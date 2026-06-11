@@ -1,0 +1,7 @@
+interface:
+  display_name: "Codex Project Workflow"
+  short_description: "Plan, research, implement, and verify projects"
+  default_prompt: "Use $codex-project-workflow to structure and execute this project rigorously."
+
+policy:
+  allow_implicit_invocation: true
