@@ -1,0 +1,9 @@
+{
+  "revision": "fixture-rev-4",
+  "allowed_governance_states": [
+    "draft",
+    "candidate",
+    "confirmed",
+    "retired"
+  ]
+}

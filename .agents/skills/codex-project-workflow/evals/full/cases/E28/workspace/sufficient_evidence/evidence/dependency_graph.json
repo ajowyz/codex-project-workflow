@@ -1,0 +1,10 @@
+{
+  "app.py": [
+    "service.process_event",
+    "state_store.JsonStateStore"
+  ],
+  "service.process_event": [
+    "state_store.load",
+    "state_store.save"
+  ]
+}

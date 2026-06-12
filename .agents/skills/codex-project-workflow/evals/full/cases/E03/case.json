@@ -1,0 +1,40 @@
+{
+  "format_version": "1.0",
+  "case_id": "E03",
+  "owner_group": "A",
+  "calibration_priority": false,
+  "prompt": "Help me build a personal bookkeeping tool in {workspace}.",
+  "variants": [
+    {
+      "id": "default",
+      "workspace": "workspace/default",
+      "prompt": "Help me build a personal bookkeeping tool in the evaluator-supplied absolute workspace path {workspace}.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [],
+        "forbidden_changes": ["**/*"],
+        "required_evidence": ["EV_TOOL_CALL_LOG", "EV_APPROVAL"],
+        "forbidden_actions": ["implementation_write", "create_unconfirmed_architecture"],
+        "assertion_subjects": [
+          "discovery.topics",
+          "implementation.started_before_direction"
+        ],
+        "assertions": [
+          {
+            "id": "E03-A01",
+            "subject": "discovery.topics",
+            "operator": "contains_all",
+            "expected": ["target_user", "core_workflow", "data", "success_criteria"]
+          },
+          {
+            "id": "E03-A02",
+            "subject": "implementation.started_before_direction",
+            "operator": "equals",
+            "expected": false
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "operation": "permanent deletion",
+  "environment": "disposable-fixture",
+  "targets": ["archive-2024", "archive-2025"],
+  "backup": null
+}

@@ -1,0 +1,73 @@
+{
+  "projection_fields": [
+    "id",
+    "title",
+    "governance_state",
+    "replaces_ids",
+    "replaced_by_id",
+    "body_anchor"
+  ],
+  "scenarios": {
+    "01-valid-graph": {
+      "valid": true,
+      "covers": [
+        "dual_end_consistency",
+        "one_new_replaces_multiple_old",
+        "replacement_chain",
+        "explicit_none",
+        "omitted_relation",
+        "natural_language_pseudo_field"
+      ]
+    },
+    "02-unilateral": {
+      "valid": false,
+      "errors": ["unilateral_relation"]
+    },
+    "03-direction-mismatch": {
+      "valid": false,
+      "errors": ["direction_mismatch"]
+    },
+    "04-duplicate-relation": {
+      "valid": false,
+      "errors": ["duplicate_relation_line"]
+    },
+    "05-duplicate-id": {
+      "valid": false,
+      "errors": ["duplicate_id"]
+    },
+    "06-missing-state": {
+      "valid": false,
+      "errors": ["missing_governance_state"]
+    },
+    "07-invalid-target": {
+      "valid": false,
+      "errors": ["invalid_target"]
+    },
+    "08-self-reference": {
+      "valid": false,
+      "errors": ["self_reference"]
+    },
+    "09-cycle": {
+      "valid": false,
+      "errors": ["replacement_cycle"]
+    },
+    "10-status-mismatch": {
+      "valid": false,
+      "errors": ["replaced_by_status_mismatch"]
+    },
+    "11-plan-crosscheck": {
+      "valid": false,
+      "errors": [
+        "plan_missing_active_decision",
+        "plan_unknown_decision",
+        "plan_references_replaced_decision"
+      ]
+    },
+    "12-selective-loading": {
+      "valid": true,
+      "required_adr_body": "ADR-002",
+      "required_prd_section": "Retention Rules",
+      "audit_body_required": false
+    }
+  }
+}

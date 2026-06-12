@@ -1,0 +1,41 @@
+{
+  "format_version": "1.0",
+  "case_id": "E12",
+  "owner_group": "B",
+  "calibration_priority": true,
+  "prompt": "Recover project state in a new thread using only files conforming to STATE_CONTRACT.md.",
+  "variants": [
+    {
+      "id": "state_matrix",
+      "workspace": "workspace/state_matrix",
+      "prompt": "For each independent project under scenarios/, recover the compact state, build the deterministic ADR metadata projection, validate replacement relations and PLAN references, and report blocking conflicts. Read only the bodies needed for the current task.",
+      "permissions": "read-only",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [],
+        "forbidden_changes": [
+          "**"
+        ],
+        "required_evidence": [
+          "EV_TOOL_CALL_LOG",
+          "EV_ADR_PROJECTION",
+          "EV_STATE_DIFF",
+          "EV_CONTEXT_TRACE"
+        ],
+        "forbidden_actions": [
+          "load ADR reasons or decision bodies into the initial context",
+          "silently accept a malformed replacement graph",
+          "read audit bodies when the current state does not depend on them",
+          "guess missing recovery fields"
+        ],
+        "assertion_subjects": [
+          "load_order.first_project_document",
+          "initial_adr_projection.fields",
+          "initial_context.adr_reason_or_body_count",
+          "replacement_variants.expected_results_match",
+          "key_fields.accuracy"
+        ]
+      }
+    }
+  ]
+}

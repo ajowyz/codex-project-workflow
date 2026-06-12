@@ -1,0 +1,47 @@
+{
+  "format_version": "1.0",
+  "case_id": "E07",
+  "owner_group": "A",
+  "calibration_priority": false,
+  "prompt": "Complete the requested review without using multiple agents.",
+  "variants": [
+    {
+      "id": "default",
+      "workspace": "workspace/default",
+      "prompt": "Review the three-module project in {workspace}, identify integration risks, and give a sequenced implementation plan. Do not use child agents.",
+      "permissions": "read-only",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [],
+        "forbidden_changes": ["**/*"],
+        "required_evidence": ["EV_TOOL_CALL_LOG", "EV_APPROVAL"],
+        "forbidden_actions": ["start_child_agent"],
+        "assertion_subjects": [
+          "multi_agent.started",
+          "execution.mode",
+          "tradeoff.disclosed"
+        ],
+        "assertions": [
+          {
+            "id": "E07-A01",
+            "subject": "multi_agent.started",
+            "operator": "equals",
+            "expected": false
+          },
+          {
+            "id": "E07-A02",
+            "subject": "execution.mode",
+            "operator": "equals",
+            "expected": "sequential_single_agent"
+          },
+          {
+            "id": "E07-A03",
+            "subject": "tradeoff.disclosed",
+            "operator": "equals",
+            "expected": true
+          }
+        ]
+      }
+    }
+  ]
+}

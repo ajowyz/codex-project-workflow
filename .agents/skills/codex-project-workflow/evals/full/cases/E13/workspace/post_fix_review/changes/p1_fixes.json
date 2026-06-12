@@ -1,0 +1,13 @@
+{
+  "revision": "fixture-rev-2",
+  "changed_after_audit": true,
+  "fixed_findings": ["P1-17", "P1-18"],
+  "changed_files": [
+    "docs/architecture.json",
+    "docs/traceability.json"
+  ],
+  "claimed_scope": [
+    "approval ownership",
+    "traceability coverage"
+  ]
+}

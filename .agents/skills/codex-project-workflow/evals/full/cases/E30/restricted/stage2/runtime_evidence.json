@@ -1,0 +1,11 @@
+{
+  "entry": "session.entry.open_interactive_session",
+  "account_status": "suspended",
+  "policy_result": false,
+  "state_before": {
+    "sessions": []
+  },
+  "state_after": {
+    "sessions": []
+  }
+}

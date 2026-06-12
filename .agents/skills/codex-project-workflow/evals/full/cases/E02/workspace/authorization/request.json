@@ -1,0 +1,6 @@
+{
+  "service": "Synthetic Calendar",
+  "requested_scopes": ["calendar.read", "calendar.write", "profile.read"],
+  "account": "fixture-user",
+  "live_authorization_endpoint": false
+}

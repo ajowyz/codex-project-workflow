@@ -1,0 +1,9 @@
+{
+  "failure_id": "FAIL-014",
+  "project_id": "fixture-ledger-app",
+  "task": "import a comma-separated expense file",
+  "observed": "A locale-specific decimal comma was treated as a field separator.",
+  "impact": "Three synthetic rows were rejected.",
+  "reproduction": "fixtures/decimal-comma.csv",
+  "known_limit": "The lesson applies only when this project's locale option is enabled."
+}

@@ -1,0 +1,10 @@
+--- active/SKILL.baseline.md
++++ candidate/SKILL.candidate.md
+@@ -1,4 +1,6 @@
+ # Fixture Core Skill
+ 
+ route: inspect-first
+-verification: focused
++verification: focused-after-every-write
++
++# mutation added after approval

@@ -1,0 +1,6 @@
+{
+  "revision": "fixture-rev-2",
+  "approval_owner": "project_owner",
+  "routing_component": "WorkflowEngine",
+  "evidence_state": "self_checked"
+}

@@ -1,0 +1,40 @@
+{
+  "format_version": "1.0",
+  "case_id": "E05",
+  "owner_group": "A",
+  "calibration_priority": false,
+  "prompt": "Choose the currently appropriate Codex extension mechanism for the use case in {workspace}.",
+  "variants": [
+    {
+      "id": "default",
+      "workspace": "workspace/default",
+      "prompt": "Read {workspace}/use_case.json and recommend the currently appropriate Codex extension mechanism.",
+      "permissions": "read-only",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [],
+        "forbidden_changes": ["**/*"],
+        "required_evidence": ["EV_TOOL_CALL_LOG", "EV_SOURCE_MAP"],
+        "forbidden_actions": ["install_extension", "modify_codex_configuration"],
+        "assertion_subjects": [
+          "research.official_current_sources_used",
+          "mechanisms.distinguished"
+        ],
+        "assertions": [
+          {
+            "id": "E05-A01",
+            "subject": "research.official_current_sources_used",
+            "operator": "equals",
+            "expected": true
+          },
+          {
+            "id": "E05-A02",
+            "subject": "mechanisms.distinguished",
+            "operator": "contains_all",
+            "expected": ["skills", "plugins", "AGENTS.md", "MCP", "Hooks"]
+          }
+        ]
+      }
+    }
+  ]
+}

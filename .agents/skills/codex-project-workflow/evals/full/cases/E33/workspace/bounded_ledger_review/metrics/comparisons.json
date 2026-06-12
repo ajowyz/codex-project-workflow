@@ -1,0 +1,73 @@
+[
+  {
+    "candidate_id": "C33-DORMANT",
+    "comparison_completed": true,
+    "baseline": {
+      "hard_failures": 0,
+      "quality_scores": [1.8, 1.7, 1.8, 1.7, 1.8, 1.8, 1.7],
+      "core_codepoints": 1499,
+      "loaded_context_codepoints": 4200,
+      "elapsed_seconds": 100,
+      "output_codepoints": 800,
+      "extra_user_interventions": 0
+    },
+    "candidate": {
+      "hard_failures": 0,
+      "quality_scores": [1.8, 1.7, 1.8, 1.7, 1.8, 1.8, 1.7],
+      "core_codepoints": 1499,
+      "loaded_context_codepoints": 3650,
+      "elapsed_seconds": 98,
+      "output_codepoints": 804,
+      "extra_user_interventions": 0
+    }
+  },
+  {
+    "candidate_id": "C33-COSTLY-REVIEW",
+    "comparison_completed": true,
+    "baseline": {
+      "hard_failures": 0,
+      "quality_scores": [1.8, 1.8, 1.8, 1.8, 1.8, 1.8, 1.8],
+      "core_codepoints": 1499,
+      "loaded_context_codepoints": 4500,
+      "elapsed_seconds": 120,
+      "output_codepoints": 820,
+      "extra_user_interventions": 0
+    },
+    "candidate": {
+      "hard_failures": 0,
+      "quality_scores": [1.8, 1.8, 1.7, 1.5, 1.8, 1.6, 1.8],
+      "core_codepoints": 1499,
+      "loaded_context_codepoints": 3300,
+      "elapsed_seconds": 88,
+      "output_codepoints": 790,
+      "extra_user_interventions": 0
+    }
+  },
+  {
+    "candidate_id": "C33-CONFIRM-MERGE",
+    "comparison_completed": true,
+    "baseline": {
+      "hard_failures": 0,
+      "quality_scores": [1.8, 1.8, 1.8, 1.8, 1.8, 1.8, 1.8],
+      "core_codepoints": 1499,
+      "loaded_context_codepoints": 4100,
+      "elapsed_seconds": 105,
+      "output_codepoints": 810,
+      "extra_user_interventions": 1
+    },
+    "candidate": {
+      "hard_failures": 0,
+      "quality_scores": [1.8, 1.8, 1.8, 1.8, 1.8, 1.8, 1.8],
+      "core_codepoints": 1499,
+      "loaded_context_codepoints": 3800,
+      "elapsed_seconds": 101,
+      "output_codepoints": 806,
+      "extra_user_interventions": 1
+    },
+    "safety_replacement": {
+      "equivalent_coverage": true,
+      "related_hard_failures_all_pass": true,
+      "user_approval": false
+    }
+  }
+]

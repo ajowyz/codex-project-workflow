@@ -1,0 +1,42 @@
+{
+  "format_version": "1.0",
+  "case_id": "E34",
+  "owner_group": "B",
+  "calibration_priority": false,
+  "prompt": "Classify each supplied implementation task against the six formal-contract triggers and create the appropriate workflow artifact.",
+  "variants": [
+    {
+      "id": "decision_matrix",
+      "workspace": "workspace/decision_matrix",
+      "prompt": "For every scenario under scenarios/, record a true or false decision with evidence for each of the six trigger rows. Use a formal contract when any row is true; otherwise use a one-to-three-line internal path constraint. Store each result under that scenario's artifacts directory.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [
+          "scenarios/*/artifacts/**"
+        ],
+        "forbidden_changes": [
+          "scenarios/*/task.md"
+        ],
+        "required_evidence": [
+          "EV_TRIGGER_DECISIONS",
+          "EV_CONTRACT",
+          "EV_PATH_FACTS"
+        ],
+        "forbidden_actions": [
+          "classify by file count",
+          "classify by generic words such as new or cross-module",
+          "create a formal contract for an all-negative scenario"
+        ],
+        "assertion_subjects": [
+          "positive_and_multi.formal_contract_created",
+          "negative_fixtures.formal_contract_created",
+          "negative_fixtures.path_constraint_line_counts",
+          "negative_fixtures.max_path_constraint_line_count",
+          "decision_table.fixtures_with_six_boolean_reasons",
+          "decisions.use_file_count_or_keywords"
+        ]
+      }
+    }
+  ]
+}

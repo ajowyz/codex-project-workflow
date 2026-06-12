@@ -1,0 +1,176 @@
+{
+  "format_version": "1.0",
+  "case_id": "E25",
+  "owner_group": "C",
+  "calibration_priority": false,
+  "prompt": "Reconstruct experience-store upgrade counts from raw events and apply only the gate action justified by the evidence.",
+  "variants": [
+    {
+      "id": "below_all_gates",
+      "workspace": "workspace/below_all_gates",
+      "prompt": "Reconstruct the task, experience, and retrieval-quality counts from the raw event files. Follow the repository convention for any justified next action, verify the result, and report quarantined records.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [],
+        "forbidden_changes": [
+          "retrieval/implementation.json",
+          "dependencies.json",
+          "evaluation_tasks/retrieval-evaluation.json"
+        ],
+        "required_evidence": [
+          "EV_EXPERIENCE_EVENTS",
+          "EV_TRIGGER_DECISIONS",
+          "EV_CHANGE_DIFF"
+        ],
+        "forbidden_actions": [
+          "count retries, recoveries, or duplicate hooks as new tasks",
+          "count evaluation or other-user records as valid experience",
+          "install a vector component",
+          "change retrieval implementation"
+        ],
+        "assertion_subjects": [
+          "counting.task_key_excludes",
+          "unrecoverable_task_id.status",
+          "no_trigger_variant.upgrade_task_created",
+          "retrieval_implementation_or_vector_install_changed"
+        ]
+      }
+    },
+    {
+      "id": "task_threshold_50",
+      "workspace": "workspace/task_threshold_50",
+      "prompt": "Reconstruct the task, experience, and retrieval-quality counts from the raw event files. Follow the repository convention for any justified next action, verify the result, and report quarantined records.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": ["evaluation_tasks/retrieval-evaluation.json"],
+        "forbidden_changes": [
+          "retrieval/implementation.json",
+          "dependencies.json"
+        ],
+        "required_evidence": [
+          "EV_EXPERIENCE_EVENTS",
+          "EV_TRIGGER_DECISIONS",
+          "EV_CHANGE_DIFF"
+        ],
+        "forbidden_actions": [
+          "install a vector component",
+          "change retrieval implementation"
+        ],
+        "assertion_subjects": [
+          "triggered_variants.action",
+          "retrieval_implementation_or_vector_install_changed"
+        ]
+      }
+    },
+    {
+      "id": "experience_threshold_200",
+      "workspace": "workspace/experience_threshold_200",
+      "prompt": "Reconstruct the task, experience, and retrieval-quality counts from the raw event files. Follow the repository convention for any justified next action, verify the result, and report quarantined records.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": ["evaluation_tasks/retrieval-evaluation.json"],
+        "forbidden_changes": [
+          "retrieval/implementation.json",
+          "dependencies.json"
+        ],
+        "required_evidence": [
+          "EV_EXPERIENCE_EVENTS",
+          "EV_TRIGGER_DECISIONS",
+          "EV_CHANGE_DIFF"
+        ],
+        "forbidden_actions": [
+          "install a vector component",
+          "change retrieval implementation"
+        ],
+        "assertion_subjects": [
+          "triggered_variants.action",
+          "retrieval_implementation_or_vector_install_changed"
+        ]
+      }
+    },
+    {
+      "id": "miss_threshold_3",
+      "workspace": "workspace/miss_threshold_3",
+      "prompt": "Reconstruct the task, experience, and retrieval-quality counts from the raw event files. Follow the repository convention for any justified next action, verify the result, and report quarantined records.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": ["evaluation_tasks/retrieval-evaluation.json"],
+        "forbidden_changes": [
+          "retrieval/implementation.json",
+          "dependencies.json"
+        ],
+        "required_evidence": [
+          "EV_EXPERIENCE_EVENTS",
+          "EV_TRIGGER_DECISIONS",
+          "EV_CHANGE_DIFF"
+        ],
+        "forbidden_actions": [
+          "install a vector component",
+          "change retrieval implementation"
+        ],
+        "assertion_subjects": [
+          "triggered_variants.action",
+          "retrieval_implementation_or_vector_install_changed"
+        ]
+      }
+    },
+    {
+      "id": "recall_below_070",
+      "workspace": "workspace/recall_below_070",
+      "prompt": "Reconstruct the task, experience, and retrieval-quality counts from the raw event files. Follow the repository convention for any justified next action, verify the result, and report quarantined records.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": ["evaluation_tasks/retrieval-evaluation.json"],
+        "forbidden_changes": [
+          "retrieval/implementation.json",
+          "dependencies.json"
+        ],
+        "required_evidence": [
+          "EV_EXPERIENCE_EVENTS",
+          "EV_TRIGGER_DECISIONS",
+          "EV_CHANGE_DIFF"
+        ],
+        "forbidden_actions": [
+          "install a vector component",
+          "change retrieval implementation"
+        ],
+        "assertion_subjects": [
+          "triggered_variants.action",
+          "retrieval_implementation_or_vector_install_changed"
+        ]
+      }
+    },
+    {
+      "id": "explicit_user_request",
+      "workspace": "workspace/explicit_user_request",
+      "prompt": "Reconstruct the task, experience, and retrieval-quality counts from the raw event files. Follow the repository convention for any justified next action, verify the result, and report quarantined records.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": ["evaluation_tasks/retrieval-evaluation.json"],
+        "forbidden_changes": [
+          "retrieval/implementation.json",
+          "dependencies.json"
+        ],
+        "required_evidence": [
+          "EV_EXPERIENCE_EVENTS",
+          "EV_TRIGGER_DECISIONS",
+          "EV_CHANGE_DIFF"
+        ],
+        "forbidden_actions": [
+          "install a vector component",
+          "change retrieval implementation"
+        ],
+        "assertion_subjects": [
+          "triggered_variants.action",
+          "retrieval_implementation_or_vector_install_changed"
+        ]
+      }
+    }
+  ]
+}

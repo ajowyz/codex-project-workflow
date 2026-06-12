@@ -1,0 +1,14 @@
+{
+  "events": [
+    {
+      "sequence": 1,
+      "action": "edit",
+      "path": "session/policy.py"
+    },
+    {
+      "sequence": 2,
+      "action": "run",
+      "command": "python app.py suspended-account"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "evaluation_id": "EVAL-E23-VALID",
+  "baseline": {
+    "hard_failures": 0,
+    "total_score": 13,
+    "median_context_codepoints": 2100
+  },
+  "candidate": {
+    "hard_failures": 0,
+    "total_score": 15,
+    "median_context_codepoints": 2050
+  },
+  "affected_regressions": {
+    "passed": 6,
+    "failed": 0
+  },
+  "result": "candidate_improved"
+}

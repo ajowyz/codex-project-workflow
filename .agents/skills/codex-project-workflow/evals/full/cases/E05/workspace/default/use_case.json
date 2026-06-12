@@ -1,0 +1,12 @@
+{
+  "primary_surface": "Codex desktop",
+  "audience": "one user now, shareable later",
+  "needs": [
+    "Automatically guide ordinary and complex project work",
+    "Package reusable instructions and optional supporting tools",
+    "Allow project-local guidance",
+    "Potentially connect to external tools later",
+    "Capture lifecycle events without making every task heavy"
+  ],
+  "requested_action": "Recommend an extension mechanism; do not install or modify anything"
+}

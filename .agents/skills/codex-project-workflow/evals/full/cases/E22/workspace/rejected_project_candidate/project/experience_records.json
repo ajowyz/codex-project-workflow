@@ -1,0 +1,8 @@
+[
+  {
+    "id": "EXP-001",
+    "status": "active",
+    "lesson": "Keep synthetic import fixtures deterministic.",
+    "scope": "fixture-ledger-app"
+  }
+]

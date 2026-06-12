@@ -1,0 +1,23 @@
+{
+  "classification_order": [
+    "invariant",
+    "safety",
+    "quality",
+    "convenience"
+  ],
+  "quality_dimension_count": 7,
+  "required_hard_failures": 0,
+  "minimum_one_cost_improvement": 0.1,
+  "maximum_other_continuous_cost_degradation": 0.05,
+  "maximum_extra_user_intervention_delta": 0,
+  "safety_replacement_requires": [
+    "equivalent_coverage",
+    "related_hard_failures_all_pass",
+    "user_approval"
+  ],
+  "review_budget": {
+    "active_items": 20,
+    "loaded_codepoints": 12000,
+    "elapsed_minutes": 30
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "revision": "fixture-rev-2",
+  "requirements": {
+    "FR-27": {
+      "approval_owner": "project_owner",
+      "routing_component": "TaskRouter"
+    }
+  }
+}

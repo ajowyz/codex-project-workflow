@@ -1,0 +1,10 @@
+{
+  "asset": "fixture-renderer",
+  "version": "4.2.0",
+  "publisher": "Example Tools Cooperative",
+  "source_type": "third-party release",
+  "source_url": null,
+  "expected_sha256": "8d969eef6ecad3c29a3a629280e686cff8cae9940a8e05aa6d4f83f9f2f4f0f5",
+  "intended_use": "Inspect a synthetic report locally",
+  "simulation_only": true
+}

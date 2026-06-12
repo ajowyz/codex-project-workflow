@@ -1,0 +1,10 @@
+{
+  "max_sources": 3,
+  "max_rounds": 2,
+  "max_queries_per_round": 2,
+  "max_tool_calls": 5,
+  "current_round": 2,
+  "sources_already_examined": 3,
+  "tool_calls_already_used": 5,
+  "extension_approved": false
+}

@@ -105,6 +105,7 @@ def collect(manifest_path, sessions_root, setup_state_path, output_dir):
                     for change in result["fixture"]["changed_files"]
                 ],
                 "expected_changed_files": result["expected"]["changed_files"],
+                "expected_assertion_subjects": result["expected"]["assertion_subjects"],
                 "context_trace": result["context_trace"],
                 "rollout_sha256": result["rollout"]["sha256"],
             }

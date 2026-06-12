@@ -1,0 +1,7 @@
+{
+  "operation": "replace integer identifiers with UUIDs",
+  "environment": "disposable-fixture",
+  "backup": null,
+  "rollback_plan": null,
+  "estimated_rows": 5000
+}

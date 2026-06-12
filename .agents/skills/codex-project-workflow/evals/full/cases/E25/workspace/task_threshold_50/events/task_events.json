@@ -1,0 +1,488 @@
+[
+  {
+    "event_id": "TASK-EVENT-001",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-01",
+    "turn_id": "TURN-001",
+    "task_id": "TASK-001",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-002",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-01",
+    "turn_id": "TURN-002",
+    "task_id": "TASK-002",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-003",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-01",
+    "turn_id": "TURN-003",
+    "task_id": "TASK-003",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-004",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-01",
+    "turn_id": "TURN-004",
+    "task_id": "TASK-004",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-005",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-01",
+    "turn_id": "TURN-005",
+    "task_id": "TASK-005",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-006",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-02",
+    "turn_id": "TURN-006",
+    "task_id": "TASK-006",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-007",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-02",
+    "turn_id": "TURN-007",
+    "task_id": "TASK-007",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-008",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-02",
+    "turn_id": "TURN-008",
+    "task_id": "TASK-008",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-009",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-02",
+    "turn_id": "TURN-009",
+    "task_id": "TASK-009",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-010",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-02",
+    "turn_id": "TURN-010",
+    "task_id": "TASK-010",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-011",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-03",
+    "turn_id": "TURN-011",
+    "task_id": "TASK-011",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-012",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-03",
+    "turn_id": "TURN-012",
+    "task_id": "TASK-012",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-013",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-03",
+    "turn_id": "TURN-013",
+    "task_id": "TASK-013",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-014",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-03",
+    "turn_id": "TURN-014",
+    "task_id": "TASK-014",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-015",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-03",
+    "turn_id": "TURN-015",
+    "task_id": "TASK-015",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-016",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-04",
+    "turn_id": "TURN-016",
+    "task_id": "TASK-016",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-017",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-04",
+    "turn_id": "TURN-017",
+    "task_id": "TASK-017",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-018",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-04",
+    "turn_id": "TURN-018",
+    "task_id": "TASK-018",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-019",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-04",
+    "turn_id": "TURN-019",
+    "task_id": "TASK-019",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-020",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-04",
+    "turn_id": "TURN-020",
+    "task_id": "TASK-020",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-021",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-05",
+    "turn_id": "TURN-021",
+    "task_id": "TASK-021",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-022",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-05",
+    "turn_id": "TURN-022",
+    "task_id": "TASK-022",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-023",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-05",
+    "turn_id": "TURN-023",
+    "task_id": "TASK-023",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-024",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-05",
+    "turn_id": "TURN-024",
+    "task_id": "TASK-024",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-025",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-05",
+    "turn_id": "TURN-025",
+    "task_id": "TASK-025",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-026",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-06",
+    "turn_id": "TURN-026",
+    "task_id": "TASK-026",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-027",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-06",
+    "turn_id": "TURN-027",
+    "task_id": "TASK-027",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-028",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-06",
+    "turn_id": "TURN-028",
+    "task_id": "TASK-028",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-029",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-06",
+    "turn_id": "TURN-029",
+    "task_id": "TASK-029",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-030",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-06",
+    "turn_id": "TURN-030",
+    "task_id": "TASK-030",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-031",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-07",
+    "turn_id": "TURN-031",
+    "task_id": "TASK-031",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-032",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-07",
+    "turn_id": "TURN-032",
+    "task_id": "TASK-032",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-033",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-07",
+    "turn_id": "TURN-033",
+    "task_id": "TASK-033",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-034",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-07",
+    "turn_id": "TURN-034",
+    "task_id": "TASK-034",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-035",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-07",
+    "turn_id": "TURN-035",
+    "task_id": "TASK-035",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-036",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-08",
+    "turn_id": "TURN-036",
+    "task_id": "TASK-036",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-037",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-08",
+    "turn_id": "TURN-037",
+    "task_id": "TASK-037",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-038",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-08",
+    "turn_id": "TURN-038",
+    "task_id": "TASK-038",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-039",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-08",
+    "turn_id": "TURN-039",
+    "task_id": "TASK-039",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-040",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-08",
+    "turn_id": "TURN-040",
+    "task_id": "TASK-040",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-041",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-09",
+    "turn_id": "TURN-041",
+    "task_id": "TASK-041",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-042",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-09",
+    "turn_id": "TURN-042",
+    "task_id": "TASK-042",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-043",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-09",
+    "turn_id": "TURN-043",
+    "task_id": "TASK-043",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-044",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-09",
+    "turn_id": "TURN-044",
+    "task_id": "TASK-044",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-045",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-09",
+    "turn_id": "TURN-045",
+    "task_id": "TASK-045",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-046",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-10",
+    "turn_id": "TURN-046",
+    "task_id": "TASK-046",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-047",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-10",
+    "turn_id": "TURN-047",
+    "task_id": "TASK-047",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-048",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-10",
+    "turn_id": "TURN-048",
+    "task_id": "TASK-048",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-049",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-10",
+    "turn_id": "TURN-049",
+    "task_id": "TASK-049",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-EVENT-050",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-10",
+    "turn_id": "TURN-050",
+    "task_id": "TASK-050",
+    "event_type": "task_completed"
+  },
+  {
+    "event_id": "TASK-RETRY",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-01",
+    "turn_id": "TURN-001-R",
+    "task_id": "TASK-001",
+    "event_type": "retry"
+  },
+  {
+    "event_id": "TASK-RECOVERY",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-RECOVERY",
+    "turn_id": "TURN-001-C",
+    "task_id": "TASK-001",
+    "event_type": "recovery"
+  },
+  {
+    "event_id": "TASK-DUP-HOOK",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-01",
+    "turn_id": "TURN-001",
+    "task_id": "TASK-001",
+    "event_type": "duplicate_hook"
+  },
+  {
+    "event_id": "TASK-UNKNOWN",
+    "installation_id": "INSTALL-FIXTURE",
+    "project_id": "PROJECT-FIXTURE",
+    "session_id": "SESSION-UNKNOWN",
+    "turn_id": "TURN-UNKNOWN",
+    "task_id": null,
+    "event_type": "task_completed"
+  }
+]

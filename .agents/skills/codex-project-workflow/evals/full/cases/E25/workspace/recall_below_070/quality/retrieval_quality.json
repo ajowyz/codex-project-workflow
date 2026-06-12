@@ -1,0 +1,16 @@
+{
+  "reproducible_misses": [
+    {
+      "miss_id": "MISS-1",
+      "reproduced": true,
+      "query_id": "QUERY-1"
+    },
+    {
+      "miss_id": "MISS-2",
+      "reproduced": true,
+      "query_id": "QUERY-2"
+    }
+  ],
+  "recall_at_5": 0.68,
+  "explicit_user_request": false
+}

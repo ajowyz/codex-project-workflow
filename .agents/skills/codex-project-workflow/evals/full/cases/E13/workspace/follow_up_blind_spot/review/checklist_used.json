@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "requirement_links",
+    "approval_ownership",
+    "document_naming"
+  ],
+  "excluded": [
+    "operational_status_vocabulary",
+    "migration_notes"
+  ]
+}

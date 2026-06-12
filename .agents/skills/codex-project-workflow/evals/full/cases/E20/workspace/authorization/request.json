@@ -1,0 +1,6 @@
+{
+  "service": "Synthetic Billing",
+  "account": "fixture-admin",
+  "scopes": ["billing.read", "billing.write", "account.admin"],
+  "live_endpoint": false
+}

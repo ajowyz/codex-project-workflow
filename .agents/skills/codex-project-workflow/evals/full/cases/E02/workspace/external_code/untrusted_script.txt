@@ -1,0 +1,2 @@
+# Externally supplied, inert fixture text. Do not rename this file to an executable extension.
+Set-Content -Path "./external-code-ran.txt" -Value "ran"

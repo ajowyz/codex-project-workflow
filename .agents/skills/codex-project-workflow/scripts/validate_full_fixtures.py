@@ -37,6 +37,17 @@ def safe_relative_path(value, label):
     return Path(*path.parts)
 
 
+def valid_scripted_reply(reply):
+    if isinstance(reply, str):
+        return bool(reply.strip())
+    if not isinstance(reply, dict) or set(reply) != {"when", "reply"}:
+        return False
+    return all(
+        isinstance(reply[field], str) and reply[field].strip()
+        for field in ("when", "reply")
+    )
+
+
 def expected_case_map():
     data = load_json(EVAL_DIR / "behavior_cases.json")
     return {
@@ -69,6 +80,7 @@ def validate_case(case_path, case_id, group_id, schema, expected):
     require(len(variant_ids) == len(set(variant_ids)), f"{case_id}: duplicate variant ID")
 
     case_dir = case_path.parent.resolve()
+    covered_subjects = set()
     for variant in variants:
         label = f"{case_id}.{variant['id']}"
         require_keys(variant, schema["variant_required"], label)
@@ -90,8 +102,8 @@ def validate_case(case_path, case_id, group_id, schema, expected):
         replies = variant["scripted_user_replies"]
         require(
             isinstance(replies, list)
-            and all(isinstance(reply, str) and reply.strip() for reply in replies),
-            f"{label}: scripted replies must be strings",
+            and all(valid_scripted_reply(reply) for reply in replies),
+            f"{label}: invalid scripted reply",
         )
 
         expected_data = variant["expected"]
@@ -112,9 +124,10 @@ def validate_case(case_path, case_id, group_id, schema, expected):
 
         actual_subjects = set(expected_data["assertion_subjects"])
         require(
-            actual_subjects == expected["assertion_subjects"],
-            f"{label}: assertion subjects do not match behavior_cases.json",
+            actual_subjects <= expected["assertion_subjects"],
+            f"{label}: unknown assertion subjects",
         )
+        covered_subjects.update(actual_subjects)
         for changed in expected_data["changed_files"]:
             safe_relative_path(changed, f"{label}.expected.changed_files")
         for forbidden in expected_data["forbidden_changes"]:
@@ -128,17 +141,17 @@ def validate_case(case_path, case_id, group_id, schema, expected):
         ]
         require(not unsafe_files, f"{label}: executable binary fixture is forbidden")
 
+    require(
+        covered_subjects == expected["assertion_subjects"],
+        f"{case_id}: variant assertion subjects do not cover behavior_cases.json",
+    )
     return {
         "variants": len(variants),
         "calibration_priority": data["calibration_priority"],
     }
 
 
-def validate(require_complete=True):
-    schema = load_json(FULL_DIR / "fixture.schema.json")
-    manifest = load_json(FULL_DIR / "batch_manifest.json")
-    expected = expected_case_map()
-
+def validate_manifest(schema, manifest, expected):
     require(schema["schema_type"] == "codex-project-executable-fixture/v1", "bad fixture schema")
     require(schema["format_version"] == "1.0", "bad fixture schema version")
     require(manifest["format_version"] == "1.0", "bad batch manifest version")
@@ -160,6 +173,18 @@ def validate(require_complete=True):
     require(
         calibration == {"E02", "E12", "E16", "E19", "E23", "E26", "E32", "E35"},
         "calibration case set changed",
+    )
+    return assigned, owner_by_case, calibration
+
+
+def validate(require_complete=True):
+    schema = load_json(FULL_DIR / "fixture.schema.json")
+    manifest = load_json(FULL_DIR / "batch_manifest.json")
+    expected = expected_case_map()
+    assigned, owner_by_case, calibration = validate_manifest(
+        schema,
+        manifest,
+        expected,
     )
 
     results = {}

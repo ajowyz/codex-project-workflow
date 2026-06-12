@@ -1,0 +1,58 @@
+{
+  "format_version": "1.0",
+  "case_id": "E17",
+  "owner_group": "B",
+  "calibration_priority": false,
+  "prompt": "Take the small reading-list project from an ambiguous request through clarification, option comparison, planning, minimal implementation, tests, state update, and acceptance.",
+  "variants": [
+    {
+      "id": "default",
+      "workspace": "workspace/default",
+      "prompt": "Make this command-line project useful for keeping a small personal reading list between runs.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [
+        {
+          "when": "The assistant asks for the persistence and duplicate-handling decision.",
+          "reply": "Use a local JSON file selected with --data-file. Keep the existing add and list commands, reject duplicate URLs, and preserve insertion order."
+        }
+      ],
+      "expected": {
+        "changed_files": [
+          "app.py",
+          "reading_list.py",
+          "tests/**",
+          "docs/PLAN.md",
+          "docs/PRD.md",
+          "docs/DECISIONS.md",
+          "docs/IMPLEMENTATION_CONTRACT.md"
+        ],
+        "forbidden_changes": [
+          "oracle/**",
+          "replace the CLI with a second entry point"
+        ],
+        "required_evidence": [
+          "EV_CHANGE_DIFF",
+          "EV_TEST_RESULTS",
+          "EV_CONTRACT",
+          "EV_CONTRACT_HISTORY",
+          "EV_FIRST_WRITE",
+          "EV_ENTRYPOINT_RUN",
+          "EV_STATE_DIFF",
+          "EV_APPROVAL"
+        ],
+        "forbidden_actions": [
+          "write persistence code before freezing the implementation contract",
+          "ask for approval at routine implementation steps",
+          "leave project state unreconstructable"
+        ],
+        "assertion_subjects": [
+          "formal_contract.frozen_before_first_write",
+          "result_assertions.all_pass",
+          "implementation_assertions.all_pass",
+          "scores.implementation_integrity",
+          "state_rebuild.required_fields_accuracy"
+        ]
+      }
+    }
+  ]
+}

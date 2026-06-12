@@ -1,0 +1,20 @@
+{
+  "project": "Local reading-list tracker",
+  "primary_user_count": 1,
+  "contributors": 1,
+  "delivery_target": "desktop only",
+  "expected_duration_weeks": 4,
+  "risk": {
+    "financial": "low",
+    "privacy": "low; local book titles only",
+    "availability": "low",
+    "migration": "none"
+  },
+  "change_rate": "one or two small changes per week",
+  "maintenance_budget_hours_per_month": 2,
+  "decision_needs": [
+    "Choose the next feature",
+    "Record the few decisions that would be costly to reverse",
+    "Keep the project understandable after a month away"
+  ]
+}

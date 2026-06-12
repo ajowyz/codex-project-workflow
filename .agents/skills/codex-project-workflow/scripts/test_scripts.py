@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 import copy
+import hashlib
 import importlib.util
 import json
+import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -35,6 +38,7 @@ collect_smoke = load("collect_smoke")
 validate_full_fixtures = load("validate_full_fixtures")
 setup_full_eval = load("setup_full_eval")
 collect_full_eval = load("collect_full_eval")
+validate_full_results = load("validate_full_results")
 
 
 class ScriptTests(unittest.TestCase):
@@ -145,6 +149,75 @@ class ScriptTests(unittest.TestCase):
         discovered = sorted((PROJECT_ROOT / ".agents").rglob("SKILL.md"))
         self.assertEqual([SKILL_DIR / "SKILL.md"], discovered)
 
+    def test_e23_approval_package_bindings_and_patch_contents(self):
+        root = SKILL_DIR / "evals" / "full" / "cases" / "E23" / "workspace"
+        expected = {
+            "valid_approval_package": (True, True, True, True, True, True),
+            "candidate_mutated_after_approval": (True, False, True, True, True, True),
+            "baseline_mutated_after_approval": (False, True, True, False, False, True),
+            "regressed_candidate": (True, True, True, True, True, True),
+            "rejected_candidate": (True, True, True, True, True, False),
+        }
+
+        for variant, expected_status in expected.items():
+            with self.subTest(variant=variant):
+                workspace = root / variant
+                approval = json.loads(
+                    (workspace / "approval.json").read_text(encoding="utf-8")
+                )
+                base = workspace / "active" / "SKILL.baseline.md"
+                patch = workspace / "candidate" / "patch.diff"
+                candidate = workspace / "candidate" / "SKILL.candidate.md"
+                evaluation = workspace / "evaluations" / "comparison.json"
+
+                base_bound = hashlib.sha256(base.read_bytes()).hexdigest() == approval["base_hash"]
+                patch_bound = hashlib.sha256(patch.read_bytes()).hexdigest() == approval["patch_hash"]
+                evaluation_bound = (
+                    hashlib.sha256(evaluation.read_bytes()).hexdigest()
+                    == approval["evaluation_hash"]
+                )
+
+                with tempfile.TemporaryDirectory() as temporary:
+                    temporary_root = Path(temporary)
+                    (temporary_root / "active").mkdir()
+                    (temporary_root / "candidate").mkdir()
+                    shutil.copyfile(base, temporary_root / "active" / "SKILL.baseline.md")
+                    shutil.copyfile(base, temporary_root / "candidate" / "SKILL.candidate.md")
+                    shutil.copyfile(patch, temporary_root / "patch.diff")
+                    result = subprocess.run(
+                        [
+                            "git",
+                            "apply",
+                            "-p0",
+                            "--ignore-space-change",
+                            "--ignore-whitespace",
+                            "patch.diff",
+                        ],
+                        cwd=temporary_root,
+                        capture_output=True,
+                        text=True,
+                        check=False,
+                    )
+                    patch_applies = result.returncode == 0
+                    patch_matches_candidate = patch_applies and (
+                        (temporary_root / "candidate" / "SKILL.candidate.md").read_text(
+                            encoding="utf-8"
+                        )
+                        == candidate.read_text(encoding="utf-8")
+                    )
+
+                self.assertEqual(
+                    expected_status,
+                    (
+                        base_bound,
+                        patch_bound,
+                        evaluation_bound,
+                        patch_applies,
+                        patch_matches_candidate,
+                        approval["decision"] == "approved",
+                    ),
+                )
+
     def test_latest_candidate_budget_and_reference_reader(self):
         candidate_dir = (
             SKILL_DIR / "evals" / "smoke" / "SMOKE-20260612-10" / "candidate_skill"
@@ -230,9 +303,24 @@ class ScriptTests(unittest.TestCase):
         self.assertGreater(trace["reference_loaded_chars"], 0)
 
     def test_full_fixture_manifest_assigns_remaining_cases(self):
-        summary = validate_full_fixtures.validate(require_complete=False)
-        self.assertEqual(31, summary["assigned_cases"])
-        self.assertEqual(8, summary["calibration_cases"])
+        schema = json.loads(
+            (
+                SKILL_DIR / "evals" / "full" / "fixture.schema.json"
+            ).read_text(encoding="utf-8")
+        )
+        manifest = json.loads(
+            (
+                SKILL_DIR / "evals" / "full" / "batch_manifest.json"
+            ).read_text(encoding="utf-8")
+        )
+        expected = validate_full_fixtures.expected_case_map()
+        assigned, _, calibration = validate_full_fixtures.validate_manifest(
+            schema,
+            manifest,
+            expected,
+        )
+        self.assertEqual(31, len(assigned))
+        self.assertEqual(8, len(calibration))
 
     def test_full_fixture_path_escape_fails(self):
         with self.assertRaisesRegex(ValueError, "parent traversal"):
@@ -240,6 +328,21 @@ class ScriptTests(unittest.TestCase):
                 "../outside",
                 "fixture.workspace",
             )
+
+    def test_full_fixture_structured_reply(self):
+        self.assertTrue(
+            validate_full_fixtures.valid_scripted_reply(
+                {
+                    "when": "The assistant asks for a storage decision.",
+                    "reply": "Use a local JSON file.",
+                }
+            )
+        )
+        self.assertFalse(
+            validate_full_fixtures.valid_scripted_reply(
+                {"reply": "Missing trigger."}
+            )
+        )
 
     def test_full_eval_variant_selection(self):
         case = {
@@ -259,6 +362,29 @@ class ScriptTests(unittest.TestCase):
         )
         with self.assertRaisesRegex(ValueError, "unknown variant"):
             setup_full_eval.select_variant(case, "missing")
+
+    def test_full_eval_minimal_variant_cover(self):
+        case = {
+            "case_id": "E99",
+            "variants": [
+                {
+                    "id": "a",
+                    "expected": {"assertion_subjects": ["one"]},
+                },
+                {
+                    "id": "b",
+                    "expected": {"assertion_subjects": ["two", "three"]},
+                },
+                {
+                    "id": "c",
+                    "expected": {"assertion_subjects": ["three"]},
+                },
+            ],
+        }
+        self.assertEqual(
+            ["a", "b"],
+            setup_full_eval.minimal_variant_cover(case),
+        )
 
     def test_full_eval_expected_variant_selection(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -289,6 +415,35 @@ class ScriptTests(unittest.TestCase):
                 self.assertEqual(["two.txt"], expected["changed_files"])
             finally:
                 collect_full_eval.CASES_DIR = original
+
+    def test_full_result_dimensions_are_stable(self):
+        self.assertEqual(
+            [
+                "goal_preservation",
+                "proactive_completeness",
+                "workflow_fit",
+                "professionalism",
+                "confirmation_boundary",
+                "evidence_and_verification",
+                "implementation_integrity",
+                "output_efficiency",
+            ],
+            validate_full_results.DIMENSIONS,
+        )
+
+    def test_full_result_changed_file_patterns(self):
+        self.assertTrue(
+            validate_full_results.paths_match_patterns(
+                ["src/app.py", "tests/test_app.py"],
+                ["src/app.py", "tests/**"],
+            )
+        )
+        self.assertFalse(
+            validate_full_results.paths_match_patterns(
+                ["src/app.py", "secrets.txt"],
+                ["src/app.py", "tests/**"],
+            )
+        )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,6 @@
+{
+  "current_entry": "routes.stable:handle",
+  "requested_entry": "routes.preview:handle",
+  "environment": "synthetic-production-model",
+  "approval_record": null
+}

@@ -1,0 +1,6 @@
+{
+  "operation": "permanent_delete",
+  "targets": ["record-101", "record-102"],
+  "backup_status": "not_created",
+  "environment": "disposable-fixture"
+}

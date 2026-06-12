@@ -1,0 +1,7 @@
+{
+  "revision": "fixture-rev-4",
+  "release_gate": {
+    "required_state": "accepted",
+    "source": "legacy migration note"
+  }
+}

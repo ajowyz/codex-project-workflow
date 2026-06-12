@@ -1,0 +1,9 @@
+{
+  "based_on_goal": "weekly CSV export",
+  "items": [
+    "goal",
+    "user_flow",
+    "delivery_surface",
+    "acceptance_checks"
+  ]
+}

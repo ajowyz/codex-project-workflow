@@ -1,0 +1,52 @@
+{
+  "trigger_rows": [
+    "production_entry_or_routing",
+    "state_authority_persistence_schema_or_migration",
+    "architecture_boundary_interface_or_ownership",
+    "core_capability_or_alternate_final_result_path",
+    "explicit_user_path_proof",
+    "high_impact_or_long_term_commitment"
+  ],
+  "scenarios": {
+    "01-production-entry": {
+      "values": [true, false, false, false, false, false],
+      "artifact": "formal_contract"
+    },
+    "02-persistence": {
+      "values": [false, true, false, false, false, false],
+      "artifact": "formal_contract"
+    },
+    "03-architecture-boundary": {
+      "values": [false, false, true, false, false, false],
+      "artifact": "formal_contract"
+    },
+    "04-core-result-path": {
+      "values": [false, false, false, true, false, false],
+      "artifact": "formal_contract"
+    },
+    "05-explicit-path-proof": {
+      "values": [false, false, false, false, true, false],
+      "artifact": "formal_contract"
+    },
+    "06-high-impact-commitment": {
+      "values": [false, false, false, false, false, true],
+      "artifact": "formal_contract"
+    },
+    "07-mechanical-cross-file": {
+      "values": [false, false, false, false, false, false],
+      "artifact": "path_constraint"
+    },
+    "08-test-only": {
+      "values": [false, false, false, false, false, false],
+      "artifact": "path_constraint"
+    },
+    "09-local-low-impact": {
+      "values": [false, false, false, false, false, false],
+      "artifact": "path_constraint"
+    },
+    "10-multi-trigger": {
+      "values": [true, true, false, false, false, true],
+      "artifact": "formal_contract"
+    }
+  }
+}

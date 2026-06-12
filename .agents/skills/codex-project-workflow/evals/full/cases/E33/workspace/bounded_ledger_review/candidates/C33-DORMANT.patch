@@ -1,0 +1,3 @@
+Candidate: C33-DORMANT
+Scope: remove M17 from the runtime path and archive its rationale offline.
+Active ledger is not modified by this isolated candidate.

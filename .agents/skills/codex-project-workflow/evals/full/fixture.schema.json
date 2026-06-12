@@ -28,6 +28,13 @@
     "read-only",
     "workspace-write"
   ],
+  "scripted_reply_formats": [
+    "non-empty string",
+    {
+      "when": "non-empty trigger description",
+      "reply": "non-empty user decision"
+    }
+  ],
   "invariants": [
     "Case IDs and assertion subjects must match behavior_cases.json.",
     "Workspace paths are relative to the case directory and may not escape it.",

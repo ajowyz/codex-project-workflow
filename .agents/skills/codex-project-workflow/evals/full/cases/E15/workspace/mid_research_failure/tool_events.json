@@ -1,0 +1,21 @@
+{
+  "events": [
+    {
+      "sequence": 1,
+      "operation": "open official release index",
+      "status": "success"
+    },
+    {
+      "sequence": 2,
+      "operation": "open official security policy",
+      "status": "success"
+    },
+    {
+      "sequence": 3,
+      "operation": "open public issue tracker activity page",
+      "status": "failed",
+      "error": "browser transport unavailable",
+      "retry_count": 1
+    }
+  ]
+}

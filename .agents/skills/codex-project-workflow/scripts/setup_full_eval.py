@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import hashlib
+import itertools
 import json
 import shutil
 from pathlib import Path
@@ -44,15 +45,32 @@ def select_variant(case, requested=None):
     return matches[0]
 
 
-def setup(case_ids, output_root, requested_variants=None):
+def minimal_variant_cover(case):
+    variants = case["variants"]
+    subjects = {
+        variant["id"]: set(variant["expected"]["assertion_subjects"])
+        for variant in variants
+    }
+    universe = set().union(*subjects.values())
+    for count in range(1, len(variants) + 1):
+        for combination in itertools.combinations(
+            [variant["id"] for variant in variants],
+            count,
+        ):
+            covered = set().union(*(subjects[item] for item in combination))
+            if covered == universe:
+                return list(combination)
+    raise ValueError(f"{case['case_id']}: no assertion-covering variant set")
+
+
+def setup_selected(selections, output_root):
     validate_full_fixtures.validate()
     output_root.mkdir(parents=True, exist_ok=True)
-    requested_variants = requested_variants or {}
     runs = []
 
-    for case_id in case_ids:
+    for case_id, variant_id in selections:
         case = load_case(case_id)
-        variant = select_variant(case, requested_variants.get(case_id))
+        variant = select_variant(case, variant_id)
         source = CASES_DIR / case_id / variant["workspace"]
         destination = output_root / case_id / variant["id"]
         if destination.exists():
@@ -93,9 +111,33 @@ def setup(case_ids, output_root, requested_variants=None):
     return state_path
 
 
+def setup(case_ids, output_root, requested_variants=None):
+    requested_variants = requested_variants or {}
+    selections = [
+        (case_id, requested_variants.get(case_id))
+        for case_id in case_ids
+    ]
+    return setup_selected(selections, output_root)
+
+
+def calibration_selections():
+    manifest = json.loads(
+        (FULL_DIR / "batch_manifest.json").read_text(encoding="utf-8")
+    )
+    selections = []
+    for case_id in manifest["calibration_cases"]:
+        case = load_case(case_id)
+        selections.extend(
+            (case_id, variant_id)
+            for variant_id in minimal_variant_cover(case)
+        )
+    return selections
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--case", action="append", dest="cases", required=True)
+    parser.add_argument("--case", action="append", dest="cases")
+    parser.add_argument("--calibration", action="store_true")
     parser.add_argument("--variant", action="append", default=[])
     parser.add_argument("--output-root", type=Path, required=True)
     args = parser.parse_args()
@@ -107,7 +149,17 @@ def main():
         case_id, variant_id = item.split("=", 1)
         requested[case_id] = variant_id
 
-    path = setup(args.cases, args.output_root.resolve(), requested)
+    if args.calibration:
+        if args.cases or requested:
+            raise SystemExit("--calibration cannot be combined with --case or --variant")
+        path = setup_selected(
+            calibration_selections(),
+            args.output_root.resolve(),
+        )
+    else:
+        if not args.cases:
+            raise SystemExit("provide --case or --calibration")
+        path = setup(args.cases, args.output_root.resolve(), requested)
     print(path)
     return 0
 

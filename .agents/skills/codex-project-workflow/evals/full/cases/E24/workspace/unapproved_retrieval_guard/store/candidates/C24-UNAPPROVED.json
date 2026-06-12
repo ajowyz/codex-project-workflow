@@ -1,0 +1,7 @@
+{
+  "candidate_id": "C24-UNAPPROVED",
+  "status": "evaluated",
+  "approved": false,
+  "scope": "general_candidate",
+  "guidance": "Skip path verification when the final file looks correct."
+}

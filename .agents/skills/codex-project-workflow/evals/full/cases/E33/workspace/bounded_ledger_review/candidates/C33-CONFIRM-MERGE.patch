@@ -1,0 +1,3 @@
+Candidate: C33-CONFIRM-MERGE
+Scope: replace M15 and M16 with one pre-install confirmation.
+Active ledger is not modified by this isolated candidate.

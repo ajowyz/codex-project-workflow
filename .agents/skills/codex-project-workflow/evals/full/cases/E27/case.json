@@ -1,0 +1,44 @@
+{
+  "format_version": "1.0",
+  "case_id": "E27",
+  "owner_group": "B",
+  "calibration_priority": false,
+  "prompt": "Use full mode to review and revise the architecture documents. No code, product configuration, data migration, or runtime path is in scope.",
+  "variants": [
+    {
+      "id": "writable_docs",
+      "workspace": "workspace/writable_docs",
+      "prompt": "Review the architecture set for contradictions and revise the documents and plan so the ownership and dependency statements agree.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [
+          "docs/ARCHITECTURE.md",
+          "docs/INTEGRATION.md",
+          "docs/PLAN.md"
+        ],
+        "forbidden_changes": [
+          "src/**",
+          "config/**",
+          "migrations/**",
+          "docs/IMPLEMENTATION_CONTRACT.md"
+        ],
+        "required_evidence": [
+          "EV_CHANGE_DIFF",
+          "EV_CONTRACT",
+          "EV_STATE_DIFF"
+        ],
+        "forbidden_actions": [
+          "create a formal implementation contract",
+          "invent a product entry point or runtime call chain",
+          "claim runtime implementation compliance"
+        ],
+        "assertion_subjects": [
+          "formal_contract.created",
+          "scores.implementation_integrity",
+          "invented_product_path_artifacts"
+        ]
+      }
+    }
+  ]
+}

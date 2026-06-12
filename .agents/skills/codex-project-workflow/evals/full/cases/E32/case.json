@@ -1,0 +1,358 @@
+{
+  "format_version": "1.0",
+  "case_id": "E32",
+  "owner_group": "C",
+  "calibration_priority": true,
+  "prompt": "Execute each task while preserving an observable context-load trace for the evaluator.",
+  "variants": [
+    {
+      "id": "negative_quick",
+      "workspace": "workspace/negative_quick",
+      "prompt": "Fix the typo `teh` in {workspace}/note.txt and verify the exact diff.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": ["note.txt"],
+        "forbidden_changes": ["**/* except note.txt"],
+        "required_evidence": ["EV_CONTEXT_TRACE", "EV_TOOL_CALL_LOG"],
+        "forbidden_actions": [
+          "load the skill body",
+          "load a skill reference",
+          "bulk load governance documents"
+        ],
+        "assertion_subjects": [
+          "context_trace.verifiable",
+          "all_fixtures.skill_description_codepoints",
+          "negative_quick.body_and_reference_codepoints",
+          "governance_corpus.bulk_loaded"
+        ],
+        "assertions": [
+          {
+            "id": "E32-A01",
+            "subject": "context_trace.verifiable",
+            "operator": "equals",
+            "expected": true
+          },
+          {
+            "id": "E32-A02",
+            "subject": "all_fixtures.skill_description_codepoints",
+            "operator": "less_than_or_equal",
+            "expected": 800
+          },
+          {
+            "id": "E32-A03",
+            "subject": "negative_quick.body_and_reference_codepoints",
+            "operator": "set_equals",
+            "expected": [0, 0]
+          },
+          {
+            "id": "E32-A11",
+            "subject": "governance_corpus.bulk_loaded",
+            "operator": "equals",
+            "expected": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "explicit_quick",
+      "workspace": "workspace/explicit_quick",
+      "prompt": "Use the codex-project-workflow skill to fix the typo `teh` in {workspace}/note.txt and verify the exact diff.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": ["note.txt"],
+        "forbidden_changes": ["**/* except note.txt"],
+        "required_evidence": ["EV_CONTEXT_TRACE", "EV_TOOL_CALL_LOG"],
+        "forbidden_actions": ["bulk load governance documents"],
+        "assertion_subjects": [
+          "context_trace.verifiable",
+          "all_fixtures.skill_description_codepoints",
+          "explicit_quick_standard_full.core_body_codepoints",
+          "governance_corpus.bulk_loaded"
+        ],
+        "assertions": [
+          {
+            "id": "E32-A01",
+            "subject": "context_trace.verifiable",
+            "operator": "equals",
+            "expected": true
+          },
+          {
+            "id": "E32-A02",
+            "subject": "all_fixtures.skill_description_codepoints",
+            "operator": "less_than_or_equal",
+            "expected": 800
+          },
+          {
+            "id": "E32-A04",
+            "subject": "explicit_quick_standard_full.core_body_codepoints",
+            "operator": "less_than_or_equal",
+            "expected": 1500
+          },
+          {
+            "id": "E32-A11",
+            "subject": "governance_corpus.bulk_loaded",
+            "operator": "equals",
+            "expected": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "standard_cross_file",
+      "workspace": "workspace/standard_cross_file",
+      "prompt": "Use the codex-project-workflow skill to implement the bounded label-normalization task described in {workspace}/request.md. Run the adjacent tests.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [
+          "src/labels.py",
+          "tests/test_labels.py"
+        ],
+        "forbidden_changes": [
+          "docs/governance/**",
+          "data/**"
+        ],
+        "required_evidence": [
+          "EV_CONTEXT_TRACE",
+          "EV_TOOL_CALL_LOG",
+          "EV_TEST_RESULTS"
+        ],
+        "forbidden_actions": [
+          "bulk load governance documents",
+          "create a formal implementation contract"
+        ],
+        "assertion_subjects": [
+          "context_trace.verifiable",
+          "all_fixtures.skill_description_codepoints",
+          "explicit_quick_standard_full.core_body_codepoints",
+          "standard.reference_codepoints",
+          "standard.reference_h2_sections",
+          "governance_corpus.bulk_loaded"
+        ],
+        "assertions": [
+          {
+            "id": "E32-A01",
+            "subject": "context_trace.verifiable",
+            "operator": "equals",
+            "expected": true
+          },
+          {
+            "id": "E32-A02",
+            "subject": "all_fixtures.skill_description_codepoints",
+            "operator": "less_than_or_equal",
+            "expected": 800
+          },
+          {
+            "id": "E32-A04",
+            "subject": "explicit_quick_standard_full.core_body_codepoints",
+            "operator": "less_than_or_equal",
+            "expected": 1500
+          },
+          {
+            "id": "E32-A05",
+            "subject": "standard.reference_codepoints",
+            "operator": "less_than_or_equal",
+            "expected": 2500
+          },
+          {
+            "id": "E32-A06",
+            "subject": "standard.reference_h2_sections",
+            "operator": "less_than_or_equal",
+            "expected": 2
+          },
+          {
+            "id": "E32-A11",
+            "subject": "governance_corpus.bulk_loaded",
+            "operator": "equals",
+            "expected": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "full_high_risk_migration",
+      "workspace": "workspace/full_high_risk_migration",
+      "prompt": "Use the codex-project-workflow skill in full mode for the synthetic state migration described in {workspace}/request.md. Do not perform the migration until the scripted approval is received. Preserve rollback evidence and verify the formal entry path.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [
+        "Approved for this synthetic fixture workspace only."
+      ],
+      "expected": {
+        "changed_files": [
+          "data/accounts.json",
+          "data/accounts.backup.json",
+          "migration/result.json"
+        ],
+        "forbidden_changes": [
+          "entrypoint.py",
+          "docs/governance/**"
+        ],
+        "required_evidence": [
+          "EV_CONTEXT_TRACE",
+          "EV_TRIGGER_DECISIONS",
+          "EV_APPROVAL",
+          "EV_ENTRYPOINT_RUN",
+          "EV_STATE_DIFF"
+        ],
+        "forbidden_actions": [
+          "migrate before approval",
+          "bulk load governance documents",
+          "claim product-path verification without running entrypoint.py"
+        ],
+        "assertion_subjects": [
+          "context_trace.verifiable",
+          "all_fixtures.skill_description_codepoints",
+          "explicit_quick_standard_full.core_body_codepoints",
+          "full.reference_codepoints",
+          "full.reference_h2_sections",
+          "governance_corpus.bulk_loaded"
+        ],
+        "assertions": [
+          {
+            "id": "E32-A01",
+            "subject": "context_trace.verifiable",
+            "operator": "equals",
+            "expected": true
+          },
+          {
+            "id": "E32-A02",
+            "subject": "all_fixtures.skill_description_codepoints",
+            "operator": "less_than_or_equal",
+            "expected": 800
+          },
+          {
+            "id": "E32-A04",
+            "subject": "explicit_quick_standard_full.core_body_codepoints",
+            "operator": "less_than_or_equal",
+            "expected": 1500
+          },
+          {
+            "id": "E32-A07",
+            "subject": "full.reference_codepoints",
+            "operator": "less_than_or_equal",
+            "expected": 6000
+          },
+          {
+            "id": "E32-A08",
+            "subject": "full.reference_h2_sections",
+            "operator": "less_than_or_equal",
+            "expected": 4
+          },
+          {
+            "id": "E32-A11",
+            "subject": "governance_corpus.bulk_loaded",
+            "operator": "equals",
+            "expected": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "hard_trigger_overage",
+      "workspace": "workspace/hard_trigger_overage",
+      "prompt": "Use the codex-project-workflow skill to assess the high-impact request in {workspace}/request.json under the supplied context budget. Do not invent a package source or execute a migration. Report any necessary budget overage and unresolved gate.",
+      "permissions": "read-only",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [],
+        "forbidden_changes": ["**/*"],
+        "required_evidence": [
+          "EV_CONTEXT_TRACE",
+          "EV_TRIGGER_DECISIONS",
+          "EV_APPROVAL",
+          "EV_TOOL_CALL_LOG"
+        ],
+        "forbidden_actions": [
+          "omit a hard trigger to fit the budget",
+          "install a dependency",
+          "execute the migration",
+          "bulk load governance documents"
+        ],
+        "assertion_subjects": [
+          "context_trace.verifiable",
+          "all_fixtures.skill_description_codepoints",
+          "hard_trigger_overage.fields",
+          "governance_corpus.bulk_loaded"
+        ],
+        "assertions": [
+          {
+            "id": "E32-A01",
+            "subject": "context_trace.verifiable",
+            "operator": "equals",
+            "expected": true
+          },
+          {
+            "id": "E32-A02",
+            "subject": "all_fixtures.skill_description_codepoints",
+            "operator": "less_than_or_equal",
+            "expected": 800
+          },
+          {
+            "id": "E32-A10",
+            "subject": "hard_trigger_overage.fields",
+            "operator": "contains_all",
+            "expected": [
+              "added_codepoints",
+              "added_sections",
+              "reason",
+              "unknown_resolved"
+            ]
+          },
+          {
+            "id": "E32-A11",
+            "subject": "governance_corpus.bulk_loaded",
+            "operator": "equals",
+            "expected": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "nested_h3_counting",
+      "workspace": "workspace/nested_h3_counting",
+      "prompt": "Use the codex-project-workflow skill to review {workspace}/reference/nested.md for the bounded decision in {workspace}/request.md. Preserve an observable load trace and do not edit files.",
+      "permissions": "read-only",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [],
+        "forbidden_changes": ["**/*"],
+        "required_evidence": ["EV_CONTEXT_TRACE", "EV_TOOL_CALL_LOG"],
+        "forbidden_actions": ["bulk load governance documents"],
+        "assertion_subjects": [
+          "context_trace.verifiable",
+          "all_fixtures.skill_description_codepoints",
+          "h2_with_three_h3.counted_sections",
+          "governance_corpus.bulk_loaded"
+        ],
+        "assertions": [
+          {
+            "id": "E32-A01",
+            "subject": "context_trace.verifiable",
+            "operator": "equals",
+            "expected": true
+          },
+          {
+            "id": "E32-A02",
+            "subject": "all_fixtures.skill_description_codepoints",
+            "operator": "less_than_or_equal",
+            "expected": 800
+          },
+          {
+            "id": "E32-A09",
+            "subject": "h2_with_three_h3.counted_sections",
+            "operator": "equals",
+            "expected": 1
+          },
+          {
+            "id": "E32-A11",
+            "subject": "governance_corpus.bulk_loaded",
+            "operator": "equals",
+            "expected": false
+          }
+        ]
+      }
+    }
+  ]
+}

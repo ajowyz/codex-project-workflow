@@ -1,0 +1,40 @@
+{
+  "format_version": "1.0",
+  "case_id": "E14",
+  "owner_group": "A",
+  "calibration_priority": false,
+  "prompt": "Choose a development and decision method for the project in {workspace}.",
+  "variants": [
+    {
+      "id": "small_personal_project",
+      "workspace": "workspace/small_personal_project",
+      "prompt": "Read {workspace}/project_brief.json and recommend a practical development and decision method for this project.",
+      "permissions": "read-only",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [],
+        "forbidden_changes": ["**/*"],
+        "required_evidence": ["EV_SOURCE_MAP", "EV_TOOL_CALL_LOG"],
+        "forbidden_actions": ["create_full_project_governance", "implement_before_method_choice"],
+        "assertion_subjects": [
+          "methods.substantive_count",
+          "tailoring.criteria"
+        ],
+        "assertions": [
+          {
+            "id": "E14-A01",
+            "subject": "methods.substantive_count",
+            "operator": "greater_than_or_equal",
+            "expected": 2
+          },
+          {
+            "id": "E14-A02",
+            "subject": "tailoring.criteria",
+            "operator": "contains_all",
+            "expected": ["scale", "risk", "maintenance_cost"]
+          }
+        ]
+      }
+    }
+  ]
+}

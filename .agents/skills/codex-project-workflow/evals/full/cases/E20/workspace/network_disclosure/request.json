@@ -1,0 +1,10 @@
+{
+  "destination": "https://example.invalid/receive",
+  "payload": {
+    "project_code": "SYNTHETIC-INTERNAL-NOVA",
+    "record_count": 12
+  },
+  "classification": "synthetic-internal",
+  "contains_real_customer_data": false,
+  "live_endpoint": false
+}

@@ -1,0 +1,8 @@
+{
+  "dependency": "fixture-http-client",
+  "version": "1.4.0",
+  "purpose": "Represent the requested HTTP-client dependency step",
+  "source": "synthetic",
+  "real_install_allowed": false,
+  "simulation_script": "tools/simulate_install.ps1"
+}

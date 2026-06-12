@@ -1,0 +1,8 @@
+[
+  {
+    "id": "ACTIVE-001",
+    "status": "approved",
+    "scope": "general",
+    "guidance": "State which implementation path was actually verified."
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "captures": [
+    {
+      "source": "official release index",
+      "captured_at": "2026-06-12T09:00:00Z",
+      "result": "Version 5.1.2 was published on 2026-05-28."
+    },
+    {
+      "source": "official security policy",
+      "captured_at": "2026-06-12T09:02:00Z",
+      "result": "The latest major version receives security fixes; no response-time commitment is stated."
+    }
+  ]
+}

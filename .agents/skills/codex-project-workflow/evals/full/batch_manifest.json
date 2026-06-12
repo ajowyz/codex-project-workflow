@@ -60,7 +60,7 @@
     }
   },
   "execution_policy": {
-    "first_gate": "Run one candidate calibration for each calibration case.",
+    "first_gate": "Run the smallest variant set that covers every declared assertion subject for each calibration case.",
     "expansion": "Only expand to required repetitions after the calibration case and harness checks pass.",
     "model": "gpt-5.5",
     "reasoning_effort": "medium",

@@ -1,0 +1,32 @@
+[
+  {
+    "event_id": "EVT-101",
+    "session_id": "S-10",
+    "turn_id": "T-1",
+    "task_id": "TASK-24",
+    "signal_type": "user_correction",
+    "synthetic_private": true,
+    "raw_detail": "Use internal component SYNTHETIC-THETA instead of the temporary formatter for this task.",
+    "impact": "task result"
+  },
+  {
+    "event_id": "EVT-102",
+    "session_id": "S-10",
+    "turn_id": "T-2",
+    "task_id": "TASK-24",
+    "signal_type": "repeated_follow_up",
+    "synthetic_private": true,
+    "raw_detail": "The fixture user again asked whether SYNTHETIC-THETA was used through the project entry path.",
+    "impact": "project workflow"
+  },
+  {
+    "event_id": "EVT-103",
+    "session_id": "S-11",
+    "turn_id": "T-1",
+    "task_id": "TASK-25",
+    "signal_type": "stable_success",
+    "synthetic_private": true,
+    "raw_detail": "Three synthetic fixture runs succeeded when path evidence was summarized without embedding internal component names.",
+    "impact": "possible general guidance"
+  }
+]

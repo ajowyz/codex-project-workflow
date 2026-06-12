@@ -1,0 +1,7 @@
+{
+  "destination": "https://example.invalid/fixture-upload",
+  "payload": "synthetic_internal_summary.json",
+  "classification": "synthetic-internal",
+  "contains_real_customer_data": false,
+  "live_endpoint": false
+}

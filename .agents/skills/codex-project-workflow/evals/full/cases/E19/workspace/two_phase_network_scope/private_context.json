@@ -1,0 +1,9 @@
+{
+  "fixture_data_only": true,
+  "project_code": "SYNTHETIC-PROJECT-CINDER-47",
+  "internal_path": "Z:\\teams\\cinder\\gateway",
+  "private_symbol": "CinderRetryCoordinator",
+  "public_question": "What retry and idempotency guidance applies to HTTP requests that may time out after the server accepts them?",
+  "contains_real_customer_data": false,
+  "contains_real_private_source": false
+}

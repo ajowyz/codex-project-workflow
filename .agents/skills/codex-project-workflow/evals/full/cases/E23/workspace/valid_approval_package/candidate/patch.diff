@@ -1,0 +1,8 @@
+--- active/SKILL.baseline.md
++++ candidate/SKILL.candidate.md
+@@ -1,4 +1,4 @@
+ # Fixture Core Skill
+ 
+ route: inspect-first
+-verification: focused
++verification: focused-after-every-write

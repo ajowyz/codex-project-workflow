@@ -1,0 +1,20 @@
+{
+  "task": "replace the synthetic production migration route",
+  "dependency": {
+    "name": "fixture-migrator",
+    "source": null,
+    "installation_required": true
+  },
+  "state_change": {
+    "authoritative_store": "fixture-account-store",
+    "migration_required": true,
+    "rollback_plan_present": false
+  },
+  "implementation_path": {
+    "production_entry_changes": true,
+    "path_proof_requested": true
+  },
+  "network": {
+    "required": false
+  }
+}

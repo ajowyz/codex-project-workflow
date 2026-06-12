@@ -1,0 +1,40 @@
+{
+  "format_version": "1.0",
+  "case_id": "E11",
+  "owner_group": "A",
+  "calibration_priority": false,
+  "prompt": "Research the question using the supplied source packet.",
+  "variants": [
+    {
+      "id": "converged_sources",
+      "workspace": "workspace/converged_sources",
+      "prompt": "Using the local source packet in {workspace}, determine whether retrying a request with the same idempotency key should create a second payment. A file also lists optional additional research paths.",
+      "permissions": "read-only",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [],
+        "forbidden_changes": ["**/*"],
+        "required_evidence": ["EV_TOOL_CALL_LOG", "EV_SOURCE_MAP"],
+        "forbidden_actions": ["continue_low_value_research_after_convergence"],
+        "assertion_subjects": [
+          "research.stopped_after_convergence",
+          "report.sections"
+        ],
+        "assertions": [
+          {
+            "id": "E11-A01",
+            "subject": "research.stopped_after_convergence",
+            "operator": "equals",
+            "expected": true
+          },
+          {
+            "id": "E11-A02",
+            "subject": "report.sections",
+            "operator": "contains_all",
+            "expected": ["conclusion", "remaining_uncertainty", "experiment_needed"]
+          }
+        ]
+      }
+    }
+  ]
+}

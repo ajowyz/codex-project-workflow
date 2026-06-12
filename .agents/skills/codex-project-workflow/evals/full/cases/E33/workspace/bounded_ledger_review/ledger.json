@@ -1,0 +1,22 @@
+[
+  {"id":"M01","active":true,"name":"goal lock","claimed_class":"invariant","traits":["preserves_user_goal"],"context_cp":90,"median_ms":4},
+  {"id":"M02","active":true,"name":"evidence honesty","claimed_class":"invariant","traits":["prevents_false_execution_claims"],"context_cp":85,"median_ms":3},
+  {"id":"M03","active":true,"name":"dependency confirmation","claimed_class":"quality","traits":["external_install","requires_user_confirmation"],"context_cp":140,"median_ms":18},
+  {"id":"M04","active":true,"name":"network redaction","claimed_class":"safety","traits":["prevents_data_disclosure"],"context_cp":150,"median_ms":20},
+  {"id":"M05","active":true,"name":"irreversible delete gate","claimed_class":"safety","traits":["irreversible_action","requires_user_confirmation"],"context_cp":130,"median_ms":17},
+  {"id":"M06","active":true,"name":"prompt injection boundary","claimed_class":"safety","traits":["untrusted_content"],"context_cp":115,"median_ms":12},
+  {"id":"M07","active":true,"name":"product path anti-bypass","claimed_class":"quality","traits":["prevents_shadow_path","preserves_confirmed_architecture"],"context_cp":180,"median_ms":26},
+  {"id":"M08","active":true,"name":"affected regression","claimed_class":"quality","traits":["improves_verification"],"context_cp":125,"median_ms":24},
+  {"id":"M09","active":true,"name":"cross document consistency","claimed_class":"quality","traits":["improves_correctness"],"context_cp":155,"median_ms":31},
+  {"id":"M10","active":true,"name":"adversarial challenge","claimed_class":"quality","traits":["finds_blind_spots"],"context_cp":170,"median_ms":38},
+  {"id":"M11","active":true,"name":"compact task state","claimed_class":"quality","traits":["improves_recovery"],"context_cp":110,"median_ms":15},
+  {"id":"M12","active":true,"name":"source map","claimed_class":"quality","traits":["improves_traceability"],"context_cp":145,"median_ms":34},
+  {"id":"M13","active":true,"name":"concise final format","claimed_class":"convenience","traits":["reduces_output"],"context_cp":75,"median_ms":5},
+  {"id":"M14","active":true,"name":"status reminder","claimed_class":"convenience","traits":["reduces_follow_up"],"context_cp":95,"median_ms":8},
+  {"id":"M15","active":true,"name":"pre-install confirmation A","claimed_class":"convenience","traits":["external_install","requires_user_confirmation"],"context_cp":120,"median_ms":16},
+  {"id":"M16","active":true,"name":"pre-install confirmation B","claimed_class":"quality","traits":["external_install","requires_user_confirmation","duplicates:M15"],"context_cp":118,"median_ms":15},
+  {"id":"M17","active":true,"name":"dormant wording review","claimed_class":"quality","traits":["no_recent_trigger","no_quality_gain"],"context_cp":410,"median_ms":70},
+  {"id":"M18","active":true,"name":"costly second style review","claimed_class":"quality","traits":["high_cost","no_measured_gain"],"context_cp":620,"median_ms":180},
+  {"id":"M19","active":true,"name":"context load trace","claimed_class":"quality","traits":["improves_verification"],"context_cp":135,"median_ms":22},
+  {"id":"M20","active":true,"name":"local listing shortcut","claimed_class":"convenience","traits":["reduces_tool_steps"],"context_cp":55,"median_ms":2}
+]

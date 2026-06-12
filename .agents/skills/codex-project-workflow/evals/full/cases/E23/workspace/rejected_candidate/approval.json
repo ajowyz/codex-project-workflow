@@ -1,0 +1,22 @@
+{
+  "credential_version": "1.0",
+  "decision": "rejected",
+  "candidate_id": "CAND-E23-001",
+  "patch_hash": "d139fb7d4a2d85faf6a92c5725fdc77651bfe77d5122096d29eeb3f0bf95f36d",
+  "base_hash": "16203de2bbd3e27e7aaa14d4d442a94a772212d1ea9d0ac0ecb953aa6eed0d37",
+  "target_files": [
+    "active/SKILL.baseline.md"
+  ],
+  "scope": "fixture core verification line only",
+  "evaluation_hash": "2ab3a9227854aca753ec554aadcb622f1db1a36dfeab29c1c48abbd3c3ec23ab",
+  "hash_algorithm": "sha256-raw-bytes",
+  "approved_at": "2026-06-01T10:00:00Z",
+  "valid_phase": "fixture activation audit",
+  "invalidation_conditions": [
+    "candidate changes",
+    "baseline changes",
+    "target files change",
+    "scope changes",
+    "evaluation changes"
+  ]
+}

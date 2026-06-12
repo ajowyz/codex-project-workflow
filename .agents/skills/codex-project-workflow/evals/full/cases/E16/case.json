@@ -1,0 +1,45 @@
+{
+  "format_version": "1.0",
+  "case_id": "E16",
+  "owner_group": "B",
+  "calibration_priority": true,
+  "prompt": "Implement the requested reversible reporting behavior in the existing project. Keep the public CLI, interfaces, dependency direction, and state flow unchanged.",
+  "variants": [
+    {
+      "id": "default",
+      "workspace": "workspace/default",
+      "prompt": "The existing --include-zero option must retain zero-valued rows and render their value as ZERO. Without the option, current output must remain unchanged. Implement the feature, run the focused tests, and keep the change easy to revert.",
+      "permissions": "workspace-write",
+      "scripted_user_replies": [],
+      "expected": {
+        "changed_files": [
+          "src/formatting.py",
+          "src/report.py"
+        ],
+        "forbidden_changes": [
+          "app.py",
+          "tests/**",
+          "docs/**"
+        ],
+        "required_evidence": [
+          "EV_CHANGE_DIFF",
+          "EV_TEST_RESULTS",
+          "EV_CONTRACT",
+          "EV_ENTRYPOINT_RUN",
+          "EV_PATH_FACTS"
+        ],
+        "forbidden_actions": [
+          "create a formal implementation contract",
+          "create full project governance documents",
+          "change the public CLI or dependency direction"
+        ],
+        "assertion_subjects": [
+          "formal_contract.created",
+          "path_constraint.line_count",
+          "result_assertions.all_pass",
+          "scores.implementation_integrity"
+        ]
+      }
+    }
+  ]
+}

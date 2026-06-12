@@ -1,0 +1,9 @@
+{
+  "candidate_id": "CAND-E23-001",
+  "active_file": "active/SKILL.baseline.md",
+  "candidate_file": "candidate/SKILL.candidate.md",
+  "patch_file": "candidate/patch.diff",
+  "evaluation_file": "evaluations/comparison.json",
+  "approval_file": "approval.json",
+  "active_skill_may_be_modified": false
+}

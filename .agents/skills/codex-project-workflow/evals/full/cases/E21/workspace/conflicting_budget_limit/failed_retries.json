@@ -1,0 +1,14 @@
+{
+  "retries": [
+    {
+      "query": "ember-store durability specification",
+      "attempts": 2,
+      "result": "no additional authoritative result"
+    },
+    {
+      "query": "ember-store power loss test",
+      "attempts": 1,
+      "result": "browser timeout"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "authority": "fixture-policy-v1",
+  "true_task_threshold": 50,
+  "valid_experience_threshold": 200,
+  "reproducible_miss_threshold": 3,
+  "recall_at_5_trigger": "below 0.70",
+  "explicit_request_triggers": true,
+  "trigger_action": "create a retrieval evaluation task only"
+}

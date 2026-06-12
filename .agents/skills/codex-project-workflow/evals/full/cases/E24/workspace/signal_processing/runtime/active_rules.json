@@ -1,0 +1,7 @@
+[
+  {
+    "id": "ACTIVE-001",
+    "scope": "general",
+    "rule": "Separate verified facts from unresolved assumptions."
+  }
+]
