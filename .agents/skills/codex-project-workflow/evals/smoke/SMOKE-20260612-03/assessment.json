@@ -1,0 +1,14 @@
+{
+  "run_id": "SMOKE-20260612-03",
+  "formal_validity": {
+    "valid": false,
+    "reason": "The candidate worktree still exposed the historical duplicate SKILL.md evaluation artifact."
+  },
+  "candidate_assertions": {
+    "E04": "pass_behavior_fail_context_efficiency",
+    "E06": "pass_multi_agent_proposal",
+    "E36": "fail_multi_agent_assessment"
+  },
+  "diagnostic_finding": "Candidate v2 fixed E06 proposal behavior but regressed progressive disclosure by loading all three protocols.",
+  "activation_decision": "not_eligible"
+}

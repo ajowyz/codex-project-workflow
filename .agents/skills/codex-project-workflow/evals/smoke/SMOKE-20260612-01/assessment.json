@@ -110,7 +110,7 @@
   "hard_failures_proven": [],
   "candidate_changes": {
     "status": "isolated_unapproved_candidate",
-    "path": "candidate_skill/SKILL.md",
+    "path": "candidate_skill/SKILL.candidate.md",
     "description_chars": 486,
     "body_chars": 1484,
     "overlay_structure_validation": "passed",

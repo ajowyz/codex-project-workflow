@@ -1,0 +1,23 @@
+{
+  "run_id": "SMOKE-20260612-02",
+  "formal_validity": {
+    "valid": false,
+    "reasons": [
+      "Candidate worktrees exposed both the intended active skill and evals/smoke/SMOKE-20260612-01/candidate_skill/SKILL.md as discoverable skills with the same name.",
+      "The baseline worktree disabled the entire skill tree and therefore did not receive the duplicate entry.",
+      "The two conditions were not identical except for the intended candidate overlay."
+    ],
+    "usable_evidence": [
+      "Raw rollout traces, timing, token use, file invariance, and actual active-skill/reference reads.",
+      "Diagnostic evidence that candidate v1 improved section reads but still exceeded the standard reference budget.",
+      "Diagnostic evidence that E06 only partially improved multi-agent assessment and E36 still missed it."
+    ]
+  },
+  "candidate_assertions": {
+    "E04": "pass_behavior_fail_context_efficiency",
+    "E06": "partial_multi_agent_proposal",
+    "E36": "fail_multi_agent_assessment"
+  },
+  "hard_failures_proven": [],
+  "activation_decision": "not_eligible"
+}

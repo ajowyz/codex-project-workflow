@@ -19,6 +19,14 @@ def load(name: str):
     return module
 
 
+def load_path(name: str, path: Path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader
+    spec.loader.exec_module(module)
+    return module
+
+
 adr_index = load("adr_index")
 measure_context = load("measure_context")
 validate_evals = load("validate_evals")
@@ -123,11 +131,35 @@ class ScriptTests(unittest.TestCase):
             / "smoke"
             / "SMOKE-20260612-01"
             / "candidate_skill"
-            / "SKILL.md"
+            / "SKILL.candidate.md"
         )
         metrics = measure_context.skill_metrics(candidate)
         self.assertLessEqual(metrics["description_chars"], 800)
         self.assertLessEqual(metrics["body_chars"], 1500)
+
+    def test_evaluation_candidates_are_not_discoverable_skills(self):
+        discovered = sorted((PROJECT_ROOT / ".agents").rglob("SKILL.md"))
+        self.assertEqual([SKILL_DIR / "SKILL.md"], discovered)
+
+    def test_latest_candidate_budget_and_reference_reader(self):
+        candidate_dir = (
+            SKILL_DIR / "evals" / "smoke" / "SMOKE-20260612-04" / "candidate_skill"
+        )
+        metrics = measure_context.skill_metrics(
+            candidate_dir / "SKILL.candidate.md"
+        )
+        self.assertLessEqual(metrics["description_chars"], 800)
+        self.assertLessEqual(metrics["body_chars"], 1500)
+
+        reader = load_path(
+            "latest_candidate_reference_reader",
+            candidate_dir / "scripts" / "read_reference.py",
+        )
+        research = reader.resolve_reference("research")
+        self.assertEqual((SKILL_DIR / "references" / "research.md").resolve(), research)
+        headings = [heading for heading, _ in reader.parse_sections(research.read_text(encoding="utf-8"))]
+        self.assertIn("Execution Rules", headings)
+        self.assertIn("Output Requirements", headings)
 
 
 if __name__ == "__main__":

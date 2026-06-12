@@ -1,0 +1,18 @@
+{
+  "run_id": "SMOKE-20260612-05",
+  "attempts": [
+    {
+      "case_id": "E04",
+      "thread_id": "019eb9d4-afb7-7b01-9d21-c44ddf30c7b6",
+      "status": "invalid",
+      "reason": "Desktop premium rate limit reported has_credits=false and balance=0 before any assistant response."
+    },
+    {
+      "case_id": "E36",
+      "thread_id": "019eb9d4-afb9-70a2-a4c1-4a92b52f560b",
+      "status": "invalid",
+      "reason": "Desktop premium rate limit reported has_credits=false and balance=0 before any assistant response."
+    }
+  ],
+  "additional_contamination": "The worktrees also exposed the historical duplicate SKILL.md artifact, so a successful response would still have required rerun."
+}

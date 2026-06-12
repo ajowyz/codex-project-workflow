@@ -1,4 +1,5 @@
 ---
+# Evaluation artifact; copy to SKILL.md only inside an isolated worktree.
 name: codex-project-workflow
 description: Structure and govern Codex work for new or ambiguous projects, multi-step implementation, professional research, solution comparison, architecture and planning, third-party downloads, high-risk changes, project recovery, or requests for a rigorous workflow. Also use for ordinary multi-step project tasks when research, confirmation, implementation-path verification, recovery, or coordination may matter. Do not use for simple questions or explicit low-risk one-step edits or commands.
 ---

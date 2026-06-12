@@ -1,0 +1,14 @@
+{
+  "run_id": "SMOKE-20260612-04",
+  "formal_validity": {
+    "valid": false,
+    "reason": "The candidate worktree still exposed the historical duplicate SKILL.md evaluation artifact."
+  },
+  "candidate_assertions": {
+    "E04": "pass_behavior_fail_context_efficiency",
+    "E06": "pass",
+    "E36": "pass"
+  },
+  "diagnostic_finding": "Candidate v3 fixed the confirmed multi-agent authorization semantics and passed E06/E36 assertions, but the reference-reader interface caused failed commands and E04 scanned excessive reference content.",
+  "activation_decision": "not_eligible"
+}

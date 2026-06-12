@@ -59,6 +59,7 @@ def output_summary(output):
         output = json.dumps(output, ensure_ascii=False, sort_keys=True)
     return {
         "chars": len(output),
+        "h2_sections": len(re.findall(r"(?m)^## ", output)),
         "sha256": hashlib.sha256(output.encode("utf-8")).hexdigest(),
         "preview": output[:2000],
     }
@@ -102,7 +103,14 @@ def changed_files(before, after):
     ]
 
 
-def parse_rollout(path, case_id, condition, fixture_root, before_inventory):
+def parse_rollout(
+    path,
+    case_id,
+    condition,
+    fixture_root,
+    before_inventory,
+    project_root=None,
+):
     records = parse_jsonl(path)
     result = {
         "case_id": case_id,
@@ -127,9 +135,11 @@ def parse_rollout(path, case_id, condition, fixture_root, before_inventory):
             "project_skill_description_chars": 0,
             "skill_body_read_calls": [],
             "skill_body_loaded_chars": 0,
+            "skill_tool_output_chars": 0,
             "reference_read_calls": [],
             "reference_files": [],
             "reference_loaded_chars": 0,
+            "reference_tool_output_chars": 0,
             "reference_h2_sections": 0,
             "governance_read_calls": [],
         },
@@ -221,7 +231,12 @@ def parse_rollout(path, case_id, condition, fixture_root, before_inventory):
         result["context_trace"]["project_skill_description_chars"] = len(description)
 
     skill_path = "codex-project-workflow"
-    reference_paths = sorted((SKILL_DIR / "references").glob("*.md"))
+    trace_skill_dir = (
+        Path(project_root) / ".agents" / "skills" / "codex-project-workflow"
+        if project_root
+        else SKILL_DIR
+    )
+    reference_paths = sorted((trace_skill_dir / "references").glob("*.md"))
     loaded_references = set()
     for call in result["tool_calls"]:
         serialized = normalize_path_text(
@@ -234,14 +249,24 @@ def parse_rollout(path, case_id, condition, fixture_root, before_inventory):
         if re.search(r"codex-project-workflow/references/.+?\.md", serialized, flags=re.IGNORECASE):
             result["context_trace"]["reference_read_calls"].append(call["call_id"])
             for reference_path in reference_paths:
-                normalized = normalize_path_text(str(reference_path.resolve()))
-                if normalized.lower() in serialized.lower():
+                reference_suffix = normalize_path_text(
+                    f"references/{reference_path.name}"
+                )
+                if reference_suffix.lower() in serialized.lower():
                     loaded_references.add(reference_path)
 
     if result["context_trace"]["skill_body_read_calls"]:
-        result["context_trace"]["skill_body_loaded_chars"] = measure_context.skill_metrics(
-            SKILL_DIR / "SKILL.md"
-        )["body_chars"]
+        skill_file = trace_skill_dir / "SKILL.md"
+        if skill_file.is_file():
+            result["context_trace"]["skill_body_loaded_chars"] = (
+                measure_context.skill_metrics(skill_file)["body_chars"]
+            )
+        result["context_trace"]["skill_tool_output_chars"] = sum(
+            call["output"]["chars"]
+            for call in result["tool_calls"]
+            if call["call_id"] in result["context_trace"]["skill_body_read_calls"]
+            and call["output"]
+        )
     result["context_trace"]["reference_files"] = [
         path.name for path in sorted(loaded_references)
     ]
@@ -249,9 +274,17 @@ def parse_rollout(path, case_id, condition, fixture_root, before_inventory):
         len(measure_context.normalized_text(path).rstrip("\n"))
         for path in loaded_references
     )
+    result["context_trace"]["reference_tool_output_chars"] = sum(
+        call["output"]["chars"]
+        for call in result["tool_calls"]
+        if call["call_id"] in result["context_trace"]["reference_read_calls"]
+        and call["output"]
+    )
     result["context_trace"]["reference_h2_sections"] = sum(
-        len(measure_context.reference_metrics(path)["sections"])
-        for path in loaded_references
+        call["output"]["h2_sections"]
+        for call in result["tool_calls"]
+        if call["call_id"] in result["context_trace"]["reference_read_calls"]
+        and call["output"]
     )
 
     governance_names = (
@@ -300,6 +333,7 @@ def collect(run_dir, sessions_root, workspace_root, output_dir):
                 condition,
                 fixture_root,
                 before_inventory,
+                manifest.get("project_roots", {}).get(condition),
             )
             results.append(result)
             (raw_dir / f"{case_id}-{condition}.json").write_text(

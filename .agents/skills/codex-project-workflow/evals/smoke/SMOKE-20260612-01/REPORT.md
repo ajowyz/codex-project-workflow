@@ -38,7 +38,7 @@ These ratios are calibration-only. E01 output length is visibly affected by diff
 
 ## Candidate
 
-`candidate_skill/SKILL.md` is an isolated, unapproved candidate. It makes two targeted changes:
+`candidate_skill/SKILL.candidate.md` is an isolated, unapproved candidate. It makes two targeted changes:
 
 - locate headings and read only required H2 blocks, never entire reference files;
 - proactively assess multi-agent use when separable streams, independent-review value, or high failure cost are present.

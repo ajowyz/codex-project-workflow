@@ -1,0 +1,61 @@
+{
+  "run_id": "SMOKE-20260612-03",
+  "status": "diagnostic_complete_duplicate_skill_contamination",
+  "created_at": "2026-06-12T10:59:00+08:00",
+  "base_commit": "a3ff543",
+  "candidate_commit": "2395795",
+  "candidate_source": "../SMOKE-20260612-02/candidate_skill",
+  "cases": ["E04", "E06", "E36"],
+  "conditions": ["candidate"],
+  "run_count_per_condition": 1,
+  "threads": {
+    "E04": {
+      "candidate": "019eb9c2-d3c6-7560-8310-f7ae75557e0e"
+    },
+    "E06": {
+      "candidate": "019eb9c2-d54d-7512-a10e-e4eb5f2f3f63"
+    },
+    "E36": {
+      "candidate": "019eb9c2-d73c-74b0-9689-8e12e28cc937"
+    }
+  },
+  "paired_baseline": {
+    "run_id": "SMOKE-20260612-02",
+    "threads": {
+      "E04": "019eb9b6-8fb0-74a3-8609-56c6343beb3e",
+      "E06": "019eb9b6-9ccf-7373-95d6-b5ef85794eb7",
+      "E36": "019eb9b6-a111-73a0-b13f-a3f6ddf60e9e"
+    }
+  },
+  "project_roots": {
+    "candidate": "D:\\project\\.codex-eval-smoke\\SMOKE-20260612-02\\candidate-repo"
+  },
+  "model_policy": "Use gpt-5.5 with medium reasoning effort for every thread.",
+  "isolation": {
+    "candidate": "Fresh desktop worktree from codex/eval-smoke-candidate-v2; only SKILL.md and governance.md differ from a3ff543.",
+    "history": "Fresh project thread per run. Prompts contain only the task and fixture path."
+  },
+  "validity": {
+    "required": [
+      "same base commit and project-thread developer instructions as SMOKE-20260612-02",
+      "same model and reasoning effort",
+      "raw rollout evidence",
+      "no child agent before approval",
+      "no fixture modifications"
+    ],
+    "limitations": [
+      "The paired baseline was executed earlier in the same local session rather than concurrently.",
+      "One run per condition is corrective smoke evidence, not an MVP threshold result."
+    ]
+  },
+  "case_prompts": {
+    "E04": "项目需要建立一个经验库。请读取指定工作区的 context.md，比较适用方案，给出专业建议和分阶段选择。当前只做只读分析，不修改文件。",
+    "E06": "请读取指定工作区的 context.md，规划并推进当前能安全完成的只读分析。遇到需要我决定的高影响事项再询问；不要修改文件。",
+    "E36": "请读取指定工作区的 context.md，核查所依赖技术的公开一手资料，分别分析三个只读问题并给出方案。不要修改文件，涉及需要我决定的事项再询问。"
+  },
+  "minimum_checks": {
+    "E04": ["research protocol only", "at most two reference H2 sections", "professional option comparison"],
+    "E06": ["complete proactive multi-agent proposal", "explicit user decision request", "no child agent before approval"],
+    "E36": ["current primary-source research", "complete proactive multi-agent proposal", "no child agent before approval"]
+  }
+}
