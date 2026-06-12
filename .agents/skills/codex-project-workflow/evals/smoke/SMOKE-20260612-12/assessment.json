@@ -1,0 +1,48 @@
+{
+  "run_id": "SMOKE-20260612-12",
+  "activation_commit": "3b3683edf45454cd8e15f23ae03cb53c6fa352cb",
+  "formal_validity": {
+    "valid": true,
+    "reasons": [
+      "E01 and E31 ran in fresh Codex desktop worktrees at exact activation commit 3b3683e.",
+      "Both runs used gpt-5.5 with medium reasoning effort and exposed exactly one codex-project-workflow skill.",
+      "Raw rollout traces show only the 486-character skill description; skill body, references, and governance documents each loaded zero characters.",
+      "E01 changed only target.txt and the exact expected content was independently verified.",
+      "E31 changed only src/invoice.py and the two neighboring unittest cases passed independently."
+    ]
+  },
+  "case_assertions": {
+    "E01": {
+      "result": "pass",
+      "changed_files": [
+        "target.txt"
+      ],
+      "skill_body_loaded_chars": 0,
+      "reference_loaded_chars": 0,
+      "governance_read_calls": 0
+    },
+    "E31": {
+      "result": "pass",
+      "changed_files": [
+        "src/invoice.py"
+      ],
+      "neighboring_tests": "2/2 passed",
+      "skill_body_loaded_chars": 0,
+      "reference_loaded_chars": 0,
+      "governance_read_calls": 0
+    }
+  },
+  "canonical_candidate_binding": {
+    "candidate_commit": "b2e99d42c2b0e001708e33df7fe6b04185d9f01e",
+    "activation_commit": "3b3683edf45454cd8e15f23ae03cb53c6fa352cb",
+    "target_git_blob_sha256": {
+      ".agents/skills/codex-project-workflow/SKILL.md": "58AFB7BF70E3920D8B779632CD6E4CA19F294F271CB97E150E9CF6D997F00E7D",
+      ".agents/skills/codex-project-workflow/references/governance.md": "726637205FC5533AC16063988A5AC694797F439CD28247E2E0422ED393B41480",
+      ".agents/skills/codex-project-workflow/scripts/read_reference.py": "3E5F060B780E921855A2708DD909B1487B349ED1F6C321A2D16FA4E1E99BE2B7"
+    },
+    "git_diff_empty": true,
+    "line_ending_note": "The approval record preserved mixed worktree LF/CRLF hashes. Fresh Windows worktrees may change worktree hashes through core.autocrlf; canonical Git blob hashes and commit identity are the durable cross-worktree binding."
+  },
+  "activation_result": "pass",
+  "next_action": "Run the remaining E01-E36 evaluation cases in controlled batches before plugin packaging."
+}

@@ -1,0 +1,68 @@
+{
+  "run_id": "SMOKE-20260612-12",
+  "source_manifest": "D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\evals\\smoke\\SMOKE-20260612-12\\manifest.json",
+  "results": [
+    {
+      "case_id": "E01",
+      "condition": "candidate",
+      "thread_id": "019ebbd1-7011-7e73-b3c9-c09b6a666449",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 27036,
+      "time_to_first_token_ms": 8782,
+      "final_response_chars": 38,
+      "total_tokens": 54708,
+      "tool_call_count": 4,
+      "changed_file_count": 1,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "skill_tool_output_chars": 0,
+        "reference_read_calls": [],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [],
+        "reference_failed_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_tool_output_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "a908193b892e11c053b452f5e58d602cb677d3079db86a3a0b807cd91b6337d6"
+    },
+    {
+      "case_id": "E31",
+      "condition": "candidate",
+      "thread_id": "019ebbd1-780d-7dd1-8d14-5ca2822df510",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 37554,
+      "time_to_first_token_ms": 7957,
+      "final_response_chars": 88,
+      "total_tokens": 74566,
+      "tool_call_count": 7,
+      "changed_file_count": 1,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "skill_tool_output_chars": 0,
+        "reference_read_calls": [],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [],
+        "reference_failed_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_tool_output_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "0b550cd8d17e25a3bb8c45d3a87c1b3bb32b7037d7bc851363989c81beefa11a"
+    }
+  ]
+}

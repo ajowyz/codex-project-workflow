@@ -46,13 +46,19 @@
       ".agents/skills/codex-project-workflow/references/governance.md": "B3C58C5A63F355D8032E2AD855C096C1FC42A99AF27E552648A21CC497D3F04F",
       ".agents/skills/codex-project-workflow/scripts/read_reference.py": "62F6709CACAFD329984DBCB520E3A32F012510775A514DCDF2B6F40835A5850A"
     },
+    "target_git_blob_sha256": {
+      ".agents/skills/codex-project-workflow/SKILL.md": "58AFB7BF70E3920D8B779632CD6E4CA19F294F271CB97E150E9CF6D997F00E7D",
+      ".agents/skills/codex-project-workflow/references/governance.md": "726637205FC5533AC16063988A5AC694797F439CD28247E2E0422ED393B41480",
+      ".agents/skills/codex-project-workflow/scripts/read_reference.py": "3E5F060B780E921855A2708DD909B1487B349ED1F6C321A2D16FA4E1E99BE2B7"
+    },
+    "hash_interpretation": "target_files preserves the approved working-tree bytes. target_git_blob_sha256 is the canonical cross-worktree binding because Windows core.autocrlf can change working-tree hashes without changing the candidate commit.",
     "invalidation_conditions": [
       "Any active target file hash changes before activation.",
       "The candidate commit, patch, target hashes, or evaluation evidence changes.",
       "Activation includes any file outside the three listed targets."
     ]
   },
-  "activation_decision": "approved_pending_negative_trigger_regression",
+  "activation_decision": "activated",
   "activation_approval": {
     "approved_at": "2026-06-12T20:29:29+08:00",
     "approved_by": "user",
@@ -68,5 +74,15 @@
       "E01",
       "E31"
     ]
+  },
+  "activation_result": {
+    "activated_at": "2026-06-12T20:34:39+08:00",
+    "activation_commit": "3b3683edf45454cd8e15f23ae03cb53c6fa352cb",
+    "post_activation_regression": "SMOKE-20260612-12",
+    "result": "pass",
+    "cases": {
+      "E01": "pass",
+      "E31": "pass"
+    }
   }
 }

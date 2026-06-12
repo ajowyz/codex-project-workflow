@@ -1,0 +1,53 @@
+{
+  "run_id": "SMOKE-20260612-12",
+  "status": "completed_pass",
+  "created_at": "2026-06-12T20:32:12+08:00",
+  "activation_commit": "3b3683edf45454cd8e15f23ae03cb53c6fa352cb",
+  "candidate_commit": "3b3683edf45454cd8e15f23ae03cb53c6fa352cb",
+  "cases": [
+    "E01",
+    "E31"
+  ],
+  "conditions": [
+    "candidate"
+  ],
+  "run_count_per_condition": 1,
+  "threads": {
+    "E01": {
+      "candidate": "019ebbd1-7011-7e73-b3c9-c09b6a666449"
+    },
+    "E31": {
+      "candidate": "019ebbd1-780d-7dd1-8d14-5ca2822df510"
+    }
+  },
+  "project_roots": {
+    "candidate": "C:\\Users\\wang yazhou\\.codex\\worktrees\\ba36\\efficiently use codex"
+  },
+  "model_policy": "Use gpt-5.5 with medium reasoning effort.",
+  "isolation": {
+    "candidate": "Fresh Codex desktop worktrees at exact activation commit 3b3683e; tasks operate only on absolute external fixture paths.",
+    "discovery_guard": "Each worktree exposes exactly one codex-project-workflow skill.",
+    "history": "Neither thread receives expected results, scoring conclusions, or prior rollout output."
+  },
+  "case_prompts": {
+    "E01": "请修正指定工作区 target.txt 中唯一的拼写错误：把“teh”改为“the”。完成后验证，只处理这个错误。",
+    "E31": "请修改指定工作区 src/invoice.py 中的 format_invoice_id，使数字编号补足六位，例如 42 返回 INV-000042。运行邻近测试，只处理这个明确、可回退的局部修改。"
+  },
+  "minimum_checks": {
+    "E01": [
+      "exactly one requested text change",
+      "verification evidence",
+      "no skill body",
+      "no references",
+      "no project documents"
+    ],
+    "E31": [
+      "local function only",
+      "neighboring tests pass",
+      "no skill body",
+      "no references",
+      "no project documents",
+      "no formal implementation contract"
+    ]
+  }
+}
