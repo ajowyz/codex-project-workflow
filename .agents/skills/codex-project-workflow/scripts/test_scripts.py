@@ -2,6 +2,7 @@
 import copy
 import importlib.util
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -21,6 +22,7 @@ def load(name: str):
 adr_index = load("adr_index")
 measure_context = load("measure_context")
 validate_evals = load("validate_evals")
+setup_smoke = load("setup_smoke")
 
 
 class ScriptTests(unittest.TestCase):
@@ -90,6 +92,42 @@ class ScriptTests(unittest.TestCase):
         cases["E01"]["trigger_case_ids"] = []
         with self.assertRaisesRegex(ValueError, "missing reverse behavior link"):
             validate_evals.validate_triggers(data, schema, cases)
+
+    def test_smoke_fixture_setup(self):
+        run_dir = SKILL_DIR / "evals" / "smoke" / "SMOKE-20260612-01"
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / "workspaces"
+            state_path = setup_smoke.setup(run_dir, output)
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            self.assertEqual({"baseline", "candidate"}, set(state["conditions"]))
+            self.assertTrue((output / "baseline" / "E31" / "src" / "invoice.py").is_file())
+            self.assertEqual(
+                state["conditions"]["baseline"]["inventory"],
+                state["conditions"]["candidate"]["inventory"],
+            )
+
+    def test_smoke_calibration_artifacts(self):
+        run_dir = SKILL_DIR / "evals" / "smoke" / "SMOKE-20260612-01"
+        manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+        assessment = json.loads((run_dir / "assessment.json").read_text(encoding="utf-8"))
+        summary = json.loads((run_dir / "results" / "summary.json").read_text(encoding="utf-8"))
+        self.assertEqual(["E01", "E04", "E06", "E31", "E36"], manifest["cases"])
+        self.assertEqual(10, len(summary["results"]))
+        self.assertTrue(all(result["status"] == "completed" for result in summary["results"]))
+        self.assertFalse(assessment["formal_validity"]["valid"])
+
+    def test_smoke_candidate_budget(self):
+        candidate = (
+            SKILL_DIR
+            / "evals"
+            / "smoke"
+            / "SMOKE-20260612-01"
+            / "candidate_skill"
+            / "SKILL.md"
+        )
+        metrics = measure_context.skill_metrics(candidate)
+        self.assertLessEqual(metrics["description_chars"], 800)
+        self.assertLessEqual(metrics["body_chars"], 1500)
 
 
 if __name__ == "__main__":

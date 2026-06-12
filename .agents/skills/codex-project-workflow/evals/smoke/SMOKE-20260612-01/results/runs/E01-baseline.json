@@ -1,0 +1,109 @@
+{
+  "case_id": "E01",
+  "condition": "baseline",
+  "thread_id": "019eb999-0967-7231-9834-44ee53184791",
+  "rollout": {
+    "path": "C:\\Users\\wang yazhou\\.codex\\sessions\\2026\\06\\12\\rollout-2026-06-12T10-11-14-019eb999-0967-7231-9834-44ee53184791.jsonl",
+    "sha256": "9356480cb866cc46297cc36aecad9bb6911e6bbf0626d39a221c8f7df0a9d9ad"
+  },
+  "status": "completed",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "started_at": 1781230275,
+  "completed_at": 1781230379,
+  "duration_ms": 103778,
+  "time_to_first_token_ms": 35254,
+  "raw_user_messages": [
+    "<codex_delegation>\n  <source_thread_id>019eaf56-91db-7c40-b740-7435313502d3</source_thread_id>\n  <input>请修正指定工作区 D:\\project\\.codex-eval-smoke\\SMOKE-20260612-01\\baseline\\E01\\target.txt 中唯一的拼写错误：把“teh”改为“the”。完成后验证，只处理这个错误。</input>\n</codex_delegation>"
+  ],
+  "commentary": [
+    "我会只检查目标文件，确认唯一的 `teh` 后做最小替换，再验证文件内容与改动范围。",
+    "已确认文件中恰好出现一次 `teh`。现在只替换这三个字符，不调整其他内容。"
+  ],
+  "final_response": "已修正并验证：仅将 `teh` 改为 `the`，未做其他修改。",
+  "final_response_chars": 32,
+  "tool_calls": [
+    {
+      "call_id": "call_ARfTCn4OsMhiaRiDdTMVZx3i",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$path='D:\\project\\.codex-eval-smoke\\SMOKE-20260612-01\\baseline\\E01\\target.txt'; if (-not (Test-Path -LiteralPath $path)) { throw \"File not found: $path\" }; $content=Get-Content -LiteralPath $path -Raw; [pscustomobject]@{TehCount=([regex]::Matches($content,'teh')).Count; Content=$content} | Format-List",
+        "workdir": "C:\\Users\\wang yazhou\\Documents\\Codex\\2026-06-12\\codex-smoke-e01-baseline"
+      },
+      "output": {
+        "chars": 126,
+        "sha256": "13ba692158fe6a2ad4ab71ac5613d2ca8e5047e959566592af8eb0a1a046f6ed",
+        "preview": "Exit code: 0\nWall time: 2 seconds\nOutput:\n\r\n\r\nTehCount : 1\r\nContent  : This is teh only typo in the file.\r\n           \r\n\r\n\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_zlnl1UW18GZnkn05mjNprQd1",
+      "name": "apply_patch",
+      "arguments": "*** Begin Patch\n*** Update File: D:\\project\\.codex-eval-smoke\\SMOKE-20260612-01\\baseline\\E01\\target.txt\n@@\n-This is teh only typo in the file.\n+This is the only typo in the file.\n*** End Patch\n",
+      "output": {
+        "chars": 153,
+        "sha256": "a51b579a0d07979930f6140fcd9c69b37af1bfcbb42469dcfbc1f1a837a47625",
+        "preview": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nM D:\\project\\.codex-eval-smoke\\SMOKE-20260612-01\\baseline\\E01\\target.txt\n"
+      }
+    },
+    {
+      "call_id": "call_SSZ3L47pQnQxzmmWrIYaybWc",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$path='D:\\project\\.codex-eval-smoke\\SMOKE-20260612-01\\baseline\\E01\\target.txt'; $content=Get-Content -LiteralPath $path -Raw; [pscustomobject]@{TehCount=([regex]::Matches($content,'teh')).Count; TheCount=([regex]::Matches($content,'the')).Count; ExactContent=($content -eq \"This is the only typo in the file.`r`n\" -or $content -eq \"This is the only typo in the file.`n\"); Content=$content} | Format-List",
+        "workdir": "C:\\Users\\wang yazhou\\Documents\\Codex\\2026-06-12\\codex-smoke-e01-baseline"
+      },
+      "output": {
+        "chars": 179,
+        "sha256": "daa819a913de777482f9f8e7517e5bb3e403f061f0ae98d7a18ba191a8e25a7e",
+        "preview": "Exit code: 0\nWall time: 0.9 seconds\nOutput:\n\r\n\r\nTehCount     : 0\r\nTheCount     : 2\r\nExactContent : True\r\nContent      : This is the only typo in the file.\r\n               \r\n\r\n\r\n\r\n"
+      }
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 52930,
+    "cached_input_tokens": 45056,
+    "output_tokens": 500,
+    "reasoning_output_tokens": 0,
+    "total_tokens": 53430
+  },
+  "context_trace": {
+    "project_skill_listed": false,
+    "project_skill_description_chars": 0,
+    "skill_body_read_calls": [],
+    "skill_body_loaded_chars": 0,
+    "reference_read_calls": [],
+    "reference_files": [],
+    "reference_loaded_chars": 0,
+    "reference_h2_sections": 0,
+    "governance_read_calls": []
+  },
+  "fixture": {
+    "root": "D:\\project\\.codex-eval-smoke\\SMOKE-20260612-01\\baseline\\E01",
+    "before_inventory": {
+      "target.txt": {
+        "sha256": "8758886acb8c5a5d4ee799b43ca7399c0da584c04db59ddb650835019c824ffa",
+        "bytes": 35
+      }
+    },
+    "after_inventory": {
+      "target.txt": {
+        "bytes": 35,
+        "sha256": "0d3ce52d2ffa20fc063e3d44c2eb899a129f044dd680c5fad701d149c73118de"
+      }
+    },
+    "changed_files": [
+      {
+        "path": "target.txt",
+        "before": {
+          "sha256": "8758886acb8c5a5d4ee799b43ca7399c0da584c04db59ddb650835019c824ffa",
+          "bytes": 35
+        },
+        "after": {
+          "bytes": 35,
+          "sha256": "0d3ce52d2ffa20fc063e3d44c2eb899a129f044dd680c5fad701d149c73118de"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "case_id": "E04",
+  "condition": "baseline",
+  "thread_id": "019eb99a-3da3-7712-9449-84975f721cd4",
+  "rollout": {
+    "path": "C:\\Users\\wang yazhou\\.codex\\sessions\\2026\\06\\12\\rollout-2026-06-12T10-12-33-019eb99a-3da3-7712-9449-84975f721cd4.jsonl",
+    "sha256": "d5e53116366c69b4eb930358188b221e06f43650403b0398bfbcc3c5686d7241"
+  },
+  "status": "completed",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "started_at": 1781230354,
+  "completed_at": 1781230492,
+  "duration_ms": 138041,
+  "time_to_first_token_ms": 59077,
+  "raw_user_messages": [
+    "<codex_delegation>\n  <source_thread_id>019eaf56-91db-7c40-b740-7435313502d3</source_thread_id>\n  <input>项目需要建立一个经验库。请读取指定工作区 D:\\project\\.codex-eval-smoke\\SMOKE-20260612-01\\baseline\\E04\\context.md，比较适用方案，给出专业建议和分阶段选择。当前只做只读分析，不修改文件。</input>\n</codex_delegation>"
+  ],
+  "commentary": [
+    "我会先读取指定的 `context.md`，梳理项目约束、候选方案与决策维度；本轮只做只读分析，不会修改任何文件。"
+  ],
+  "final_response": "已读取 `context.md`。结合单人起步、两年内 5,000–20,000 条、本地优先、严格治理和可重建要求，建议采用：\n\n**SQLite 作为事实库 + FTS5 全文检索 + 可重建的本地向量索引。**\n\n**方案比较**\n\n| 方案 | 优点 | 主要问题 | 适用判断 |\n|---|---|---|---|\n| Markdown/JSON + Git | 简单、透明、易导出 | 过滤、删除、治理、并发和语义检索逐渐困难 | 适合原型，不宜长期作为主库 |\n| SQLite + FTS5 | 单文件、事务可靠、备份删除简单，足以支撑目标规模 | 多人远程协作能力有限 | **当前最合适** |\n| SQLite + 向量扩展 | 保持本地一体化 | 扩展兼容性和迁移需管理 | 可在语义检索阶段评估 |\n| SQLite + 独立向量索引 | 事实库与派生索引边界清晰，可完全重建 | 需要维护索引同步流程 | **推荐演进方向** |\n| PostgreSQL + pgvector | 查询、权限、并发和共享能力强 | 当前运维成本过高，本地优先体验较差 | 多人共享后再迁移 |\n| 专用向量数据库 | 大规模相似度检索能力强 | 增加服务、备份和一致性复杂度 | 当前明显过度设计 |\n\n**核心设计建议**\n\n1. SQLite 保存唯一权威记录；全文索引、向量和缓存都视为可删除、可重建的派生数据。\n2. 原始观察先进入 `candidate`，审批后形成独立、不可混淆的 `approved rule`。\n3. 规则至少包含：适用范围、项目、状态、来源摘要、审批信息、版本、失效时间和敏感性检查结果。\n4. 检索顺序采用“结构化过滤 → 关键词/语义召回 → 排序”，避免向量搜索绕过项目范围、状态或过期条件。\n5. 共享库只接收脱敏后的结构化经验，不保存原始对话、客户名称、密钥或私有源码。\n6. 记录正文与向量模型解耦，保存嵌入模型版本；更换模型时重建索引，不改写事实记录。\n7. 使用稳定 ID 和软删除审计，同时提供真正的物理清除流程，确保删除能够覆盖导出和派生索引。\n\n**分阶段选择**\n\n**阶段 1：约 100 条**\n\n采用 SQLite + 普通字段索引 + FTS5。先完成候选、审批、作用域、过期、导入导出、备份、删除和全文检索。语义相似可暂缓，先验证记录质量与治理流程。\n\n**阶段 2：约 500–5,000 条**\n\n增加本地嵌入生成和向量索引。仅对批准且已脱敏的经验生成向量；查询先执行权限、范围和状态过滤，再进行混合检索。建立全量重建与模型版本升级流程。\n\n**阶段 3：约 5,000–20,000 条或开始多人共享**\n\n先继续压测 SQLite。这个数量本身不足以成为迁移理由；只有出现多人并发写入、集中权限控制、远程访问或审计服务化需求时，才迁移到 PostgreSQL + pgvector。保留相同数据模型和导出格式，降低迁移成本。\n\n**结论**\n\n近期不应直接引入 PostgreSQL或专用向量数据库。先用 SQLite 把治理和数据边界做正确，再按真实检索需求加入本地语义索引；是否升级到服务端架构，应由协作与权限需求触发，而不是由 20,000 条的数据量触发。",
+  "final_response_chars": 1378,
+  "tool_calls": [
+    {
+      "call_id": "call_sixphbIhQEAviGOngVCFG119",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -LiteralPath 'D:\\project\\.codex-eval-smoke\\SMOKE-20260612-01\\baseline\\E04\\context.md' -Raw",
+        "workdir": "C:\\Users\\wang yazhou\\Documents\\Codex\\2026-06-12\\codex-smoke-e04-baseline",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 778,
+        "sha256": "460cdf20207c14311bc2facd19694e2096cc1b879a99e6db8e49bca8672ba884",
+        "preview": "Exit code: 0\nWall time: 2.2 seconds\nOutput:\n# Experience Library Context\n\n- Primary user: one person now; sharing with others may come later.\n- Initial scale: about 100 approved experience records.\n- Plausible two-year scale: 5,000 to 20,000 records.\n- Queries: exact project and status filters, keyword lookup, and finding semantically similar mistakes or successful patterns.\n- Privacy: local-first; raw transcripts, secrets, customer names, and private source code must not enter a shared library.\n- Governance: observations become candidates first; only approved, scoped, non-expired rules may affect later work.\n- Operations: simple backup, export, deletion, and full index rebuild are required.\n- Current state: no storage or retrieval implementation has been selected.\n\r\n"
+      }
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 26155,
+    "cached_input_tokens": 22272,
+    "output_tokens": 1131,
+    "reasoning_output_tokens": 112,
+    "total_tokens": 27286
+  },
+  "context_trace": {
+    "project_skill_listed": false,
+    "project_skill_description_chars": 0,
+    "skill_body_read_calls": [],
+    "skill_body_loaded_chars": 0,
+    "reference_read_calls": [],
+    "reference_files": [],
+    "reference_loaded_chars": 0,
+    "reference_h2_sections": 0,
+    "governance_read_calls": []
+  },
+  "fixture": {
+    "root": "D:\\project\\.codex-eval-smoke\\SMOKE-20260612-01\\baseline\\E04",
+    "before_inventory": {
+      "context.md": {
+        "sha256": "2c2753eb96b3887022c185e07e970725c20dbd6024774f5dea7fa1e72acd708b",
+        "bytes": 732
+      }
+    },
+    "after_inventory": {
+      "context.md": {
+        "bytes": 732,
+        "sha256": "2c2753eb96b3887022c185e07e970725c20dbd6024774f5dea7fa1e72acd708b"
+      }
+    },
+    "changed_files": []
+  }
+}

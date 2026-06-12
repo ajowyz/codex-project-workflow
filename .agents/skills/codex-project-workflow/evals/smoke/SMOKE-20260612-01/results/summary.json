@@ -1,0 +1,292 @@
+{
+  "run_id": "SMOKE-20260612-01",
+  "source_manifest": "D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\evals\\smoke\\SMOKE-20260612-01\\manifest.json",
+  "results": [
+    {
+      "case_id": "E01",
+      "condition": "baseline",
+      "thread_id": "019eb999-0967-7231-9834-44ee53184791",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 103778,
+      "time_to_first_token_ms": 35254,
+      "final_response_chars": 32,
+      "total_tokens": 53430,
+      "tool_call_count": 3,
+      "changed_file_count": 1,
+      "context_trace": {
+        "project_skill_listed": false,
+        "project_skill_description_chars": 0,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "reference_read_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "9356480cb866cc46297cc36aecad9bb6911e6bbf0626d39a221c8f7df0a9d9ad"
+    },
+    {
+      "case_id": "E01",
+      "condition": "candidate",
+      "thread_id": "019eb999-23dd-7aa2-922e-2d311350102b",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 108296,
+      "time_to_first_token_ms": 30963,
+      "final_response_chars": 117,
+      "total_tokens": 54347,
+      "tool_call_count": 3,
+      "changed_file_count": 1,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "reference_read_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "67e4099f52a368e52d6af6d83e61f1116f891b133b27720e49803e7723016691"
+    },
+    {
+      "case_id": "E04",
+      "condition": "baseline",
+      "thread_id": "019eb99a-3da3-7712-9449-84975f721cd4",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 138041,
+      "time_to_first_token_ms": 59077,
+      "final_response_chars": 1378,
+      "total_tokens": 27286,
+      "tool_call_count": 1,
+      "changed_file_count": 0,
+      "context_trace": {
+        "project_skill_listed": false,
+        "project_skill_description_chars": 0,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "reference_read_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "d5e53116366c69b4eb930358188b221e06f43650403b0398bfbcc3c5686d7241"
+    },
+    {
+      "case_id": "E04",
+      "condition": "candidate",
+      "thread_id": "019eb99a-5fbc-7361-9025-55c59231c97a",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 182691,
+      "time_to_first_token_ms": 58399,
+      "final_response_chars": 1607,
+      "total_tokens": 44872,
+      "tool_call_count": 6,
+      "changed_file_count": 0,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [
+          "call_90rOkvM6QpZM81h2UY2xmUil"
+        ],
+        "skill_body_loaded_chars": 1460,
+        "reference_read_calls": [
+          "call_nZT3QPKFVbGsrXuNIEXCeHK9",
+          "call_gYqqJcZrPHsxU6X4BohzlX0j",
+          "call_i2l2OuAXzG2AQmmfvE7T9EOI"
+        ],
+        "reference_files": [
+          "governance.md",
+          "research.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 6738,
+        "reference_h2_sections": 21,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "1c37541fe2917aa39a7b695d0bf190773972a5bb1426af2a908725c1096e5bb2"
+    },
+    {
+      "case_id": "E06",
+      "condition": "baseline",
+      "thread_id": "019eb99a-96a7-7b13-895e-a68cc4ba6d86",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 232654,
+      "time_to_first_token_ms": 71526,
+      "final_response_chars": 550,
+      "total_tokens": 70500,
+      "tool_call_count": 6,
+      "changed_file_count": 0,
+      "context_trace": {
+        "project_skill_listed": false,
+        "project_skill_description_chars": 0,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "reference_read_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "c2928488a9b0e9f844292d018632b3867d8749be0b77ef9adf2cb9f6e3037982"
+    },
+    {
+      "case_id": "E06",
+      "condition": "candidate",
+      "thread_id": "019eb99a-b8fc-7a33-b976-29f317c519cf",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 189442,
+      "time_to_first_token_ms": 69483,
+      "final_response_chars": 400,
+      "total_tokens": 59241,
+      "tool_call_count": 8,
+      "changed_file_count": 0,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [
+          "call_hj98Xk4q8vByojd57qsS2Cw8"
+        ],
+        "skill_body_loaded_chars": 1460,
+        "reference_read_calls": [
+          "call_2JKwmfDDjwu0Dda8D63rM9ru",
+          "call_4K0370SENEEIta9U7cQZYz5r"
+        ],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4646,
+        "reference_h2_sections": 14,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "a8a929fd54c0142800e607b37ec16252f619f797576969bc7e32a926d9aceb72"
+    },
+    {
+      "case_id": "E31",
+      "condition": "baseline",
+      "thread_id": "019eb99b-0524-7762-8505-b2f035600f3f",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 198258,
+      "time_to_first_token_ms": 71159,
+      "final_response_chars": 118,
+      "total_tokens": 69132,
+      "tool_call_count": 7,
+      "changed_file_count": 1,
+      "context_trace": {
+        "project_skill_listed": false,
+        "project_skill_description_chars": 0,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "reference_read_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "57a0b1c3019dbbe41da93d6171da52933af0b87ec670dc34f08aab7806f06781"
+    },
+    {
+      "case_id": "E31",
+      "condition": "candidate",
+      "thread_id": "019eb99b-27e2-72f0-802b-420a49b0fcd9",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 159431,
+      "time_to_first_token_ms": 62653,
+      "final_response_chars": 138,
+      "total_tokens": 55458,
+      "tool_call_count": 4,
+      "changed_file_count": 1,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "reference_read_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "f1fbd932d8c9accecda8daad7972fcca17f2ee612b5cf544308bef9c357eafec"
+    },
+    {
+      "case_id": "E36",
+      "condition": "baseline",
+      "thread_id": "019eb99b-6a20-7da1-9d5e-0bce2b281842",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 242135,
+      "time_to_first_token_ms": 57712,
+      "final_response_chars": 4459,
+      "total_tokens": 133227,
+      "tool_call_count": 11,
+      "changed_file_count": 0,
+      "context_trace": {
+        "project_skill_listed": false,
+        "project_skill_description_chars": 0,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "reference_read_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "5d5685aa4c161d37e557ba90fc9c62bc58905dca6690ce6eef0001f9e6b3c242"
+    },
+    {
+      "case_id": "E36",
+      "condition": "candidate",
+      "thread_id": "019eb99b-941c-7ea2-a4a3-318d469abe46",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 242172,
+      "time_to_first_token_ms": 54683,
+      "final_response_chars": 3247,
+      "total_tokens": 115524,
+      "tool_call_count": 12,
+      "changed_file_count": 0,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [
+          "call_KGSIER7bc6HJpJhrkKe9uADX"
+        ],
+        "skill_body_loaded_chars": 1460,
+        "reference_read_calls": [
+          "call_TrjOlFLK07VsubTkQrVfZPUK",
+          "call_4voktfFCX4g6OGF5Z8bLVSvj"
+        ],
+        "reference_files": [
+          "research.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4729,
+        "reference_h2_sections": 14,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "1d1c68edbeff01c50d212431e301e43609c76f6db8e1cba3a2a49a781480308f"
+    }
+  ]
+}

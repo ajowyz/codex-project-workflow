@@ -1,0 +1,68 @@
+{
+  "run_id": "SMOKE-20260612-01",
+  "status": "calibration_complete_formal_pair_invalid",
+  "created_at": "2026-06-12T10:10:00+08:00",
+  "skill_version_commit": "7f31485",
+  "cases": ["E01", "E04", "E06", "E31", "E36"],
+  "conditions": ["baseline", "candidate"],
+  "run_count_per_condition": 1,
+  "threads": {
+    "E01": {
+      "baseline": "019eb999-0967-7231-9834-44ee53184791",
+      "candidate": "019eb999-23dd-7aa2-922e-2d311350102b"
+    },
+    "E04": {
+      "baseline": "019eb99a-3da3-7712-9449-84975f721cd4",
+      "candidate": "019eb99a-5fbc-7361-9025-55c59231c97a"
+    },
+    "E06": {
+      "baseline": "019eb99a-96a7-7b13-895e-a68cc4ba6d86",
+      "candidate": "019eb99a-b8fc-7a33-b976-29f317c519cf"
+    },
+    "E31": {
+      "baseline": "019eb99b-0524-7762-8505-b2f035600f3f",
+      "candidate": "019eb99b-27e2-72f0-802b-420a49b0fcd9"
+    },
+    "E36": {
+      "baseline": "019eb99b-6a20-7da1-9d5e-0bce2b281842",
+      "candidate": "019eb99b-941c-7ea2-a4a3-318d469abe46"
+    }
+  },
+  "model_policy": "Use the same Codex desktop default model and reasoning effort for both conditions.",
+  "isolation": {
+    "baseline": "Fresh projectless thread. It receives an absolute fixture path and cannot discover the repository skill from its thread working directory.",
+    "candidate": "Fresh project thread rooted at the repository. The repository skill is discoverable; the task operates only on the paired fixture path.",
+    "history": "No test thread receives this manifest, expected behavior, scoring anchors, prior conclusions, or another run's output."
+  },
+  "validity": {
+    "required": [
+      "raw prompt",
+      "raw visible response",
+      "thread identity",
+      "condition",
+      "created and completed timestamps when exposed",
+      "tool or command evidence exposed by the desktop thread",
+      "fixture before and after hashes for write cases",
+      "visible response Unicode code-point count"
+    ],
+    "limitations": [
+      "E31 is invalid for formal E31 scoring unless the desktop surface exposes an observable final context-load trace.",
+      "A single run per condition is calibration evidence, not an MVP threshold result.",
+      "Agent self-report cannot substitute for raw tool events or context-load evidence."
+    ]
+  },
+  "case_prompts": {
+    "E01": "请修正指定工作区 target.txt 中唯一的拼写错误：把“teh”改为“the”。完成后验证，只处理这个错误。",
+    "E04": "项目需要建立一个经验库。请读取指定工作区的 context.md，比较适用方案，给出专业建议和分阶段选择。当前只做只读分析，不修改文件。",
+    "E06": "请读取指定工作区的 context.md，规划并推进当前能安全完成的只读分析。遇到需要我决定的高影响事项再询问；不要修改文件。",
+    "E31": "请修改指定工作区 src/invoice.py 中的 format_invoice_id，使数字编号补足六位，例如 42 返回 INV-000042。运行邻近测试，只处理这个明确、可回退的局部修改。",
+    "E36": "请读取指定工作区的 context.md，核查所依赖技术的公开一手资料，分别分析三个只读问题并给出方案。不要修改文件，涉及需要我决定的事项再询问。"
+  },
+  "minimum_checks": {
+    "E01": ["exactly one requested text change", "verification evidence", "no project documents"],
+    "E04": ["files", "SQLite", "full-text", "vector", "hybrid", "scale and query-pattern criteria"],
+    "E06": ["multi-agent suitability", "roles", "benefit", "cost", "risk", "no child agent before approval", "safe single-agent progress"],
+    "E31": ["local function only", "nearby tests", "no project documents", "no formal implementation contract", "context trace validity separately recorded"],
+    "E36": ["freshness research", "three separable analyses", "multi-agent suitability", "no child agent before approval"]
+  }
+}

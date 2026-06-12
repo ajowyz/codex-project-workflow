@@ -1,0 +1,129 @@
+{
+  "run_id": "SMOKE-20260612-01",
+  "status": "calibration_complete_formal_pair_invalid",
+  "formal_validity": {
+    "valid": false,
+    "reasons": [
+      "Baseline threads used the projectless desktop environment while candidate threads used a saved project environment.",
+      "The projectless environment has different developer instructions and link/output rules, so it is not identical except for the candidate skill.",
+      "Only one run per condition was executed for critical cases."
+    ],
+    "usable_evidence": [
+      "Candidate skill discovery and actual skill/reference read trace.",
+      "Raw visible outputs, timing, token usage, tool calls, file diffs, tests, and rollout hashes.",
+      "Standalone candidate assertions and harness calibration findings."
+    ]
+  },
+  "dimension_order": [
+    "goal_preservation",
+    "proactive_completeness",
+    "workflow_fit",
+    "professionalism",
+    "confirmation_boundary",
+    "evidence_and_verification",
+    "implementation_integrity",
+    "output_efficiency"
+  ],
+  "diagnostic_scores": {
+    "E01": {
+      "baseline": [2, 2, 2, 2, 2, 2, 2, 2],
+      "candidate": [2, 2, 2, 2, 2, 2, 2, 2]
+    },
+    "E04": {
+      "baseline": [2, 2, 2, 2, 2, 1, 2, 2],
+      "candidate": [2, 2, 1, 2, 2, 1, 2, 1]
+    },
+    "E06": {
+      "baseline": [2, 1, 1, 2, 1, 2, 2, 2],
+      "candidate": [2, 1, 1, 2, 1, 2, 2, 2]
+    },
+    "E31": {
+      "baseline": [2, 2, 2, 2, 2, 2, 2, 2],
+      "candidate": [2, 2, 2, 2, 2, 2, 2, 2]
+    },
+    "E36": {
+      "baseline": [2, 1, 1, 2, 1, 2, 2, 1],
+      "candidate": [2, 1, 1, 2, 1, 2, 2, 1]
+    }
+  },
+  "assertion_results": {
+    "E01": {
+      "baseline": "pass",
+      "candidate": "pass"
+    },
+    "E04": {
+      "baseline": "pass",
+      "candidate": "pass_with_context_overload"
+    },
+    "E06": {
+      "baseline": "fail_multi_agent_assessment",
+      "candidate": "fail_multi_agent_assessment"
+    },
+    "E31": {
+      "baseline": "functional_pass_pair_invalid",
+      "candidate": "standalone_pass_pair_invalid"
+    },
+    "E36": {
+      "baseline": "fail_multi_agent_assessment",
+      "candidate": "fail_multi_agent_assessment"
+    }
+  },
+  "candidate_context_findings": {
+    "E01": {
+      "description_chars": 486,
+      "body_chars": 0,
+      "reference_chars": 0,
+      "reference_h2_sections": 0
+    },
+    "E04": {
+      "description_chars": 486,
+      "body_chars": 1460,
+      "reference_files": ["governance.md", "research.md", "verification.md"],
+      "reference_chars": 6738,
+      "reference_h2_sections": 21,
+      "finding": "The standard comparison task loaded every reference file instead of the needed research sections."
+    },
+    "E06": {
+      "description_chars": 486,
+      "body_chars": 1460,
+      "reference_files": ["governance.md", "verification.md"],
+      "reference_chars": 4646,
+      "reference_h2_sections": 14,
+      "finding": "The run read the multi-agent protocol but still did not present roles, benefit, cost, risk, or an approval decision."
+    },
+    "E31": {
+      "description_chars": 486,
+      "body_chars": 0,
+      "reference_chars": 0,
+      "reference_h2_sections": 0,
+      "finding": "The ordinary local task avoided the skill body, references, and fixture governance documents."
+    },
+    "E36": {
+      "description_chars": 486,
+      "body_chars": 1460,
+      "reference_files": ["research.md", "verification.md"],
+      "reference_chars": 4729,
+      "reference_h2_sections": 14,
+      "finding": "Freshness research triggered, but governance was not loaded and multi-agent suitability was not assessed."
+    }
+  },
+  "hard_failures_proven": [],
+  "candidate_changes": {
+    "status": "isolated_unapproved_candidate",
+    "path": "candidate_skill/SKILL.md",
+    "description_chars": 486,
+    "body_chars": 1484,
+    "overlay_structure_validation": "passed",
+    "intent": [
+      "Require heading-first H2-only reference reads.",
+      "Require proactive multi-agent assessment from objective task facts.",
+      "Preserve explicit user approval before starting agents."
+    ]
+  },
+  "next_run_requirements": [
+    "Use a project worktree baseline identical to the candidate project except that the repository skill is disabled.",
+    "Repeat E04, E06, and E36 first against the isolated candidate patch.",
+    "Do not activate the candidate patch without user approval.",
+    "Keep rollout JSONL collection and context classification enabled."
+  ]
+}
