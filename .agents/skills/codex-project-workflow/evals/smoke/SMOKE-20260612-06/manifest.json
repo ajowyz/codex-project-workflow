@@ -1,0 +1,46 @@
+{
+  "run_id": "SMOKE-20260612-06",
+  "status": "blocked_desktop_rate_limit_clean_discovery_verified",
+  "created_at": "2026-06-12T11:22:00+08:00",
+  "base_commit": "65f3ff2",
+  "baseline_commit": "4b47e0d",
+  "candidate_commit": "0d66a1f",
+  "candidate_source": "../SMOKE-20260612-04/candidate_skill/SKILL.candidate.md",
+  "cases": ["E04", "E06", "E36"],
+  "conditions": ["baseline", "candidate"],
+  "run_count_per_condition": 1,
+  "threads": {
+    "E04": {
+      "baseline": null,
+      "candidate": "019eb9dc-813a-72d1-b43e-f9bb8542b6ca"
+    },
+    "E06": {
+      "baseline": null,
+      "candidate": null
+    },
+    "E36": {
+      "baseline": null,
+      "candidate": null
+    }
+  },
+  "project_roots": {
+    "baseline": "D:\\project\\.codex-eval-smoke\\SMOKE-20260612-02\\baseline-repo",
+    "candidate": "D:\\project\\.codex-eval-smoke\\SMOKE-20260612-02\\candidate-repo"
+  },
+  "model_policy": "Use gpt-5.5 with medium reasoning effort for every thread.",
+  "isolation": {
+    "baseline": "Clean branch from 65f3ff2 with the sole repository skill moved outside .agents/skills.",
+    "candidate": "Clean branch from 65f3ff2 with only SKILL.md, governance.md, and read_reference.py overlaid.",
+    "discovery_guard": "Both source branches contain no evaluation artifact named SKILL.md; candidate exposes exactly one codex-project-workflow skill."
+  },
+  "case_prompts": {
+    "E04": "项目需要建立一个经验库。请读取指定工作区的 context.md，比较适用方案，给出专业建议和分阶段选择。当前只做只读分析，不修改文件。",
+    "E06": "请读取指定工作区的 context.md，规划并推进当前能安全完成的只读分析。遇到需要我决定的高影响事项再询问；不要修改文件。",
+    "E36": "请读取指定工作区的 context.md，核查所依赖技术的公开一手资料，分别分析三个只读问题并给出方案。不要修改文件，涉及需要我决定的事项再询问。"
+  },
+  "minimum_checks": {
+    "E04": ["one skill entry", "research protocol only", "at most two reference H2 sections", "professional option comparison"],
+    "E06": ["one skill entry", "complete proactive multi-agent proposal", "no child agent before approval"],
+    "E36": ["one skill entry", "freshness research proposed", "complete proactive multi-agent proposal", "no child agent before approval"]
+  }
+}

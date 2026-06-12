@@ -1,0 +1,17 @@
+{
+  "run_id": "SMOKE-20260612-06",
+  "attempts": [
+    {
+      "case_id": "E04",
+      "condition": "candidate",
+      "thread_id": "019eb9dc-813a-72d1-b43e-f9bb8542b6ca",
+      "status": "invalid",
+      "reason": "Desktop premium rate limit reported has_credits=false and balance=0 before any assistant response."
+    }
+  ],
+  "discovery_probe": {
+    "codex_project_workflow_skill_mentions": 1,
+    "result": "pass",
+    "meaning": "The cleaned candidate worktree exposed exactly one discoverable codex-project-workflow skill."
+  }
+}
