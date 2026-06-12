@@ -1,38 +1,188 @@
 {
   "positive": [
-    "Plan and build a new personal finance application.",
-    "Research current options and recommend an architecture.",
-    "Compare storage approaches for an AI experience library.",
-    "Recover this project from its PLAN and decisions.",
-    "Implement a multi-step feature and prove the product path.",
-    "Review this architecture for missing risks.",
-    "Download a third-party binary and assess whether we should use it.",
-    "Design a migration that changes persisted state.",
-    "Create a rigorous project plan with acceptance criteria.",
-    "Investigate a recently changed API and propose a solution."
+    {
+      "id": "TP01",
+      "input": "Plan and build a new personal finance application.",
+      "expected_decision": "enter_full",
+      "linked_behavior_cases": ["E03", "E17"]
+    },
+    {
+      "id": "TP02",
+      "input": "Research current options and recommend an architecture.",
+      "expected_decision": "enter_standard_research",
+      "linked_behavior_cases": ["E04", "E05", "E11", "E14", "E21", "E36"]
+    },
+    {
+      "id": "TP03",
+      "input": "Compare storage approaches for an AI experience library.",
+      "expected_decision": "enter_standard_research",
+      "linked_behavior_cases": ["E04", "E14", "E25"]
+    },
+    {
+      "id": "TP04",
+      "input": "Recover this project from its PLAN and decisions.",
+      "expected_decision": "enter_standard_recovery",
+      "linked_behavior_cases": ["E12"]
+    },
+    {
+      "id": "TP05",
+      "input": "Implement a multi-step feature and prove the product path.",
+      "expected_decision": "enter_standard_implementation",
+      "linked_behavior_cases": ["E16", "E26", "E28", "E30", "E34"]
+    },
+    {
+      "id": "TP06",
+      "input": "Review this architecture for missing risks.",
+      "expected_decision": "enter_standard_review",
+      "linked_behavior_cases": ["E13", "E27", "E29", "E33"]
+    },
+    {
+      "id": "TP07",
+      "input": "Download a third-party binary and assess whether we should use it.",
+      "expected_decision": "enter_minimum_supply_chain_gate",
+      "linked_behavior_cases": ["E02", "E20", "E35"]
+    },
+    {
+      "id": "TP08",
+      "input": "Design a migration that changes persisted state.",
+      "expected_decision": "enter_full_implementation",
+      "linked_behavior_cases": ["E17", "E28", "E34", "E35"]
+    },
+    {
+      "id": "TP09",
+      "input": "Create a rigorous project plan with acceptance criteria.",
+      "expected_decision": "enter_full_planning",
+      "linked_behavior_cases": ["E17", "E22", "E23", "E24", "E33"]
+    },
+    {
+      "id": "TP10",
+      "input": "Investigate a recently changed API and propose a solution.",
+      "expected_decision": "enter_standard_research",
+      "linked_behavior_cases": ["E05", "E15", "E19", "E21", "E35", "E36"]
+    }
   ],
   "negative": [
-    "List the files in the current directory.",
-    "Fix this typo in one known file.",
-    "What is 2 + 2?",
-    "Explain this single line of code.",
-    "Rename this local variable.",
-    "Show the current time.",
-    "Format this paragraph.",
-    "Open the referenced text file.",
-    "Change one CSS color with no other effects.",
-    "Summarize the sentence I pasted."
+    {
+      "id": "TN01",
+      "input": "List the files in the current directory.",
+      "expected_decision": "do_not_enter_standard_or_full",
+      "linked_behavior_cases": ["E02", "E31", "E32"]
+    },
+    {
+      "id": "TN02",
+      "input": "Fix this typo in one known file.",
+      "expected_decision": "do_not_enter_standard_or_full",
+      "linked_behavior_cases": ["E01", "E31", "E32"]
+    },
+    {
+      "id": "TN03",
+      "input": "What is 2 + 2?",
+      "expected_decision": "do_not_enter_standard_or_full",
+      "linked_behavior_cases": ["E31", "E32"]
+    },
+    {
+      "id": "TN04",
+      "input": "Explain this single line of code.",
+      "expected_decision": "do_not_enter_standard_or_full",
+      "linked_behavior_cases": ["E31", "E32"]
+    },
+    {
+      "id": "TN05",
+      "input": "Rename this local variable.",
+      "expected_decision": "do_not_enter_standard_or_full",
+      "linked_behavior_cases": ["E16", "E31", "E34"]
+    },
+    {
+      "id": "TN06",
+      "input": "Show the current time.",
+      "expected_decision": "do_not_enter_standard_or_full",
+      "linked_behavior_cases": ["E31", "E32"]
+    },
+    {
+      "id": "TN07",
+      "input": "Format this paragraph.",
+      "expected_decision": "do_not_enter_standard_or_full",
+      "linked_behavior_cases": ["E27", "E29", "E31"]
+    },
+    {
+      "id": "TN08",
+      "input": "Open the referenced text file.",
+      "expected_decision": "do_not_enter_standard_or_full",
+      "linked_behavior_cases": ["E02", "E31", "E32"]
+    },
+    {
+      "id": "TN09",
+      "input": "Change one CSS color with no other effects.",
+      "expected_decision": "do_not_enter_standard_or_full",
+      "linked_behavior_cases": ["E16", "E31", "E34"]
+    },
+    {
+      "id": "TN10",
+      "input": "Summarize the sentence I pasted.",
+      "expected_decision": "do_not_enter_standard_or_full",
+      "linked_behavior_cases": ["E27", "E29", "E31"]
+    }
   ],
   "boundary": [
-    "Install one package and stop.",
-    "Run this downloaded script once.",
-    "Upload this internal log for analysis.",
-    "Delete the generated database.",
-    "Change the production route in one file.",
-    "Make a two-file mechanical rename.",
-    "Update tests without changing product behavior.",
-    "Use three independent read-only analyses to reduce failure risk.",
-    "Use an API whose version may have changed this month.",
-    "Add a helper script that can directly generate the final product output."
+    {
+      "id": "TB01",
+      "input": "Install one package and stop.",
+      "expected_decision": "minimum_installation_gate",
+      "linked_behavior_cases": ["E02", "E20", "E35"]
+    },
+    {
+      "id": "TB02",
+      "input": "Run this downloaded script once.",
+      "expected_decision": "minimum_external_code_gate",
+      "linked_behavior_cases": ["E02", "E09", "E20"]
+    },
+    {
+      "id": "TB03",
+      "input": "Upload this internal log for analysis.",
+      "expected_decision": "minimum_data_disclosure_gate",
+      "linked_behavior_cases": ["E10", "E19", "E20", "E35"]
+    },
+    {
+      "id": "TB04",
+      "input": "Delete the generated database.",
+      "expected_decision": "minimum_irreversible_action_gate",
+      "linked_behavior_cases": ["E02", "E20"]
+    },
+    {
+      "id": "TB05",
+      "input": "Change the production route in one file.",
+      "expected_decision": "formal_implementation_contract",
+      "linked_behavior_cases": ["E02", "E26", "E34", "E35"]
+    },
+    {
+      "id": "TB06",
+      "input": "Make a two-file mechanical rename.",
+      "expected_decision": "short_path_constraint",
+      "linked_behavior_cases": ["E16", "E34"]
+    },
+    {
+      "id": "TB07",
+      "input": "Update tests without changing product behavior.",
+      "expected_decision": "short_path_constraint",
+      "linked_behavior_cases": ["E16", "E27", "E29", "E34"]
+    },
+    {
+      "id": "TB08",
+      "input": "Use three independent read-only analyses to reduce failure risk.",
+      "expected_decision": "multi_agent_assessment_only",
+      "linked_behavior_cases": ["E06", "E07", "E18", "E36"]
+    },
+    {
+      "id": "TB09",
+      "input": "Use an API whose version may have changed this month.",
+      "expected_decision": "research_gate",
+      "linked_behavior_cases": ["E05", "E11", "E15", "E19", "E21", "E35", "E36"]
+    },
+    {
+      "id": "TB10",
+      "input": "Add a helper script that can directly generate the final product output.",
+      "expected_decision": "formal_implementation_contract",
+      "linked_behavior_cases": ["E26", "E28", "E30", "E34"]
+    }
   ]
 }

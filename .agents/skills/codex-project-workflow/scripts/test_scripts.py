@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import copy
 import importlib.util
 import json
 import unittest
@@ -19,6 +20,7 @@ def load(name: str):
 
 adr_index = load("adr_index")
 measure_context = load("measure_context")
+validate_evals = load("validate_evals")
 
 
 class ScriptTests(unittest.TestCase):
@@ -55,6 +57,39 @@ class ScriptTests(unittest.TestCase):
         cases = json.loads((SKILL_DIR / "evals" / "trigger_cases.json").read_text(encoding="utf-8"))
         self.assertEqual({"positive", "negative", "boundary"}, set(cases))
         self.assertTrue(all(len(cases[group]) >= 10 for group in cases))
+
+    def test_evaluation_fixtures(self):
+        summary = validate_evals.validate()
+        self.assertEqual(36, summary["cases"])
+        self.assertEqual(31, summary["critical_cases"])
+        self.assertEqual(8, summary["dimensions"])
+        self.assertEqual(30, summary["triggers"])
+
+    def test_evaluation_anchor_regression_fails(self):
+        schema = json.loads((SKILL_DIR / "evals" / "behavior_case.schema.json").read_text(encoding="utf-8"))
+        data = json.loads((SKILL_DIR / "evals" / "behavior_cases.json").read_text(encoding="utf-8"))
+        broken = copy.deepcopy(data)
+        del broken["cases"][0]["scoring_anchors"]["output_efficiency"]
+        with self.assertRaisesRegex(ValueError, "anchors must cover eight dimensions"):
+            validate_evals.validate_cases(broken, schema)
+
+    def test_evaluation_special_threshold_regression_fails(self):
+        schema = json.loads((SKILL_DIR / "evals" / "behavior_case.schema.json").read_text(encoding="utf-8"))
+        data = json.loads((SKILL_DIR / "evals" / "behavior_cases.json").read_text(encoding="utf-8"))
+        broken = copy.deepcopy(data)
+        e31 = next(case for case in broken["cases"] if case["id"] == "E31")
+        assertion = next(item for item in e31["assertions"] if item["subject"] == "skill.description_codepoints")
+        assertion["expected"] = 900
+        with self.assertRaisesRegex(ValueError, "normative operator/value changed"):
+            validate_evals.validate_cases(broken, schema)
+
+    def test_evaluation_reverse_trigger_link_regression_fails(self):
+        schema = json.loads((SKILL_DIR / "evals" / "behavior_case.schema.json").read_text(encoding="utf-8"))
+        data = json.loads((SKILL_DIR / "evals" / "behavior_cases.json").read_text(encoding="utf-8"))
+        cases = validate_evals.validate_cases(data, schema)
+        cases["E01"]["trigger_case_ids"] = []
+        with self.assertRaisesRegex(ValueError, "missing reverse behavior link"):
+            validate_evals.validate_triggers(data, schema, cases)
 
 
 if __name__ == "__main__":

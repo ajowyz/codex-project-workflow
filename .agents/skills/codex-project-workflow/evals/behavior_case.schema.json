@@ -1,0 +1,102 @@
+{
+  "schema_type": "codex-project-eval-declaration/v1",
+  "format_version": "1.0",
+  "description": "Project-owned declaration for deterministic validation without a JSON Schema dependency.",
+  "root_required": [
+    "format_version",
+    "schema",
+    "source_documents",
+    "expected_case_count",
+    "critical_case_ids",
+    "scoring_dimensions",
+    "assertion_operators",
+    "evidence_catalog",
+    "universal_evidence_fields",
+    "hard_failure_catalog",
+    "trigger_dataset",
+    "cases"
+  ],
+  "case_required": [
+    "id",
+    "title",
+    "critical",
+    "required_runs",
+    "traceability",
+    "prompt",
+    "fixture",
+    "expected_behavior",
+    "target_dimensions",
+    "evidence_fields",
+    "hard_failure_ids",
+    "assertions",
+    "scoring_anchors",
+    "trigger_case_ids"
+  ],
+  "assertion_required": [
+    "id",
+    "subject",
+    "operator",
+    "expected",
+    "evidence_field",
+    "description"
+  ],
+  "trigger_case_required": [
+    "id",
+    "input",
+    "expected_decision",
+    "linked_behavior_cases"
+  ],
+  "dimension_ids": [
+    "goal_preservation",
+    "proactive_completeness",
+    "workflow_fit",
+    "professionalism",
+    "confirmation_boundary",
+    "evidence_and_verification",
+    "implementation_integrity",
+    "output_efficiency"
+  ],
+  "score_values": [
+    0,
+    1,
+    2
+  ],
+  "assertion_operators": [
+    "equals",
+    "not_equals",
+    "contains_all",
+    "contains_none",
+    "set_equals",
+    "before",
+    "before_or_equal",
+    "less_than_or_equal",
+    "greater_than_or_equal",
+    "between_inclusive",
+    "all_true",
+    "all_false",
+    "all_greater_than_or_equal",
+    "at_least_one_greater_than_or_equal"
+  ],
+  "trigger_groups": {
+    "positive": {
+      "id_prefix": "TP",
+      "expected_count": 10
+    },
+    "negative": {
+      "id_prefix": "TN",
+      "expected_count": 10
+    },
+    "boundary": {
+      "id_prefix": "TB",
+      "expected_count": 10
+    }
+  },
+  "invariants": [
+    "Behavior case IDs are exactly E01 through E36 in order.",
+    "Critical cases run three times and all other cases run once.",
+    "Every case has exactly eight dimension anchors with explicit score 0, 1, and 2 text.",
+    "Every assertion references a declared evidence field and operator.",
+    "Every trigger link is bidirectional between behavior_cases.json and trigger_cases.json.",
+    "E16, E17, and E26 through E36 contain the normative special assertions checked by validate_evals.py."
+  ]
+}
