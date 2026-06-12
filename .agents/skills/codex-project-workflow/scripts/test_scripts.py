@@ -463,6 +463,44 @@ class ScriptTests(unittest.TestCase):
                 [],
             )
 
+    def test_targeted_regression_expectations_follow_selected_runs(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest_path = Path(temporary) / "manifest.json"
+            manifest_path.write_text(
+                json.dumps(
+                    {
+                        "evaluation_scope": "targeted_regression",
+                        "runs": [
+                            {"case_id": "E02", "variant_id": "download"},
+                            {"case_id": "E32", "variant_id": "nested_h3_counting"},
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            summary = {
+                "source_manifest": str(manifest_path),
+                "results": [
+                    {
+                        "case_id": "E02",
+                        "variant_id": "download",
+                        "expected_assertion_subjects": ["download.checks"],
+                    },
+                    {
+                        "case_id": "E32",
+                        "variant_id": "nested_h3_counting",
+                        "expected_assertion_subjects": ["h2.count"],
+                    },
+                ],
+            }
+            scope, cases, subjects = (
+                validate_full_results.evaluation_expectations(summary)
+            )
+            self.assertEqual("targeted_regression", scope)
+            self.assertEqual({"E02", "E32"}, cases)
+            self.assertEqual({"download.checks"}, subjects["E02"])
+            self.assertEqual({"h2.count"}, subjects["E32"])
+
 
 if __name__ == "__main__":
     unittest.main()

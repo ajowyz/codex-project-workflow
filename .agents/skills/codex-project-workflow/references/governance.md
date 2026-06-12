@@ -15,7 +15,7 @@ Identify the action, affected scope, reversibility, data involved, permissions, 
 ## Execution Rules
 
 - Ask only when the decision blocks progress or has high impact. Continue safe, independent work while waiting when possible.
-- For third-party downloads, check source, maintenance, license, integrity, necessity, and known risk before use.
+- For third-party downloads, record a pass, fail, or unknown outcome for source, maintenance, license, integrity, necessity, and known risk before use.
 - Before an install, external execution, or requested install substitute, show the exact command and scope and obtain explicit approval. Approval for one action does not authorize another.
 - For internal data, send only the minimum approved, redacted content to approved destinations.
 - Suitable multi-agent work enters `proposed` even when permission has not yet been granted. Present count and roles, task boundaries, read/write ownership, parallel and main-agent work, benefit, token/time/coordination cost, conflict/context/duplication risk, and the single-agent alternative. Ask for an explicit decision. Only explicit acceptance authorizes startup; only explicit refusal or unavailable agents selects fallback.

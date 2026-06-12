@@ -1,0 +1,548 @@
+{
+  "case_id": "E12",
+  "condition": "candidate",
+  "thread_id": "019ebc13-3513-7b21-8042-87208bf9a0bf",
+  "rollout": {
+    "path": "C:\\Users\\wang yazhou\\.codex\\sessions\\2026\\06\\12\\rollout-2026-06-12T21-44-00-019ebc13-3513-7b21-8042-87208bf9a0bf.jsonl",
+    "sha256": "c33da1572ce5ca0202b05c8c2a5596d486a72e1e6a613644ee3731bdd205faef"
+  },
+  "status": "completed",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "started_at": 1781271892,
+  "completed_at": 1781272099,
+  "duration_ms": 207528,
+  "time_to_first_token_ms": 6070,
+  "raw_user_messages": [
+    "<codex_delegation>\n  <source_thread_id>019eaf56-91db-7c40-b740-7435313502d3</source_thread_id>\n  <input>For each independent project under D:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios, recover the compact state, build the deterministic ADR metadata projection, validate replacement relations and PLAN references, and report blocking conflicts. Read only the bodies needed for the current task.</input>\n</codex_delegation>"
+  ],
+  "commentary": [
+    "I’m using the `codex-project-workflow` skill because this is a multi-project recovery and validation pass. I’ll first read its operating rules, then inspect only the scenario-level files needed to identify each project’s state and expected outputs.",
+    "This task triggers the workflow’s recovery and path-verification protocol. I’m loading that narrow reference now, then I’ll map the scenario directories without opening project bodies prematurely.",
+    "There are 12 independent fixtures, each with a compact `PLAN.md` and ADR ledger; only scenario 12 also has PRD/audit material. Per the recovery contract, I’ll read every compact PLAN first and use those references to decide whether any non-metadata body sections are actually needed.",
+    "The first metadata probe found no conventional YAML-style keys, so the ledger uses a different compact format. I’m opening one representative ledger to identify its structural markers, then I’ll extract only those markers across all scenarios.",
+    "The ledger is valid UTF-8; only the PowerShell display path garbled the Chinese labels. I’ve confirmed the structural fields are `治理状态` and `替代关系`, so the projection can be built deterministically from ADR headings plus those metadata lines, while excluding decision and reason text entirely.",
+    "The metadata inventory already distinguishes the intended matrix: valid graph, unilateral links, directional mismatch, duplicates, missing state, invalid targets, self-reference, cycles, status mismatch, PLAN cross-check, and selective loading. Before final validation, I’m reading only the one decision body and PRD section explicitly required by scenario 12’s `Next` instruction; the audit archive remains untouched.",
+    "One validator detail needed tightening: repeated identical `replaced-by` declarations are a duplicate-field conflict, but they do not make the target semantically ambiguous. I’m normalizing identical values in the projection while preserving the duplicate declaration as the sole blocker, avoiding a misleading secondary status error."
+  ],
+  "final_response": "Recovered all 12 compact states and projected 28 ADR declarations using exactly:\n\n`id, title, governance_state, replaces_ids, replaced_by_id, body_anchor`\n\nAnchors use `docs/DECISIONS.md#<normalized-id-and-title>`.\n\n**Results**\n- `01-valid-graph`: Valid. Active: `ADR-004`, `ADR-005`, `ADR-006`; PLAN references valid.\n- `02-unilateral`: Blocked. `ADR-001` points to `ADR-002`, but reverse `replaces` relation is absent.\n- `03-direction-mismatch`: Blocked. `ADR-001` names `ADR-003`; `ADR-003` only replaces `ADR-002`.\n- `04-duplicate-relation`: Blocked. Identical `replaced-by ADR-002` fields at `DECISIONS.md:7-8`.\n- `05-duplicate-id`: Blocked. `ADR-001` declared twice at `DECISIONS.md:3` and `:11`.\n- `06-missing-state`: Blocked. `ADR-001` lacks `governance_state`.\n- `07-invalid-target`: Blocked. `ADR-001` replaces nonexistent `ADR-999`.\n- `08-self-reference`: Blocked. `ADR-001` both replaces and is replaced by itself.\n- `09-cycle`: Blocked. Cycle: `ADR-001 -> ADR-002 -> ADR-001`.\n- `10-status-mismatch`: Blocked. `ADR-001` is confirmed but has `replaced-by ADR-002`.\n- `11-plan-crosscheck`: Blocked. PLAN line 14 lists replaced `ADR-003` as active and references missing `ADR-999`.\n- `12-selective-loading`: Valid. `ADR-001` and `ADR-002` are active; all PLAN references resolve.\n\nFor scenario 12, only the referenced `ADR-002` body and PRD `Retention Rules` section were loaded. Both specify 30-day retention. `audits/ARCHIVE.md` was not read.\n\nNo files were modified.",
+  "final_response_chars": 1479,
+  "tool_calls": [
+    {
+      "call_id": "call_TvmPccOE4fjyS5cNMDVUZopj",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'C:\\Users\\wang yazhou\\.codex\\worktrees\\d09f\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\SKILL.md'",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\d09f\\efficiently use codex",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 2068,
+        "h2_sections": 3,
+        "sha256": "98e14aa148c95de4599f5f6042cb3661420107ddd82e2b7fa3645e03c356b633",
+        "preview": "Exit code: 0\nWall time: 5.9 seconds\nOutput:\n---\r\nname: codex-project-workflow\r\ndescription: Structure and govern Codex work for new or ambiguous projects, multi-step implementation, professional research, solution comparison, architecture and planning, third-party downloads, high-risk changes, project recovery, or requests for a rigorous workflow. Also use for ordinary multi-step project tasks when research, confirmation, implementation-path verification, recovery, or coordination may matter. Do not use for simple questions or explicit low-risk one-step edits or commands.\r\n---\r\n\r\n# Codex Project Workflow\r\n\r\n## Route\r\n\r\n1. Inspect first. Keep goal, constraints, and completion test. Ask only blocking decisions.\r\n2. From the repo root containing this skill, run `python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME \"Execution Rules\" \"Output Requirements\"`. Use `research` for unstable evidence/options; `governance` for third-party assets, installs, execution, private networking, approvals, agents, or durable changes; `verification` for writes, recovery, production/core paths, or path proof. Load each triggered protocol only.\r\n3. Never list headings, scan skill directories, or read references directly. Report helper failure; it waives no gate.\r\n4. Agents suit three streams, conflicting evidence, or high failure cost. Load governance, propose count/roles, ownership, parallel/main work, benefit, cost, risks, and fallback, then ask. Only explicit acceptance starts them; safe unrelated work may continue.\r\n\r\n## Safeguards\r\n\r\n- Never invent execution, sources, tests, or verification.\r\n- Before writes map entry, state, boundaries, and bypasses. Freeze an evidence-bound contract first for production routing, persistence/schema/migration, architecture, core capability, alternate final output, explicit path proof, or high impact. Never borrow a neighboring or shadow implementation.\r\n- Safety, authorization, and verification override budgets.\r\n\r\n## Finish\r\n\r\nV"
+      }
+    },
+    {
+      "call_id": "call_1K6vrTX1Kmfv8yV6mKz9vzUd",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python '.agents/skills/codex-project-workflow/scripts/read_reference.py' verification 'Execution Rules' 'Output Requirements'",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\d09f\\efficiently use codex",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 2002,
+        "h2_sections": 2,
+        "sha256": "8f2b70864322877aa8b99f2e8d9d79e8be8331fa02a9c8602973941b9d29edf2",
+        "preview": "Exit code: 124\nWall time: 10.4 seconds\nOutput:\ncommand timed out after 10357 milliseconds\n## Execution Rules\r\n\r\n- Create a formal implementation contract before the first relevant write when any trigger applies: production entry or routing changes; state authority, persistence, schema, or migration changes; architecture boundary or ownership changes; new, copied, or replacement core capability; a direct alternate final-output path; explicit user path proof; or high-impact commitment.\r\n- Freeze the contract from independent evidence before writing. If the source, version, entry, state update, save path, or ownership cannot be proven, stop as implementation-path unverified; do not borrow a sibling, neighboring fixture, helper, or post-hoc contract.\r\n- File count, module count, tests plus code, and mechanical cross-file edits do not trigger a formal contract by themselves. When every trigger is false, keep a one-to-three-line internal path constraint.\r\n- Bind contract claims to independent project evidence such as confirmed docs, registration points, callers, runtime entry points, or state definitions. Preserve later contract differences.\r\n- Test through the formal product entry point when applicable. Mock, spy, coverage, or direct module calls may supplement but cannot alone prove the product path.\r\n- Verify result and implementation path separately. An output can be correct while the implementation is unacceptable.\r\n- For recovery, read compact `PLAN.md` first. The initial ADR projection is exactly `id`, `title`, `governance_state`, `replaces_ids`, `replaced_by_id`, and `body_anchor`; metadata extraction must exclude reason and decision-body text. Load only referenced ADR bodies and PRD sections afterward.\r\n\r\n## Output Requirements\r\n\r\nReport user action, product entry point, core path, state or persistence change, result, tests, auxiliary scripts, deviations, and unverified paths. If path evidence is insufficient, say: result verified, implementation path unverified."
+      }
+    },
+    {
+      "call_id": "call_osQCpRKMPelssaQiRqjnoixa",
+      "name": "update_plan",
+      "arguments": {
+        "plan": [
+          {
+            "step": "Inventory independent scenario projects and compact state files",
+            "status": "in_progress"
+          },
+          {
+            "step": "Recover PLAN state and build ADR metadata projections",
+            "status": "pending"
+          },
+          {
+            "step": "Validate replacement relations and PLAN references",
+            "status": "pending"
+          },
+          {
+            "step": "Report blocking conflicts and verified outputs",
+            "status": "pending"
+          }
+        ]
+      },
+      "output": {
+        "chars": 12,
+        "h2_sections": 0,
+        "sha256": "670b64743d66cba15de8e393dbd58415c540361f2266f3843e56e920477ee972",
+        "preview": "Plan updated"
+      }
+    },
+    {
+      "call_id": "call_aLr9ivtJYQsFdgsouwD6nJOX",
+      "name": "shell_command",
+      "arguments": {
+        "command": "rg --files 'D:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios'",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\d09f\\efficiently use codex",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 3227,
+        "h2_sections": 0,
+        "sha256": "fc6256dcb92c3c5f1e12d71e41c379912e4e6f901f4ad3897dcf66cb305a743d",
+        "preview": "Exit code: 0\nWall time: 6.9 seconds\nOutput:\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\12-selective-loading\\docs\\PRD.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\12-selective-loading\\docs\\PLAN.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\12-selective-loading\\docs\\DECISIONS.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\12-selective-loading\\docs\\audits\\ARCHIVE.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\11-plan-crosscheck\\docs\\PLAN.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\11-plan-crosscheck\\docs\\DECISIONS.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\10-status-mismatch\\docs\\PLAN.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\10-status-mismatch\\docs\\DECISIONS.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\09-cycle\\docs\\PLAN.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\09-cycle\\docs\\DECISIONS.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\08-self-reference\\docs\\PLAN.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\08-self-reference\\docs\\DECISIONS.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\07-invalid-target\\docs\\PLAN.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\07-invalid-target\\docs\\DECISIONS.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\06-missing-state\\docs\\PLAN.md\nD:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\06-missing-state\\docs\\DECISIONS"
+      }
+    },
+    {
+      "call_id": "call_4lmtrUNJWajOmEIdgmBanvhA",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-ChildItem -LiteralPath 'D:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios' -Directory | Sort-Object Name | ForEach-Object { $p = Join-Path $_.FullName 'docs\\PLAN.md'; \"### $($_.Name)\"; Get-Content -Raw -LiteralPath $p }",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\d09f\\efficiently use codex",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 4278,
+        "h2_sections": 12,
+        "sha256": "17f28792b3b11a7be41169b99a382cb1aea69917512ebe89224aea37443e2172",
+        "preview": "Exit code: 0\nWall time: 4.8 seconds\nOutput:\n### 01-valid-graph\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore release state\n\n## Current Snapshot\n\n- Goal: prepare the current release.\n- Key constraints: use active ADRs only.\n- Completed: replacement decisions recorded.\n- Next: apply ADR-004 and ADR-005.\n- Blockers: none.\n- Related active decisions: ADR-004, ADR-005, ADR-006.\n\r\n### 02-unilateral\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore deployment state\n\n## Current Snapshot\n\n- Goal: resume deployment work.\n- Completed: decision file assembled.\n- Next: use ADR-002.\n- Blockers: validate decision relations.\n- Related active decisions: ADR-002.\n\r\n### 03-direction-mismatch\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore storage state\n\n## Current Snapshot\n\n- Goal: resume storage implementation.\n- Completed: decisions drafted.\n- Next: validate active storage decision.\n- Blockers: decision relation conflict.\n\r\n### 04-duplicate-relation\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore API state\n\n## Current Snapshot\n\n- Goal: resume API work.\n- Completed: decisions assembled.\n- Next: validate ADR metadata.\n- Blockers: parser validation.\n\r\n### 05-duplicate-id\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore notification state\n\n## Current Snapshot\n\n- Goal: resume notification work.\n- Completed: decision file assembled.\n- Next: determine the active notification decision.\n- Blockers: decision index validation.\n\r\n### 06-missing-state\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore cache state\n\n## Current Snapshot\n\n- Goal: resume cache work.\n- Completed: decision file assembled.\n"
+      }
+    },
+    {
+      "call_id": "call_McCvhQQYlvEICNna8yvAwDED",
+      "name": "shell_command",
+      "arguments": {
+        "command": "rg -n --no-heading \"^(#{1,3} |[-*]?(ID|Title|Status|Governance State|Replaces|Replaced By|Body Anchor):|id:|title:|governance_state:|replaces_ids:|replaced_by_id:|body_anchor:)\" 'D:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\*\\docs\\DECISIONS.md'",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\d09f\\efficiently use codex",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 326,
+        "h2_sections": 0,
+        "sha256": "751af06bcbeb8a748d66b5f1532e06e2b2f19e2a9684172af5035a8caf298536",
+        "preview": "Exit code: 1\nWall time: 2.1 seconds\nOutput:\nrg: D:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\*\\docs\\DECISIONS.md: IO error for operation on D:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\*\\docs\\DECISIONS.md: 文件名、目录名或卷标语法不正确。 (os error 123)\n"
+      }
+    },
+    {
+      "call_id": "call_PivfxyuMYgCskSSDKnv5NRwH",
+      "name": "shell_command",
+      "arguments": {
+        "command": "rg -n --no-heading -g '*/docs/DECISIONS.md' \"^(#{1,3} |[-*]?(ID|Title|Status|Governance State|Replaces|Replaced By|Body Anchor):|id:|title:|governance_state:|replaces_ids:|replaced_by_id:|body_anchor:)\" 'D:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios'",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\d09f\\efficiently use codex",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 44,
+        "h2_sections": 0,
+        "sha256": "05aa3b771fc7f4e1d56442d7aec94686594dce800e5ad20bf9da654e844860a1",
+        "preview": "Exit code: 1\nWall time: 3.5 seconds\nOutput:\n"
+      }
+    },
+    {
+      "call_id": "call_PxyVxrkHhROCgTcL80JpMU7i",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -LiteralPath 'D:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix\\scenarios\\01-valid-graph\\docs\\DECISIONS.md' -TotalCount 100",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\d09f\\efficiently use codex",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 1067,
+        "h2_sections": 6,
+        "sha256": "19d37496105efd60de0744b00199c89d8901a1b315c75e7105de7bd1520e3f45",
+        "preview": "Exit code: 0\nWall time: 2 seconds\nOutput:\n# Decisions\r\n\r\n## ADR-001: Legacy queue\r\n\r\n- 娌荤悊鐘舵€侊細宸叉浛浠?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鏇夸唬鍏崇郴锛歳eplaced-by ADR-003\r\n- 鍐冲畾鍐呭锛歎se the legacy queue.\r\n- 鍘熷洜锛欼nitial delivery choice.\r\n\r\n## ADR-002: Legacy retry\r\n\r\n- 娌荤悊鐘舵€侊細宸叉浛浠?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鏇夸唬鍏崇郴锛歳eplaced-by ADR-003\r\n- 鍐冲畾鍐呭锛歎se fixed retries.\r\n- 鍘熷洜锛欼nitial retry policy.\r\n\r\n## ADR-003: Unified delivery\r\n\r\n- 娌荤悊鐘舵€侊細宸叉浛浠?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鏇夸唬鍏崇郴锛歳eplaces ADR-001, ADR-002\r\n- 鏇夸唬鍏崇郴锛歳eplaced-by ADR-004\r\n- 鍐冲畾鍐呭锛歎nify queue and retry policy.\r\n- 鍘熷洜锛歍his decision replaces older policy text; prose is not a relation field.\r\n\r\n## ADR-004: Current delivery\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細鐙珛澶嶆牳\r\n- 鏇夸唬鍏崇郴锛歳eplaces ADR-003\r\n- 鍐冲畾鍐呭锛歎se the current delivery service.\r\n- 鍘熷洜锛欼t supports current reliability requirements.\r\n\r\n## ADR-005: Metrics\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鏇夸唬鍏崇郴锛氭棤\r\n- 鍐冲畾鍐呭锛歊ecord delivery metrics.\r\n- 鍘熷洜锛歄perational visibility.\r\n\r\n## ADR-006: Alerting\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細宸茶嚜鏌?- 鍐冲畾鍐呭锛欰lert on sustained delivery failure.\r\n- 鍘熷洜锛歀imit unnoticed outages.\r\n"
+      }
+    },
+    {
+      "call_id": "call_eE4nDCfDIf6tYY2H8EiLo5x3",
+      "name": "js",
+      "arguments": {
+        "code": "var fs = await import('node:fs/promises'); var p='D:/project/.codex-eval-full/REGRESSION-20260612-01/workspaces/E12/state_matrix/scenarios/01-valid-graph/docs/DECISIONS.md'; var txt=await fs.readFile(p,'utf8'); nodeRepl.write(JSON.stringify(txt.split(/\\r?\\n/).slice(0,12)));",
+        "title": "Inspect ledger encoding"
+      },
+      "output": {
+        "chars": 284,
+        "h2_sections": 0,
+        "sha256": "3b734995c6c9e6df27fbe78a09abbb91eed89604355b8818866e50bbe27132c9",
+        "preview": "Wall time: 1.0739 seconds\nOutput:\n[{\"type\":\"text\",\"text\":\"[\\\"# Decisions\\\",\\\"\\\",\\\"## ADR-001: Legacy queue\\\",\\\"\\\",\\\"- 治理状态：已替代\\\",\\\"- 证据状态：已验证\\\",\\\"- 替代关系：replaced-by ADR-003\\\",\\\"- 决定内容：Use the legacy queue.\\\",\\\"- 原因：Initial delivery choice.\\\",\\\"\\\",\\\"## ADR-002: Legacy retry\\\",\\\"\\\"]\"}]"
+      }
+    },
+    {
+      "call_id": "call_tcxtAXhRfb9n4cXP6qdHFYEZ",
+      "name": "js",
+      "arguments": {
+        "code": "var root='D:/project/.codex-eval-full/REGRESSION-20260612-01/workspaces/E12/state_matrix/scenarios'; var dirs=(await fs.readdir(root,{withFileTypes:true})).filter(x=>x.isDirectory()).map(x=>x.name).sort(); var rawMeta={}; for (var d of dirs){var s=await fs.readFile(`${root}/${d}/docs/DECISIONS.md`,'utf8'); var lines=s.split(/\\r?\\n/); var recs=[]; var cur=null; for (var line of lines){var h=line.match(/^##\\s+(ADR-\\d+):\\s*(.+?)\\s*$/); if(h){cur={id:h[1],title:h[2],governance:[],relations:[],heading:line};recs.push(cur);continue;} if(!cur)continue; var g=line.match(/^-\\s*治理状态：\\s*(.*?)\\s*$/); if(g)cur.governance.push(g[1]); var r=line.match(/^-\\s*替代关系：\\s*(.*?)\\s*$/); if(r)cur.relations.push(r[1]); } rawMeta[d]=recs;} nodeRepl.write(JSON.stringify(rawMeta,null,2));",
+        "title": "Extract ADR metadata markers"
+      },
+      "output": {
+        "chars": 7344,
+        "h2_sections": 0,
+        "sha256": "db61151a27c9de6529f79c39fb8d2cd30a096b5b98fd708e945971502607b65e",
+        "preview": "Wall time: 0.1824 seconds\nOutput:\n[{\"type\":\"text\",\"text\":\"{\\n  \\\"01-valid-graph\\\": [\\n    {\\n      \\\"id\\\": \\\"ADR-001\\\",\\n      \\\"title\\\": \\\"Legacy queue\\\",\\n      \\\"governance\\\": [\\n        \\\"已替代\\\"\\n      ],\\n      \\\"relations\\\": [\\n        \\\"replaced-by ADR-003\\\"\\n      ],\\n      \\\"heading\\\": \\\"## ADR-001: Legacy queue\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"ADR-002\\\",\\n      \\\"title\\\": \\\"Legacy retry\\\",\\n      \\\"governance\\\": [\\n        \\\"已替代\\\"\\n      ],\\n      \\\"relations\\\": [\\n        \\\"replaced-by ADR-003\\\"\\n      ],\\n      \\\"heading\\\": \\\"## ADR-002: Legacy retry\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"ADR-003\\\",\\n      \\\"title\\\": \\\"Unified delivery\\\",\\n      \\\"governance\\\": [\\n        \\\"已替代\\\"\\n      ],\\n      \\\"relations\\\": [\\n        \\\"replaces ADR-001, ADR-002\\\",\\n        \\\"replaced-by ADR-004\\\"\\n      ],\\n      \\\"heading\\\": \\\"## ADR-003: Unified delivery\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"ADR-004\\\",\\n      \\\"title\\\": \\\"Current delivery\\\",\\n      \\\"governance\\\": [\\n        \\\"已确认\\\"\\n      ],\\n      \\\"relations\\\": [\\n        \\\"replaces ADR-003\\\"\\n      ],\\n      \\\"heading\\\": \\\"## ADR-004: Current delivery\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"ADR-005\\\",\\n      \\\"title\\\": \\\"Metrics\\\",\\n      \\\"governance\\\": [\\n        \\\"已确认\\\"\\n      ],\\n      \\\"relations\\\": [\\n        \\\"无\\\"\\n      ],\\n      \\\"heading\\\": \\\"## ADR-005: Metrics\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"ADR-006\\\",\\n      \\\"title\\\": \\\"Alerting\\\",\\n      \\\"governance\\\": [\\n        \\\"已确认\\\"\\n      ],\\n      \\\"relations\\\": [],\\n      \\\"heading\\\": \\\"## ADR-006: Alerting\\\"\\n    }\\n  ],\\n  \\\"02-unilateral\\\": [\\n    {\\n      \\\"id\\\": \\\"ADR-001\\\",\\n      \\\"title\\\": \\\"Old deploy path\\\",\\n      \\\"governance\\\": [\\n        \\\"已替代\\\"\\n      ],\\n      \\\"relations\\\": [\\n        \\\"replaced-by ADR-002\\\"\\n      ],\\n      \\\"heading\\\": \\\"## ADR-001: Old deploy path\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"ADR-002\\\",\\n      \\\"title\\\": \\\"New deploy path\\\",\\n      \\\"governance\\\": [\\n        \\\"已确认\\\"\\n      ],\\n      \\\"relations\\\": [],\\n      \\\"heading\\\": \\\"#"
+      }
+    },
+    {
+      "call_id": "call_5NEGRcome33nWeDgJP4YYGLV",
+      "name": "js",
+      "arguments": {
+        "code": "var d12=`${root}/12-selective-loading/docs`; var dec12=await fs.readFile(`${d12}/DECISIONS.md`,'utf8'); var ls12=dec12.split(/\\r?\\n/); var start12=ls12.findIndex(x=>/^## ADR-002:/.test(x)); var end12=ls12.findIndex((x,i)=>i>start12&&/^## /.test(x)); if(end12<0)end12=ls12.length; var adr2body=ls12.slice(start12,end12).filter(x=>/^## ADR-002:|^- (决定内容|原因)：/.test(x)); var prd12=await fs.readFile(`${d12}/PRD.md`,'utf8'); var pl12=prd12.split(/\\r?\\n/); var ps12=pl12.findIndex(x=>/^## Retention Rules\\s*$/.test(x)); var pe12=pl12.findIndex((x,i)=>i>ps12&&/^## /.test(x)); if(pe12<0)pe12=pl12.length; nodeRepl.write(JSON.stringify({adr2_relevant_body:adr2body,prd_retention_rules:pl12.slice(ps12,pe12)},null,2));",
+        "title": "Read referenced retention sections"
+      },
+      "output": {
+        "chars": 467,
+        "h2_sections": 0,
+        "sha256": "08d56266a8ca77077e7fb1cf42e31a7b5c0ed896cddb2a80f1056a6a4f572f54",
+        "preview": "Wall time: 0.2457 seconds\nOutput:\n[{\"type\":\"text\",\"text\":\"{\\n  \\\"adr2_relevant_body\\\": [\\n    \\\"## ADR-002: Retention period\\\",\\n    \\\"- 决定内容：Retain completed records for 30 days.\\\",\\n    \\\"- 原因：Balance recovery needs and storage cost.\\\"\\n  ],\\n  \\\"prd_retention_rules\\\": [\\n    \\\"## Retention Rules\\\",\\n    \\\"\\\",\\n    \\\"Completed records remain available for 30 days. Expired records are removed by\\\",\\n    \\\"the existing maintenance command.\\\",\\n    \\\"\\\"\\n  ]\\n}\"}]"
+      }
+    },
+    {
+      "call_id": "call_qzNcybDTCz4YSr4stTNFnnvn",
+      "name": "js",
+      "arguments": {
+        "code": "function slugHeading(id,title){return `docs/DECISIONS.md#${(`${id}-${title}`).toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^\\p{L}\\p{N}\\s-]/gu,'').trim().replace(/\\s+/g,'-').replace(/-+/g,'-')}`;} function parseRelations(items){var replaces=[];var replacedBy=[];var explicitNone=0;var invalid=[]; for(var it of items){var v=it.value.trim();if(v==='无'){explicitNone++;continue;}var a=v.match(/^replaces\\s+(.+)$/i);if(a){for(var id of (a[1].match(/ADR-\\d+/g)||[]))replaces.push({id,line:it.line});continue;}var b=v.match(/^replaced-by\\s+(ADR-\\d+)$/i);if(b){replacedBy.push({id:b[1],line:it.line});continue;}invalid.push(it);}return{replaces,replacedBy,explicitNone,invalid};} var results={}; for(var d of dirs){var decPath=`${root}/${d}/docs/DECISIONS.md`;var planPath=`${root}/${d}/docs/PLAN.md`;var s=await fs.readFile(decPath,'utf8');var lines=s.split(/\\r?\\n/);var recs=[];var cur=null;for(var i=0;i<lines.length;i++){var line=lines[i];var h=line.match(/^##\\s+(ADR-\\d+):\\s*(.+?)\\s*$/);if(h){cur={id:h[1],title:h[2],headingLine:i+1,governance:[],relations:[]};recs.push(cur);continue;}if(!cur)continue;var g=line.match(/^-\\s*治理状态：\\s*(.*?)\\s*$/);if(g)cur.governance.push({value:g[1],line:i+1});var r=line.match(/^-\\s*替代关系：\\s*(.*?)\\s*$/);if(r)cur.relations.push({value:r[1],line:i+1});} var idGroups=new Map();for(var r of recs){if(!idGroups.has(r.id))idGroups.set(r.id,[]);idGroups.get(r.id).push(r);}var diagnostics=[];for(var [id,grp] of idGroups)if(grp.length>1)diagnostics.push({code:'DUPLICATE_ID',at:grp.map(x=>x.headingLine),detail:`${id} declared ${grp.length} times`}); var unique=new Map([...idGroups].filter(([,g])=>g.length===1).map(([id,g])=>[id,g[0]]));for(var r of recs){r.rel=parseRelations(r.relations);if(r.governance.length!==1)diagnostics.push({code:'GOVERNANCE_STATE_CARDINALITY',at:[r.headingLine,...r.governance.map(x=>x.line)],detail:`${r.id} has ${r.governance.length} governance states`});var relKeys=r.relations.map(x=>x.value.toLowerCase());for(var k of new Set(relKeys)){var hits=r.relations.filter(x=>x.value.toLowerCase()===k);if(hits.length>1)diagnostics.push({code:'DUPLICATE_RELATION',at:hits.map(x=>x.line),detail:`${r.id}: ${hits[0].value}`});}if(r.rel.invalid.length)diagnostics.push({code:'INVALID_RELATION_SYNTAX',at:r.rel.invalid.map(x=>x.line),detail:r.id});if(r.rel.explicitNone&&r.relations.length>1)diagnostics.push({code:'NONE_WITH_RELATION',at:r.relations.map(x=>x.line),detail:r.id});if(r.rel.replacedBy.length>1)diagnostics.push({code:'MULTIPLE_REPLACED_BY',at:r.rel.replacedBy.map(x=>x.line),detail:r.id});for(var e of [...r.rel.replaces.map(x=>({...x,kind:'replaces'})),...r.rel.replacedBy.map(x=>({...x,kind:'replaced-by'}))]){if(e.id===r.id)diagnostics.push({code:'SELF_REFERENCE',at:[e.line],detail:`${r.id} ${e.kind} itself`});if(!unique.has(e.id))diagnostics.push({code:'INVALID_TARGET',at:[e.line],detail:`${r.id} ${e.kind} ${e.id}, target missing or ambiguous`});}} for(var r of recs){if(idGroups.get(r.id)?.length!==1)continue;for(var e of r.rel.replaces){var target=unique.get(e.id);if(target&&e.id!==r.id&&!target.rel.replacedBy.some(x=>x.id===r.id))diagnostics.push({code:'UNILATERAL_REPLACES',at:[e.line,target.headingLine],detail:`${r.id} replaces ${e.id}, but ${e.id} does not point back`});}for(var e of r.rel.replacedBy){var source=unique.get(e.id);if(source&&e.id!==r.id&&!source.rel.replaces.some(x=>x.id===r.id))diagnostics.push({code:'UNILATERAL_REPLACED_BY',at:[e.line,source.headingLine],detail:`${r.id} replaced-by ${e.id}, but ${e.id} does not replace it`});}var state=r.governance[0]?.value;var rb=r.rel.replacedBy.length===1?r.rel.replacedBy[0].id:null;if(state==='已确认'&&rb)diagnostics.push({code:'STATUS_MISMATCH',at:[r.governance[0].line,r.rel.replacedBy[0].line],detail:`${r.id} is confirmed but has replaced-by ${rb}`});if(state==='已替代'&&!rb)diagnostics.push({code:'STATUS_MISMATCH',at:[r.governance[0].line],detail:`${r.id} is replaced but lacks replaced-by`});} var adj=new Map([...unique.keys()].map(x=>[x,[]]));for(var [id,r] of unique)for(var e of r.rel.replaces)if(unique.has(e.id)&&e.id!==id)adj.get(id).push(e.id);var color=new Map(),stack=[];var cycleSet=new Set();function dfs(n){color.set(n,1);stack.push(n);for(var m of adj.get(n)){if(!color.has(m))dfs(m);else if(color.get(m)===1){var j=stack.indexOf(m);cycleSet.add([...stack.slice(j),m].join(' -> '));}}stack.pop();color.set(n,2);}for(var n of adj.keys())if(!color.has(n))dfs(n);for(var c of cycleSet)diagnostics.push({code:'REPLACEMENT_CYCLE',at:[],detail:c});var plan=await fs.readFile(planPath,'utf8');var planLines=plan.split(/\\r?\\n/);var planRefs=[];for(var i=0;i<planLines.length;i++)for(var id of (planLines[i].match(/ADR-\\d+/g)||[]))planRefs.push({id,line:i+1,text:planLines[i].trim()});for(var pr of planRefs){var grp=idGroups.get(pr.id);if(!grp)diagnostics.push({code:'PLAN_MISSING_REFERENCE',file:'PLAN.md',at:[pr.line],detail:pr.id});else if(grp.length!==1)diagnostics.push({code:'PLAN_AMBIGUOUS_REFERENCE',file:'PLAN.md',at:[pr.line],detail:pr.id});else if(grp[0].governance[0]?.value!=='已确认'||grp[0].rel.replacedBy.length)diagnostics.push({code:'PLAN_INACTIVE_REFERENCE',file:'PLAN.md',at:[pr.line],detail:`${pr.id} is not active`});}var projection=recs.map(r=>({id:r.id,title:r.title,governance_state:r.governance.length===1?r.governance[0].value:null,replaces_ids:r.rel.replaces.map(x=>x.id),replaced_by_id:r.rel.replacedBy.length===1?r.rel.replacedBy[0].id:null,body_anchor:slugHeading(r.id,r.title)}));results[d]={projection,plan_refs:planRefs.map(x=>x.id),diagnostics};} nodeRepl.write(JSON.stringify(results,null,2));",
+        "title": "Validate ADR graphs and PLAN references"
+      },
+      "output": {
+        "chars": 12024,
+        "h2_sections": 0,
+        "sha256": "f06395319b9d70e6dfe993ba19f67a3ae1ede279bb8bb19d02ceb2a84e3b8951",
+        "preview": "Wall time: 0.0557 seconds\nOutput:\n[{\"type\":\"text\",\"text\":\"{\\n  \\\"01-valid-graph\\\": {\\n    \\\"projection\\\": [\\n      {\\n        \\\"id\\\": \\\"ADR-001\\\",\\n        \\\"title\\\": \\\"Legacy queue\\\",\\n        \\\"governance_state\\\": \\\"已替代\\\",\\n        \\\"replaces_ids\\\": [],\\n        \\\"replaced_by_id\\\": \\\"ADR-003\\\",\\n        \\\"body_anchor\\\": \\\"docs/DECISIONS.md#adr-001-legacy-queue\\\"\\n      },\\n      {\\n        \\\"id\\\": \\\"ADR-002\\\",\\n        \\\"title\\\": \\\"Legacy retry\\\",\\n        \\\"governance_state\\\": \\\"已替代\\\",\\n        \\\"replaces_ids\\\": [],\\n        \\\"replaced_by_id\\\": \\\"ADR-003\\\",\\n        \\\"body_anchor\\\": \\\"docs/DECISIONS.md#adr-002-legacy-retry\\\"\\n      },\\n      {\\n        \\\"id\\\": \\\"ADR-003\\\",\\n        \\\"title\\\": \\\"Unified delivery\\\",\\n        \\\"governance_state\\\": \\\"已替代\\\",\\n        \\\"replaces_ids\\\": [\\n          \\\"ADR-001\\\",\\n          \\\"ADR-002\\\"\\n        ],\\n        \\\"replaced_by_id\\\": \\\"ADR-004\\\",\\n        \\\"body_anchor\\\": \\\"docs/DECISIONS.md#adr-003-unified-delivery\\\"\\n      },\\n      {\\n        \\\"id\\\": \\\"ADR-004\\\",\\n        \\\"title\\\": \\\"Current delivery\\\",\\n        \\\"governance_state\\\": \\\"已确认\\\",\\n        \\\"replaces_ids\\\": [\\n          \\\"ADR-003\\\"\\n        ],\\n        \\\"replaced_by_id\\\": null,\\n        \\\"body_anchor\\\": \\\"docs/DECISIONS.md#adr-004-current-delivery\\\"\\n      },\\n      {\\n        \\\"id\\\": \\\"ADR-005\\\",\\n        \\\"title\\\": \\\"Metrics\\\",\\n        \\\"governance_state\\\": \\\"已确认\\\",\\n        \\\"replaces_ids\\\": [],\\n        \\\"replaced_by_id\\\": null,\\n        \\\"body_anchor\\\": \\\"docs/DECISIONS.md#adr-005-metrics\\\"\\n      },\\n      {\\n        \\\"id\\\": \\\"ADR-006\\\",\\n        \\\"title\\\": \\\"Alerting\\\",\\n        \\\"governance_state\\\": \\\"已确认\\\",\\n        \\\"replaces_ids\\\": [],\\n        \\\"replaced_by_id\\\": null,\\n        \\\"body_anchor\\\": \\\"docs/DECISIONS.md#adr-006-alerting\\\"\\n      }\\n    ],\\n    \\\"plan_refs\\\": [\\n      \\\"ADR-004\\\",\\n      \\\"ADR-005\\\",\\n      \\\"ADR-004\\\",\\n      \\\"ADR-005\\\",\\n      \\\"ADR-006\\\"\\n    ],\\n    \\\"diagnostics\\\": []\\n  },\\n  \\\"02-unilateral\\\": {\\n    \\\"projection\\\":"
+      }
+    },
+    {
+      "call_id": "call_3TyTVUHRBPaLQNWzMylaKAbs",
+      "name": "js",
+      "arguments": {
+        "code": "for(var d of dirs){var item=results[d];for(var r of item.projection){r.replaces_ids=[...new Set(r.replaces_ids)];} } var r04=results['04-duplicate-relation'].projection.find(x=>x.id==='ADR-001');r04.replaced_by_id='ADR-002';results['04-duplicate-relation'].diagnostics=results['04-duplicate-relation'].diagnostics.filter(x=>!['MULTIPLE_REPLACED_BY','STATUS_MISMATCH'].includes(x.code)); var compact={};for(var d of dirs)compact[d]={status:results[d].diagnostics.length?'BLOCKED':'VALID',projection:results[d].projection,conflicts:results[d].diagnostics};nodeRepl.write(JSON.stringify(compact,null,2));",
+        "title": "Finalize deterministic projections"
+      },
+      "output": {
+        "chars": 11470,
+        "h2_sections": 0,
+        "sha256": "fd5c065e6147073eeea4690656e7997d3c39bd7fc508320325705bf6b43a7225",
+        "preview": "Wall time: 0.0308 seconds\nOutput:\n[{\"type\":\"text\",\"text\":\"{\\n  \\\"01-valid-graph\\\": {\\n    \\\"status\\\": \\\"VALID\\\",\\n    \\\"projection\\\": [\\n      {\\n        \\\"id\\\": \\\"ADR-001\\\",\\n        \\\"title\\\": \\\"Legacy queue\\\",\\n        \\\"governance_state\\\": \\\"已替代\\\",\\n        \\\"replaces_ids\\\": [],\\n        \\\"replaced_by_id\\\": \\\"ADR-003\\\",\\n        \\\"body_anchor\\\": \\\"docs/DECISIONS.md#adr-001-legacy-queue\\\"\\n      },\\n      {\\n        \\\"id\\\": \\\"ADR-002\\\",\\n        \\\"title\\\": \\\"Legacy retry\\\",\\n        \\\"governance_state\\\": \\\"已替代\\\",\\n        \\\"replaces_ids\\\": [],\\n        \\\"replaced_by_id\\\": \\\"ADR-003\\\",\\n        \\\"body_anchor\\\": \\\"docs/DECISIONS.md#adr-002-legacy-retry\\\"\\n      },\\n      {\\n        \\\"id\\\": \\\"ADR-003\\\",\\n        \\\"title\\\": \\\"Unified delivery\\\",\\n        \\\"governance_state\\\": \\\"已替代\\\",\\n        \\\"replaces_ids\\\": [\\n          \\\"ADR-001\\\",\\n          \\\"ADR-002\\\"\\n        ],\\n        \\\"replaced_by_id\\\": \\\"ADR-004\\\",\\n        \\\"body_anchor\\\": \\\"docs/DECISIONS.md#adr-003-unified-delivery\\\"\\n      },\\n      {\\n        \\\"id\\\": \\\"ADR-004\\\",\\n        \\\"title\\\": \\\"Current delivery\\\",\\n        \\\"governance_state\\\": \\\"已确认\\\",\\n        \\\"replaces_ids\\\": [\\n          \\\"ADR-003\\\"\\n        ],\\n        \\\"replaced_by_id\\\": null,\\n        \\\"body_anchor\\\": \\\"docs/DECISIONS.md#adr-004-current-delivery\\\"\\n      },\\n      {\\n        \\\"id\\\": \\\"ADR-005\\\",\\n        \\\"title\\\": \\\"Metrics\\\",\\n        \\\"governance_state\\\": \\\"已确认\\\",\\n        \\\"replaces_ids\\\": [],\\n        \\\"replaced_by_id\\\": null,\\n        \\\"body_anchor\\\": \\\"docs/DECISIONS.md#adr-005-metrics\\\"\\n      },\\n      {\\n        \\\"id\\\": \\\"ADR-006\\\",\\n        \\\"title\\\": \\\"Alerting\\\",\\n        \\\"governance_state\\\": \\\"已确认\\\",\\n        \\\"replaces_ids\\\": [],\\n        \\\"replaced_by_id\\\": null,\\n        \\\"body_anchor\\\": \\\"docs/DECISIONS.md#adr-006-alerting\\\"\\n      }\\n    ],\\n    \\\"conflicts\\\": []\\n  },\\n  \\\"02-unilateral\\\": {\\n    \\\"status\\\": \\\"BLOCKED\\\",\\n    \\\"projection\\\": [\\n      {\\n        \\\"id\\\": \\\"ADR-001\\\",\\n        \\\"title\\\": \\\"Old deplo"
+      }
+    },
+    {
+      "call_id": "call_GrnyhW6mxM7KxME2ENYySeG8",
+      "name": "update_plan",
+      "arguments": {
+        "explanation": "All 12 compact PLANs were recovered; ADR metadata was projected without decision/reason text, graph and PLAN checks completed, and only scenario 12's explicitly referenced ADR/PRD sections were loaded.",
+        "plan": [
+          {
+            "step": "Inventory independent scenario projects and compact state files",
+            "status": "completed"
+          },
+          {
+            "step": "Recover PLAN state and build ADR metadata projections",
+            "status": "completed"
+          },
+          {
+            "step": "Validate replacement relations and PLAN references",
+            "status": "completed"
+          },
+          {
+            "step": "Report blocking conflicts and verified outputs",
+            "status": "completed"
+          }
+        ]
+      },
+      "output": {
+        "chars": 12,
+        "h2_sections": 0,
+        "sha256": "670b64743d66cba15de8e393dbd58415c540361f2266f3843e56e920477ee972",
+        "preview": "Plan updated"
+      }
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 302086,
+    "cached_input_tokens": 257152,
+    "output_tokens": 7480,
+    "reasoning_output_tokens": 2802,
+    "total_tokens": 309566
+  },
+  "context_trace": {
+    "project_skill_listed": true,
+    "project_skill_description_chars": 486,
+    "skill_body_read_calls": [
+      "call_TvmPccOE4fjyS5cNMDVUZopj"
+    ],
+    "skill_body_loaded_chars": 1461,
+    "skill_tool_output_chars": 2068,
+    "reference_read_calls": [
+      "call_1K6vrTX1Kmfv8yV6mKz9vzUd"
+    ],
+    "reference_list_calls": [],
+    "reference_section_read_calls": [],
+    "reference_failed_calls": [
+      "call_1K6vrTX1Kmfv8yV6mKz9vzUd"
+    ],
+    "reference_files": [],
+    "reference_loaded_chars": 0,
+    "reference_tool_output_chars": 2002,
+    "reference_h2_sections": 2,
+    "governance_read_calls": [
+      "call_McCvhQQYlvEICNna8yvAwDED",
+      "call_PivfxyuMYgCskSSDKnv5NRwH",
+      "call_PxyVxrkHhROCgTcL80JpMU7i",
+      "call_eE4nDCfDIf6tYY2H8EiLo5x3",
+      "call_tcxtAXhRfb9n4cXP6qdHFYEZ",
+      "call_5NEGRcome33nWeDgJP4YYGLV",
+      "call_qzNcybDTCz4YSr4stTNFnnvn"
+    ]
+  },
+  "fixture": {
+    "root": "D:\\project\\.codex-eval-full\\REGRESSION-20260612-01\\workspaces\\E12\\state_matrix",
+    "before_inventory": {
+      "scenarios/01-valid-graph/docs/DECISIONS.md": {
+        "sha256": "6cb514929df536f9637b50c3616b63f7ba64c591989ff2559857b354fb528775",
+        "bytes": 1259
+      },
+      "scenarios/01-valid-graph/docs/PLAN.md": {
+        "sha256": "a9d7ba9a9d0c5f690eb0645c2bd33e4bced1eb8cc043be78fe51dffd4e5638cf",
+        "bytes": 382
+      },
+      "scenarios/02-unilateral/docs/DECISIONS.md": {
+        "sha256": "7c6ad94e4a311b9d5e6bb9f9246f47ad182ae901aaa0bfe743a2ecb62d805e42",
+        "bytes": 366
+      },
+      "scenarios/02-unilateral/docs/PLAN.md": {
+        "sha256": "31a0544e31669b4cfa24f51b715643abc9143b9cb42a22e41707362ad18f357a",
+        "bytes": 323
+      },
+      "scenarios/03-direction-mismatch/docs/DECISIONS.md": {
+        "sha256": "1c0212bd1bc5ee060db235199c30e7439a399b5bb294d3bbf2cca538fc32477c",
+        "bytes": 569
+      },
+      "scenarios/03-direction-mismatch/docs/PLAN.md": {
+        "sha256": "8d507ee4dc49b1ae7acef54f984707051b064977382fecabcfb8ba1efff1abd9",
+        "bytes": 304
+      },
+      "scenarios/04-duplicate-relation/docs/DECISIONS.md": {
+        "sha256": "b8b247a4a69b8f7ecce8f81f007b060faa52c9e747ac76a362bfe304c1c10712",
+        "bytes": 397
+      },
+      "scenarios/04-duplicate-relation/docs/PLAN.md": {
+        "sha256": "ab6e92707698eb8c174aa22b79f9dd81becad7883c2045b1a50d022da150697b",
+        "bytes": 268
+      },
+      "scenarios/05-duplicate-id/docs/DECISIONS.md": {
+        "sha256": "886af341956cd3d691b4ea62fdb76e0618319c4cc9302f5b62fbbb7a31b92a77",
+        "bytes": 388
+      },
+      "scenarios/05-duplicate-id/docs/PLAN.md": {
+        "sha256": "a619eb885f682070389d5a77673dfa5c9b7dec96faa4951c899fb528cd6c2997",
+        "bytes": 319
+      },
+      "scenarios/06-missing-state/docs/DECISIONS.md": {
+        "sha256": "a8420219f4d551a5a5befdd4f42c5293c23c5672fac35f65c5283f04c8c2d2cc",
+        "bytes": 163
+      },
+      "scenarios/06-missing-state/docs/PLAN.md": {
+        "sha256": "ab622d7d46c3b587519cd910caca95460a9e0c13fe08c9053b847d0137fb8491",
+        "bytes": 301
+      },
+      "scenarios/07-invalid-target/docs/DECISIONS.md": {
+        "sha256": "f94687578889263b0501b1ea36cfa6d9e17d66ca79fb44c0c5ac6212d9c61b4e",
+        "bytes": 201
+      },
+      "scenarios/07-invalid-target/docs/PLAN.md": {
+        "sha256": "d6fbb02e429fcfc01144074bb7c4ee45eb2f289252e5d6989542d0557d125544",
+        "bytes": 308
+      },
+      "scenarios/08-self-reference/docs/DECISIONS.md": {
+        "sha256": "6cbeb2a2a4ef779724bf871b953a928860a21b98bbbe4bea384924c7daa89b70",
+        "bytes": 245
+      },
+      "scenarios/08-self-reference/docs/PLAN.md": {
+        "sha256": "9f3e7b72a56c9ae31e80842befb8be8ca00b9a6a0110b27ae7a523470edc4e75",
+        "bytes": 296
+      },
+      "scenarios/09-cycle/docs/DECISIONS.md": {
+        "sha256": "b07646e31e922f0b1c4b4a7284699cd2e215506128212c82720d98942d0e7636",
+        "bytes": 451
+      },
+      "scenarios/09-cycle/docs/PLAN.md": {
+        "sha256": "a374132bff3c75f7607edb8f699284f6d27633c1a65fe63e615d7c1ac9c34f9d",
+        "bytes": 309
+      },
+      "scenarios/10-status-mismatch/docs/DECISIONS.md": {
+        "sha256": "443a9491026f29a3eef6d885826c47f8442c78f1c878ed715dbb268bb1f92955",
+        "bytes": 433
+      },
+      "scenarios/10-status-mismatch/docs/PLAN.md": {
+        "sha256": "85d5d7db9e4b895649d64e0d4d76cae1314bf51bc072742368a751a04960d865",
+        "bytes": 322
+      },
+      "scenarios/11-plan-crosscheck/docs/DECISIONS.md": {
+        "sha256": "982248b6ea6f080f2d034857c9b032234dd1de9800004ed64df60372dee88bbc",
+        "bytes": 754
+      },
+      "scenarios/11-plan-crosscheck/docs/PLAN.md": {
+        "sha256": "2f7d4e89b55ce7f2970c4a1caee3e6e23f220390172ae1058da504d7d87a7218",
+        "bytes": 381
+      },
+      "scenarios/12-selective-loading/docs/audits/ARCHIVE.md": {
+        "sha256": "156de4420a4e9beaddfe55a6545753942fe03c6131bfe373b5e58956a5b93a8a",
+        "bytes": 187
+      },
+      "scenarios/12-selective-loading/docs/DECISIONS.md": {
+        "sha256": "ca62021913ee0c48a9e9b3fa1639c587e628ab03a4989e92986406ce157a3b3f",
+        "bytes": 433
+      },
+      "scenarios/12-selective-loading/docs/PLAN.md": {
+        "sha256": "d7f669cb99d6f940b7f8942708bbd84fdb5f9153c70bdd4c50c32c7dca5a7627",
+        "bytes": 427
+      },
+      "scenarios/12-selective-loading/docs/PRD.md": {
+        "sha256": "18a6ec5971ff3ae8735cb2754c1ae11f9782a1090ec6dffa5b8734d75df2311e",
+        "bytes": 405
+      }
+    },
+    "after_inventory": {
+      "scenarios/01-valid-graph/docs/DECISIONS.md": {
+        "bytes": 1259,
+        "sha256": "6cb514929df536f9637b50c3616b63f7ba64c591989ff2559857b354fb528775"
+      },
+      "scenarios/01-valid-graph/docs/PLAN.md": {
+        "bytes": 382,
+        "sha256": "a9d7ba9a9d0c5f690eb0645c2bd33e4bced1eb8cc043be78fe51dffd4e5638cf"
+      },
+      "scenarios/02-unilateral/docs/DECISIONS.md": {
+        "bytes": 366,
+        "sha256": "7c6ad94e4a311b9d5e6bb9f9246f47ad182ae901aaa0bfe743a2ecb62d805e42"
+      },
+      "scenarios/02-unilateral/docs/PLAN.md": {
+        "bytes": 323,
+        "sha256": "31a0544e31669b4cfa24f51b715643abc9143b9cb42a22e41707362ad18f357a"
+      },
+      "scenarios/03-direction-mismatch/docs/DECISIONS.md": {
+        "bytes": 569,
+        "sha256": "1c0212bd1bc5ee060db235199c30e7439a399b5bb294d3bbf2cca538fc32477c"
+      },
+      "scenarios/03-direction-mismatch/docs/PLAN.md": {
+        "bytes": 304,
+        "sha256": "8d507ee4dc49b1ae7acef54f984707051b064977382fecabcfb8ba1efff1abd9"
+      },
+      "scenarios/04-duplicate-relation/docs/DECISIONS.md": {
+        "bytes": 397,
+        "sha256": "b8b247a4a69b8f7ecce8f81f007b060faa52c9e747ac76a362bfe304c1c10712"
+      },
+      "scenarios/04-duplicate-relation/docs/PLAN.md": {
+        "bytes": 268,
+        "sha256": "ab6e92707698eb8c174aa22b79f9dd81becad7883c2045b1a50d022da150697b"
+      },
+      "scenarios/05-duplicate-id/docs/DECISIONS.md": {
+        "bytes": 388,
+        "sha256": "886af341956cd3d691b4ea62fdb76e0618319c4cc9302f5b62fbbb7a31b92a77"
+      },
+      "scenarios/05-duplicate-id/docs/PLAN.md": {
+        "bytes": 319,
+        "sha256": "a619eb885f682070389d5a77673dfa5c9b7dec96faa4951c899fb528cd6c2997"
+      },
+      "scenarios/06-missing-state/docs/DECISIONS.md": {
+        "bytes": 163,
+        "sha256": "a8420219f4d551a5a5befdd4f42c5293c23c5672fac35f65c5283f04c8c2d2cc"
+      },
+      "scenarios/06-missing-state/docs/PLAN.md": {
+        "bytes": 301,
+        "sha256": "ab622d7d46c3b587519cd910caca95460a9e0c13fe08c9053b847d0137fb8491"
+      },
+      "scenarios/07-invalid-target/docs/DECISIONS.md": {
+        "bytes": 201,
+        "sha256": "f94687578889263b0501b1ea36cfa6d9e17d66ca79fb44c0c5ac6212d9c61b4e"
+      },
+      "scenarios/07-invalid-target/docs/PLAN.md": {
+        "bytes": 308,
+        "sha256": "d6fbb02e429fcfc01144074bb7c4ee45eb2f289252e5d6989542d0557d125544"
+      },
+      "scenarios/08-self-reference/docs/DECISIONS.md": {
+        "bytes": 245,
+        "sha256": "6cbeb2a2a4ef779724bf871b953a928860a21b98bbbe4bea384924c7daa89b70"
+      },
+      "scenarios/08-self-reference/docs/PLAN.md": {
+        "bytes": 296,
+        "sha256": "9f3e7b72a56c9ae31e80842befb8be8ca00b9a6a0110b27ae7a523470edc4e75"
+      },
+      "scenarios/09-cycle/docs/DECISIONS.md": {
+        "bytes": 451,
+        "sha256": "b07646e31e922f0b1c4b4a7284699cd2e215506128212c82720d98942d0e7636"
+      },
+      "scenarios/09-cycle/docs/PLAN.md": {
+        "bytes": 309,
+        "sha256": "a374132bff3c75f7607edb8f699284f6d27633c1a65fe63e615d7c1ac9c34f9d"
+      },
+      "scenarios/10-status-mismatch/docs/DECISIONS.md": {
+        "bytes": 433,
+        "sha256": "443a9491026f29a3eef6d885826c47f8442c78f1c878ed715dbb268bb1f92955"
+      },
+      "scenarios/10-status-mismatch/docs/PLAN.md": {
+        "bytes": 322,
+        "sha256": "85d5d7db9e4b895649d64e0d4d76cae1314bf51bc072742368a751a04960d865"
+      },
+      "scenarios/11-plan-crosscheck/docs/DECISIONS.md": {
+        "bytes": 754,
+        "sha256": "982248b6ea6f080f2d034857c9b032234dd1de9800004ed64df60372dee88bbc"
+      },
+      "scenarios/11-plan-crosscheck/docs/PLAN.md": {
+        "bytes": 381,
+        "sha256": "2f7d4e89b55ce7f2970c4a1caee3e6e23f220390172ae1058da504d7d87a7218"
+      },
+      "scenarios/12-selective-loading/docs/audits/ARCHIVE.md": {
+        "bytes": 187,
+        "sha256": "156de4420a4e9beaddfe55a6545753942fe03c6131bfe373b5e58956a5b93a8a"
+      },
+      "scenarios/12-selective-loading/docs/DECISIONS.md": {
+        "bytes": 433,
+        "sha256": "ca62021913ee0c48a9e9b3fa1639c587e628ab03a4989e92986406ce157a3b3f"
+      },
+      "scenarios/12-selective-loading/docs/PLAN.md": {
+        "bytes": 427,
+        "sha256": "d7f669cb99d6f940b7f8942708bbd84fdb5f9153c70bdd4c50c32c7dca5a7627"
+      },
+      "scenarios/12-selective-loading/docs/PRD.md": {
+        "bytes": 405,
+        "sha256": "18a6ec5971ff3ae8735cb2754c1ae11f9782a1090ec6dffa5b8734d75df2311e"
+      }
+    },
+    "changed_files": []
+  },
+  "variant_id": "state_matrix",
+  "permissions": "read-only",
+  "expected": {
+    "changed_files": [],
+    "forbidden_changes": [
+      "**"
+    ],
+    "required_evidence": [
+      "EV_TOOL_CALL_LOG",
+      "EV_ADR_PROJECTION",
+      "EV_STATE_DIFF",
+      "EV_CONTEXT_TRACE"
+    ],
+    "forbidden_actions": [
+      "load ADR reasons or decision bodies into the initial context",
+      "silently accept a malformed replacement graph",
+      "read audit bodies when the current state does not depend on them",
+      "guess missing recovery fields"
+    ],
+    "assertion_subjects": [
+      "load_order.first_project_document",
+      "initial_adr_projection.fields",
+      "initial_context.adr_reason_or_body_count",
+      "replacement_variants.expected_results_match",
+      "key_fields.accuracy"
+    ]
+  }
+}

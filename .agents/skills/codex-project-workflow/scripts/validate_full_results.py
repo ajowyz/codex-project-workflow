@@ -74,17 +74,50 @@ def validate_changed_files(actual_paths, expected_patterns, hard_failures):
     return matches
 
 
+def evaluation_expectations(summary):
+    manifest = load_json(Path(summary["source_manifest"]))
+    scope = manifest.get("evaluation_scope", "full_calibration")
+    manifest_run_keys = {
+        f"{run['case_id']}:{run['variant_id']}"
+        for run in manifest["runs"]
+    }
+    summary_run_keys = {
+        f"{result['case_id']}:{result['variant_id']}"
+        for result in summary["results"]
+    }
+    require(
+        summary_run_keys == manifest_run_keys,
+        "summary run set must match source manifest",
+    )
+
+    expected_cases = {run["case_id"] for run in manifest["runs"]}
+    if scope == "full_calibration":
+        batch = load_json(FULL_DIR / "batch_manifest.json")
+        require(
+            expected_cases == set(batch["calibration_cases"]),
+            "full calibration must contain exactly the calibration cases",
+        )
+        expected_subjects = assertion_subjects()
+    elif scope == "targeted_regression":
+        expected_subjects = {case_id: set() for case_id in expected_cases}
+        for result in summary["results"]:
+            expected_subjects[result["case_id"]].update(
+                result["expected_assertion_subjects"]
+            )
+    else:
+        raise ValueError(f"unsupported evaluation scope: {scope}")
+    return scope, expected_cases, expected_subjects
+
+
 def validate(summary_path, assessment_path):
     summary = load_json(summary_path)
     assessment = load_json(assessment_path)
-    batch = load_json(FULL_DIR / "batch_manifest.json")
-    expected_cases = set(batch["calibration_cases"])
-    expected_subjects = assertion_subjects()
+    scope, expected_cases, expected_subjects = evaluation_expectations(summary)
 
     results = summary["results"]
     require(
         {result["case_id"] for result in results} == expected_cases,
-        "summary must contain exactly the eight calibration cases",
+        "summary case set mismatch",
     )
     run_keys = [
         f"{result['case_id']}:{result['variant_id']}"
@@ -195,6 +228,7 @@ def validate(summary_path, assessment_path):
         "runs": len(results),
         "passed_runs": passed_runs,
         "overall_result": assessment["overall_result"],
+        "scope": scope,
     }
 
 
@@ -210,7 +244,7 @@ def main():
         return 1
     print(
         "Full evaluation result is valid: "
-        f"{result['passed']}/{result['cases']} calibration cases passed; "
+        f"{result['passed']}/{result['cases']} {result['scope']} cases passed; "
         f"overall={result['overall_result']}."
     )
     return 0
