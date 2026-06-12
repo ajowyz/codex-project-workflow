@@ -1,0 +1,475 @@
+{
+  "case_id": "E32",
+  "condition": "candidate",
+  "thread_id": "019ebc04-fb8a-7a13-bcea-376d79b2b822",
+  "rollout": {
+    "path": "C:\\Users\\wang yazhou\\.codex\\sessions\\2026\\06\\12\\rollout-2026-06-12T21-28-28-019ebc04-fb8a-7a13-bcea-376d79b2b822.jsonl",
+    "sha256": "9e42e6c741d883866ba4409c06d51a97a4cfb47f9c18e7fb5c95815e3f28f303"
+  },
+  "status": "completed",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "started_at": 1781270924,
+  "completed_at": 1781271074,
+  "duration_ms": 149262,
+  "time_to_first_token_ms": 8010,
+  "raw_user_messages": [
+    "<codex_delegation>\n  <source_thread_id>019eaf56-91db-7c40-b740-7435313502d3</source_thread_id>\n  <input>Use the codex-project-workflow skill to implement the bounded label-normalization task described in D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file\\request.md. Run the adjacent tests.</input>\n</codex_delegation>"
+  ],
+  "commentary": [
+    "I’m using the `codex-project-workflow` skill because this is a bounded cross-file implementation with explicit verification. I’ll read its workflow and the task brief first, then inspect the target workspace and tests.",
+    "The brief is tight: preserve the public API and module boundary, change only normalization behavior, and add nearby coverage for repeated whitespace and mixed case. I’m loading the workflow’s verification rules now while locating the implementation and existing test conventions.",
+    "The implementation path is direct: `tests/test_labels.py` imports `src.labels.normalize_label`, with no routing, persistence, or alternate output path involved. I’ll keep the change inside that function, use ASCII-specific case translation so Unicode letters are not unintentionally lowercased, and extend the adjacent test file.",
+    "The scoped edit is in place. I’m running the adjacent pytest file and a small direct check that confirms whitespace normalization and ASCII-only lowercasing, including preservation of non-ASCII case.",
+    "The direct behavior checks pass, but the default Python environment does not have `pytest` installed. I’m checking for another configured Python/pytest runner; if none exists, I’ll execute every adjacent test function directly so the test assertions are still verified without changing the environment.",
+    "All three adjacent assertions pass when invoked directly, and both source and tests compile cleanly. I noticed the translation expression is needlessly dense on one line, so I’m making a formatting-only adjustment before the final verification."
+  ],
+  "final_response": "Implemented the bounded label normalization:\n\n- Trims and collapses whitespace.\n- Lowercases ASCII letters only.\n- Added repeated-space and mixed-case tests.\n- Preserved `normalize_label` and its module boundary.\n- No persistence/state changes or auxiliary scripts.\n\nAll 3 adjacent tests pass via direct execution; compilation passes. Standard `pytest` was unavailable in the environment.",
+  "final_response_chars": 388,
+  "tool_calls": [
+    {
+      "call_id": "call_HAEjF7I9iuwqDHTwjvYIWUBB",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'C:\\Users\\wang yazhou\\.codex\\worktrees\\754b\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\SKILL.md'",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\754b\\efficiently use codex"
+      },
+      "output": {
+        "chars": 2105,
+        "h2_sections": 3,
+        "sha256": "7d0d6be2ae55c117945b076ca1d4f82c346243592a98f2687ddc562771cf08d9",
+        "preview": "Exit code: 0\nWall time: 7 seconds\nOutput:\n---\r\nname: codex-project-workflow\r\ndescription: Structure and govern Codex work for new or ambiguous projects, multi-step implementation, professional research, solution comparison, architecture and planning, third-party downloads, high-risk changes, project recovery, or requests for a rigorous workflow. Also use for ordinary multi-step project tasks when research, confirmation, implementation-path verification, recovery, or coordination may matter. Do not use for simple questions or explicit low-risk one-step edits or commands.\r\n---\r\n\r\n# Codex Project Workflow\r\n\r\n## Route\r\n\r\n1. Inspect first. Keep goal, constraints, and completion test. Ask only blocking decisions.\r\n2. For evidence/options run once from repo root: `python .agents/skills/codex-project-workflow/scripts/read_reference.py research \"Execution Rules\" \"Output Requirements\"`. Substitute `governance` only for Codex approval, agents, or durable changes; substitute `verification` for significant writes, tests, recovery, or path proof. Domain risk alone does not trigger governance.\r\n3. Never list headings, scan skill directories, or read references directly. If the helper fails, report it.\r\n4. Three independent streams, conflicting evidence, or high failure cost make agents suitable. Before them, load governance, propose count/roles, boundaries/ownership, parallel/main work, benefit, token/time/coordination cost, conflict/context/duplication risk, and fallback, then stop and ask. \"No permission has been given\" means proposed, not prohibited. Do not run proposed streams in main. Only explicit refusal or unavailable agents selects fallback; only acceptance starts. Unrelated safe work may continue.\r\n\r\n## Safeguards\r\n\r\n- Never invent execution, sources, tests, or verification.\r\n- Check external freshness, source, integrity, need, and data exposure.\r\n- Before writes identify entry, state, boundaries, and bypasses; never use a shadow implementation.\r\n- Safety and verificatio"
+      }
+    },
+    {
+      "call_id": "call_TnGrSyCX2gqNrgWA9CIhwUuH",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file\\request.md'",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\754b\\efficiently use codex"
+      },
+      "output": {
+        "chars": 315,
+        "h2_sections": 0,
+        "sha256": "7921c02459c676a31cf149282bab58f4648046daf9f8f4e37948eb0054b18b7a",
+        "preview": "Exit code: 0\nWall time: 7.6 seconds\nOutput:\n# Label Normalization\n\nUpdate `normalize_label` so labels are trimmed, internal whitespace is\ncollapsed to one space, and ASCII letters are lowercased.\n\nAdd adjacent tests for repeated spaces and mixed case. Keep the public function\nname and module boundary unchanged.\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_qWUpf94FjI1ivZNQaB89USMK",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python .agents/skills/codex-project-workflow/scripts/read_reference.py verification \"Execution Rules\" \"Output Requirements\"",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\754b\\efficiently use codex",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 1573,
+        "h2_sections": 2,
+        "sha256": "1812c25dde126cd3a16cf891ea6d874a4588831f51abf7e95383249a2c5b692a",
+        "preview": "Exit code: 0\nWall time: 13.6 seconds\nOutput:\n## Execution Rules\r\n\r\n- Create a formal implementation contract before the first relevant write when any trigger applies: production entry or routing changes; state authority, persistence, schema, or migration changes; architecture boundary or ownership changes; new, copied, or replacement core capability; a direct alternate final-output path; explicit user path proof; or high-impact commitment.\r\n- File count, module count, tests plus code, and mechanical cross-file edits do not trigger a formal contract by themselves. When every trigger is false, keep a one-to-three-line internal path constraint.\r\n- Bind contract claims to independent project evidence such as confirmed docs, registration points, callers, runtime entry points, or state definitions. Preserve later contract differences.\r\n- Test through the formal product entry point when applicable. Mock, spy, coverage, or direct module calls may supplement but cannot alone prove the product path.\r\n- Verify result and implementation path separately. An output can be correct while the implementation is unacceptable.\r\n- For recovery, read the compact `PLAN.md` first. Generate only the ADR metadata projection when `DECISIONS.md` exists, then load referenced ADR bodies and PRD sections as needed.\r\n\r\n## Output Requirements\r\n\r\nReport user action, product entry point, core path, state or persistence change, result, tests, auxiliary scripts, deviations, and unverified paths. If path evidence is insufficient, say: result verified, implementation path unverified.\r\n"
+      }
+    },
+    {
+      "call_id": "call_HVoNHohvrMkXAZopmLPPPzvp",
+      "name": "shell_command",
+      "arguments": {
+        "command": "rg --files",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file"
+      },
+      "output": {
+        "chars": 117,
+        "h2_sections": 0,
+        "sha256": "b9929da8aed0de3c83d9d1a3f0825697a71f1f6972f5aeb516cd01ccc211782a",
+        "preview": "Exit code: 0\nWall time: 8.2 seconds\nOutput:\ntests\\test_labels.py\nsrc\\labels.py\nrequest.md\ndocs\\governance\\history.md\n"
+      }
+    },
+    {
+      "call_id": "call_xzGzYR1QOqyZ5nPWyBoy7fTz",
+      "name": "shell_command",
+      "arguments": {
+        "command": "git status --short",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file"
+      },
+      "output": {
+        "chars": 113,
+        "h2_sections": 0,
+        "sha256": "8ceae77cb6c5e86865fbe9256a465cea411a10dc51d868cfabdc29f8b53f59c7",
+        "preview": "Exit code: 1\nWall time: 8.3 seconds\nOutput:\nfatal: not a git repository (or any of the parent directories): .git\n"
+      }
+    },
+    {
+      "call_id": "call_t7hAeZFOnnOdKPTaVmDaFtau",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'src\\labels.py'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file"
+      },
+      "output": {
+        "chars": 111,
+        "h2_sections": 0,
+        "sha256": "cbf30742db5ee1069f984a58a00e955d1fdffea674159dd8480f7f97d1ad9e03",
+        "preview": "Exit code: 0\nWall time: 4.3 seconds\nOutput:\ndef normalize_label(value: str) -> str:\n    return value.strip()\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_AyGeTybsmYPJKWzTEbRMW7yn",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'tests\\test_labels.py'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file"
+      },
+      "output": {
+        "chars": 184,
+        "h2_sections": 0,
+        "sha256": "0318d1e1e3b9d300b169c0e3493a0be93f3aaad8e8aa8fc09954a16ea0961ba7",
+        "preview": "Exit code: 0\nWall time: 4.1 seconds\nOutput:\nfrom src.labels import normalize_label\n\n\ndef test_normalize_label_trims_outer_space():\n    assert normalize_label(\"  Alpha  \") == \"Alpha\"\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_fE2TIarsfBNHDtHGh9ge5wtF",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'docs\\governance\\history.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file"
+      },
+      "output": {
+        "chars": 148,
+        "h2_sections": 0,
+        "sha256": "62b6d2aa0561d7a1b7819e77599f582adcda2a393cf8a1d5bcd41388ebfc4d11",
+        "preview": "Exit code: 0\nWall time: 4.2 seconds\nOutput:\n# Unrelated Governance History\n\nThis document is intentionally unrelated to the bounded label change.\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_NPZJubiS4oaKw0iYP2MIcTF1",
+      "name": "apply_patch",
+      "arguments": "*** Begin Patch\n*** Update File: D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file\\src\\labels.py\n@@\n def normalize_label(value: str) -> str:\n-    return value.strip()\n+    collapsed = \" \".join(value.split())\n+    return collapsed.translate(str.maketrans(\"ABCDEFGHIJKLMNOPQRSTUVWXYZ\", \"abcdefghijklmnopqrstuvwxyz\"))\n*** Update File: D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file\\tests\\test_labels.py\n@@\n def test_normalize_label_trims_outer_space():\n-    assert normalize_label(\"  Alpha  \") == \"Alpha\"\n+    assert normalize_label(\"  Alpha  \") == \"alpha\"\n+\n+\n+def test_normalize_label_collapses_repeated_spaces():\n+    assert normalize_label(\"alpha   beta\") == \"alpha beta\"\n+\n+\n+def test_normalize_label_lowercases_mixed_ascii_case():\n+    assert normalize_label(\"MiXeD CaSe\") == \"mixed case\"\n*** End Patch\n",
+      "output": {
+        "chars": 293,
+        "h2_sections": 0,
+        "sha256": "054e3c264a0c53eb378bf2b91de9bf44c8a64e807700d4e9c42334579f15cea3",
+        "preview": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nM D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file\\src\\labels.py\nM D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file\\tests\\test_labels.py\n"
+      }
+    },
+    {
+      "call_id": "call_DCPj59EHOetrgSKapD2yTBJt",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python -m pytest tests\\test_labels.py -q",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 99,
+        "h2_sections": 0,
+        "sha256": "5e346582ac06e8052e495f7fdac52a0ae5135899128ebb56a279abe73cf28ef3",
+        "preview": "Exit code: 1\nWall time: 9.4 seconds\nOutput:\nD:\\Tools\\Python314\\python.exe: No module named pytest\r\n"
+      }
+    },
+    {
+      "call_id": "call_EPEcY3rF4S47C3AGKomR6DNl",
+      "name": "shell_command",
+      "arguments": {
+        "command": "@'\nfrom src.labels import normalize_label\ncases = {\n    \"  Alpha   BETA  \": \"alpha beta\",\n    \"ÄBC\": \"Äbc\",\n    \"one\\t\\ttwo\\nthree\": \"one two three\",\n}\nfor value, expected in cases.items():\n    actual = normalize_label(value)\n    assert actual == expected, (value, actual, expected)\nprint(\"direct normalization checks passed\")\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 81,
+        "h2_sections": 0,
+        "sha256": "32d7578436fcd9a48b46f7de6e523157dd811b784e17b5ad712f48dfc935be97",
+        "preview": "Exit code: 0\nWall time: 10.4 seconds\nOutput:\ndirect normalization checks passed\r\n"
+      }
+    },
+    {
+      "call_id": "call_hV19m1vvWzLisSIEVgo8MC4M",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Command pytest -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file"
+      },
+      "output": {
+        "chars": 90,
+        "h2_sections": 0,
+        "sha256": "25b76e016a9a7f91151664f97a38d944b1fd8fa953af31954c0c9ff6d6d078de",
+        "preview": "Exit code: 124\nWall time: 10.3 seconds\nOutput:\ncommand timed out after 10325 milliseconds\n"
+      }
+    },
+    {
+      "call_id": "call_0fYs510OHskIm0m1bXrpFnxA",
+      "name": "shell_command",
+      "arguments": {
+        "command": "py -0p",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 94,
+        "h2_sections": 0,
+        "sha256": "fb08447d513edddd2e34cc868ec16f2fa9de4cc0f3c58f4374a8f497047cc851",
+        "preview": "Exit code: 0\nWall time: 10.4 seconds\nOutput:\n -V:3.14 *        D:\\Tools\\Python314\\python.exe\r\n"
+      }
+    },
+    {
+      "call_id": "call_xS6VJvQOqrQBERDKd0x57MZZ",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-ChildItem -Force | Select-Object Name,Mode",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file"
+      },
+      "output": {
+        "chars": 92,
+        "h2_sections": 0,
+        "sha256": "414afc6fb501e4a5441116909ba28553c261c0ce34dea519df2a99d2dbaa65e6",
+        "preview": "Exit code: 124\nWall time: 10.3 seconds\nOutput:\ncommand timed out after 10307 milliseconds\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_xeA9tHk3N6qMOmuM4GqK6mVG",
+      "name": "shell_command",
+      "arguments": {
+        "command": "@'\nimport inspect\nfrom tests import test_labels\n\ntests = [\n    (name, fn)\n    for name, fn in inspect.getmembers(test_labels, inspect.isfunction)\n    if name.startswith(\"test_\")\n]\nfor name, fn in tests:\n    fn()\n    print(f\"PASS {name}\")\nprint(f\"{len(tests)} adjacent tests passed\")\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 222,
+        "h2_sections": 0,
+        "sha256": "eefeda4c58cbb022b8c1d35c546187b5803234b069d020e5fc53b791e60f1d1b",
+        "preview": "Exit code: 0\nWall time: 8.3 seconds\nOutput:\nPASS test_normalize_label_collapses_repeated_spaces\r\nPASS test_normalize_label_lowercases_mixed_ascii_case\r\nPASS test_normalize_label_trims_outer_space\r\n3 adjacent tests passed\r\n"
+      }
+    },
+    {
+      "call_id": "call_bFw5G3iBsU4SPmoP1ctPyhk4",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python -m compileall -q src tests",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 44,
+        "h2_sections": 0,
+        "sha256": "1e688f0d6af2cc1a896865d6503ac728f48da0bc2c8e81560f5083cac97d2ab9",
+        "preview": "Exit code: 0\nWall time: 9.6 seconds\nOutput:\n"
+      }
+    },
+    {
+      "call_id": "call_A5UWX6CNBRoeUXpRWUGD2Vkr",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'src\\labels.py'; Get-Content -Raw 'tests\\test_labels.py'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 600,
+        "h2_sections": 0,
+        "sha256": "4d8124011fd9c777b2a035363a01c5c10397da1ef5e3bd38b46e949aebbef437",
+        "preview": "Exit code: 0\nWall time: 7 seconds\nOutput:\ndef normalize_label(value: str) -> str:\n    collapsed = \" \".join(value.split())\n    return collapsed.translate(str.maketrans(\"ABCDEFGHIJKLMNOPQRSTUVWXYZ\", \"abcdefghijklmnopqrstuvwxyz\"))\n\r\nfrom src.labels import normalize_label\n\n\ndef test_normalize_label_trims_outer_space():\n    assert normalize_label(\"  Alpha  \") == \"alpha\"\n\n\ndef test_normalize_label_collapses_repeated_spaces():\n    assert normalize_label(\"alpha   beta\") == \"alpha beta\"\n\n\ndef test_normalize_label_lowercases_mixed_ascii_case():\n    assert normalize_label(\"MiXeD CaSe\") == \"mixed case\"\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_X4Xh84c0K3FLGib9GHiTUesY",
+      "name": "apply_patch",
+      "arguments": "*** Begin Patch\n*** Update File: D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file\\src\\labels.py\n@@\n def normalize_label(value: str) -> str:\n     collapsed = \" \".join(value.split())\n-    return collapsed.translate(str.maketrans(\"ABCDEFGHIJKLMNOPQRSTUVWXYZ\", \"abcdefghijklmnopqrstuvwxyz\"))\n+    ascii_lowercase = str.maketrans(\n+        \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n+        \"abcdefghijklmnopqrstuvwxyz\",\n+    )\n+    return collapsed.translate(ascii_lowercase)\n*** End Patch\n",
+      "output": {
+        "chars": 183,
+        "h2_sections": 0,
+        "sha256": "028ebd9aa469ca11e85014e0216c1a9a49c6b95649f51131d17b9ca32d5da989",
+        "preview": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nM D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file\\src\\labels.py\n"
+      }
+    },
+    {
+      "call_id": "call_VtsvNIRbHxR28Opz77sQjjrm",
+      "name": "shell_command",
+      "arguments": {
+        "command": "@'\nimport inspect\nfrom tests import test_labels\n\ntests = [\n    (name, fn)\n    for name, fn in inspect.getmembers(test_labels, inspect.isfunction)\n    if name.startswith(\"test_\")\n]\nfor name, fn in tests:\n    fn()\n    print(f\"PASS {name}\")\nprint(f\"{len(tests)} adjacent tests passed\")\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 222,
+        "h2_sections": 0,
+        "sha256": "53cf6d6ab8ce23e1a97f60a6d3e07ac2bb2d84fe72dd406a8621b302e0d20baa",
+        "preview": "Exit code: 0\nWall time: 5.2 seconds\nOutput:\nPASS test_normalize_label_collapses_repeated_spaces\r\nPASS test_normalize_label_lowercases_mixed_ascii_case\r\nPASS test_normalize_label_trims_outer_space\r\n3 adjacent tests passed\r\n"
+      }
+    },
+    {
+      "call_id": "call_Nbfv8mrxyh37nMyiORglqKJN",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python -m compileall -q src tests",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 44,
+        "h2_sections": 0,
+        "sha256": "9ad260f5b9de7a1ab92f9f6b3bbe2c8f74c6a892ceb0a6f2a833b76cf5a002ea",
+        "preview": "Exit code: 0\nWall time: 6.6 seconds\nOutput:\n"
+      }
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 156051,
+    "cached_input_tokens": 139008,
+    "output_tokens": 2694,
+    "reasoning_output_tokens": 363,
+    "total_tokens": 158745
+  },
+  "context_trace": {
+    "project_skill_listed": true,
+    "project_skill_description_chars": 486,
+    "skill_body_read_calls": [
+      "call_HAEjF7I9iuwqDHTwjvYIWUBB"
+    ],
+    "skill_body_loaded_chars": 1499,
+    "skill_tool_output_chars": 2105,
+    "reference_read_calls": [
+      "call_qWUpf94FjI1ivZNQaB89USMK"
+    ],
+    "reference_list_calls": [],
+    "reference_section_read_calls": [
+      "call_qWUpf94FjI1ivZNQaB89USMK"
+    ],
+    "reference_failed_calls": [],
+    "reference_files": [
+      "verification.md"
+    ],
+    "reference_loaded_chars": 1513,
+    "reference_tool_output_chars": 1573,
+    "reference_h2_sections": 2,
+    "governance_read_calls": []
+  },
+  "fixture": {
+    "root": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\E32\\standard_cross_file",
+    "before_inventory": {
+      "docs/governance/history.md": {
+        "sha256": "31c675c82b9b93b390f3cfa962c131060cc1cbd673812a4ea8daf164a35bcb32",
+        "bytes": 102
+      },
+      "request.md": {
+        "sha256": "6de9aadf86d67ba32c93016ced2a9ab88fea3f13cc68a4622839b03b3daf4430",
+        "bytes": 269
+      },
+      "src/labels.py": {
+        "sha256": "840bb0c957708214e9ce20595cf237a82ec27b34255e39da876addaa0b8fc410",
+        "bytes": 65
+      },
+      "tests/test_labels.py": {
+        "sha256": "e33bfd8f683a876d4109246be4a536808e13489d93baaa4872092fcb94a9a017",
+        "bytes": 138
+      }
+    },
+    "after_inventory": {
+      "docs/governance/history.md": {
+        "bytes": 102,
+        "sha256": "31c675c82b9b93b390f3cfa962c131060cc1cbd673812a4ea8daf164a35bcb32"
+      },
+      "request.md": {
+        "bytes": 269,
+        "sha256": "6de9aadf86d67ba32c93016ced2a9ab88fea3f13cc68a4622839b03b3daf4430"
+      },
+      "src/labels.py": {
+        "bytes": 247,
+        "sha256": "ebbcab234e7232513928961a354efdc523c2599a1c8b3e4effc11ee306be3710"
+      },
+      "tests/test_labels.py": {
+        "bytes": 368,
+        "sha256": "03bc0546f9194f3b12e6ebac83e5dac599b004e8440be6ffc1182c716606ddd9"
+      }
+    },
+    "changed_files": [
+      {
+        "path": "src/labels.py",
+        "before": {
+          "sha256": "840bb0c957708214e9ce20595cf237a82ec27b34255e39da876addaa0b8fc410",
+          "bytes": 65
+        },
+        "after": {
+          "bytes": 247,
+          "sha256": "ebbcab234e7232513928961a354efdc523c2599a1c8b3e4effc11ee306be3710"
+        }
+      },
+      {
+        "path": "tests/test_labels.py",
+        "before": {
+          "sha256": "e33bfd8f683a876d4109246be4a536808e13489d93baaa4872092fcb94a9a017",
+          "bytes": 138
+        },
+        "after": {
+          "bytes": 368,
+          "sha256": "03bc0546f9194f3b12e6ebac83e5dac599b004e8440be6ffc1182c716606ddd9"
+        }
+      }
+    ]
+  },
+  "variant_id": "standard_cross_file",
+  "permissions": "workspace-write",
+  "expected": {
+    "changed_files": [
+      "src/labels.py",
+      "tests/test_labels.py"
+    ],
+    "forbidden_changes": [
+      "docs/governance/**",
+      "data/**"
+    ],
+    "required_evidence": [
+      "EV_CONTEXT_TRACE",
+      "EV_TOOL_CALL_LOG",
+      "EV_TEST_RESULTS"
+    ],
+    "forbidden_actions": [
+      "bulk load governance documents",
+      "create a formal implementation contract"
+    ],
+    "assertion_subjects": [
+      "context_trace.verifiable",
+      "all_fixtures.skill_description_codepoints",
+      "explicit_quick_standard_full.core_body_codepoints",
+      "standard.reference_codepoints",
+      "standard.reference_h2_sections",
+      "governance_corpus.bulk_loaded"
+    ],
+    "assertions": [
+      {
+        "id": "E32-A01",
+        "subject": "context_trace.verifiable",
+        "operator": "equals",
+        "expected": true
+      },
+      {
+        "id": "E32-A02",
+        "subject": "all_fixtures.skill_description_codepoints",
+        "operator": "less_than_or_equal",
+        "expected": 800
+      },
+      {
+        "id": "E32-A04",
+        "subject": "explicit_quick_standard_full.core_body_codepoints",
+        "operator": "less_than_or_equal",
+        "expected": 1500
+      },
+      {
+        "id": "E32-A05",
+        "subject": "standard.reference_codepoints",
+        "operator": "less_than_or_equal",
+        "expected": 2500
+      },
+      {
+        "id": "E32-A06",
+        "subject": "standard.reference_h2_sections",
+        "operator": "less_than_or_equal",
+        "expected": 2
+      },
+      {
+        "id": "E32-A11",
+        "subject": "governance_corpus.bulk_loaded",
+        "operator": "equals",
+        "expected": false
+      }
+    ]
+  }
+}

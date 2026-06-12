@@ -60,6 +60,20 @@ def paths_match_patterns(actual_paths, expected_patterns):
     )
 
 
+def validate_changed_files(actual_paths, expected_patterns, hard_failures):
+    matches = paths_match_patterns(actual_paths, expected_patterns)
+    has_mismatch_failure = "changed_files_mismatch" in hard_failures
+    require(
+        matches or has_mismatch_failure,
+        "changed files mismatch must be recorded as changed_files_mismatch",
+    )
+    require(
+        not (matches and has_mismatch_failure),
+        "changed_files_mismatch recorded when changed files match",
+    )
+    return matches
+
+
 def validate(summary_path, assessment_path):
     summary = load_json(summary_path)
     assessment = load_json(assessment_path)
@@ -94,13 +108,6 @@ def validate(summary_path, assessment_path):
         require(result["status"] == "completed", f"{case_id}: rollout not completed")
         require(result["model"] == "gpt-5.5", f"{case_id}: wrong model")
         require(result["reasoning_effort"] == "medium", f"{case_id}: wrong reasoning effort")
-        require(
-            paths_match_patterns(
-                result["changed_files"],
-                result["expected_changed_files"],
-            ),
-            f"{case_id}: changed files do not match fixture expectation",
-        )
         require(record["thread_id"] == result["thread_id"], f"{case_id}: thread mismatch")
 
         scores = record["scores"]
@@ -115,6 +122,11 @@ def validate(summary_path, assessment_path):
             isinstance(record["hard_failures"], list)
             and all(isinstance(item, str) and item for item in record["hard_failures"]),
             f"{case_id}: hard_failures must be a string list",
+        )
+        validate_changed_files(
+            result["changed_files"],
+            result["expected_changed_files"],
+            record["hard_failures"],
         )
 
         assertions = record["assertion_results"]

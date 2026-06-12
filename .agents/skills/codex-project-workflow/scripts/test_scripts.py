@@ -445,6 +445,24 @@ class ScriptTests(unittest.TestCase):
             )
         )
 
+    def test_full_result_changed_file_mismatch_is_a_hard_failure(self):
+        self.assertFalse(
+            validate_full_results.validate_changed_files(
+                ["output/model.json"],
+                [],
+                ["changed_files_mismatch"],
+            )
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "changed files mismatch must be recorded",
+        ):
+            validate_full_results.validate_changed_files(
+                ["output/model.json"],
+                [],
+                [],
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

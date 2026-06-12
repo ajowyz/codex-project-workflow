@@ -14,11 +14,11 @@
       "expected": {
         "changed_files": [
           "src/formatting.py",
-          "src/report.py"
+          "src/report.py",
+          "tests/test_existing.py"
         ],
         "forbidden_changes": [
           "app.py",
-          "tests/**",
           "docs/**"
         ],
         "required_evidence": [

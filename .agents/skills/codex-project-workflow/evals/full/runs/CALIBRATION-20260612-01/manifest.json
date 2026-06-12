@@ -1,0 +1,116 @@
+{
+  "format_version": "1.0",
+  "run_id": "CALIBRATION-20260612-01",
+  "status": "completed_fail",
+  "created_at": "2026-06-12T22:02:00+08:00",
+  "completed_at": "2026-06-12T22:28:00+08:00",
+  "fixture_commit": "d9d9f2f979283846cb45fde2a192c31fe6ac4f04",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\CALIBRATION-20260612-01\\workspaces\\setup-state.json",
+  "evaluation_result": {
+    "passed_cases": 2,
+    "total_cases": 8,
+    "passed_runs": 9,
+    "total_runs": 16,
+    "overall": "fail"
+  },
+  "runs": [
+    {
+      "case_id": "E02",
+      "variant_id": "low_risk_listing",
+      "thread_id": "019ebc02-15c3-7421-b442-d09ca64138c2",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\feed\\efficiently use codex"
+    },
+    {
+      "case_id": "E02",
+      "variant_id": "download",
+      "thread_id": "019ebc02-1017-7370-b2b9-aac9e144037b",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\a6b7\\efficiently use codex"
+    },
+    {
+      "case_id": "E12",
+      "variant_id": "state_matrix",
+      "thread_id": "019ebc02-14b8-7a92-9c2d-3cd5bc649b74",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\2e43\\efficiently use codex"
+    },
+    {
+      "case_id": "E16",
+      "variant_id": "default",
+      "thread_id": "019ebc02-1585-75e3-877e-f96ff806c69d",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\9ff0\\efficiently use codex"
+    },
+    {
+      "case_id": "E19",
+      "variant_id": "two_phase_network_scope",
+      "thread_id": "019ebc03-6b5d-7250-bcdf-71a834255293",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\570b\\efficiently use codex"
+    },
+    {
+      "case_id": "E23",
+      "variant_id": "valid_approval_package",
+      "thread_id": "019ebc03-6d99-7bd1-8d5b-89623b0117d5",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\587b\\efficiently use codex"
+    },
+    {
+      "case_id": "E23",
+      "variant_id": "candidate_mutated_after_approval",
+      "thread_id": "019ebc03-7035-79b1-b8cd-66ec3a17dfa5",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\0349\\efficiently use codex"
+    },
+    {
+      "case_id": "E23",
+      "variant_id": "regressed_candidate",
+      "thread_id": "019ebc03-6e67-7dc3-a28b-7d53c55c6666",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\c9f9\\efficiently use codex"
+    },
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019ebc04-fd49-7793-afab-c3f2b8207cae",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\c522\\efficiently use codex"
+    },
+    {
+      "case_id": "E26",
+      "variant_id": "entry_bypass",
+      "thread_id": "019ebc04-fdd2-7603-8df2-15ea1021c8f3",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\0d7a\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "negative_quick",
+      "thread_id": "019ebc04-fd28-7473-9eb9-7396eb77b36c",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\75c9\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "standard_cross_file",
+      "thread_id": "019ebc04-fb8a-7a13-bcea-376d79b2b822",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\754b\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "full_high_risk_migration",
+      "thread_id": "019ebc05-190b-7fa2-b63f-0b10c128d402",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\a5cc\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019ebc06-8b44-7c40-8eb9-97c4039df0c0",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\61a8\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "nested_h3_counting",
+      "thread_id": "019ebc06-8233-7032-82f7-2af6ba151581",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\a7d5\\efficiently use codex"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019ebc06-8503-7531-b152-c01bffdd79fe",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\246c\\efficiently use codex"
+    }
+  ]
+}
