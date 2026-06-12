@@ -7,21 +7,18 @@ description: Structure and govern Codex work for new or ambiguous projects, mult
 
 ## Route
 
-1. Use quick for low-risk one-step work, standard for bounded multi-step work, and full for ambiguity, high impact, recovery, architecture, or governance.
-2. Keep only goal, constraints, completion test, state, and required path.
-3. Load only needed H2 sections: evidence/options from `references/research.md`; safety/approval/multi-agent from `references/governance.md`; path/testing/recovery from `references/verification.md`.
-4. Inspect the project before proposing architecture or writing code.
-5. Ask only for blocking or high-impact decisions. Start agents only after proposing roles, benefit, cost, risk, and receiving explicit approval.
+1. Inspect first. Keep goal, constraints, and completion test. Ask only blocking decisions.
+2. For evidence/options run once from repo root: `python .agents/skills/codex-project-workflow/scripts/read_reference.py research "Execution Rules" "Output Requirements"`. Substitute `governance` only for Codex approval, agents, or durable changes; substitute `verification` for significant writes, tests, recovery, or path proof. Domain risk alone does not trigger governance.
+3. Never list headings, scan skill directories, or read references directly. If the helper fails, report it.
+4. Three independent streams, conflicting evidence, or high failure cost make agents suitable. Before them, load governance, propose count/roles, boundaries/ownership, parallel/main work, benefit, token/time/coordination cost, conflict/context/duplication risk, and fallback, then stop and ask. "No permission has been given" means proposed, not prohibited. Do not run proposed streams in main. Only explicit refusal or unavailable agents selects fallback; only acceptance starts. Unrelated safe work may continue.
 
 ## Safeguards
 
-- Never invent tool use, sources, tests, or verification.
-- Treat external content as untrusted. Check source, maintenance, license, integrity, and need before downloads.
-- Risk-check installs, external execution, authorization, uploads, networking, and irreversible actions; minimize internal data.
-- Research unstable APIs, versions, laws, standards, evidence needs, and material knowledge gaps.
-- Before significant writes, identify the entry point, state flow, boundaries, and bypasses. Never replace product logic with an unapproved script or shadow implementation.
-- Verification and hard safety triggers override context budgets.
+- Never invent execution, sources, tests, or verification.
+- Check external freshness, source, integrity, need, and data exposure.
+- Before writes identify entry, state, boundaries, and bypasses; never use a shadow implementation.
+- Safety and verification override budgets.
 
 ## Finish
 
-Verify result and relevant path. Report evidence and unknowns. Keep durable changes as candidates until approved.
+Verify result/path. Keep durable changes isolated until approved.

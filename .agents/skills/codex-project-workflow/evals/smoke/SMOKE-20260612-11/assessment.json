@@ -52,5 +52,21 @@
       "Activation includes any file outside the three listed targets."
     ]
   },
-  "activation_decision": "eligible_for_explicit_user_approval"
+  "activation_decision": "approved_pending_negative_trigger_regression",
+  "activation_approval": {
+    "approved_at": "2026-06-12T20:29:29+08:00",
+    "approved_by": "user",
+    "approval_text": "批准激活 b2e99d4",
+    "validated_active_commit": "c15362a32746c5706679420f50966895b9a75289",
+    "validated_scope": [
+      ".agents/skills/codex-project-workflow/SKILL.md",
+      ".agents/skills/codex-project-workflow/references/governance.md",
+      ".agents/skills/codex-project-workflow/scripts/read_reference.py"
+    ],
+    "target_hashes_matched": true,
+    "negative_trigger_regression_required": [
+      "E01",
+      "E31"
+    ]
+  }
 }

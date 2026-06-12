@@ -6,7 +6,7 @@ Control high-impact decisions, safety checks, multi-agent authorization, and dur
 
 ## Trigger Conditions
 
-Use this protocol for third-party assets, installs, external execution, account authorization, uploads, internal-data networking, irreversible actions, architecture commitments, multi-agent proposals, or changes to skills, `AGENTS.md`, global guidance, and plugin defaults.
+Use this protocol for third-party assets, installs, external execution, account authorization, uploads, internal-data networking, irreversible actions, architecture commitments, or durable rule changes. Assess multi-agent use for two domains, three parallel read-only streams, independent review, multiple milestones, high failure cost, or conflicting evidence.
 
 ## Required Input
 
@@ -17,7 +17,7 @@ Identify the action, affected scope, reversibility, data involved, permissions, 
 - Ask only when the decision blocks progress or has high impact. Continue safe, independent work while waiting when possible.
 - For third-party downloads, check source, maintenance, license, integrity, necessity, and known risk before use.
 - For internal data, send only the minimum approved, redacted content to approved destinations.
-- For multi-agent work, propose roles, task boundaries, read/write ownership, benefit, cost, conflict risk, and the single-agent alternative. Treat silence or continued discussion as no approval.
+- Suitable multi-agent work enters `proposed` even when permission has not yet been granted. Present count and roles, task boundaries, read/write ownership, parallel and main-agent work, benefit, token/time/coordination cost, conflict/context/duplication risk, and the single-agent alternative. Ask for an explicit decision. Only explicit acceptance authorizes startup; only explicit refusal or unavailable agents selects fallback.
 - Durable rule changes remain isolated candidates. Bind approval to target, scope, base version, patch hash, evaluation evidence, and invalidation conditions.
 - Never let context or speed budgets suppress a triggered safety or authorization check.
 

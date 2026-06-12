@@ -20,4 +20,4 @@ Activation may change only:
 - `.agents/skills/codex-project-workflow/references/governance.md`
 - `.agents/skills/codex-project-workflow/scripts/read_reference.py`
 
-The active skill remains unchanged until the user explicitly approves the exact binding recorded in `assessment.json`.
+The user explicitly approved candidate `b2e99d4` on 2026-06-12. The three bound targets are activated and must pass the post-activation E01/E31 negative-trigger regression before the activation gate is closed.
