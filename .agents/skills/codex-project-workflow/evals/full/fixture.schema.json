@@ -1,0 +1,40 @@
+{
+  "schema_type": "codex-project-executable-fixture/v1",
+  "format_version": "1.0",
+  "case_required": [
+    "format_version",
+    "case_id",
+    "owner_group",
+    "calibration_priority",
+    "prompt",
+    "variants"
+  ],
+  "variant_required": [
+    "id",
+    "workspace",
+    "prompt",
+    "permissions",
+    "scripted_user_replies",
+    "expected"
+  ],
+  "expected_required": [
+    "changed_files",
+    "forbidden_changes",
+    "required_evidence",
+    "forbidden_actions",
+    "assertion_subjects"
+  ],
+  "permission_values": [
+    "read-only",
+    "workspace-write"
+  ],
+  "invariants": [
+    "Case IDs and assertion subjects must match behavior_cases.json.",
+    "Workspace paths are relative to the case directory and may not escape it.",
+    "Prompts contain task facts but never expected answers, score anchors, or prior conclusions.",
+    "Scripted replies contain only user decisions needed to continue the task.",
+    "Expected evidence is kept outside the copied task workspace.",
+    "Fixtures must not contain credentials, real customer data, private source, or executable third-party binaries.",
+    "Calibration cases are E02, E12, E16, E19, E23, E26, E32, and E35."
+  ]
+}

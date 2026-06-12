@@ -32,6 +32,9 @@ measure_context = load("measure_context")
 validate_evals = load("validate_evals")
 setup_smoke = load("setup_smoke")
 collect_smoke = load("collect_smoke")
+validate_full_fixtures = load("validate_full_fixtures")
+setup_full_eval = load("setup_full_eval")
+collect_full_eval = load("collect_full_eval")
 
 
 class ScriptTests(unittest.TestCase):
@@ -225,6 +228,67 @@ class ScriptTests(unittest.TestCase):
         self.assertEqual(2, trace["reference_h2_sections"])
         self.assertEqual(["research.md"], trace["reference_files"])
         self.assertGreater(trace["reference_loaded_chars"], 0)
+
+    def test_full_fixture_manifest_assigns_remaining_cases(self):
+        summary = validate_full_fixtures.validate(require_complete=False)
+        self.assertEqual(31, summary["assigned_cases"])
+        self.assertEqual(8, summary["calibration_cases"])
+
+    def test_full_fixture_path_escape_fails(self):
+        with self.assertRaisesRegex(ValueError, "parent traversal"):
+            validate_full_fixtures.safe_relative_path(
+                "../outside",
+                "fixture.workspace",
+            )
+
+    def test_full_eval_variant_selection(self):
+        case = {
+            "case_id": "E99",
+            "variants": [
+                {"id": "first"},
+                {"id": "second"},
+            ],
+        }
+        self.assertEqual(
+            "first",
+            setup_full_eval.select_variant(case)["id"],
+        )
+        self.assertEqual(
+            "second",
+            setup_full_eval.select_variant(case, "second")["id"],
+        )
+        with self.assertRaisesRegex(ValueError, "unknown variant"):
+            setup_full_eval.select_variant(case, "missing")
+
+    def test_full_eval_expected_variant_selection(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            original = collect_full_eval.CASES_DIR
+            try:
+                collect_full_eval.CASES_DIR = root
+                case_dir = root / "E99"
+                case_dir.mkdir()
+                (case_dir / "case.json").write_text(
+                    json.dumps(
+                        {
+                            "variants": [
+                                {
+                                    "id": "one",
+                                    "expected": {"changed_files": ["one.txt"]},
+                                },
+                                {
+                                    "id": "two",
+                                    "expected": {"changed_files": ["two.txt"]},
+                                },
+                            ]
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+                expected = collect_full_eval.load_expected("E99", "two")
+                self.assertEqual(["two.txt"], expected["changed_files"])
+            finally:
+                collect_full_eval.CASES_DIR = original
 
 
 if __name__ == "__main__":

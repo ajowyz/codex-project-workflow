@@ -1,0 +1,70 @@
+{
+  "format_version": "1.0",
+  "activation_commit": "3b3683edf45454cd8e15f23ae03cb53c6fa352cb",
+  "calibration_cases": [
+    "E02",
+    "E12",
+    "E16",
+    "E19",
+    "E23",
+    "E26",
+    "E32",
+    "E35"
+  ],
+  "groups": {
+    "A": {
+      "domain": "interaction, research, authorization, and safety",
+      "case_ids": [
+        "E02",
+        "E03",
+        "E05",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E14",
+        "E15",
+        "E18",
+        "E19",
+        "E20",
+        "E21",
+        "E35"
+      ]
+    },
+    "B": {
+      "domain": "state recovery and implementation-path integrity",
+      "case_ids": [
+        "E12",
+        "E16",
+        "E17",
+        "E26",
+        "E27",
+        "E28",
+        "E29",
+        "E30",
+        "E34"
+      ]
+    },
+    "C": {
+      "domain": "review closure, experience governance, and context budgets",
+      "case_ids": [
+        "E13",
+        "E22",
+        "E23",
+        "E24",
+        "E25",
+        "E32",
+        "E33"
+      ]
+    }
+  },
+  "execution_policy": {
+    "first_gate": "Run one candidate calibration for each calibration case.",
+    "expansion": "Only expand to required repetitions after the calibration case and harness checks pass.",
+    "model": "gpt-5.5",
+    "reasoning_effort": "medium",
+    "fresh_thread_per_run": true,
+    "expected_answers_hidden_from_threads": true
+  }
+}
