@@ -69,6 +69,91 @@ def normalize_path_text(value):
     return re.sub(r"/+", "/", value.replace("\\", "/"))
 
 
+def reference_call_trace(tool_calls, trace_skill_dir):
+    reference_paths = sorted((trace_skill_dir / "references").glob("*.md"))
+    path_by_stem = {path.stem.casefold(): path for path in reference_paths}
+    result = {
+        "reference_read_calls": [],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [],
+        "reference_failed_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_tool_output_chars": 0,
+        "reference_h2_sections": 0,
+    }
+    loaded_references = set()
+
+    for call in tool_calls:
+        arguments = call.get("arguments")
+        serialized = normalize_path_text(json.dumps(arguments, ensure_ascii=False))
+        output = call.get("output")
+        command = arguments.get("command", "") if isinstance(arguments, dict) else ""
+        helper_match = re.search(
+            r"read_reference\.py[\"']?\s+([A-Za-z0-9_.-]+)",
+            command,
+            flags=re.IGNORECASE,
+        )
+        direct_paths = [
+            path
+            for path in reference_paths
+            if normalize_path_text(f"references/{path.name}").lower()
+            in serialized.lower()
+        ]
+        helper_path = (
+            path_by_stem.get(Path(helper_match.group(1)).stem.casefold())
+            if helper_match
+            else None
+        )
+        if not direct_paths and helper_path is None:
+            continue
+
+        result["reference_read_calls"].append(call["call_id"])
+        if output:
+            result["reference_tool_output_chars"] += output["chars"]
+            result["reference_h2_sections"] += output["h2_sections"]
+        failed = bool(
+            output
+            and re.search(r"(?m)^Exit code:\s*[1-9]\d*$", output.get("preview", ""))
+        )
+        if failed:
+            result["reference_failed_calls"].append(call["call_id"])
+            continue
+
+        if helper_path is not None:
+            loaded_references.add(helper_path)
+            sections = measure_context.reference_metrics(helper_path)["sections"]
+            selected = [
+                section
+                for section in sections
+                if re.search(
+                    rf"(?<!\w){re.escape(section['heading'])}(?!\w)",
+                    command,
+                    flags=re.IGNORECASE,
+                )
+            ]
+            if output and output["h2_sections"]:
+                result["reference_section_read_calls"].append(call["call_id"])
+                result["reference_loaded_chars"] += sum(
+                    section["chars"] for section in selected
+                )
+            else:
+                result["reference_list_calls"].append(call["call_id"])
+            continue
+
+        result["reference_section_read_calls"].append(call["call_id"])
+        for path in direct_paths:
+            loaded_references.add(path)
+            result["reference_loaded_chars"] += len(
+                measure_context.normalized_text(path).rstrip("\n")
+            )
+
+    result["reference_files"] = [
+        path.name for path in sorted(loaded_references)
+    ]
+    return result
+
+
 def extract_skill_description(developer_text):
     pattern = re.compile(
         r"^- codex-project-workflow: (.+?) \(file: .+?codex-project-workflow/SKILL\.md\)$",
@@ -137,6 +222,9 @@ def parse_rollout(
             "skill_body_loaded_chars": 0,
             "skill_tool_output_chars": 0,
             "reference_read_calls": [],
+            "reference_list_calls": [],
+            "reference_section_read_calls": [],
+            "reference_failed_calls": [],
             "reference_files": [],
             "reference_loaded_chars": 0,
             "reference_tool_output_chars": 0,
@@ -236,8 +324,6 @@ def parse_rollout(
         if project_root
         else SKILL_DIR
     )
-    reference_paths = sorted((trace_skill_dir / "references").glob("*.md"))
-    loaded_references = set()
     for call in result["tool_calls"]:
         serialized = normalize_path_text(
             json.dumps(call["arguments"], ensure_ascii=False)
@@ -246,14 +332,6 @@ def parse_rollout(
             continue
         if re.search(r"codex-project-workflow/SKILL\.md", serialized, flags=re.IGNORECASE):
             result["context_trace"]["skill_body_read_calls"].append(call["call_id"])
-        if re.search(r"codex-project-workflow/references/.+?\.md", serialized, flags=re.IGNORECASE):
-            result["context_trace"]["reference_read_calls"].append(call["call_id"])
-            for reference_path in reference_paths:
-                reference_suffix = normalize_path_text(
-                    f"references/{reference_path.name}"
-                )
-                if reference_suffix.lower() in serialized.lower():
-                    loaded_references.add(reference_path)
 
     if result["context_trace"]["skill_body_read_calls"]:
         skill_file = trace_skill_dir / "SKILL.md"
@@ -267,24 +345,8 @@ def parse_rollout(
             if call["call_id"] in result["context_trace"]["skill_body_read_calls"]
             and call["output"]
         )
-    result["context_trace"]["reference_files"] = [
-        path.name for path in sorted(loaded_references)
-    ]
-    result["context_trace"]["reference_loaded_chars"] = sum(
-        len(measure_context.normalized_text(path).rstrip("\n"))
-        for path in loaded_references
-    )
-    result["context_trace"]["reference_tool_output_chars"] = sum(
-        call["output"]["chars"]
-        for call in result["tool_calls"]
-        if call["call_id"] in result["context_trace"]["reference_read_calls"]
-        and call["output"]
-    )
-    result["context_trace"]["reference_h2_sections"] = sum(
-        call["output"]["h2_sections"]
-        for call in result["tool_calls"]
-        if call["call_id"] in result["context_trace"]["reference_read_calls"]
-        and call["output"]
+    result["context_trace"].update(
+        reference_call_trace(result["tool_calls"], trace_skill_dir)
     )
 
     governance_names = (

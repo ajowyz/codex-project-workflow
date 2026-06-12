@@ -1,0 +1,45 @@
+{
+  "run_id": "SMOKE-20260612-10",
+  "source_manifest": "D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\evals\\smoke\\SMOKE-20260612-10\\manifest.json",
+  "results": [
+    {
+      "case_id": "E36",
+      "condition": "candidate",
+      "thread_id": "019ebac9-5367-7de2-95cb-74e5f7cf25d3",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 75988,
+      "time_to_first_token_ms": 29312,
+      "final_response_chars": 173,
+      "total_tokens": 46500,
+      "tool_call_count": 4,
+      "changed_file_count": 0,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [
+          "call_XN98JSEnsfa9dS0OsOsQ6O1D"
+        ],
+        "skill_body_loaded_chars": 1499,
+        "skill_tool_output_chars": 2107,
+        "reference_read_calls": [
+          "call_gPx2SiWNOzkLvlcK7xnVhvWb"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_gPx2SiWNOzkLvlcK7xnVhvWb"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md"
+        ],
+        "reference_loaded_chars": 1199,
+        "reference_tool_output_chars": 1258,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "dc9e9ba6b0dbfbe647ec85b7cf7aa4fd14b156f95294623d1385109dc8409f89"
+    }
+  ]
+}

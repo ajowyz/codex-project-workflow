@@ -1,0 +1,123 @@
+{
+  "run_id": "SMOKE-20260612-07",
+  "source_manifest": "D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\evals\\smoke\\SMOKE-20260612-07\\manifest.json",
+  "results": [
+    {
+      "case_id": "E04",
+      "condition": "candidate",
+      "thread_id": "019ebab2-dd3d-7e90-b29b-c8b9cbdd7518",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 129559,
+      "time_to_first_token_ms": 30554,
+      "final_response_chars": 2798,
+      "total_tokens": 61918,
+      "tool_call_count": 6,
+      "changed_file_count": 0,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [
+          "call_zBNiPnQPywZc3YtX8e0gMkZR"
+        ],
+        "skill_body_loaded_chars": 1498,
+        "skill_tool_output_chars": 2106,
+        "reference_read_calls": [
+          "call_xYsWpRUn1rdhzbwaH26EBbfm"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_xYsWpRUn1rdhzbwaH26EBbfm"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "research.md"
+        ],
+        "reference_loaded_chars": 918,
+        "reference_tool_output_chars": 977,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "643c9ec5ebbca13407f01577dff4f2b76ee704df9f8af31c83692d9ecc09b70a"
+    },
+    {
+      "case_id": "E06",
+      "condition": "candidate",
+      "thread_id": "019ebab2-dd31-77a3-9ad1-3f299637236f",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 110035,
+      "time_to_first_token_ms": 31703,
+      "final_response_chars": 245,
+      "total_tokens": 59067,
+      "tool_call_count": 6,
+      "changed_file_count": 0,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [
+          "call_HrD5ZV51E5Te5GDzuq6n79fc"
+        ],
+        "skill_body_loaded_chars": 1498,
+        "skill_tool_output_chars": 2106,
+        "reference_read_calls": [
+          "call_6Cvfz0ojCBX8VZ0eYyVHCrTX"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_6Cvfz0ojCBX8VZ0eYyVHCrTX"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "research.md"
+        ],
+        "reference_loaded_chars": 918,
+        "reference_tool_output_chars": 977,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "cb2b2f569ec1074d70bbee5206c167fe7493d6abc6fcf0d46826121993012d0e"
+    },
+    {
+      "case_id": "E36",
+      "condition": "candidate",
+      "thread_id": "019ebab2-dd25-7461-a4c9-073cbda42b3e",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 201831,
+      "time_to_first_token_ms": 31166,
+      "final_response_chars": 3722,
+      "total_tokens": 172129,
+      "tool_call_count": 14,
+      "changed_file_count": 0,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [
+          "call_nc63JbXJdbfmBtJ4jQ63cGpu"
+        ],
+        "skill_body_loaded_chars": 1498,
+        "skill_tool_output_chars": 2106,
+        "reference_read_calls": [
+          "call_UgmEzAySSxJKY5bIoQKFpGRT"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_UgmEzAySSxJKY5bIoQKFpGRT"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "research.md"
+        ],
+        "reference_loaded_chars": 918,
+        "reference_tool_output_chars": 977,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "e7eedd86bccb298cf8ce32f4e355bdb6dca56b6793d7dfd2b33e782b5c266bb1"
+    }
+  ]
+}

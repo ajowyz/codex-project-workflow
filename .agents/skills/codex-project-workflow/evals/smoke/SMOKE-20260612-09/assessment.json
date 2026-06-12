@@ -1,0 +1,11 @@
+{
+  "run_id": "SMOKE-20260612-09",
+  "formal_validity": {
+    "valid": true,
+    "reason": "The single clean candidate thread completed with one skill, two reference H2 sections, no failed call, no child agent, and no fixture change."
+  },
+  "candidate_assertion": "fail_proposed_streams_executed_in_main",
+  "finding": "The exact phrase rule prevented startup but did not force a proposal. The model still treated all three proposed streams as safe main-thread work and completed them without requesting the agent decision.",
+  "activation_decision": "not_eligible",
+  "next_action": "Load governance when the agent trigger matches, prohibit main-thread execution of proposed streams, and stop for the decision."
+}

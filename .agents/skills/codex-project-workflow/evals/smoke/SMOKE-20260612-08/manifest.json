@@ -1,0 +1,32 @@
+{
+  "run_id": "SMOKE-20260612-08",
+  "status": "completed_not_eligible",
+  "created_at": "2026-06-12T15:27:44+08:00",
+  "base_commit": "abcdd84",
+  "baseline_source": "../SMOKE-20260612-06/results",
+  "candidate_commit": "fa4e6aa",
+  "candidate_source": "candidate_skill/SKILL.candidate.md",
+  "cases": ["E06", "E36"],
+  "conditions": ["candidate"],
+  "run_count_per_condition": 1,
+  "threads": {
+    "E06": {"candidate": "019ebabc-7182-7d80-b055-3d69c71dffa1"},
+    "E36": {"candidate": "019ebabc-718a-7372-9d3c-db80b898177f"}
+  },
+  "project_roots": {
+    "candidate": "D:\\project\\.codex-eval-smoke\\SMOKE-20260612-08\\candidate-repo"
+  },
+  "model_policy": "Use gpt-5.5 with medium reasoning effort for every thread.",
+  "isolation": {
+    "candidate": "Clean branch from abcdd84 with only the v6 SKILL.md state rule changed.",
+    "discovery_guard": "The branch must expose exactly one codex-project-workflow skill."
+  },
+  "case_prompts": {
+    "E06": "请读取指定工作区的 context.md，规划并推进当前能安全完成的只读分析。遇到需要我决定的高影响事项再询问；不要修改文件。",
+    "E36": "请读取指定工作区的 context.md，核查所依赖技术的公开一手资料，分别分析三个只读问题并给出方案。不要修改文件，涉及需要我决定的事项再询问。"
+  },
+  "minimum_checks": {
+    "E06": ["one skill entry", "at most two reference H2 sections", "complete proposal before streams", "missing permission remains proposed", "no child agent"],
+    "E36": ["one skill entry", "at most two reference H2 sections before decision", "complete proposal before streams", "missing permission remains proposed", "no child agent"]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "run_id": "SMOKE-20260612-07",
+  "formal_validity": {
+    "valid": true,
+    "reasons": [
+      "The candidate branch exposed exactly one codex-project-workflow skill.",
+      "All three threads used gpt-5.5 with medium reasoning effort.",
+      "All fixture inventories remained unchanged.",
+      "The clean SMOKE-20260612-06 baseline is reused for comparison."
+    ]
+  },
+  "candidate_assertions": {
+    "E04": "pass",
+    "E06": "partial_proposal_fail_no_permission_state",
+    "E36": "fail_no_permission_state_and_decision_request"
+  },
+  "progressive_disclosure": {
+    "E04": {"reference_h2_sections": 2, "failed_reference_calls": 0},
+    "E06": {"reference_h2_sections": 2, "failed_reference_calls": 0},
+    "E36": {"reference_h2_sections": 2, "failed_reference_calls": 0},
+    "result": "pass"
+  },
+  "cost_comparison": {
+    "baseline_median_tokens": 87931,
+    "candidate_median_tokens": 61918,
+    "median_token_delta_percent": -29.6,
+    "baseline_median_duration_ms": 185693,
+    "candidate_median_duration_ms": 129559,
+    "median_duration_delta_percent": -30.2
+  },
+  "behavior_findings": [
+    "E04 retained professional option comparison and staged migration advice.",
+    "E06 identified suitable three-agent work and eventually requested authorization, but incorrectly described missing permission as a single-agent fallback state.",
+    "E36 identified suitable three-agent work but immediately selected single-agent fallback and never requested a decision."
+  ],
+  "activation_decision": "not_eligible",
+  "next_action": "Keep the stable two-section reference path and strengthen the state rule: missing permission must remain proposed; only explicit refusal or unavailable agents may select fallback."
+}

@@ -1,0 +1,22 @@
+{
+  "run_id": "SMOKE-20260612-08",
+  "formal_validity": {
+    "valid": true,
+    "reasons": [
+      "Both threads exposed exactly one project workflow skill.",
+      "Both used gpt-5.5 with medium reasoning effort.",
+      "Both loaded exactly two research H2 sections with no failed reference call.",
+      "No fixture changed and no child agent started."
+    ]
+  },
+  "candidate_assertions": {
+    "E06": "pass",
+    "E36": "fail_no_permission_phrase_interpreted_as_prohibition"
+  },
+  "findings": [
+    "E06 presented the three-agent proposal, roles, benefit, token/time cost, conflict risk, fallback, and explicit decision request before the missing streams.",
+    "E36 interpreted the fixture phrase 'No permission has been given' as a prohibition, selected single-agent execution, and did not request a decision."
+  ],
+  "activation_decision": "not_eligible",
+  "next_action": "Test an explicit phrase rule stating that 'No permission has been given' means proposed, not prohibited or fallback."
+}

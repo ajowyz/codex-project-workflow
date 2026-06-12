@@ -1,0 +1,56 @@
+{
+  "run_id": "SMOKE-20260612-11",
+  "formal_validity": {
+    "valid": true,
+    "reasons": [
+      "E04 and E06 ran on the exact frozen candidate commit b2e99d4.",
+      "E36 ran on the same commit in SMOKE-20260612-10.",
+      "Every thread exposed exactly one project skill and used gpt-5.5 with medium reasoning effort.",
+      "Every thread loaded exactly two intended H2 sections with no failed helper call.",
+      "No fixture changed and no child agent started."
+    ]
+  },
+  "candidate_assertions": {
+    "E04": "pass",
+    "E06": "pass",
+    "E36": "pass_from_SMOKE-20260612-10"
+  },
+  "quality_findings": [
+    "E04 compared materially different storage and retrieval options and gave staged migration triggers.",
+    "E06 and E36 proposed three agents before the proposed streams, included roles, boundaries, main-agent work, benefit, cost, risks, fallback, and an explicit decision request.",
+    "The candidate preserved read-only boundaries and did not start agents without approval."
+  ],
+  "cost_comparison": {
+    "baseline_source": "SMOKE-20260612-06",
+    "baseline_median_tokens": 87931,
+    "candidate_median_tokens": 46500,
+    "median_token_delta_percent": -47.1,
+    "baseline_median_duration_ms": 185693,
+    "candidate_median_duration_ms": 84320,
+    "median_duration_delta_percent": -54.6,
+    "baseline_median_time_to_first_token_ms": 43217,
+    "candidate_median_time_to_first_token_ms": 31334,
+    "median_time_to_first_token_delta_percent": -27.5
+  },
+  "approval_binding": {
+    "evaluated_active_base_commit": "ba1a2db5e3f9bd02e0ab6331b32fd9c082f98aaf",
+    "candidate_commit": "b2e99d42c2b0e001708e33df7fe6b04185d9f01e",
+    "patch_blob_sha1": "43a4742dd41f8e913f775c8cf116506ef48504c0",
+    "active_target_base": {
+      ".agents/skills/codex-project-workflow/SKILL.md": "E20B5E3F688D6EE4D1B8DB358F35ED1F3BACD6DFC6E9BAFD66CF967760FEF961",
+      ".agents/skills/codex-project-workflow/references/governance.md": "441CD02ED81B1BDB5212026D686983EFA9F84CD1951AA71C9335A6C5B128D9D8",
+      ".agents/skills/codex-project-workflow/scripts/read_reference.py": null
+    },
+    "target_files": {
+      ".agents/skills/codex-project-workflow/SKILL.md": "58AFB7BF70E3920D8B779632CD6E4CA19F294F271CB97E150E9CF6D997F00E7D",
+      ".agents/skills/codex-project-workflow/references/governance.md": "B3C58C5A63F355D8032E2AD855C096C1FC42A99AF27E552648A21CC497D3F04F",
+      ".agents/skills/codex-project-workflow/scripts/read_reference.py": "62F6709CACAFD329984DBCB520E3A32F012510775A514DCDF2B6F40835A5850A"
+    },
+    "invalidation_conditions": [
+      "Any active target file hash changes before activation.",
+      "The candidate commit, patch, target hashes, or evaluation evidence changes.",
+      "Activation includes any file outside the three listed targets."
+    ]
+  },
+  "activation_decision": "eligible_for_explicit_user_approval"
+}

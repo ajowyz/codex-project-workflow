@@ -1,0 +1,32 @@
+{
+  "run_id": "SMOKE-20260612-11",
+  "status": "completed_eligible_for_approval",
+  "created_at": "2026-06-12T15:46:55+08:00",
+  "base_commit": "b2e99d4",
+  "baseline_source": "../SMOKE-20260612-06/results",
+  "candidate_commit": "b2e99d4",
+  "candidate_source": "../SMOKE-20260612-10/candidate_skill/SKILL.candidate.md",
+  "cases": ["E04", "E06"],
+  "conditions": ["candidate"],
+  "run_count_per_condition": 1,
+  "threads": {
+    "E04": {"candidate": "019ebacd-9182-7773-bb08-3e2f0633e924"},
+    "E06": {"candidate": "019ebacd-92c1-7792-828c-43fa0ddbdcfd"}
+  },
+  "project_roots": {
+    "candidate": "D:\\project\\.codex-eval-smoke\\SMOKE-20260612-10\\candidate-repo"
+  },
+  "model_policy": "Use gpt-5.5 with medium reasoning effort.",
+  "isolation": {
+    "candidate": "Exact frozen candidate b2e99d4 already validated by SMOKE-20260612-10.",
+    "discovery_guard": "The branch must expose exactly one codex-project-workflow skill."
+  },
+  "case_prompts": {
+    "E04": "项目需要建立一个经验库。请读取指定工作区的 context.md，比较适用方案，给出专业建议和分阶段选择。当前只做只读分析，不修改文件。",
+    "E06": "请读取指定工作区的 context.md，规划并推进当前能安全完成的只读分析。遇到需要我决定的高影响事项再询问；不要修改文件。"
+  },
+  "minimum_checks": {
+    "E04": ["one skill entry", "two research H2 sections", "professional comparison", "single-agent judgment"],
+    "E06": ["one skill entry", "two governance H2 sections", "complete proposal and stop", "no child agent"]
+  }
+}

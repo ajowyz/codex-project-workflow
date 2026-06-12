@@ -1,0 +1,32 @@
+{
+  "run_id": "SMOKE-20260612-06",
+  "formal_validity": {
+    "valid": true,
+    "reasons": [
+      "The baseline branch exposed no project workflow skill.",
+      "The candidate branch exposed exactly one codex-project-workflow skill.",
+      "All six effective threads used gpt-5.5 with medium reasoning effort.",
+      "All fixture inventories remained unchanged."
+    ]
+  },
+  "candidate_assertions": {
+    "E04": "pass_professional_comparison_fail_progressive_disclosure",
+    "E06": "pass_multi_agent_proposal_fail_reference_path_and_context_efficiency",
+    "E36": "pass_freshness_and_multi_agent_gate_fail_reference_path_and_context_efficiency"
+  },
+  "behavior_findings": [
+    "E04 compared file, SQLite/FTS, sqlite-vec, PostgreSQL/pgvector, and Qdrant options with staged migration criteria.",
+    "E06 proposed three read-only agents with roles, main-agent integration, benefit, cost, conflict risk, a single-agent alternative, and an explicit approval request.",
+    "E36 detected freshness and high-impact migration concerns, proposed three read-only agents, and did not start them before approval."
+  ],
+  "efficiency_failures": [
+    "E04 loaded ten reference H2 sections across both research and governance, exceeding the standard-mode ceiling of two.",
+    "E06 first invoked the helper from the wrong directory, recursively listed the whole skill tree, and then loaded all seven governance sections.",
+    "E36 made two wrong-directory helper calls, recursively listed the whole skill tree, and then loaded all fourteen research and governance sections.",
+    "Candidate total tokens were 341592 versus 235290 for baseline, a 45.2 percent increase.",
+    "Candidate total duration was 568467 ms versus 494850 ms for baseline, a 14.9 percent increase."
+  ],
+  "hard_failures_proven": [],
+  "activation_decision": "not_eligible",
+  "next_action": "Fix helper observability and create a candidate that uses a project-root-stable command and fixed minimal section sets without heading discovery or recursive skill inspection."
+}

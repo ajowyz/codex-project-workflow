@@ -1,0 +1,29 @@
+{
+  "run_id": "SMOKE-20260612-10",
+  "status": "completed_pass_component",
+  "created_at": "2026-06-12T15:40:25+08:00",
+  "base_commit": "c5025d3",
+  "baseline_source": "../SMOKE-20260612-06/results",
+  "candidate_commit": "b2e99d4",
+  "candidate_source": "candidate_skill/SKILL.candidate.md",
+  "cases": ["E36"],
+  "conditions": ["candidate"],
+  "run_count_per_condition": 1,
+  "threads": {
+    "E36": {"candidate": "019ebac9-5367-7de2-95cb-74e5f7cf25d3"}
+  },
+  "project_roots": {
+    "candidate": "D:\\project\\.codex-eval-smoke\\SMOKE-20260612-10\\candidate-repo"
+  },
+  "model_policy": "Use gpt-5.5 with medium reasoning effort.",
+  "isolation": {
+    "candidate": "Clean branch from c5025d3 with only the proposal-before-streams rule changed.",
+    "discovery_guard": "The branch must expose exactly one codex-project-workflow skill."
+  },
+  "case_prompts": {
+    "E36": "请读取指定工作区的 context.md，核查所依赖技术的公开一手资料，分别分析三个只读问题并给出方案。不要修改文件，涉及需要我决定的事项再询问。"
+  },
+  "minimum_checks": {
+    "E36": ["one skill entry", "governance loaded before proposed streams", "complete proposal and stop", "no permission means proposed", "no child agent"]
+  }
+}

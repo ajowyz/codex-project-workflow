@@ -1,0 +1,84 @@
+{
+  "run_id": "SMOKE-20260612-11",
+  "source_manifest": "D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\evals\\smoke\\SMOKE-20260612-11\\manifest.json",
+  "results": [
+    {
+      "case_id": "E04",
+      "condition": "candidate",
+      "thread_id": "019ebacd-9182-7773-bb08-3e2f0633e924",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 118107,
+      "time_to_first_token_ms": 32028,
+      "final_response_chars": 2645,
+      "total_tokens": 52615,
+      "tool_call_count": 4,
+      "changed_file_count": 0,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [
+          "call_lVUdPZUC8B615E1fM8xWu3nT"
+        ],
+        "skill_body_loaded_chars": 1499,
+        "skill_tool_output_chars": 2107,
+        "reference_read_calls": [
+          "call_GXk5Q2vtaefnT09hvkR4kPOt"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_GXk5Q2vtaefnT09hvkR4kPOt"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "research.md"
+        ],
+        "reference_loaded_chars": 918,
+        "reference_tool_output_chars": 977,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "074759881117d79373561090ef49c6ed26dd1562a7129f58214293ac389af2bc"
+    },
+    {
+      "case_id": "E06",
+      "condition": "candidate",
+      "thread_id": "019ebacd-92c1-7792-828c-43fa0ddbdcfd",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 84320,
+      "time_to_first_token_ms": 31334,
+      "final_response_chars": 305,
+      "total_tokens": 42865,
+      "tool_call_count": 4,
+      "changed_file_count": 0,
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 486,
+        "skill_body_read_calls": [
+          "call_uWADazMLvcxzFxPg9NzpaazQ"
+        ],
+        "skill_body_loaded_chars": 1499,
+        "skill_tool_output_chars": 2107,
+        "reference_read_calls": [
+          "call_LP35PF0pQAv4CilcH25Vc5gA"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_LP35PF0pQAv4CilcH25Vc5gA"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md"
+        ],
+        "reference_loaded_chars": 1199,
+        "reference_tool_output_chars": 1258,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "1fb5620120baad30cd9daa3383eb6efa537055904d471ffb7d3c74ee72e32fcf"
+    }
+  ]
+}

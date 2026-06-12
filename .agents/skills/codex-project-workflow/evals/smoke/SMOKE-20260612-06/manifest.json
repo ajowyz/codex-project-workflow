@@ -1,6 +1,6 @@
 {
   "run_id": "SMOKE-20260612-06",
-  "status": "blocked_desktop_rate_limit_clean_discovery_verified",
+  "status": "completed_not_eligible",
   "created_at": "2026-06-12T11:22:00+08:00",
   "base_commit": "65f3ff2",
   "baseline_commit": "4b47e0d",
@@ -11,16 +11,16 @@
   "run_count_per_condition": 1,
   "threads": {
     "E04": {
-      "baseline": null,
-      "candidate": "019eb9dc-813a-72d1-b43e-f9bb8542b6ca"
+      "baseline": "019ebaa0-ba0f-7bc0-a636-865f27e33ce3",
+      "candidate": "019eba9e-1c2c-78d0-8c73-f97774a84bf6"
     },
     "E06": {
-      "baseline": null,
-      "candidate": null
+      "baseline": "019ebaa0-bac8-7440-9b2e-39e9a9a3c084",
+      "candidate": "019ebaa0-ba53-7403-b517-f9d3a2722a25"
     },
     "E36": {
-      "baseline": null,
-      "candidate": null
+      "baseline": "019ebaa0-b9c6-77f0-a6e7-5da212543dd9",
+      "candidate": "019ebaa0-c3df-7623-9a19-827151292d38"
     }
   },
   "project_roots": {

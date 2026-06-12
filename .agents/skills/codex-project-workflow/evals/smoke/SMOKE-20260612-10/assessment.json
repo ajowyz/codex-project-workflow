@@ -1,0 +1,11 @@
+{
+  "run_id": "SMOKE-20260612-10",
+  "formal_validity": {
+    "valid": true,
+    "reason": "The exact candidate thread completed with one skill, two governance H2 sections, no failed call, no child agent, and no fixture change."
+  },
+  "candidate_assertion": "pass",
+  "finding": "The candidate detected the three independent high-risk streams, loaded governance before them, presented a complete three-agent proposal, and stopped for explicit approval.",
+  "activation_decision": "pending_exact_candidate_E04_E06_regression",
+  "next_action": "Run E04 and E06 on the same b2e99d4 candidate commit."
+}

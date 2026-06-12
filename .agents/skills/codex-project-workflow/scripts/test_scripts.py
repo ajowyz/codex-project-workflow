@@ -31,6 +31,7 @@ adr_index = load("adr_index")
 measure_context = load("measure_context")
 validate_evals = load("validate_evals")
 setup_smoke = load("setup_smoke")
+collect_smoke = load("collect_smoke")
 
 
 class ScriptTests(unittest.TestCase):
@@ -143,7 +144,7 @@ class ScriptTests(unittest.TestCase):
 
     def test_latest_candidate_budget_and_reference_reader(self):
         candidate_dir = (
-            SKILL_DIR / "evals" / "smoke" / "SMOKE-20260612-04" / "candidate_skill"
+            SKILL_DIR / "evals" / "smoke" / "SMOKE-20260612-10" / "candidate_skill"
         )
         metrics = measure_context.skill_metrics(
             candidate_dir / "SKILL.candidate.md"
@@ -160,6 +161,70 @@ class ScriptTests(unittest.TestCase):
         headings = [heading for heading, _ in reader.parse_sections(research.read_text(encoding="utf-8"))]
         self.assertIn("Execution Rules", headings)
         self.assertIn("Output Requirements", headings)
+        candidate_text = (candidate_dir / "SKILL.candidate.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            "python .agents/skills/codex-project-workflow/scripts/"
+            'read_reference.py research "Execution Rules" "Output Requirements"',
+            candidate_text,
+        )
+        self.assertIn("Never list headings", candidate_text)
+        self.assertIn("Do not run proposed streams in main", candidate_text)
+
+    def test_smoke_collector_traces_reference_reader_sections(self):
+        calls = [
+            {
+                "call_id": "list",
+                "name": "shell_command",
+                "arguments": {
+                    "command": (
+                        "python .agents/skills/codex-project-workflow/"
+                        "scripts/read_reference.py research"
+                    )
+                },
+                "output": {
+                    "chars": 100,
+                    "h2_sections": 0,
+                    "preview": "Exit code: 0\nOutput:\nExecution Rules\nOutput Requirements",
+                },
+            },
+            {
+                "call_id": "sections",
+                "name": "shell_command",
+                "arguments": {
+                    "command": (
+                        "python .agents/skills/codex-project-workflow/"
+                        "scripts/read_reference.py research "
+                        "'Execution Rules' 'Output Requirements'"
+                    )
+                },
+                "output": {
+                    "chars": 900,
+                    "h2_sections": 2,
+                    "preview": "Exit code: 0\nOutput:\n## Execution Rules",
+                },
+            },
+            {
+                "call_id": "failed",
+                "name": "shell_command",
+                "arguments": {
+                    "command": "python scripts/read_reference.py governance"
+                },
+                "output": {
+                    "chars": 200,
+                    "h2_sections": 0,
+                    "preview": "Exit code: 1\nOutput:\ncan't open file",
+                },
+            },
+        ]
+        trace = collect_smoke.reference_call_trace(calls, SKILL_DIR)
+        self.assertEqual(["failed"], trace["reference_failed_calls"])
+        self.assertEqual(["list"], trace["reference_list_calls"])
+        self.assertEqual(["sections"], trace["reference_section_read_calls"])
+        self.assertEqual(2, trace["reference_h2_sections"])
+        self.assertEqual(["research.md"], trace["reference_files"])
+        self.assertGreater(trace["reference_loaded_chars"], 0)
 
 
 if __name__ == "__main__":
