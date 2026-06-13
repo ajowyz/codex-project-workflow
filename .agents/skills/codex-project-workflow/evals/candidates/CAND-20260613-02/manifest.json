@@ -17,7 +17,7 @@
       "active_path": ".agents/skills/codex-project-workflow/references/governance.md",
       "base_sha256": "a9b9d4689ad3f8fd2b8d4c112bc784bbfd31834630f2232900362518e09e654a",
       "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260613-02/references/governance.md",
-      "candidate_sha256": "b22ea72b124e883ac9911db5dfc442eba941f040502c25afe25fa52337e26bb4"
+      "candidate_sha256": "494de479fd138e4270bee5155b6e44f93f4cb9666ddd63389c3ba22676e408ed"
     },
     {
       "active_path": ".agents/skills/codex-project-workflow/references/verification.md",
@@ -28,7 +28,7 @@
   ],
   "patch": {
     "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260613-02/patch.diff",
-    "sha256": "92cc910a985abbcc4ec2964100de925e6d4cc68a238f3b83116a4b0e43ba180d"
+    "sha256": "b46ea37170b030f4ecd44b7611678ff61da355045111680a72b31d956c1f3368"
   },
   "scope": [
     "retain all CAND-20260613-01 changes",
@@ -38,7 +38,7 @@
   ],
   "preflight": {
     "status": "pass",
-    "script_tests": "44 passed",
+    "script_tests": "45 passed",
     "behavior_fixtures": "36 cases, 148 assertions valid",
     "full_fixtures": "31/31 cases, 61 variants valid"
   },

@@ -66,10 +66,31 @@ def output_summary(output):
     marker = "\nOutput:\n"
     if marker in normalized:
         content = normalized.split(marker, 1)[1]
+    reference_metrics = None
+    metrics_match = re.search(
+        r"\n\n<!-- codex-reference-metrics "
+        r"codepoints=(\d+) h2_sections=(\d+) -->\n?\Z",
+        content,
+    )
+    if metrics_match:
+        reference_metrics = {
+            "codepoints": int(metrics_match.group(1)),
+            "h2_sections": int(metrics_match.group(2)),
+        }
+        content = content[:metrics_match.start()]
     return {
         "chars": len(output),
-        "content_codepoints": len(content),
-        "h2_sections": len(re.findall(r"(?m)^## ", output)),
+        "content_codepoints": (
+            reference_metrics["codepoints"]
+            if reference_metrics
+            else len(content)
+        ),
+        "h2_sections": (
+            reference_metrics["h2_sections"]
+            if reference_metrics
+            else len(re.findall(r"(?m)^## ", output))
+        ),
+        "reference_metrics": reference_metrics,
         "sha256": hashlib.sha256(output.encode("utf-8")).hexdigest(),
         "preview": output[:2000],
     }

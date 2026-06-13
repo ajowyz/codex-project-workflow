@@ -36,7 +36,7 @@ index 2ccceda..0000000 100644
  - Durable rule changes remain isolated candidates. Bind approval to target, scope, base version, patch hash, evaluation evidence, and invalidation conditions.
  - Never let context or speed budgets suppress a triggered safety or authorization check.
 -- When hard triggers exceed a stated context budget, report `added_codepoints`, `added_sections`, `reason`, and `unknown_resolved`.
-+- When hard triggers exceed a stated context budget, compute from the NFC-normalized content of every reference extraction actually emitted: `added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)` and `added_sections=max(0, emitted_H2_blocks-budget_H2_blocks)`. Measure the captured helper `Output` payload directly; never reconstruct or retype it. Same-titled H2 blocks from different protocols and repeated outputs each count; nested H3 headings do not. Report these values with `reason` and `unknown_resolved`, and carry the current four fields into the final completion response.
++- When hard triggers exceed a stated context budget, compute from the NFC-normalized content of every reference extraction actually emitted: `added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)` and `added_sections=max(0, emitted_H2_blocks-budget_H2_blocks)`. Use the helper's emitted metrics; never reconstruct or retype its output. Same-titled H2 blocks from different protocols and repeated outputs each count; nested H3 headings do not. Report these values with `reason` and `unknown_resolved`, and carry the current four fields into the final completion response.
  
  ## Stop Conditions
  

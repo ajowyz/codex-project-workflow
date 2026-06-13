@@ -124,7 +124,7 @@ class ScriptTests(unittest.TestCase):
             )
         self.assertIn("only explicit refusal or unavailable agents", governance)
         self.assertIn("added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)", governance)
-        self.assertIn("never reconstruct or retype it", governance)
+        self.assertIn("helper's emitted metrics", governance)
         self.assertIn("It is evidence, not automatically a project file", verification)
         self.assertIn("Before the first delivery/state write", verification)
         self.assertIn("existing responsibility owner", verification)
@@ -212,6 +212,22 @@ class ScriptTests(unittest.TestCase):
                         encoding="utf-8"
                     ),
                 )
+
+    def test_reference_reader_emits_exact_metrics(self):
+        payload = "## Execution Rules\n\nalpha\n\n## Output Requirements\n\nbeta"
+        rendered = read_reference.output_with_metrics(payload)
+        summary = collect_smoke.output_summary(
+            f"Exit code: 0\nOutput:\n{rendered}\n"
+        )
+        self.assertEqual(
+            {
+                "codepoints": len(payload),
+                "h2_sections": 2,
+            },
+            summary["reference_metrics"],
+        )
+        self.assertEqual(len(payload), summary["content_codepoints"])
+        self.assertEqual(2, summary["h2_sections"])
 
     def test_trigger_case_counts(self):
         cases = json.loads((SKILL_DIR / "evals" / "trigger_cases.json").read_text(encoding="utf-8"))

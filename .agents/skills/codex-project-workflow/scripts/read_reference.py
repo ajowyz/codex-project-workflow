@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 import argparse
+import re
+import unicodedata
 from pathlib import Path
+
+METRICS_TEMPLATE = (
+    "<!-- codex-reference-metrics "
+    "codepoints={codepoints} h2_sections={h2_sections} -->"
+)
 
 
 def parse_sections(text):
@@ -42,6 +49,18 @@ def resolve_reference(value):
     raise SystemExit(f"unknown reference: {value}")
 
 
+def output_with_metrics(payload):
+    normalized = unicodedata.normalize(
+        "NFC",
+        payload.replace("\r\n", "\n").replace("\r", "\n"),
+    )
+    metrics = METRICS_TEMPLATE.format(
+        codepoints=len(normalized),
+        h2_sections=len(re.findall(r"(?m)^## ", normalized)),
+    )
+    return f"{payload}\n\n{metrics}"
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("reference")
@@ -57,11 +76,10 @@ def main():
     ]
     if missing:
         raise SystemExit(f"unknown section: {', '.join(missing)}")
-    print(
-        "\n\n".join(
-            by_heading[name.casefold()] for name in args.headings
-        )
+    payload = "\n\n".join(
+        by_heading[name.casefold()] for name in args.headings
     )
+    print(output_with_metrics(payload))
     return 0
 
 
