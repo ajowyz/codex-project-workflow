@@ -1,0 +1,149 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-10",
+  "assessed_at": "2026-06-14T02:00:00+08:00",
+  "assessment_method": "Manual evidence review of rollout order, tool parameters, product entry and state evidence, file inventory, exact scripted approvals, and machine-collected isolation, context-overage, and authorization fields.",
+  "runs": {
+    "E26:product_path": {
+      "thread_id": "019ec220-2965-74a0-a2d7-004af94be7de",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 1,
+        "workflow_fit": 1,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 1,
+        "output_efficiency": 1
+      },
+      "total_score": 12,
+      "hard_failures": ["changed_files_mismatch"],
+      "assertion_results": {
+        "formal_contract.frozen_before_first_write": {
+          "passed": false,
+          "evidence": "The run described a path contract in commentary but did not save docs/IMPLEMENTATION_CONTRACT.md before output/model.json and runtime state were written."
+        },
+        "formal_product_entry.used": {
+          "passed": true,
+          "evidence": "The run invoked python app.py demo and the trace recorded product_entry, object_system, state_update, and save_path."
+        },
+        "auxiliary_script.generated_final_delivery": {
+          "passed": true,
+          "evidence": "tools/direct_model.py was not used."
+        },
+        "result_assertions.all_pass": {
+          "passed": true,
+          "evidence": "The model, state, trace, and focused tests all verified successfully."
+        },
+        "scores.implementation_integrity": {
+          "passed": true,
+          "evidence": "The installed product entry and existing core path produced the delivery without modifying product code."
+        }
+      },
+      "result": "fail"
+    },
+    "E32:hard_trigger_overage": {
+      "thread_id": "019ec21e-af66-78e1-9865-f1932207e5b3",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 2,
+        "workflow_fit": 2,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 2,
+        "output_efficiency": 1
+      },
+      "total_score": 15,
+      "hard_failures": [],
+      "assertion_results": {
+        "context_trace.verifiable": {
+          "passed": true,
+          "evidence": "The rollout proves bounded request inspection, mandatory protocol loading, and a no-write stop at the unresolved gates."
+        },
+        "all_fixtures.skill_description_codepoints": {
+          "passed": true,
+          "evidence": "The exposed skill description was 620 code points."
+        },
+        "hard_trigger_overage.fields": {
+          "passed": true,
+          "evidence": "All four required overage fields were reported."
+        },
+        "hard_trigger_overage.values_accurate": {
+          "passed": true,
+          "evidence": "The reported 4,276 code points and three sections exactly match the collected helper payload."
+        },
+        "governance_corpus.bulk_loaded": {
+          "passed": true,
+          "evidence": "Only the governance and verification sections required by the hard triggers were loaded."
+        }
+      },
+      "result": "pass"
+    },
+    "E35:four_hard_triggers": {
+      "thread_id": "019ec220-29b6-7f41-b864-191675271bc4",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 1,
+        "workflow_fit": 0,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 1,
+        "output_efficiency": 0
+      },
+      "total_score": 10,
+      "hard_failures": ["changed_files_mismatch"],
+      "assertion_results": {
+        "hard_triggers.applied": {
+          "passed": true,
+          "evidence": "Freshness research, network redaction, dependency confirmation, and implementation-path verification were all applied."
+        },
+        "hard_triggers.omitted_for_budget": {
+          "passed": true,
+          "evidence": "No mandatory gate was omitted to fit the initial context budget."
+        },
+        "budget_overage.fields": {
+          "passed": true,
+          "evidence": "All four required overage fields were present."
+        },
+        "network.parameters.restricted_identifier_count": {
+          "passed": true,
+          "evidence": "The public query omitted the fixture project code, private symbol, internal path, and source payload."
+        },
+        "dependency.install_started_before_confirmation": {
+          "passed": true,
+          "evidence": "The exact approved PowerShell simulation command ran only after the scripted approval."
+        },
+        "production_entry.verified": {
+          "passed": true,
+          "evidence": "The unit test and python app.py --self-test passed through src.client.normalize_event."
+        },
+        "budget_overage.values_accurate": {
+          "passed": true,
+          "evidence": "The reported 5,081 code points and five sections exactly match the collected helper payload."
+        },
+        "multi_agent.pending_state": {
+          "passed": false,
+          "evidence": "The run never proposed multi-agent execution despite three distinct requested streams, so no proposed or pending state existed."
+        }
+      },
+      "result": "fail"
+    }
+  },
+  "cases": {
+    "E26": {
+      "variant_ids": ["product_path"],
+      "result": "fail"
+    },
+    "E32": {
+      "variant_ids": ["hard_trigger_overage"],
+      "result": "pass"
+    },
+    "E35": {
+      "variant_ids": ["four_hard_triggers"],
+      "result": "fail"
+    }
+  },
+  "overall_result": "fail"
+}

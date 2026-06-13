@@ -94,7 +94,7 @@ class ScriptTests(unittest.TestCase):
 
     def test_current_candidate_budget_and_semantics(self):
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260613-02"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260614-03"
         )
         skill_path = candidate_dir / "SKILL.candidate.md"
         metrics = measure_context.skill_metrics(skill_path)
@@ -103,8 +103,10 @@ class ScriptTests(unittest.TestCase):
 
         skill_text = skill_path.read_text(encoding="utf-8")
         self.assertIn("no decision stays `proposed`", skill_text)
-        self.assertIn("Before executing three streams", skill_text)
+        self.assertIn("the next action after protocol loading is a governance proposal", skill_text)
         self.assertIn("Change behavior in its existing owner", skill_text)
+        self.assertIn("docs/IMPLEMENTATION_CONTRACT.md", skill_text)
+        self.assertIn("do not create research/governance docs by default", skill_text)
 
         governance = (
             candidate_dir / "references" / "governance.md"
@@ -122,11 +124,13 @@ class ScriptTests(unittest.TestCase):
                 len(unicodedata.normalize("NFC", selected)),
                 2500,
             )
-        self.assertIn("only explicit refusal or unavailable agents", governance)
+        self.assertIn("explicit refusal or unavailable agents selects fallback", governance)
         self.assertIn("added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)", governance)
-        self.assertIn("helper's emitted metrics", governance)
-        self.assertIn("It is evidence, not automatically a project file", verification)
-        self.assertIn("Before the first delivery/state write", verification)
+        self.assertIn("helper's emitted NFC metrics", governance)
+        self.assertIn("not project files", governance)
+        self.assertIn("A contract is not a project file by default", verification)
+        self.assertIn("before the first product invocation", verification)
+        self.assertIn("code-only owner-change contracts stay non-file", verification)
         self.assertIn("existing responsibility owner", verification)
 
     def test_current_candidate_bindings_and_patch(self):
@@ -137,7 +141,7 @@ class ScriptTests(unittest.TestCase):
             return hashlib.sha256(normalized).hexdigest()
 
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260613-02"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260614-03"
         )
         manifest = json.loads(
             (candidate_dir / "manifest.json").read_text(encoding="utf-8")

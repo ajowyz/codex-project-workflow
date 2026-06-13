@@ -1,0 +1,71 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-10",
+  "evaluation_scope": "targeted_regression",
+  "status": "assessed_failed",
+  "completed_at": "2026-06-14T02:00:00+08:00",
+  "created_at": "2026-06-14T01:53:00+08:00",
+  "fixture_commit": "09bfdb703708e6221a72ab21c1f25f430c38b688",
+  "candidate_id": "CAND-20260613-02",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260613-10\\workspaces\\setup-state.json",
+  "excluded_infrastructure_runs": [
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019ec132-91a4-7f63-8057-a852583b9ebf",
+      "reason": "systemError before the first model output"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019ec132-91c4-7590-b123-ed5aa4212240",
+      "reason": "systemError before the first model output"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019ec132-920b-7203-bb35-9f2bb3e54531",
+      "reason": "systemError before the first model output"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019ec133-725a-7c32-9166-00832e27528b",
+      "reason": "systemError before the first model output"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019ec134-5ad0-79e1-876d-8f134e9af3ba",
+      "reason": "systemError before the first model output"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019ec13a-9a8a-7b51-b83c-63a928028a99",
+      "reason": "systemError before the first model output"
+    }
+  ],
+  "runs": [
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019ec220-2965-74a0-a2d7-004af94be7de",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\dbb3\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019ec21e-af66-78e1-9865-f1932207e5b3",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\294d\\efficiently use codex"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019ec220-29b6-7f41-b864-191675271bc4",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\5b6f\\efficiently use codex"
+    }
+  ]
+}

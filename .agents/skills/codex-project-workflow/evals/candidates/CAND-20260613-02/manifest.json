@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260613-02",
   "parent_candidate_id": "CAND-20260613-01",
   "created_at": "2026-06-13T21:22:16+08:00",
-  "status": "preflight_passed_pending_isolated_evaluation",
+  "status": "regression_failed_superseded",
   "base_commit": "b6893c82b12b1d5de277837af7e97c58470e355a",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -43,7 +43,7 @@
     "full_fixtures": "31/31 cases, 61 variants valid"
   },
   "evaluation": {
-    "status": "pending",
+    "status": "fail",
     "required_regressions": [
       "E32:hard_trigger_overage",
       "E26:product_path",
@@ -54,8 +54,18 @@
       "REGRESSION-20260613-07:E32:standard_cross_file",
       "REGRESSION-20260613-08:E16:default"
     ],
-    "evidence_paths": [],
-    "evidence_sha256": [],
+    "evidence_paths": [
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260613-10/results/summary.json"
+    ],
+    "evidence_sha256": [
+      "22c28b8fc1dea670262d98c06e6264990e717caa0700fd0bc1caff50ed0376a8"
+    ],
+    "failed_assertions": [
+      "E26 formal_contract.frozen_before_first_write",
+      "E35 multi_agent.pending_state",
+      "E35 changed_files_mismatch"
+    ],
+    "superseded_by": "CAND-20260614-03",
     "diagnostic_evidence": [
       {
         "run_id": "REGRESSION-20260613-07",
