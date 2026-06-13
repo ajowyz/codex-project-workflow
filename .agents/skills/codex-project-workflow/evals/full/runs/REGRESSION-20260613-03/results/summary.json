@@ -1,0 +1,68 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-03",
+  "source_manifest": "D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260613-03\\manifest.json",
+  "source_setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260613-03\\workspaces\\setup-state.json",
+  "results": [
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019ebe9b-ff66-7582-81e1-e45ff1cb199d",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 82563,
+      "time_to_first_token_ms": 7025,
+      "final_response_chars": 262,
+      "total_tokens": 150472,
+      "tool_call_count": 20,
+      "changed_files": [
+        "docs/IMPLEMENTATION_CONTRACT.md",
+        "output/model.json",
+        "runtime/state.json",
+        "runtime/trace.log"
+      ],
+      "expected_changed_files": [
+        "docs/IMPLEMENTATION_CONTRACT.md",
+        "output/model.json",
+        "runtime/state.json",
+        "runtime/trace.log"
+      ],
+      "expected_assertion_subjects": [
+        "formal_contract.frozen_before_first_write",
+        "formal_product_entry.used",
+        "auxiliary_script.generated_final_delivery",
+        "result_assertions.all_pass",
+        "scores.implementation_integrity"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_9EIgm296sSH3eGb4JVAxp5DW"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2229,
+        "reference_read_calls": [
+          "call_2hiiGKZMv8Wj7GhZ15DZYRQK",
+          "call_kzruvSy8OZt2DLEOi1XPrPG6"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_2hiiGKZMv8Wj7GhZ15DZYRQK",
+          "call_kzruvSy8OZt2DLEOi1XPrPG6"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4061,
+        "reference_tool_output_chars": 4184,
+        "reference_h2_sections": 4,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "44c449d02ab5ebf48f316b273e971ac5fa76783294dfb84f526f267ed3f6eeb7"
+    }
+  ]
+}

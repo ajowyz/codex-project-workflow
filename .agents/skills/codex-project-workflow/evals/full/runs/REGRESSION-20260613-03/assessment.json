@@ -1,0 +1,53 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-03",
+  "assessed_at": "2026-06-13T09:37:22+08:00",
+  "assessment_method": "Manual evidence review of rollout order, exact product invocation, fixture inventory diff, state, trace, and test evidence.",
+  "runs": {
+    "E26:product_path": {
+      "thread_id": "019ebe9b-ff66-7582-81e1-e45ff1cb199d",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 2,
+        "workflow_fit": 2,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 2,
+        "output_efficiency": 2
+      },
+      "total_score": 16,
+      "hard_failures": [],
+      "assertion_results": {
+        "formal_contract.frozen_before_first_write": {
+          "passed": true,
+          "evidence": "docs/IMPLEMENTATION_CONTRACT.md was created before output/model.json, runtime/state.json, or runtime/trace.log."
+        },
+        "formal_product_entry.used": {
+          "passed": true,
+          "evidence": "The run invoked the root app.py CLI and the trace recorded product_entry, object_system, state_update, and save_path."
+        },
+        "auxiliary_script.generated_final_delivery": {
+          "passed": true,
+          "evidence": "tools/direct_model.py was inspected as an excluded bypass and was not executed."
+        },
+        "result_assertions.all_pass": {
+          "passed": true,
+          "evidence": "The model content, persisted state, ordered trace, exact output path, and product test all passed."
+        },
+        "scores.implementation_integrity": {
+          "passed": true,
+          "evidence": "The independently mapped contract preceded writes and the formal entry plus full core path were proven."
+        }
+      },
+      "result": "pass"
+    }
+  },
+  "cases": {
+    "E26": {
+      "variant_ids": ["product_path"],
+      "result": "pass"
+    }
+  },
+  "overall_result": "pass"
+}

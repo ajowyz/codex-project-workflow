@@ -383,6 +383,21 @@ class ScriptTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unknown variant"):
             setup_full_eval.select_variant(case, "missing")
 
+    def test_full_eval_targeted_selection_supports_multiple_variants(self):
+        self.assertEqual(
+            [
+                ("E26", "product_path"),
+                ("E26", "entry_bypass"),
+                ("E32", None),
+            ],
+            setup_full_eval.targeted_selections(
+                ["E26", "E32"],
+                {
+                    "E26": ["product_path", "entry_bypass"],
+                },
+            ),
+        )
+
     def test_full_eval_minimal_variant_cover(self):
         case = {
             "case_id": "E99",

@@ -1,0 +1,27 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-03",
+  "evaluation_scope": "targeted_regression",
+  "status": "completed_pass",
+  "created_at": "2026-06-13T09:32:43+08:00",
+  "fixture_commit": "2300d168c6b6d930112c02cbf1ad7b11ab3faab5",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "completed_at": "2026-06-13T09:34:12+08:00",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260613-03\\workspaces\\setup-state.json",
+  "evaluation_result": {
+    "passed_cases": 1,
+    "total_cases": 1,
+    "passed_runs": 1,
+    "total_runs": 1,
+    "overall": "pass"
+  },
+  "runs": [
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019ebe9b-ff66-7582-81e1-e45ff1cb199d",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\57c1\\efficiently use codex"
+    }
+  ]
+}

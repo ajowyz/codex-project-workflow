@@ -111,12 +111,22 @@ def setup_selected(selections, output_root):
     return state_path
 
 
-def setup(case_ids, output_root, requested_variants=None):
+def targeted_selections(case_ids, requested_variants=None):
     requested_variants = requested_variants or {}
-    selections = [
-        (case_id, requested_variants.get(case_id))
-        for case_id in case_ids
-    ]
+    selections = []
+    for case_id in dict.fromkeys(case_ids):
+        variants = requested_variants.get(case_id)
+        if variants is None:
+            selections.append((case_id, None))
+            continue
+        if isinstance(variants, str):
+            variants = [variants]
+        selections.extend((case_id, variant_id) for variant_id in variants)
+    return selections
+
+
+def setup(case_ids, output_root, requested_variants=None):
+    selections = targeted_selections(case_ids, requested_variants)
     return setup_selected(selections, output_root)
 
 
@@ -147,7 +157,7 @@ def main():
         if "=" not in item:
             raise SystemExit("--variant must use CASE=VARIANT")
         case_id, variant_id = item.split("=", 1)
-        requested[case_id] = variant_id
+        requested.setdefault(case_id, []).append(variant_id)
 
     if args.calibration:
         if args.cases or requested:
@@ -159,6 +169,12 @@ def main():
     else:
         if not args.cases:
             raise SystemExit("provide --case or --calibration")
+        unknown_cases = set(requested) - set(args.cases)
+        if unknown_cases:
+            raise SystemExit(
+                "--variant case must also be selected with --case: "
+                + ", ".join(sorted(unknown_cases))
+            )
         path = setup(args.cases, args.output_root.resolve(), requested)
     print(path)
     return 0

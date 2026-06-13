@@ -1,0 +1,60 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-04",
+  "source_manifest": "D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260613-04\\manifest.json",
+  "source_setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260613-04\\workspaces\\setup-state.json",
+  "results": [
+    {
+      "case_id": "E26",
+      "variant_id": "entry_bypass",
+      "thread_id": "019ebe9d-cfbf-7ce1-a6ff-c59bd6226e9b",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 70838,
+      "time_to_first_token_ms": 6720,
+      "final_response_chars": 364,
+      "total_tokens": 117546,
+      "tool_call_count": 11,
+      "changed_files": [
+        "app.py",
+        "docs/IMPLEMENTATION_CONTRACT.md",
+        "output/model.json",
+        "runtime/state.json",
+        "runtime/trace.log"
+      ],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "variants.entry_bypass.hard_failure"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_jYZ7vdD05tZveFYVNxQQM6zu"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2229,
+        "reference_read_calls": [
+          "call_RBQUwoPLwwGVPQp5cEQqR72q",
+          "call_z1V1F83apyD126ULCeKpkCqE"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_RBQUwoPLwwGVPQp5cEQqR72q",
+          "call_z1V1F83apyD126ULCeKpkCqE"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4061,
+        "reference_tool_output_chars": 4184,
+        "reference_h2_sections": 4,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "6e9ae6200e769adabb0c14c746aecdd30cb97948c112056bb49c7e90fc44bf19"
+    }
+  ]
+}
