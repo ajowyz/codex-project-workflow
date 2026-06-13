@@ -126,6 +126,12 @@ class ScriptTests(unittest.TestCase):
         self.assertIn("existing responsibility owner", verification)
 
     def test_current_candidate_bindings_and_patch(self):
+        def canonical_hash_bytes(value):
+            text = value.decode("utf-8-sig")
+            text = text.replace("\r\n", "\n").replace("\r", "\n")
+            normalized = unicodedata.normalize("NFC", text).encode("utf-8")
+            return hashlib.sha256(normalized).hexdigest()
+
         candidate_dir = (
             SKILL_DIR / "evals" / "candidates" / "CAND-20260613-01"
         )
@@ -133,26 +139,35 @@ class ScriptTests(unittest.TestCase):
             (candidate_dir / "manifest.json").read_text(encoding="utf-8")
         )
         self.assertFalse(manifest["activation"]["allowed"])
+        self.assertEqual("sha256-nfc-lf-utf8", manifest["hash_algorithm"])
         self.assertEqual(
             "preflight_passed_pending_isolated_evaluation",
             manifest["status"],
         )
 
+        active_states = set()
         for target in manifest["targets"]:
             active = PROJECT_ROOT / target["active_path"]
             candidate = PROJECT_ROOT / target["candidate_path"]
-            self.assertEqual(
-                target["base_sha256"],
-                hashlib.sha256(active.read_bytes()).hexdigest(),
+            active_hash = canonical_hash_bytes(active.read_bytes())
+            self.assertIn(
+                active_hash,
+                {target["base_sha256"], target["candidate_sha256"]},
+            )
+            active_states.add(
+                "base"
+                if active_hash == target["base_sha256"]
+                else "candidate"
             )
             self.assertEqual(
                 target["candidate_sha256"],
-                hashlib.sha256(candidate.read_bytes()).hexdigest(),
+                canonical_hash_bytes(candidate.read_bytes()),
             )
+        self.assertEqual(1, len(active_states), "active targets are in a mixed state")
         patch_path = PROJECT_ROOT / manifest["patch"]["path"]
         self.assertEqual(
             manifest["patch"]["sha256"],
-            hashlib.sha256(patch_path.read_bytes()).hexdigest(),
+            canonical_hash_bytes(patch_path.read_bytes()),
         )
 
         with tempfile.TemporaryDirectory() as temporary:
@@ -160,10 +175,21 @@ class ScriptTests(unittest.TestCase):
             for target in manifest["targets"]:
                 destination = temporary_root / target["active_path"]
                 destination.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(
-                    PROJECT_ROOT / target["active_path"],
-                    destination,
+                baseline = subprocess.run(
+                    [
+                        "git",
+                        "show",
+                        f"{manifest['base_commit']}:{target['active_path']}",
+                    ],
+                    cwd=PROJECT_ROOT,
+                    capture_output=True,
+                    check=True,
                 )
+                self.assertEqual(
+                    target["base_sha256"],
+                    canonical_hash_bytes(baseline.stdout),
+                )
+                destination.write_bytes(baseline.stdout)
             shutil.copyfile(patch_path, temporary_root / "patch.diff")
             result = subprocess.run(
                 ["git", "apply", "--ignore-space-change", "patch.diff"],

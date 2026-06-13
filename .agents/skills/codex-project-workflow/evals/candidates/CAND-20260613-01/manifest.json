@@ -4,7 +4,7 @@
   "created_at": "2026-06-13T21:00:59+08:00",
   "status": "preflight_passed_pending_isolated_evaluation",
   "base_commit": "76324e3648ac93e7eac36b028935a9e1af9838b8",
-  "hash_algorithm": "sha256-raw-bytes",
+  "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
     {
       "active_path": ".agents/skills/codex-project-workflow/SKILL.md",
@@ -14,7 +14,7 @@
     },
     {
       "active_path": ".agents/skills/codex-project-workflow/references/governance.md",
-      "base_sha256": "0044ba0cc26964d439c755764f17577dc1ed870b3c5538745720d47d55468a07",
+      "base_sha256": "a9b9d4689ad3f8fd2b8d4c112bc784bbfd31834630f2232900362518e09e654a",
       "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260613-01/references/governance.md",
       "candidate_sha256": "b7a0d901c438ad7ce195ec2b62ea3c6ef5b072f40c535f707e7425bcf3120b55"
     },
