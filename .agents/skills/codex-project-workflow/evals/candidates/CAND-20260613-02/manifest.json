@@ -55,7 +55,28 @@
       "REGRESSION-20260613-08:E16:default"
     ],
     "evidence_paths": [],
-    "evidence_sha256": []
+    "evidence_sha256": [],
+    "diagnostic_evidence": [
+      {
+        "run_id": "REGRESSION-20260613-07",
+        "result": "fail_superseded_candidate",
+        "summary_path": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260613-07/results/summary.json",
+        "summary_sha256": "49c626ce92022bf2d31ab01a5fe6fea266a932ef13b1edf709402bf9c25e1830"
+      },
+      {
+        "run_id": "REGRESSION-20260613-08",
+        "result": "fail_superseded_candidate",
+        "summary_path": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260613-08/results/summary.json",
+        "summary_sha256": "6db426e73b4a79cf6eefd1d9ed864ffb7e8473b01ebb0f7244f45219ec0c748f"
+      },
+      {
+        "run_id": "REGRESSION-20260613-09",
+        "result": "fail_pre_final_helper_commit_and_infrastructure_interruption",
+        "summary_path": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260613-09/results/summary.json",
+        "summary_sha256": "eb0cebffe858e60752aff6c22ec825e6c9f02c20514b490048c19dbf94b33d40"
+      }
+    ],
+    "infrastructure_blocker": "Fresh desktop evaluation threads created for REGRESSION-20260613-10 returned systemError before the first model output; fixture workspaces remain untouched."
   },
   "activation": {
     "allowed": false,

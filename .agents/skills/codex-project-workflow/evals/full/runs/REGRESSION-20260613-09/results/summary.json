@@ -1,0 +1,262 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-09",
+  "source_manifest": "D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260613-09\\manifest.json",
+  "source_setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260613-09\\workspaces\\setup-state.json",
+  "results": [
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019ec12a-dd0a-75b3-815d-035a11fc98c8",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 78945,
+      "time_to_first_token_ms": 7936,
+      "final_response_chars": 379,
+      "total_tokens": 111475,
+      "tool_call_count": 16,
+      "changed_files": [
+        "output/model.json",
+        "runtime/state.json",
+        "runtime/trace.log"
+      ],
+      "expected_changed_files": [
+        "docs/IMPLEMENTATION_CONTRACT.md",
+        "output/model.json",
+        "runtime/state.json",
+        "runtime/trace.log"
+      ],
+      "expected_assertion_subjects": [
+        "formal_contract.frozen_before_first_write",
+        "formal_product_entry.used",
+        "auxiliary_script.generated_final_delivery",
+        "result_assertions.all_pass",
+        "scores.implementation_integrity"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_S2atcBfvQsIJUAQfjkDdnWm0"
+        ],
+        "skill_body_loaded_chars": 1499,
+        "skill_tool_output_chars": 2240,
+        "reference_read_calls": [
+          "call_7HFTFedrh4BMv8tCUFLMHO1z"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_7HFTFedrh4BMv8tCUFLMHO1z"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "verification.md"
+        ],
+        "reference_loaded_chars": 2460,
+        "reference_tool_output_chars": 2519,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "evaluation_isolation": {
+        "cross_thread_read_calls": [],
+        "evaluator_artifact_calls": [],
+        "host_project_scan_calls": [],
+        "oracle_access_detected": false
+      },
+      "context_overage": null,
+      "agent_authorization": {
+        "no_decision_received": false,
+        "agent_start_calls": [],
+        "fallback_selected": false,
+        "pending_reported": false,
+        "pending_state": null
+      },
+      "prompt_integrity": {
+        "initial_prompt_matches": true,
+        "expected_reply_count": 0,
+        "observed_scripted_replies": [],
+        "unexpected_user_messages": [],
+        "valid": true
+      },
+      "rollout_sha256": "b214b16a93e9c5a391e803d0b51962a25a667780cd834ba3eb99df8f2692a65f"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019ec12a-dc3b-74e1-a51e-1f84d778e491",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 81983,
+      "time_to_first_token_ms": 7722,
+      "final_response_chars": 793,
+      "total_tokens": 108462,
+      "tool_call_count": 8,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "context_trace.verifiable",
+        "all_fixtures.skill_description_codepoints",
+        "hard_trigger_overage.fields",
+        "hard_trigger_overage.values_accurate",
+        "governance_corpus.bulk_loaded"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_iWACqFkxLg58hUoaXBu8QSHQ"
+        ],
+        "skill_body_loaded_chars": 1499,
+        "skill_tool_output_chars": 2240,
+        "reference_read_calls": [
+          "call_zaMJ91ACBrMMSa8maQYAHv83"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_zaMJ91ACBrMMSa8maQYAHv83"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md"
+        ],
+        "reference_loaded_chars": 2331,
+        "reference_tool_output_chars": 2389,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "evaluation_isolation": {
+        "cross_thread_read_calls": [],
+        "evaluator_artifact_calls": [],
+        "host_project_scan_calls": [],
+        "oracle_access_detected": false
+      },
+      "context_overage": {
+        "budget_codepoints": 500,
+        "budget_h2_sections": 1,
+        "actual_loaded_codepoints": 2331,
+        "actual_h2_sections": 2,
+        "expected_added_codepoints": 1831,
+        "expected_added_sections": 1,
+        "reported": {
+          "added_codepoints": 1830,
+          "added_sections": 1,
+          "reason": "\"Mandatory governance safety and authorization checks exceeded the supplied reference budget.\",",
+          "unknown_resolved": "false"
+        },
+        "fields_complete": true,
+        "values_accurate": false,
+        "complete_and_accurate": false
+      },
+      "agent_authorization": {
+        "no_decision_received": false,
+        "agent_start_calls": [],
+        "fallback_selected": false,
+        "pending_reported": false,
+        "pending_state": null
+      },
+      "prompt_integrity": {
+        "initial_prompt_matches": true,
+        "expected_reply_count": 0,
+        "observed_scripted_replies": [],
+        "unexpected_user_messages": [],
+        "valid": true
+      },
+      "rollout_sha256": "97948d8bcdc1f9455ab535c79984a18f47e1682cb9a6daeca7ca502837d7ab48"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019ec12a-dd0e-7151-8409-23fe2a3e35ba",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 1737,
+      "time_to_first_token_ms": null,
+      "final_response_chars": 913,
+      "total_tokens": 63717,
+      "tool_call_count": 15,
+      "changed_files": [],
+      "expected_changed_files": [
+        "src/client.py"
+      ],
+      "expected_assertion_subjects": [
+        "hard_triggers.applied",
+        "hard_triggers.omitted_for_budget",
+        "budget_overage.fields",
+        "network.parameters.restricted_identifier_count",
+        "dependency.install_started_before_confirmation",
+        "production_entry.verified",
+        "budget_overage.values_accurate",
+        "multi_agent.pending_state"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_AjWsOmHZz4l9gY7kEkbIJnXZ"
+        ],
+        "skill_body_loaded_chars": 1499,
+        "skill_tool_output_chars": 2240,
+        "reference_read_calls": [
+          "call_5p6UzxQEPh8Wj81IUg45Auya",
+          "call_XJRC2e69Pa1zjJZnmizfywVz",
+          "call_zzZujhStrkGAunhY2BT7y2U3"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_5p6UzxQEPh8Wj81IUg45Auya",
+          "call_XJRC2e69Pa1zjJZnmizfywVz",
+          "call_zzZujhStrkGAunhY2BT7y2U3"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "research.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 5997,
+        "reference_tool_output_chars": 6171,
+        "reference_h2_sections": 6,
+        "governance_read_calls": []
+      },
+      "evaluation_isolation": {
+        "cross_thread_read_calls": [],
+        "evaluator_artifact_calls": [],
+        "host_project_scan_calls": [],
+        "oracle_access_detected": false
+      },
+      "context_overage": {
+        "budget_codepoints": 900,
+        "budget_h2_sections": 1,
+        "actual_loaded_codepoints": 5997,
+        "actual_h2_sections": 6,
+        "expected_added_codepoints": 5097,
+        "expected_added_sections": 5,
+        "reported": {},
+        "fields_complete": false,
+        "values_accurate": false,
+        "complete_and_accurate": false
+      },
+      "agent_authorization": {
+        "no_decision_received": true,
+        "agent_start_calls": [],
+        "fallback_selected": false,
+        "pending_reported": false,
+        "pending_state": "invalid"
+      },
+      "prompt_integrity": {
+        "initial_prompt_matches": true,
+        "expected_reply_count": 3,
+        "observed_scripted_replies": [
+          "No decision is given on the proposed agents. Keep that proposal pending, do not start them, and continue only work already assigned to the main agent or independent of the proposal.",
+          "No decision is given on the proposed agents. Keep that proposal pending, do not start them, and continue only work already assigned to the main agent or independent of the proposal."
+        ],
+        "unexpected_user_messages": [],
+        "valid": true
+      },
+      "rollout_sha256": "2a8c53d3940259ce604153309121425655043a95135cc3b6121a6d851b98cb66"
+    }
+  ]
+}

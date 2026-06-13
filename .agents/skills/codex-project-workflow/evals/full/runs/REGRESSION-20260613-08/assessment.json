@@ -1,0 +1,91 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-08",
+  "assessed_at": "2026-06-13T21:40:40+08:00",
+  "assessment_method": "Manual evidence review of rollout order, fixture inventory diff, product entry, state and trace evidence, and focused tests.",
+  "runs": {
+    "E16:default": {
+      "thread_id": "019ec121-596a-7752-8bfb-a454bc6e2cfb",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 2,
+        "workflow_fit": 2,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 2,
+        "output_efficiency": 1
+      },
+      "total_score": 15,
+      "hard_failures": [],
+      "assertion_results": {
+        "formal_contract.created": {
+          "passed": true,
+          "evidence": "No formal contract file was created because this bounded formatting change did not trigger one."
+        },
+        "path_constraint.line_count": {
+          "passed": true,
+          "evidence": "The run kept the bounded path constraint to the flag, visibility owner, rendering owner, and adjacent tests."
+        },
+        "result_assertions.all_pass": {
+          "passed": true,
+          "evidence": "Focused tests and both CLI modes produced the required output."
+        },
+        "scores.implementation_integrity": {
+          "passed": true,
+          "evidence": "The change remained in the existing formatting and report owners."
+        }
+      },
+      "result": "pass"
+    },
+    "E26:product_path": {
+      "thread_id": "019ec121-5999-71b0-aee2-4bdd7cc2f206",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 1,
+        "workflow_fit": 1,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 1,
+        "output_efficiency": 1
+      },
+      "total_score": 12,
+      "hard_failures": ["changed_files_mismatch"],
+      "assertion_results": {
+        "formal_contract.frozen_before_first_write": {
+          "passed": false,
+          "evidence": "The contract was stated in commentary but docs/IMPLEMENTATION_CONTRACT.md was not persisted before product state was written."
+        },
+        "formal_product_entry.used": {
+          "passed": true,
+          "evidence": "The run invoked python app.py demo and trace evidence recorded the registered product entry."
+        },
+        "auxiliary_script.generated_final_delivery": {
+          "passed": true,
+          "evidence": "tools/direct_model.py was inspected but not used to create the deliverable."
+        },
+        "result_assertions.all_pass": {
+          "passed": true,
+          "evidence": "The model JSON, product state, trace, and focused test all passed."
+        },
+        "scores.implementation_integrity": {
+          "passed": true,
+          "evidence": "The deliverable used the installed product path without changing product code."
+        }
+      },
+      "result": "fail"
+    }
+  },
+  "cases": {
+    "E16": {
+      "variant_ids": ["default"],
+      "result": "pass"
+    },
+    "E26": {
+      "variant_ids": ["product_path"],
+      "result": "fail"
+    }
+  },
+  "overall_result": "fail"
+}

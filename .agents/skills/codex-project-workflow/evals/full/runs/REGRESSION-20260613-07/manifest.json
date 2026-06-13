@@ -1,0 +1,53 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-07",
+  "evaluation_scope": "targeted_regression",
+  "status": "assessed_failed_superseded",
+  "completed_at": "2026-06-13T21:40:40+08:00",
+  "created_at": "2026-06-13T21:13:06+08:00",
+  "fixture_commit": "b6d6d1090129bb19f94ec6215bf8a90dec31350f",
+  "candidate_id": "CAND-20260613-01",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260613-07\\workspaces\\setup-state.json",
+  "excluded_infrastructure_runs": [
+    {
+      "case_id": "E16",
+      "variant_id": "default",
+      "thread_id": "019ec11d-0fe7-7ca3-bbe9-ff75a9ab7d77",
+      "reason": "fixture prompt omitted the external workspace path"
+    },
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019ec11d-0fae-7ae2-a332-8a815255909a",
+      "reason": "fixture prompt omitted the external workspace path"
+    }
+  ],
+  "runs": [
+    {
+      "case_id": "E02",
+      "variant_id": "download",
+      "thread_id": "019ec11a-d3bd-7920-9aea-017b91bec0b8",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\b094\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "standard_cross_file",
+      "thread_id": "019ec11d-0fc0-7221-86c9-790088cdf0b8",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\951f\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019ec11d-0fdf-7a92-aec0-7816a4522bb7",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\08f8\\efficiently use codex"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019ec11d-0fc1-7233-80c9-85b7d6bfbac6",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\ffb0\\efficiently use codex"
+    }
+  ]
+}
