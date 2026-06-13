@@ -259,7 +259,7 @@ def parse_rollout(
                 result["duration_ms"] = payload.get("duration_ms")
                 result["time_to_first_token_ms"] = payload.get("time_to_first_token_ms")
             elif event_type == "token_count":
-                usage = payload.get("info", {}).get("total_token_usage")
+                usage = token_usage_from_event(payload)
                 if usage:
                     result["token_usage"] = usage
         elif record_type == "response_item":
@@ -368,6 +368,11 @@ def parse_rollout(
     result["fixture"]["after_inventory"] = after_inventory
     result["fixture"]["changed_files"] = changed_files(before_inventory, after_inventory)
     return result
+
+
+def token_usage_from_event(payload):
+    info = payload.get("info") or {}
+    return info.get("total_token_usage")
 
 
 def collect(run_dir, sessions_root, workspace_root, output_dir):

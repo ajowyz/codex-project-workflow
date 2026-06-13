@@ -68,6 +68,10 @@ class ScriptTests(unittest.TestCase):
         metrics = measure_context.skill_metrics(SKILL_DIR / "SKILL.md")
         self.assertLessEqual(metrics["description_chars"], 800)
         self.assertLessEqual(metrics["body_chars"], 1500)
+        self.assertIn(
+            "deliverable through an existing product or application",
+            (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8"),
+        )
         for path in (SKILL_DIR / "references").glob("*.md"):
             self.assertEqual(1, measure_context.reference_metrics(path)["h1_count"])
 
@@ -301,6 +305,22 @@ class ScriptTests(unittest.TestCase):
         self.assertEqual(2, trace["reference_h2_sections"])
         self.assertEqual(["research.md"], trace["reference_files"])
         self.assertGreater(trace["reference_loaded_chars"], 0)
+
+    def test_smoke_collector_ignores_null_token_info(self):
+        self.assertIsNone(
+            collect_smoke.token_usage_from_event(
+                {"type": "token_count", "info": None}
+            )
+        )
+        self.assertEqual(
+            {"total_tokens": 42},
+            collect_smoke.token_usage_from_event(
+                {
+                    "type": "token_count",
+                    "info": {"total_token_usage": {"total_tokens": 42}},
+                }
+            ),
+        )
 
     def test_full_fixture_manifest_assigns_remaining_cases(self):
         schema = json.loads(

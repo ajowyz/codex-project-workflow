@@ -1,0 +1,51 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260612-02",
+  "evaluation_scope": "targeted_regression",
+  "status": "completed_fail",
+  "created_at": "2026-06-12T22:42:00+08:00",
+  "fixture_commit": "19062117173e41c20c0ac7b2757f1ee709c2889f",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "completed_at": "2026-06-13T09:28:29+08:00",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260612-02\\workspaces\\setup-state.json",
+  "evaluation_result": {
+    "passed_cases": 3,
+    "total_cases": 4,
+    "passed_runs": 3,
+    "total_runs": 5,
+    "overall": "fail"
+  },
+  "runs": [
+    {
+      "case_id": "E02",
+      "variant_id": "download",
+      "thread_id": "019ebc1e-2cf2-7411-9343-ba6f33e8e95a",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\a297\\efficiently use codex"
+    },
+    {
+      "case_id": "E12",
+      "variant_id": "state_matrix",
+      "thread_id": "019ebc1e-2d0a-7ae0-b949-fdb1f0fb7e94",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\4a03\\efficiently use codex"
+    },
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019ebc1e-2e9c-7b82-89ab-ebe12cc3d6a7",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\4251\\efficiently use codex"
+    },
+    {
+      "case_id": "E26",
+      "variant_id": "entry_bypass",
+      "thread_id": "019ebc1f-1023-7bd3-bf37-fef89bfccc99",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\6624\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "nested_h3_counting",
+      "thread_id": "019ebc1f-0d41-7f01-adc0-75a2b780963b",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\0b60\\efficiently use codex"
+    }
+  ]
+}
