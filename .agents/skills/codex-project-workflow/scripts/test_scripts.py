@@ -94,7 +94,7 @@ class ScriptTests(unittest.TestCase):
 
     def test_current_candidate_budget_and_semantics(self):
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260614-03"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260614-04"
         )
         skill_path = candidate_dir / "SKILL.candidate.md"
         metrics = measure_context.skill_metrics(skill_path)
@@ -125,6 +125,9 @@ class ScriptTests(unittest.TestCase):
                 2500,
             )
         self.assertIn("explicit refusal or unavailable agents selects fallback", governance)
+        self.assertIn("Exact approval of a displayed action authorizes main", governance)
+        self.assertIn("including later approval follow-ups", governance)
+        self.assertIn("with unquoted numbers", governance)
         self.assertIn("added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)", governance)
         self.assertIn("helper's emitted NFC metrics", governance)
         self.assertIn("not project files", governance)
@@ -141,7 +144,7 @@ class ScriptTests(unittest.TestCase):
             return hashlib.sha256(normalized).hexdigest()
 
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260614-03"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260614-04"
         )
         manifest = json.loads(
             (candidate_dir / "manifest.json").read_text(encoding="utf-8")
@@ -232,6 +235,22 @@ class ScriptTests(unittest.TestCase):
         )
         self.assertEqual(len(payload), summary["content_codepoints"])
         self.assertEqual(2, summary["h2_sections"])
+
+    def test_overage_line_is_machine_readable_and_unquoted(self):
+        parsed = collect_smoke.parse_reported_overage(
+            "added_codepoints=1456, added_sections=5, "
+            "reason=mandatory gates, unknown_resolved=entry and approval"
+        )
+        self.assertEqual(1456, parsed["added_codepoints"])
+        self.assertEqual(5, parsed["added_sections"])
+        self.assertIn("mandatory gates", parsed["reason"])
+        self.assertIn("entry and approval", parsed["unknown_resolved"])
+
+        quoted = collect_smoke.parse_reported_overage(
+            "`added_codepoints`: `1456`, `added_sections`: `5`"
+        )
+        self.assertNotIn("added_codepoints", quoted)
+        self.assertNotIn("added_sections", quoted)
 
     def test_trigger_case_counts(self):
         cases = json.loads((SKILL_DIR / "evals" / "trigger_cases.json").read_text(encoding="utf-8"))
