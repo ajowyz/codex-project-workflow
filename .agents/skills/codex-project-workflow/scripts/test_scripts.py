@@ -94,7 +94,7 @@ class ScriptTests(unittest.TestCase):
 
     def test_current_candidate_budget_and_semantics(self):
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260613-01"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260613-02"
         )
         skill_path = candidate_dir / "SKILL.candidate.md"
         metrics = measure_context.skill_metrics(skill_path)
@@ -103,6 +103,7 @@ class ScriptTests(unittest.TestCase):
 
         skill_text = skill_path.read_text(encoding="utf-8")
         self.assertIn("no decision stays `proposed`", skill_text)
+        self.assertIn("Before executing three streams", skill_text)
         self.assertIn("Change behavior in its existing owner", skill_text)
 
         governance = (
@@ -123,7 +124,9 @@ class ScriptTests(unittest.TestCase):
             )
         self.assertIn("only explicit refusal or unavailable agents", governance)
         self.assertIn("added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)", governance)
+        self.assertIn("never reconstruct or retype it", governance)
         self.assertIn("It is evidence, not automatically a project file", verification)
+        self.assertIn("Before the first delivery/state write", verification)
         self.assertIn("existing responsibility owner", verification)
 
     def test_current_candidate_bindings_and_patch(self):
@@ -134,7 +137,7 @@ class ScriptTests(unittest.TestCase):
             return hashlib.sha256(normalized).hexdigest()
 
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260613-01"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260613-02"
         )
         manifest = json.loads(
             (candidate_dir / "manifest.json").read_text(encoding="utf-8")

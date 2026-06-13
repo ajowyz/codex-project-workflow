@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "candidate_id": "CAND-20260613-01",
   "created_at": "2026-06-13T21:00:59+08:00",
-  "status": "preflight_passed_pending_isolated_evaluation",
+  "status": "regression_failed_superseded",
   "base_commit": "76324e3648ac93e7eac36b028935a9e1af9838b8",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -51,7 +51,7 @@
     }
   },
   "evaluation": {
-    "status": "pending",
+    "status": "fail",
     "required_regressions": [
       "E02:download",
       "E16:default",
@@ -60,8 +60,13 @@
       "E32:hard_trigger_overage",
       "E35:four_hard_triggers"
     ],
-    "evidence_path": null,
-    "evidence_sha256": null
+    "evidence_path": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260613-07/results/summary.json",
+    "evidence_sha256": null,
+    "failed_assertions": [
+      "E35 budget_overage.values_accurate",
+      "E35 multi_agent.pending_state"
+    ],
+    "superseded_by": "CAND-20260613-02"
   },
   "activation": {
     "allowed": false,

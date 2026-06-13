@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "CAND-20260613-02",
+  "parent_candidate_id": "CAND-20260613-01",
+  "created_at": "2026-06-13T21:22:16+08:00",
+  "status": "preflight_passed_pending_isolated_evaluation",
+  "base_commit": "b6893c82b12b1d5de277837af7e97c58470e355a",
+  "hash_algorithm": "sha256-nfc-lf-utf8",
+  "targets": [
+    {
+      "active_path": ".agents/skills/codex-project-workflow/SKILL.md",
+      "base_sha256": "3e1ad434124780ec1a47353705f291ab8314c2ba366886d5a8f76b3305c46bf1",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260613-02/SKILL.candidate.md",
+      "candidate_sha256": "78fed787abab2fd7efc1a98140e854757754407b1aa59d7fba398c4172b95b68"
+    },
+    {
+      "active_path": ".agents/skills/codex-project-workflow/references/governance.md",
+      "base_sha256": "a9b9d4689ad3f8fd2b8d4c112bc784bbfd31834630f2232900362518e09e654a",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260613-02/references/governance.md",
+      "candidate_sha256": "b22ea72b124e883ac9911db5dfc442eba941f040502c25afe25fa52337e26bb4"
+    },
+    {
+      "active_path": ".agents/skills/codex-project-workflow/references/verification.md",
+      "base_sha256": "45bf582d3da94319324630f2f944e498b2848c4a67e88a404b9cad9ef8877fc8",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260613-02/references/verification.md",
+      "candidate_sha256": "c12ff6895b0ebadedf686edf19f40cfa7c985e67baeabb21a43397428b21b828"
+    }
+  ],
+  "patch": {
+    "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260613-02/patch.diff",
+    "sha256": "92cc910a985abbcc4ec2964100de925e6d4cc68a238f3b83116a4b0e43ba180d"
+  },
+  "scope": [
+    "retain all CAND-20260613-01 changes",
+    "require a multi-agent proposal before executing three distinct requested streams",
+    "calculate context overage from captured helper output without reconstructed text",
+    "persist generated-delivery contracts before the first product state write"
+  ],
+  "preflight": {
+    "status": "pass",
+    "script_tests": "44 passed",
+    "behavior_fixtures": "36 cases, 148 assertions valid",
+    "full_fixtures": "31/31 cases, 61 variants valid"
+  },
+  "evaluation": {
+    "status": "pending",
+    "required_regressions": [
+      "E32:hard_trigger_overage",
+      "E26:product_path",
+      "E35:four_hard_triggers"
+    ],
+    "carried_evidence": [
+      "REGRESSION-20260613-07:E02:download",
+      "REGRESSION-20260613-07:E32:standard_cross_file",
+      "REGRESSION-20260613-08:E16:default"
+    ],
+    "evidence_paths": [],
+    "evidence_sha256": []
+  },
+  "activation": {
+    "allowed": false,
+    "requires_explicit_user_approval": true,
+    "invalidation_conditions": [
+      "base commit or any active target hash changes",
+      "candidate, patch, target list, or scope changes",
+      "required or carried regression evidence changes or regresses",
+      "a hard failure or evaluator contamination is detected",
+      "activation approval refers to a different candidate id or hash set"
+    ]
+  }
+}
