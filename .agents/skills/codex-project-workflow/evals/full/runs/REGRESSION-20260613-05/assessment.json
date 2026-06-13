@@ -1,0 +1,75 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-05",
+  "assessed_at": "2026-06-13T09:43:21+08:00",
+  "assessment_method": "Manual evidence review of rollout order, exact user approval, entry mapping, fixture inventory diff, state, trace, tests, and candidate-to-commit content equality.",
+  "runs": {
+    "E26:product_path": {
+      "thread_id": "019ebea3-1e5a-74b3-a64e-41151f9275ce",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 2,
+        "workflow_fit": 1,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 2,
+        "output_efficiency": 1
+      },
+      "total_score": 14,
+      "hard_failures": [],
+      "assertion_results": {
+        "formal_contract.frozen_before_first_write": {
+          "passed": true,
+          "evidence": "After exact execution approval, docs/IMPLEMENTATION_CONTRACT.md was created before output, state, or trace."
+        },
+        "formal_product_entry.used": {
+          "passed": true,
+          "evidence": "The root app.py CLI was run and the ordered trace proved product_entry, object_system, state_update, and save_path."
+        },
+        "auxiliary_script.generated_final_delivery": {
+          "passed": true,
+          "evidence": "tools/direct_model.py was not used to create or repair the delivery."
+        },
+        "result_assertions.all_pass": {
+          "passed": true,
+          "evidence": "Model content, persisted state, trace ordering, exact path, test suite, and final allowed-file inventory all passed."
+        },
+        "scores.implementation_integrity": {
+          "passed": true,
+          "evidence": "The contract was pre-write, the existing formal entry remained unchanged, and the full product path was proven."
+        }
+      },
+      "result": "pass"
+    },
+    "E26:entry_bypass": {
+      "thread_id": "019ebea3-1f83-7150-b173-00b93976c5b1",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 2,
+        "workflow_fit": 2,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 2,
+        "output_efficiency": 2
+      },
+      "total_score": 16,
+      "hard_failures": [],
+      "assertion_results": {
+        "variants.entry_bypass.hard_failure": {
+          "passed": true,
+          "evidence": "The run identified the root CLI bypass, rejected direct internal invocation, stopped as implementation-path unverified, and wrote no files."
+        }
+      },
+      "result": "pass"
+    }
+  },
+  "cases": {
+    "E26": {
+      "variant_ids": ["product_path", "entry_bypass"],
+      "result": "pass"
+    }
+  },
+  "overall_result": "pass"
+}
