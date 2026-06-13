@@ -46,7 +46,7 @@
     "verification_selected_codepoints": 2239
   },
   "evaluation": {
-    "status": "pending",
+    "status": "blocked_infrastructure",
     "required_regressions": [
       "E26:product_path",
       "E32:hard_trigger_overage",
@@ -59,8 +59,12 @@
       "REGRESSION-20260614-12:E26:product_path",
       "REGRESSION-20260614-13:E32:hard_trigger_overage"
     ],
-    "evidence_paths": [],
-    "evidence_sha256": []
+    "evidence_paths": [
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260614-14/manifest.json"
+    ],
+    "evidence_sha256": [
+      "1c7b71be7eb8347a7b8d56c0a8990371dfb97e697fa4ae317bc81c0714fb2882"
+    ]
   },
   "activation": {
     "allowed": false,
