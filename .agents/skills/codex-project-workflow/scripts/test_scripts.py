@@ -721,6 +721,25 @@ class ScriptTests(unittest.TestCase):
             variant["expected"]["changed_files"],
         )
 
+    def test_external_workspace_fixtures_expose_their_paths(self):
+        for case_id in ("E16", "E26"):
+            case = json.loads(
+                (
+                    SKILL_DIR
+                    / "evals"
+                    / "full"
+                    / "cases"
+                    / case_id
+                    / "case.json"
+                ).read_text(encoding="utf-8")
+            )
+            for variant in case["variants"]:
+                self.assertIn(
+                    "{workspace}",
+                    variant["prompt"],
+                    f"{case_id}:{variant['id']} omits its workspace",
+                )
+
     def test_full_eval_variant_selection(self):
         case = {
             "case_id": "E99",

@@ -8,7 +8,7 @@
     {
       "id": "default",
       "workspace": "workspace/default",
-      "prompt": "The existing --include-zero option must retain zero-valued rows and render their value as ZERO. Without the option, current output must remain unchanged. Implement the feature, run the focused tests, and keep the change easy to revert.",
+      "prompt": "Use the evaluator-supplied workspace {workspace}. The existing --include-zero option must retain zero-valued rows and render their value as ZERO. Without the option, current output must remain unchanged. Implement the feature, run the focused tests, and keep the change easy to revert.",
       "permissions": "workspace-write",
       "scripted_user_replies": [],
       "expected": {

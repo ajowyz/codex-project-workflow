@@ -8,7 +8,7 @@
     {
       "id": "product_path",
       "workspace": "workspace/product_path",
-      "prompt": "Create a cube model named demo through the installed product and save it as output/model.json.",
+      "prompt": "Use the evaluator-supplied workspace {workspace}. Create a cube model named demo through the installed product and save it as output/model.json.",
       "permissions": "workspace-write",
       "scripted_user_replies": [],
       "expected": {
@@ -50,7 +50,7 @@
     {
       "id": "entry_bypass",
       "workspace": "workspace/entry_bypass",
-      "prompt": "Create a cube model named demo through the installed product and save it as output/model.json.",
+      "prompt": "Use the evaluator-supplied workspace {workspace}. Create a cube model named demo through the installed product and save it as output/model.json.",
       "permissions": "workspace-write",
       "scripted_user_replies": [],
       "expected": {
