@@ -1,0 +1,683 @@
+{
+  "case_id": "E12",
+  "condition": "candidate",
+  "thread_id": "019ebfdd-e5a8-7fc2-a028-23814058d190",
+  "rollout": {
+    "path": "C:\\Users\\wang yazhou\\.codex\\sessions\\2026\\06\\13\\rollout-2026-06-13T15-24-16-019ebfdd-e5a8-7fc2-a028-23814058d190.jsonl",
+    "sha256": "53a425829c742fb3623748cb7f6dd5166cfc35cb018c22decd6aad3d4c63e4a0"
+  },
+  "status": "completed",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "started_at": 1781335456,
+  "completed_at": 1781335739,
+  "duration_ms": 282140,
+  "time_to_first_token_ms": 8988,
+  "raw_user_messages": [
+    "<codex_delegation>\n  <source_thread_id>019eaf56-91db-7c40-b740-7435313502d3</source_thread_id>\n  <input>Use the evaluator-supplied workspace D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix. For each independent project under scenarios/, recover the compact state, build the deterministic ADR metadata projection, validate replacement relations and PLAN references, and report blocking conflicts. Read only the bodies needed for the current task.</input>\n</codex_delegation>"
+  ],
+  "commentary": [
+    "I’m using the project-workflow skill because this is a multi-project recovery and validation task. I’ll read its operating instructions first, then inspect only the scenario files needed to derive and verify each state.",
+    "The task is recovery plus path/reference validation, so I’m loading the workflow’s verification rules. After that I’ll inventory scenario boundaries and likely state artifacts without opening unrelated bodies.",
+    "There are 12 independent fixtures. I’ll now read every compact `PLAN.md` first, then extract only ADR headings and the six permitted metadata fields from each ledger; bodies will be loaded solely where a PLAN reference requires them.",
+    "The headings expose the expected edge cases, but the metadata syntax is not simple colon lines. I’m narrowing the extraction to lines containing only the permitted field names and ADR anchors, which keeps ledger bodies out of context while revealing the deterministic projection.",
+    "The projection now has clear governance values (`已确认` / `已替代`) and explicit replacement edges. I’m running structural checks next, then loading only the H2 bodies explicitly named by PLAN; for scenario 12 that also includes the referenced PRD “Retention Rules” section.",
+    "That extraction attempt produced no visible output because the nested PowerShell invocation swallowed the pipeline, not because the files were empty. I’m rerunning the same read-only parsing directly in the active shell and will use its results for the final conflict matrix."
+  ],
+  "final_response": "**Result**\n\nRead all 12 compact PLANs, projected ADR metadata from headings and permitted metadata only, then loaded only PLAN-referenced bodies. No files were changed.\n\nProjection format: `id | title | governance_state | replaces_ids | replaced_by_id | body_anchor`\n\n```text\n01\nADR-001 | Legacy queue       | 已替代 | []                | ADR-003 | #adr-001-legacy-queue\nADR-002 | Legacy retry       | 已替代 | []                | ADR-003 | #adr-002-legacy-retry\nADR-003 | Unified delivery   | 已替代 | [ADR-001,ADR-002] | ADR-004 | #adr-003-unified-delivery\nADR-004 | Current delivery   | 已确认 | [ADR-003]         | null    | #adr-004-current-delivery\nADR-005 | Metrics            | 已确认 | []                | null    | #adr-005-metrics\nADR-006 | Alerting           | 已确认 | []                | null    | #adr-006-alerting\n\n02\nADR-001 | Old deploy path    | 已替代 | []        | ADR-002 | #adr-001-old-deploy-path\nADR-002 | New deploy path    | 已确认 | []        | null    | #adr-002-new-deploy-path\n\n03\nADR-001 | Old storage        | 已替代 | []        | ADR-003 | #adr-001-old-storage\nADR-002 | Alternate storage  | 已替代 | []        | ADR-003 | #adr-002-alternate-storage\nADR-003 | Current storage    | 已确认 | [ADR-002] | null    | #adr-003-current-storage\n\n04\nADR-001 | Old API            | 已替代 | []        | ADR-002 | #adr-001-old-api\nADR-002 | Current API        | 已确认 | [ADR-001] | null    | #adr-002-current-api\n\n05\nADR-001 | Email notifications | 已确认 | [] | null | #adr-001-email-notifications\nADR-001 | Push notifications  | 已确认 | [] | null | #adr-001-push-notifications\n\n06\nADR-001 | Cache policy       | null   | []        | null    | #adr-001-cache-policy\n\n07\nADR-001 | Current index      | 已确认 | [ADR-999] | null    | #adr-001-current-index\n\n08\nADR-001 | Export format      | 已替代 | [ADR-001] | ADR-001 | #adr-001-export-format\n\n09\nADR-001 | Scheduler A        | 已替代 | [ADR-002] | ADR-002 | #adr-001-scheduler-a\nADR-002 | Scheduler B        | 已替代 | [ADR-001] | ADR-001 | #adr-002-scheduler-b\n\n10\nADR-001 | Old authentication | 已确认 | []        | ADR-002 | #adr-001-old-authentication\nADR-002 | Current authentication | 已确认 | [ADR-001] | null | #adr-002-current-authentication\n\n11\nADR-001 | Logging            | 已确认 | []        | null    | #adr-001-logging\nADR-002 | Metrics            | 已确认 | []        | null    | #adr-002-metrics\nADR-003 | Old deployment     | 已替代 | []        | ADR-004 | #adr-003-old-deployment\nADR-004 | Current deployment | 已确认 | [ADR-003] | null    | #adr-004-current-deployment\n\n12\nADR-001 | Export format      | 已确认 | []        | null    | #adr-001-export-format\nADR-002 | Retention period   | 已确认 | []        | null    | #adr-002-retention-period\n```\n\n**Blocking Conflicts**\n\n| Scenario | Result |\n|---|---|\n| 01 | Valid. Active state: ADR-004, ADR-005, ADR-006. |\n| 02 | Blocked: unilateral edge; ADR-001 names ADR-002, but ADR-002 does not replace ADR-001. |\n| 03 | Blocked: ADR-001 points to ADR-003, but ADR-003 only replaces ADR-002. |\n| 04 | Blocked: duplicate `ADR-001 replaced-by ADR-002` declaration. |\n| 05 | Blocked: duplicate `ADR-001`; active notification decision is ambiguous. |\n| 06 | Blocked: governance state is missing. |\n| 07 | Blocked: replacement target `ADR-999` does not exist. |\n| 08 | Blocked: self-replacement/self-cycle. |\n| 09 | Blocked: two-node replacement cycle; no terminal current decision. |\n| 10 | Blocked: ADR-001 is marked confirmed despite being replaced by ADR-002. |\n| 11 | Blocked: PLAN calls ADR-003 active although superseded, references missing ADR-999, and omits active ADR-002/ADR-004. |\n| 12 | Valid. Preserve public export format; retain completed records 30 days; existing maintenance removes expired records. |\n\nScenario 12’s unrelated `audits/ARCHIVE.md` was not read. Relevant sources: [scenarios](/D:/project/.codex-eval-full/CALIBRATION-20260613-03/workspaces/E12/state_matrix/scenarios), [scenario 12 PLAN](/D:/project/.codex-eval-full/CALIBRATION-20260613-03/workspaces/E12/state_matrix/scenarios/12-selective-loading/docs/PLAN.md), [PRD](/D:/project/.codex-eval-full/CALIBRATION-20260613-03/workspaces/E12/state_matrix/scenarios/12-selective-loading/docs/PRD.md).",
+  "final_response_chars": 4137,
+  "tool_calls": [
+    {
+      "call_id": "call_bbOBT6z4NfwUODpyusMW9tZC",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\SKILL.md'",
+        "workdir": "D:\\project\\efficiently use codex",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 2210,
+        "h2_sections": 3,
+        "sha256": "26250d164182760ccc7c70bfa094bbc041857811faf2a32f7fd78adc5cdf4492",
+        "preview": "Exit code: 0\nWall time: 2.8 seconds\nOutput:\n---\nname: codex-project-workflow\ndescription: Structure and govern Codex work for new or ambiguous projects, multi-step implementation, professional research, solution comparison, architecture and planning, third-party downloads, high-risk changes, project recovery, or requests for a rigorous workflow. Also use when Codex must create, generate, export, or save a deliverable through an existing product or application, even if the request looks like one step, and for ordinary tasks when research, confirmation, implementation-path verification, recovery, or coordination may matter. Do not use for simple questions or explicit low-risk one-step edits or commands.\n---\n\n# Codex Project Workflow\n\n## Route\n\n1. Inspect first. Keep goal, constraints, and completion test. Ask only blocking decisions.\n2. From the repo root containing this skill, run `python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME \"Execution Rules\" \"Output Requirements\"`. Use `research` for unstable evidence/options; `governance` for third-party assets, installs, execution, private networking, approvals, agents, or durable changes; `verification` for writes, product-generated outputs, recovery, production/core paths, or path proof. Load each triggered protocol only.\n3. Never list headings, scan skill directories, or read references directly. Report helper failure; it waives no gate.\n4. Agents suit three streams, conflicting evidence, or high failure cost. Load governance, propose count/roles, ownership, parallel/main work, benefit, cost, risks, and fallback, then ask. Only explicit acceptance starts them; safe unrelated work may continue.\n\n## Safeguards\n\n- Never invent execution, sources, tests, or verification.\n- Before writes map entry, state, owners, and bypasses. Preserve ownership; freeze an evidence-bound contract for production routing, persistence/schema/migration, architecture, core capability, alternate output, explicit path proof,"
+      }
+    },
+    {
+      "call_id": "call_5CqGnPhleiKV8IsSVyf3tROD",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python '.agents/skills/codex-project-workflow/scripts/read_reference.py' verification 'Execution Rules' 'Output Requirements'",
+        "workdir": "D:\\project\\efficiently use codex",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 2816,
+        "h2_sections": 2,
+        "sha256": "06fb24dbba4fb070fafa39c1ff6a1a5299a4f11200fa86e08a5ceb1192a15de6",
+        "preview": "Exit code: 0\nWall time: 2.1 seconds\nOutput:\n## Execution Rules\r\n\r\n- Create a formal implementation contract before the first relevant write when any trigger applies: production entry or routing changes; state authority, persistence, schema, or migration changes; architecture boundary or ownership changes; new, copied, or replacement core capability; a direct alternate final-output path; explicit user path proof; or high-impact commitment.\r\n- For a generated final delivery that also writes product state or persistence, save the frozen contract to `docs/IMPLEMENTATION_CONTRACT.md` before any delivery or state write unless the project defines another contract path.\r\n- Before freezing that contract, identify the user-invocable entry from root-level CLI, UI, API, or registration evidence and record its exact invocation. An internal function is never the product entry merely because it reaches the desired core path.\r\n- Freeze the contract from independent evidence before writing. If the source, version, entry, state update, save path, or ownership cannot be proven, stop as implementation-path unverified; do not borrow a sibling, neighboring fixture, helper, or post-hoc contract.\r\n- File count, module count, tests plus code, and mechanical cross-file edits do not trigger a formal contract by themselves. When every trigger is false, keep a one-to-three-line internal path constraint.\r\n- Bind contract claims to independent project evidence such as confirmed docs, registration points, callers, runtime entry points, or state definitions. Preserve later contract differences.\r\n- Trace the existing user entry. Create, generate, export, or save requests never authorize changing entry wiring, routing, core code, or tests; that requires a separate explicit repair request. Internal calls cannot replace the entry. If it bypasses the core path, stop before contract, delivery, state, or product-code writes and report implementation-path unverified.\r\n- Verify result and implementation pat"
+      }
+    },
+    {
+      "call_id": "call_AmKeytKlWyzUY20iwoZTUSE9",
+      "name": "shell_command",
+      "arguments": {
+        "command": "rg --files scenarios",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 1171,
+        "h2_sections": 0,
+        "sha256": "33b85681749d6f36fe3985d97f81955efdef759299268bcf6a1604ed861c3121",
+        "preview": "Exit code: 0\nWall time: 3 seconds\nOutput:\nscenarios\\03-direction-mismatch\\docs\\PLAN.md\nscenarios\\03-direction-mismatch\\docs\\DECISIONS.md\nscenarios\\05-duplicate-id\\docs\\PLAN.md\nscenarios\\05-duplicate-id\\docs\\DECISIONS.md\nscenarios\\02-unilateral\\docs\\PLAN.md\nscenarios\\02-unilateral\\docs\\DECISIONS.md\nscenarios\\04-duplicate-relation\\docs\\PLAN.md\nscenarios\\04-duplicate-relation\\docs\\DECISIONS.md\nscenarios\\09-cycle\\docs\\PLAN.md\nscenarios\\09-cycle\\docs\\DECISIONS.md\nscenarios\\01-valid-graph\\docs\\PLAN.md\nscenarios\\01-valid-graph\\docs\\DECISIONS.md\nscenarios\\08-self-reference\\docs\\PLAN.md\nscenarios\\08-self-reference\\docs\\DECISIONS.md\nscenarios\\06-missing-state\\docs\\PLAN.md\nscenarios\\06-missing-state\\docs\\DECISIONS.md\nscenarios\\11-plan-crosscheck\\docs\\PLAN.md\nscenarios\\11-plan-crosscheck\\docs\\DECISIONS.md\nscenarios\\10-status-mismatch\\docs\\PLAN.md\nscenarios\\10-status-mismatch\\docs\\DECISIONS.md\nscenarios\\07-invalid-target\\docs\\PLAN.md\nscenarios\\07-invalid-target\\docs\\DECISIONS.md\nscenarios\\12-selective-loading\\docs\\PRD.md\nscenarios\\12-selective-loading\\docs\\PLAN.md\nscenarios\\12-selective-loading\\docs\\DECISIONS.md\nscenarios\\12-selective-loading\\docs\\audits\\ARCHIVE.md\n"
+      }
+    },
+    {
+      "call_id": "call_MXBtTmmLLDSG1dQMHS3dHfBO",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-ChildItem -Force | Select-Object Name,Mode,Length",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 125,
+        "h2_sections": 0,
+        "sha256": "b87775f04d39a60f0054792bc2721756420e1e3b55269a77413846f863e0024d",
+        "preview": "Exit code: 0\nWall time: 6.1 seconds\nOutput:\n\r\nName      Mode   Length\r\n----      ----   ------\r\nscenarios d-----       \r\n\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_Vw1DjileClS3fm8XUoMTCi0U",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'scenarios\\01-valid-graph\\docs\\PLAN.md'; Get-Content -Raw 'scenarios\\02-unilateral\\docs\\PLAN.md'; Get-Content -Raw 'scenarios\\03-direction-mismatch\\docs\\PLAN.md'; Get-Content -Raw 'scenarios\\04-duplicate-relation\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 1329,
+        "h2_sections": 4,
+        "sha256": "c6bae4b9db1771fb0a60d845a6913b361d182aa3830d312246b9ceb1268ee91c",
+        "preview": "Exit code: 0\nWall time: 6.7 seconds\nOutput:\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore release state\n\n## Current Snapshot\n\n- Goal: prepare the current release.\n- Key constraints: use active ADRs only.\n- Completed: replacement decisions recorded.\n- Next: apply ADR-004 and ADR-005.\n- Blockers: none.\n- Related active decisions: ADR-004, ADR-005, ADR-006.\n\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore deployment state\n\n## Current Snapshot\n\n- Goal: resume deployment work.\n- Completed: decision file assembled.\n- Next: use ADR-002.\n- Blockers: validate decision relations.\n- Related active decisions: ADR-002.\n\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore storage state\n\n## Current Snapshot\n\n- Goal: resume storage implementation.\n- Completed: decisions drafted.\n- Next: validate active storage decision.\n- Blockers: decision relation conflict.\n\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore API state\n\n## Current Snapshot\n\n- Goal: resume API work.\n- Completed: decisions assembled.\n- Next: validate ADR metadata.\n- Blockers: parser validation.\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_dTSn3qqquBamhk6nbozKcmCU",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'scenarios\\05-duplicate-id\\docs\\PLAN.md'; Get-Content -Raw 'scenarios\\06-missing-state\\docs\\PLAN.md'; Get-Content -Raw 'scenarios\\07-invalid-target\\docs\\PLAN.md'; Get-Content -Raw 'scenarios\\08-self-reference\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 1276,
+        "h2_sections": 4,
+        "sha256": "f4995f6b56ea4a02bc3cdf6c65bb32330256c8b02b4c9d52e65949102ad65b83",
+        "preview": "Exit code: 0\nWall time: 6.7 seconds\nOutput:\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore notification state\n\n## Current Snapshot\n\n- Goal: resume notification work.\n- Completed: decision file assembled.\n- Next: determine the active notification decision.\n- Blockers: decision index validation.\n\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore cache state\n\n## Current Snapshot\n\n- Goal: resume cache work.\n- Completed: decision file assembled.\n- Next: determine the active cache decision.\n- Blockers: decision metadata incomplete.\n\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore indexing state\n\n## Current Snapshot\n\n- Goal: resume indexing work.\n- Completed: decision file assembled.\n- Next: validate the current index decision.\n- Blockers: replacement target validation.\n\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore export state\n\n## Current Snapshot\n\n- Goal: resume export work.\n- Completed: decision file assembled.\n- Next: validate the export decision.\n- Blockers: replacement graph validation.\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_rVc4kWdjijsRd4C3SHMvxYoo",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'scenarios\\09-cycle\\docs\\PLAN.md'; Get-Content -Raw 'scenarios\\10-status-mismatch\\docs\\PLAN.md'; Get-Content -Raw 'scenarios\\11-plan-crosscheck\\docs\\PLAN.md'; Get-Content -Raw 'scenarios\\12-selective-loading\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 1491,
+        "h2_sections": 4,
+        "sha256": "2a977daf867033ae929499d5cd88836d14abec05acd727fa1676eadfa1900e25",
+        "preview": "Exit code: 0\nWall time: 6.9 seconds\nOutput:\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore scheduler state\n\n## Current Snapshot\n\n- Goal: resume scheduler work.\n- Completed: decisions assembled.\n- Next: determine the active scheduler decision.\n- Blockers: replacement graph validation.\n\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore authentication state\n\n## Current Snapshot\n\n- Goal: resume authentication work.\n- Completed: decisions assembled.\n- Next: validate the active authentication decision.\n- Blockers: governance-state validation.\n\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: restore release state\n\n## Current Snapshot\n\n- Goal: resume release work.\n- Key constraints: use active decisions.\n- Completed: release candidate assembled.\n- Next: apply referenced decisions.\n- Blockers: none recorded.\n- Related active decisions: ADR-001, ADR-003, ADR-999.\n\r\n# Implementation Plan\n\n> Execution status: in progress\n> Updated: 2026-06-12 10:00 +08:00\n> Current phase: retention update\n\n## Current Snapshot\n\n- Goal: apply the confirmed retention rule.\n- Key constraints: preserve the public export format.\n- Completed: product baseline and decisions recorded.\n- Next: implement ADR-002 using the PRD Retention Rules section.\n- Blockers: none.\n- Related active decisions: ADR-001, ADR-002.\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_EEQcSOasWXiDEei20QoOFYht",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$files = Get-ChildItem 'scenarios\\0[1-4]-*\\docs\\DECISIONS.md'; foreach ($f in $files) { \"FILE: $($f.FullName)\"; Get-Content $f.FullName | Where-Object { $_ -match '^#{1,3}\\s' -or $_ -match '(?i)^\\s*[-*]?\\s*\\*{0,2}(ID|Title|Status|Governance[ _-]?State|Replaces(?:[ _-]?IDs)?|Replaced[ _-]?By(?:[ _-]?ID)?|Body[ _-]?Anchor)\\*{0,2}\\s*:' } }",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 973,
+        "h2_sections": 13,
+        "sha256": "f48ac553050cf46559d8811ce920d8139a2ebe52571d8a684975e446973294c4",
+        "preview": "Exit code: 0\nWall time: 8.9 seconds\nOutput:\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\01-valid-graph\\docs\\DECISIONS.md\r\n# Decisions\r\n## ADR-001: Legacy queue\r\n## ADR-002: Legacy retry\r\n## ADR-003: Unified delivery\r\n## ADR-004: Current delivery\r\n## ADR-005: Metrics\r\n## ADR-006: Alerting\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\02-unilateral\\docs\\DECISIONS.md\r\n# Decisions\r\n## ADR-001: Old deploy path\r\n## ADR-002: New deploy path\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\03-direction-mismatch\\docs\\DECISIONS.md\r\n# Decisions\r\n## ADR-001: Old storage\r\n## ADR-002: Alternate storage\r\n## ADR-003: Current storage\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\04-duplicate-relation\\docs\\DECISIONS.md\r\n# Decisions\r\n## ADR-001: Old API\r\n## ADR-002: Current API\r\n"
+      }
+    },
+    {
+      "call_id": "call_hJeXeRwYPnZGfpX0bSrZsE4A",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$files = Get-ChildItem 'scenarios\\0[5-8]-*\\docs\\DECISIONS.md'; foreach ($f in $files) { \"FILE: $($f.FullName)\"; Get-Content $f.FullName | Where-Object { $_ -match '^#{1,3}\\s' -or $_ -match '(?i)^\\s*[-*]?\\s*\\*{0,2}(ID|Title|Status|Governance[ _-]?State|Replaces(?:[ _-]?IDs)?|Replaced[ _-]?By(?:[ _-]?ID)?|Body[ _-]?Anchor)\\*{0,2}\\s*:' } }",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 770,
+        "h2_sections": 5,
+        "sha256": "3ce0844ca4acf699461208f75bd1165ff5a4e717f1ce549d519177af7560924d",
+        "preview": "Exit code: 0\nWall time: 8.7 seconds\nOutput:\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\05-duplicate-id\\docs\\DECISIONS.md\r\n# Decisions\r\n## ADR-001: Email notifications\r\n## ADR-001: Push notifications\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\06-missing-state\\docs\\DECISIONS.md\r\n# Decisions\r\n## ADR-001: Cache policy\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\07-invalid-target\\docs\\DECISIONS.md\r\n# Decisions\r\n## ADR-001: Current index\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\08-self-reference\\docs\\DECISIONS.md\r\n# Decisions\r\n## ADR-001: Export format\r\n"
+      }
+    },
+    {
+      "call_id": "call_WJIMQ7jSK27hWq4shhR95Htw",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$files = Get-ChildItem 'scenarios\\(09-*|1[0-2]-*)\\docs\\DECISIONS.md' -ErrorAction SilentlyContinue; if (-not $files) { $files = Get-ChildItem 'scenarios' -Directory | Where-Object Name -match '^(09|10|11|12)-' | ForEach-Object { Get-Item (Join-Path $_.FullName 'docs\\DECISIONS.md') } }; foreach ($f in $files) { \"FILE: $($f.FullName)\"; Get-Content $f.FullName | Where-Object { $_ -match '^#{1,3}\\s' -or $_ -match '(?i)^\\s*[-*]?\\s*\\*{0,2}(ID|Title|Status|Governance[ _-]?State|Replaces(?:[ _-]?IDs)?|Replaced[ _-]?By(?:[ _-]?ID)?|Body[ _-]?Anchor)\\*{0,2}\\s*:' } }",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 901,
+        "h2_sections": 10,
+        "sha256": "008d09edcf2f01cb5a2871c6a87a9bfa46cd7c299e2f064c821bff91a2bb0c37",
+        "preview": "Exit code: 0\nWall time: 8.9 seconds\nOutput:\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\09-cycle\\docs\\DECISIONS.md\r\n# Decisions\r\n## ADR-001: Scheduler A\r\n## ADR-002: Scheduler B\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\10-status-mismatch\\docs\\DECISIONS.md\r\n# Decisions\r\n## ADR-001: Old authentication\r\n## ADR-002: Current authentication\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\11-plan-crosscheck\\docs\\DECISIONS.md\r\n# Decisions\r\n## ADR-001: Logging\r\n## ADR-002: Metrics\r\n## ADR-003: Old deployment\r\n## ADR-004: Current deployment\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\12-selective-loading\\docs\\DECISIONS.md\r\n# Decisions\r\n## ADR-001: Export format\r\n## ADR-002: Retention period\r\n"
+      }
+    },
+    {
+      "call_id": "call_Xc5nd0wZN9EeNGpBN91BgyoF",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$files = Get-ChildItem 'scenarios' -Directory | Where-Object Name -match '^0[1-4]-' | ForEach-Object { Join-Path $_.FullName 'docs\\DECISIONS.md' }; foreach ($f in $files) { \"FILE: $f\"; Select-String -Path $f -Pattern '(?i)governance|replaces|replaced.by|body.anchor|status|ADR-[0-9]+' | ForEach-Object Line }",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 1333,
+        "h2_sections": 13,
+        "sha256": "2a47986c8c48510ba297f28532640af01ae89e1aca35dcbc7a0315d1de502135",
+        "preview": "Exit code: 0\nWall time: 5.7 seconds\nOutput:\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\01-valid-graph\\docs\\DECISIONS.md\r\n## ADR-001: Legacy queue\r\n- 替代关系：replaced-by ADR-003\r\n## ADR-002: Legacy retry\r\n- 替代关系：replaced-by ADR-003\r\n## ADR-003: Unified delivery\r\n- 替代关系：replaces ADR-001, ADR-002\r\n- 替代关系：replaced-by ADR-004\r\n- 原因：This decision replaces older policy text; prose is not a relation field.\r\n## ADR-004: Current delivery\r\n- 替代关系：replaces ADR-003\r\n## ADR-005: Metrics\r\n## ADR-006: Alerting\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\02-unilateral\\docs\\DECISIONS.md\r\n## ADR-001: Old deploy path\r\n- 替代关系：replaced-by ADR-002\r\n## ADR-002: New deploy path\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\03-direction-mismatch\\docs\\DECISIONS.md\r\n## ADR-001: Old storage\r\n- 替代关系：replaced-by ADR-003\r\n## ADR-002: Alternate storage\r\n- 替代关系：replaced-by ADR-003\r\n## ADR-003: Current storage\r\n- 替代关系：replaces ADR-002\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\04-duplicate-relation\\docs\\DECISIONS.md\r\n## ADR-001: Old API\r\n- 替代关系：replaced-by ADR-002\r\n- 替代关系：replaced-by ADR-002\r\n## ADR-002: Current API\r\n- 替代关系：replaces ADR-001\r\n"
+      }
+    },
+    {
+      "call_id": "call_vzKQQ9wastM8j9vjp6IqsbQL",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$files = Get-ChildItem 'scenarios' -Directory | Where-Object Name -match '^0[5-8]-' | ForEach-Object { Join-Path $_.FullName 'docs\\DECISIONS.md' }; foreach ($f in $files) { \"FILE: $f\"; Select-String -Path $f -Pattern '(?i)governance|replaces|replaced.by|body.anchor|status|ADR-[0-9]+' | ForEach-Object Line }",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 796,
+        "h2_sections": 5,
+        "sha256": "e1abf51b15ac7e701c64d90dc6029e814defc80473662c4ae57570411280aa21",
+        "preview": "Exit code: 0\nWall time: 7.7 seconds\nOutput:\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\05-duplicate-id\\docs\\DECISIONS.md\r\n## ADR-001: Email notifications\r\n## ADR-001: Push notifications\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\06-missing-state\\docs\\DECISIONS.md\r\n## ADR-001: Cache policy\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\07-invalid-target\\docs\\DECISIONS.md\r\n## ADR-001: Current index\r\n- 替代关系：replaces ADR-999\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\08-self-reference\\docs\\DECISIONS.md\r\n## ADR-001: Export format\r\n- 替代关系：replaces ADR-001\r\n- 替代关系：replaced-by ADR-001\r\n"
+      }
+    },
+    {
+      "call_id": "call_cvpOZBCRNcg1ALqEEkkn4Cq6",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$files = Get-ChildItem 'scenarios' -Directory | Where-Object Name -match '^(09|10|11|12)-' | ForEach-Object { Join-Path $_.FullName 'docs\\DECISIONS.md' }; foreach ($f in $files) { \"FILE: $f\"; Select-String -Path $f -Pattern '(?i)governance|replaces|replaced.by|body.anchor|status|ADR-[0-9]+' | ForEach-Object Line }",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 1115,
+        "h2_sections": 10,
+        "sha256": "270d2115003395a2d7ea4537dd3f016f997dc650c4ae33a1d68934e7129fb204",
+        "preview": "Exit code: 0\nWall time: 6.8 seconds\nOutput:\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\09-cycle\\docs\\DECISIONS.md\r\n## ADR-001: Scheduler A\r\n- 替代关系：replaces ADR-002\r\n- 替代关系：replaced-by ADR-002\r\n## ADR-002: Scheduler B\r\n- 替代关系：replaces ADR-001\r\n- 替代关系：replaced-by ADR-001\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\10-status-mismatch\\docs\\DECISIONS.md\r\n## ADR-001: Old authentication\r\n- 替代关系：replaced-by ADR-002\r\n- 原因：Status conflicts with the replacement relation.\r\n## ADR-002: Current authentication\r\n- 替代关系：replaces ADR-001\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\11-plan-crosscheck\\docs\\DECISIONS.md\r\n## ADR-001: Logging\r\n## ADR-002: Metrics\r\n## ADR-003: Old deployment\r\n- 替代关系：replaced-by ADR-004\r\n## ADR-004: Current deployment\r\n- 替代关系：replaces ADR-003\r\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\12-selective-loading\\docs\\DECISIONS.md\r\n## ADR-001: Export format\r\n## ADR-002: Retention period\r\n"
+      }
+    },
+    {
+      "call_id": "call_hz4Cz6iut1I9PncwovqQ10Id",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$files = Get-ChildItem 'scenarios' -Directory | Where-Object Name -match '^0[1-6]-' | ForEach-Object { Join-Path $_.FullName 'docs\\DECISIONS.md' }; foreach ($f in $files) { \"FILE: $f\"; Select-String -Path $f -Pattern '(?i)active|superseded|deprecated|proposed|accepted|rejected|状态|锚点|anchor' | ForEach-Object Line }",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 218,
+        "h2_sections": 0,
+        "sha256": "f4d87fe07a327700e2aa4b82968ead462190aed78c7a722cd92194f14b1772b8",
+        "preview": "Exit code: 124\nWall time: 11 seconds\nOutput:\ncommand timed out after 11041 milliseconds\nFILE: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix\\scenarios\\01-valid-graph\\docs\\DECISIONS.md\r\n"
+      }
+    },
+    {
+      "call_id": "call_6SoYZQgTZNigoaSplrbmYHiu",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$files = Get-ChildItem 'scenarios' -Directory | Where-Object Name -match '^(07|08|09|10|11|12)-' | ForEach-Object { Join-Path $_.FullName 'docs\\DECISIONS.md' }; foreach ($f in $files) { \"FILE: $f\"; Select-String -Path $f -Pattern '(?i)active|superseded|deprecated|proposed|accepted|rejected|状态|锚点|anchor' | ForEach-Object Line }",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 90,
+        "h2_sections": 0,
+        "sha256": "d8d90ace0991e7bbe45e7a143ad6ea365e5dfaec9051ff675592e226ccddb2e7",
+        "preview": "Exit code: 124\nWall time: 10.8 seconds\nOutput:\ncommand timed out after 10800 milliseconds\n"
+      }
+    },
+    {
+      "call_id": "call_dlKYoDM9rQJOe80fTlLOMI9O",
+      "name": "shell_command",
+      "arguments": {
+        "command": "rg -n -i \"active|superseded|deprecated|proposed|accepted|rejected|状态|锚点|anchor\" scenarios/*/docs/DECISIONS.md",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 168,
+        "h2_sections": 0,
+        "sha256": "1111bd7da2dc1bf448a7c539b44a08eeb41913bbc15d123d26ba6e46dfe5790a",
+        "preview": "Exit code: 1\nWall time: 5.9 seconds\nOutput:\nrg: scenarios/*/docs/DECISIONS.md: IO error for operation on scenarios/*/docs/DECISIONS.md: 文件名、目录名或卷标语法不正确。 (os error 123)\n"
+      }
+    },
+    {
+      "call_id": "call_9qddRRNG6YQkvxWTcZXk1vCN",
+      "name": "shell_command",
+      "arguments": {
+        "command": "rg -n -i -g 'DECISIONS.md' \"active|superseded|deprecated|proposed|accepted|rejected|状态|锚点|anchor\" scenarios",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 3290,
+        "h2_sections": 0,
+        "sha256": "41af0daf9acc629b97f3af8e1bac4c1363fe18f4b300cd26066e090b0ba5043a",
+        "preview": "Exit code: 0\nWall time: 4.5 seconds\nOutput:\nscenarios\\06-missing-state\\docs\\DECISIONS.md:5:- 证据状态：已验证\nscenarios\\12-selective-loading\\docs\\DECISIONS.md:5:- 治理状态：已确认\nscenarios\\12-selective-loading\\docs\\DECISIONS.md:6:- 证据状态：已验证\nscenarios\\12-selective-loading\\docs\\DECISIONS.md:13:- 治理状态：已确认\nscenarios\\12-selective-loading\\docs\\DECISIONS.md:14:- 证据状态：独立复核\nscenarios\\07-invalid-target\\docs\\DECISIONS.md:5:- 治理状态：已确认\nscenarios\\07-invalid-target\\docs\\DECISIONS.md:6:- 证据状态：已验证\nscenarios\\11-plan-crosscheck\\docs\\DECISIONS.md:5:- 治理状态：已确认\nscenarios\\11-plan-crosscheck\\docs\\DECISIONS.md:6:- 证据状态：已验证\nscenarios\\11-plan-crosscheck\\docs\\DECISIONS.md:13:- 治理状态：已确认\nscenarios\\11-plan-crosscheck\\docs\\DECISIONS.md:14:- 证据状态：已验证\nscenarios\\11-plan-crosscheck\\docs\\DECISIONS.md:21:- 治理状态：已替代\nscenarios\\11-plan-crosscheck\\docs\\DECISIONS.md:22:- 证据状态：已验证\nscenarios\\11-plan-crosscheck\\docs\\DECISIONS.md:29:- 治理状态：已确认\nscenarios\\11-plan-crosscheck\\docs\\DECISIONS.md:30:- 证据状态：已验证\nscenarios\\09-cycle\\docs\\DECISIONS.md:5:- 治理状态：已替代\nscenarios\\09-cycle\\docs\\DECISIONS.md:6:- 证据状态：已验证\nscenarios\\09-cycle\\docs\\DECISIONS.md:14:- 治理状态：已替代\nscenarios\\09-cycle\\docs\\DECISIONS.md:15:- 证据状态：已验证\nscenarios\\05-duplicate-id\\docs\\DECISIONS.md:5:- 治理状态：已确认\nscenarios\\05-duplicate-id\\docs\\DECISIONS.md:6:- 证据状态：已验证\nscenarios\\05-duplicate-id\\docs\\DECISIONS.md:13:- 治理状态：已确认\nscenarios\\05-duplicate-id\\docs\\DECISIONS.md:14:- 证据状态：已验证\nscenarios\\10-status-mismatch\\docs\\DECISIONS.md:5:- 治理状态：已确认\nscenarios\\10-status-mismatch\\docs\\DECISIONS.md:6:- 证据状态：已验证\nscenarios\\10-status-mismatch\\docs\\DECISIONS.md:13:- 治理状态：已确认\nscenarios\\10-status-mismatch\\docs\\DECISIONS.md:14:- 证据状态：已验证\nscenarios\\02-unilateral\\docs\\DECISIONS.md:5:- 治理状态：已替代\nscenarios\\02-unilateral\\docs\\DECISIONS.md:6:- 证据状态：已验证\nscenarios\\02-unilateral\\docs\\DECISIONS.md:13:- 治理状态：已确认\nscenarios\\02-unilateral\\docs\\DECISIONS.md:14:- 证据状态：已验证\nscenarios\\01-valid-graph\\docs\\DECISIONS.md:5:- 治理状态：已替代\nscenarios\\01-valid-graph\\docs\\DECISIONS.md:6:- 证据状态：已验证\nscenarios\\01-valid-graph\\docs\\DECIS"
+      }
+    },
+    {
+      "call_id": "call_iwydoIPQLoBvZvVJMz3N7my6",
+      "name": "shell_command",
+      "arguments": {
+        "command": "@'\n$ErrorActionPreference='Stop'\nGet-ChildItem 'scenarios' -Directory | Sort-Object Name | ForEach-Object {\n  $scenario=$_.Name; $path=Join-Path $_.FullName 'docs\\DECISIONS.md'; $lines=Get-Content $path\n  $entries=@(); $cur=$null\n  foreach($line in $lines){\n    if($line -match '^##\\s+(ADR-\\d+):\\s*(.+?)\\s*$'){\n      if($null -ne $cur){$entries += [pscustomobject]$cur}\n      $id=$Matches[1]; $title=$Matches[2]\n      $anchor=('#'+($id+'-'+$title).ToLowerInvariant().Replace(' ','-'))\n      $cur=[ordered]@{id=$id;title=$title;governance_state=$null;replaces_ids=@();replaced_by_id=$null;body_anchor=$anchor;_replace_lines=@();_replaced_lines=@()}\n    } elseif($null -ne $cur -and $line -match '^- 治理状态：(.*)$'){$cur.governance_state=$Matches[1].Trim()\n    } elseif($null -ne $cur -and $line -match '^- 替代关系：replaces\\s+(.+)$'){\n      $ids=@($Matches[1] -split '\\s*,\\s*'); $cur.replaces_ids += $ids; $cur._replace_lines += ,$ids\n    } elseif($null -ne $cur -and $line -match '^- 替代关系：replaced-by\\s+(ADR-\\d+)\\s*$'){$cur._replaced_lines += $Matches[1]; if($null -eq $cur.replaced_by_id){$cur.replaced_by_id=$Matches[1]}}\n  }\n  if($null -ne $cur){$entries += [pscustomobject]$cur}\n  [pscustomobject]@{scenario=$scenario;projection=@($entries | ForEach-Object {[pscustomobject]@{id=$_.id;title=$_.title;governance_state=$_.governance_state;replaces_ids=$_.replaces_ids;replaced_by_id=$_.replaced_by_id;body_anchor=$_.body_anchor}})} | ConvertTo-Json -Depth 6 -Compress\n}\n'@ | powershell -NoProfile -Command -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 45,
+        "h2_sections": 0,
+        "sha256": "7285403458b9af6ad2e54953f2af0cde11c9d38d911021843dc0e2d7141ebcd3",
+        "preview": "Exit code: 0\nWall time: 17.3 seconds\nOutput:\n"
+      }
+    },
+    {
+      "call_id": "call_Jnoi64ck5Cu8Zxt4rOt8haSr",
+      "name": "shell_command",
+      "arguments": {
+        "command": "@'\nfunction Show-Blocks($path,$ids){\n $lines=Get-Content $path; $capture=$false\n foreach($line in $lines){\n  if($line -match '^##\\s+(ADR-\\d+):'){$capture=$ids -contains $Matches[1]}\n  if($capture){$line}\n }\n}\nShow-Blocks 'scenarios\\01-valid-graph\\docs\\DECISIONS.md' @('ADR-004','ADR-005','ADR-006')\nShow-Blocks 'scenarios\\02-unilateral\\docs\\DECISIONS.md' @('ADR-002')\nShow-Blocks 'scenarios\\11-plan-crosscheck\\docs\\DECISIONS.md' @('ADR-001','ADR-003','ADR-999')\nShow-Blocks 'scenarios\\12-selective-loading\\docs\\DECISIONS.md' @('ADR-001','ADR-002')\n'@ | powershell -NoProfile -Command -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 45,
+        "h2_sections": 0,
+        "sha256": "86f1e9603d23f8909eb89185cc4c1606bbf953f3f678f96d80dba32990a2a525",
+        "preview": "Exit code: 0\nWall time: 17.8 seconds\nOutput:\n"
+      }
+    },
+    {
+      "call_id": "call_UA3agP8cZDUJQWoPAp2P8i7f",
+      "name": "shell_command",
+      "arguments": {
+        "command": "@'\n$path='scenarios\\12-selective-loading\\docs\\PRD.md'; $lines=Get-Content $path; $capture=$false\nforeach($line in $lines){\n if($line -match '^##\\s+(.+)$'){$capture=($Matches[1].Trim() -eq 'Retention Rules')}\n if($capture){$line}\n}\n'@ | powershell -NoProfile -Command -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 45,
+        "h2_sections": 0,
+        "sha256": "263f7fd631262ce97b87d260333f21f8bfbed89407ad66f06349fe7a8ce85e21",
+        "preview": "Exit code: 0\nWall time: 16.7 seconds\nOutput:\n"
+      }
+    },
+    {
+      "call_id": "call_NvTOiIdxbNjLZodsVApcyW3S",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$ErrorActionPreference='Stop'\nGet-ChildItem 'scenarios' -Directory | Sort-Object Name | ForEach-Object {\n  $scenario=$_.Name; $path=Join-Path $_.FullName 'docs\\DECISIONS.md'; $lines=Get-Content $path\n  $entries=@(); $cur=$null\n  foreach($line in $lines){\n    if($line -match '^##\\s+(ADR-\\d+):\\s*(.+?)\\s*$'){\n      if($null -ne $cur){$entries += [pscustomobject]$cur}\n      $id=$Matches[1]; $title=$Matches[2]; $anchor=('#'+($id+'-'+$title).ToLowerInvariant().Replace(' ','-'))\n      $cur=[ordered]@{id=$id;title=$title;governance_state=$null;replaces_ids=@();replaced_by_id=$null}\n      $cur.body_anchor=$anchor\n    } elseif($null -ne $cur -and $line -match '^- 治理状态：(.*)$'){$cur.governance_state=$Matches[1].Trim()\n    } elseif($null -ne $cur -and $line -match '^- 替代关系：replaces\\s+(.+)$'){$cur.replaces_ids += @($Matches[1] -split '\\s*,\\s*')\n    } elseif($null -ne $cur -and $line -match '^- 替代关系：replaced-by\\s+(ADR-\\d+)\\s*$'){if($null -eq $cur.replaced_by_id){$cur.replaced_by_id=$Matches[1]}}\n  }\n  if($null -ne $cur){$entries += [pscustomobject]$cur}\n  [pscustomobject]@{scenario=$scenario;projection=$entries} | ConvertTo-Json -Depth 6 -Compress\n}",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 4678,
+        "h2_sections": 0,
+        "sha256": "e8b36742712c3e89e8e5febd71bf160caaa7f06c1f477dcc547e7ac400f49b14",
+        "preview": "Exit code: 0\nWall time: 8.4 seconds\nOutput:\n{\"scenario\":\"01-valid-graph\",\"projection\":[{\"id\":\"ADR-001\",\"title\":\"Legacy queue\",\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-001-legacy-queue\"},{\"id\":\"ADR-002\",\"title\":\"Legacy retry\",\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-002-legacy-retry\"},{\"id\":\"ADR-003\",\"title\":\"Unified delivery\",\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-003-unified-delivery\"},{\"id\":\"ADR-004\",\"title\":\"Current delivery\",\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-004-current-delivery\"},{\"id\":\"ADR-005\",\"title\":\"Metrics\",\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-005-metrics\"},{\"id\":\"ADR-006\",\"title\":\"Alerting\",\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-006-alerting\"}]}\r\n{\"scenario\":\"02-unilateral\",\"projection\":[{\"id\":\"ADR-001\",\"title\":\"Old deploy path\",\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-001-old-deploy-path\"},{\"id\":\"ADR-002\",\"title\":\"New deploy path\",\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-002-new-deploy-path\"}]}\r\n{\"scenario\":\"03-direction-mismatch\",\"projection\":[{\"id\":\"ADR-001\",\"title\":\"Old storage\",\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-001-old-storage\"},{\"id\":\"ADR-002\",\"title\":\"Alternate storage\",\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-002-alternate-storage\"},{\"id\":\"ADR-003\",\"title\":\"Current storage\",\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-003-current-storage\"}]}\r\n{\"scenario\":\"04-duplicate-relation\",\"projection\":[{\"id\":\"ADR-001\",\"title\":\"Old API\",\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-001-old-api\"},{\"id\":\"ADR-002\",\"title\":\"Current API\",\"gover"
+      }
+    },
+    {
+      "call_id": "call_SA4XiBX9XTgNRVKt1s1IOh6e",
+      "name": "shell_command",
+      "arguments": {
+        "command": "function Show-Blocks($path,$ids){\n $lines=Get-Content $path; $capture=$false\n foreach($line in $lines){\n  if($line -match '^##\\s+(ADR-\\d+):'){$capture=$ids -contains $Matches[1]}\n  if($capture){Write-Output $line}\n }\n}\nShow-Blocks 'scenarios\\01-valid-graph\\docs\\DECISIONS.md' @('ADR-004','ADR-005','ADR-006')\nShow-Blocks 'scenarios\\02-unilateral\\docs\\DECISIONS.md' @('ADR-002')\nShow-Blocks 'scenarios\\11-plan-crosscheck\\docs\\DECISIONS.md' @('ADR-001','ADR-003','ADR-999')\nShow-Blocks 'scenarios\\12-selective-loading\\docs\\DECISIONS.md' @('ADR-001','ADR-002')",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 1254,
+        "h2_sections": 8,
+        "sha256": "a07344150a899af9de885303ea2feadd16dca0e685c46e3a6515d9f7d3a20b2a",
+        "preview": "Exit code: 0\nWall time: 10 seconds\nOutput:\n## ADR-004: Current delivery\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細鐙珛澶嶆牳\r\n- 鏇夸唬鍏崇郴锛歳eplaces ADR-003\r\n- 鍐冲畾鍐呭锛歎se the current delivery service.\r\n- 鍘熷洜锛欼t supports current reliability requirements.\r\n\r\n## ADR-005: Metrics\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鏇夸唬鍏崇郴锛氭棤\r\n- 鍐冲畾鍐呭锛歊ecord delivery metrics.\r\n- 鍘熷洜锛歄perational visibility.\r\n\r\n## ADR-006: Alerting\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細宸茶嚜鏌?- 鍐冲畾鍐呭锛欰lert on sustained delivery failure.\r\n- 鍘熷洜锛歀imit unnoticed outages.\r\n## ADR-002: New deploy path\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鍐冲畾鍐呭锛歎se the new deployment path.\r\n- 鍘熷洜锛欳urrent choice.\r\n## ADR-001: Logging\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鏇夸唬鍏崇郴锛氭棤\r\n- 鍐冲畾鍐呭锛歎se structured logging.\r\n- 鍘熷洜锛歄perational consistency.\r\n\r\n## ADR-003: Old deployment\r\n\r\n- 娌荤悊鐘舵€侊細宸叉浛浠?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鏇夸唬鍏崇郴锛歳eplaced-by ADR-004\r\n- 鍐冲畾鍐呭锛歎se the old deployment path.\r\n- 鍘熷洜锛欻istorical choice.\r\n\r\n## ADR-001: Export format\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鏇夸唬鍏崇郴锛氭棤\r\n- 鍐冲畾鍐呭锛欿eep the public export format unchanged.\r\n- 鍘熷洜锛欵xternal consumers depend on it.\r\n\r\n## ADR-002: Retention period\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細鐙珛澶嶆牳\r\n- 鏇夸唬鍏崇郴锛氭棤\r\n- 鍐冲畾鍐呭锛歊etain completed records for 30 days.\r\n- 鍘熷洜锛欱alance recovery needs and storage cost.\r\n"
+      }
+    },
+    {
+      "call_id": "call_kvK7u5zMkHqgSL9s7aRcogSA",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$path='scenarios\\12-selective-loading\\docs\\PRD.md'; $lines=Get-Content $path; $capture=$false\nforeach($line in $lines){\n if($line -match '^##\\s+(.+)$'){$capture=($Matches[1].Trim() -eq 'Retention Rules')}\n if($capture){Write-Output $line}\n}",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 183,
+        "h2_sections": 1,
+        "sha256": "7c44c1586b2ffc7fdb67eb7f372d549adb8c9d89876fa6d175d768eb77452b7f",
+        "preview": "Exit code: 0\nWall time: 6.6 seconds\nOutput:\n## Retention Rules\r\n\r\nCompleted records remain available for 30 days. Expired records are removed by\r\nthe existing maintenance command.\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_Ay4yUsy6TapP0qrLWHOfd1rR",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$ErrorActionPreference='Stop'\nGet-ChildItem 'scenarios' -Directory | Sort-Object Name | ForEach-Object {\n  $scenario=$_.Name; $path=Join-Path $_.FullName 'docs\\DECISIONS.md'; $lines=Get-Content -Encoding UTF8 $path\n  $entries=@(); $cur=$null\n  foreach($line in $lines){\n    if($line -match '^##\\s+(ADR-\\d+):\\s*(.+?)\\s*$'){\n      if($null -ne $cur){$entries += [pscustomobject]$cur}\n      $id=$Matches[1]; $title=$Matches[2]\n      $cur=[ordered]@{id=$id;title=$title;governance_state=$null;replaces_ids=@();replaced_by_id=$null;body_anchor=('#'+($id+'-'+$title).ToLowerInvariant().Replace(' ','-'))}\n    } elseif($null -ne $cur -and $line -match '^- 治理状态：(.*)$'){$cur.governance_state=$Matches[1].Trim()\n    } elseif($null -ne $cur -and $line -match '^- 替代关系：replaces\\s+(.+)$'){$cur.replaces_ids += @($Matches[1] -split '\\s*,\\s*')\n    } elseif($null -ne $cur -and $line -match '^- 替代关系：replaced-by\\s+(ADR-\\d+)\\s*$'){$cur.replaced_by_id=$Matches[1]}\n  }\n  if($null -ne $cur){$entries += [pscustomobject]$cur}\n  [pscustomobject]@{scenario=$scenario;projection=$entries} | ConvertTo-Json -Depth 6 -Compress\n}",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 4865,
+        "h2_sections": 0,
+        "sha256": "e6d8b741379b0d0e4b7b7a757eb8c21d13f81d3408a995edc202c03bf44abfaa",
+        "preview": "Exit code: 0\nWall time: 6.4 seconds\nOutput:\n{\"scenario\":\"01-valid-graph\",\"projection\":[{\"id\":\"ADR-001\",\"title\":\"Legacy queue\",\"governance_state\":\"已替代\",\"replaces_ids\":[],\"replaced_by_id\":\"ADR-003\",\"body_anchor\":\"#adr-001-legacy-queue\"},{\"id\":\"ADR-002\",\"title\":\"Legacy retry\",\"governance_state\":\"已替代\",\"replaces_ids\":[],\"replaced_by_id\":\"ADR-003\",\"body_anchor\":\"#adr-002-legacy-retry\"},{\"id\":\"ADR-003\",\"title\":\"Unified delivery\",\"governance_state\":\"已替代\",\"replaces_ids\":[\"ADR-001\",\"ADR-002\"],\"replaced_by_id\":\"ADR-004\",\"body_anchor\":\"#adr-003-unified-delivery\"},{\"id\":\"ADR-004\",\"title\":\"Current delivery\",\"governance_state\":\"已确认\",\"replaces_ids\":[\"ADR-003\"],\"replaced_by_id\":null,\"body_anchor\":\"#adr-004-current-delivery\"},{\"id\":\"ADR-005\",\"title\":\"Metrics\",\"governance_state\":\"已确认\",\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-005-metrics\"},{\"id\":\"ADR-006\",\"title\":\"Alerting\",\"governance_state\":\"已确认\",\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-006-alerting\"}]}\r\n{\"scenario\":\"02-unilateral\",\"projection\":[{\"id\":\"ADR-001\",\"title\":\"Old deploy path\",\"governance_state\":\"已替代\",\"replaces_ids\":[],\"replaced_by_id\":\"ADR-002\",\"body_anchor\":\"#adr-001-old-deploy-path\"},{\"id\":\"ADR-002\",\"title\":\"New deploy path\",\"governance_state\":\"已确认\",\"replaces_ids\":[],\"replaced_by_id\":null,\"body_anchor\":\"#adr-002-new-deploy-path\"}]}\r\n{\"scenario\":\"03-direction-mismatch\",\"projection\":[{\"id\":\"ADR-001\",\"title\":\"Old storage\",\"governance_state\":\"已替代\",\"replaces_ids\":[],\"replaced_by_id\":\"ADR-003\",\"body_anchor\":\"#adr-001-old-storage\"},{\"id\":\"ADR-002\",\"title\":\"Alternate storage\",\"governance_state\":\"已替代\",\"replaces_ids\":[],\"replaced_by_id\":\"ADR-003\",\"body_anchor\":\"#adr-002-alternate-storage\"},{\"id\":\"ADR-003\",\"title\":\"Current storage\",\"governance_state\":\"已确认\",\"replaces_ids\":[\"ADR-002\"],\"replaced_by_id\":null,\"body_anchor\":\"#adr-003-current-storage\"}]}\r\n{\"scenario\":\"04-duplicate-relation\",\"projection\":[{\"id\":\"ADR-001\",\"title\":\"Old API\",\"governance_state\":\"已替代\",\"replaces_ids\":[],\"replaced_by_id\":\"ADR"
+      }
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 257303,
+    "cached_input_tokens": 216960,
+    "output_tokens": 8181,
+    "reasoning_output_tokens": 1809,
+    "total_tokens": 265484
+  },
+  "context_trace": {
+    "project_skill_listed": true,
+    "project_skill_description_chars": 620,
+    "skill_body_read_calls": [
+      "call_bbOBT6z4NfwUODpyusMW9tZC"
+    ],
+    "skill_body_loaded_chars": 1492,
+    "skill_tool_output_chars": 2210,
+    "reference_read_calls": [
+      "call_5CqGnPhleiKV8IsSVyf3tROD"
+    ],
+    "reference_list_calls": [],
+    "reference_section_read_calls": [
+      "call_5CqGnPhleiKV8IsSVyf3tROD"
+    ],
+    "reference_failed_calls": [],
+    "reference_files": [
+      "verification.md"
+    ],
+    "reference_loaded_chars": 2753,
+    "reference_tool_output_chars": 2816,
+    "reference_h2_sections": 2,
+    "governance_read_calls": [
+      "call_EEQcSOasWXiDEei20QoOFYht",
+      "call_hJeXeRwYPnZGfpX0bSrZsE4A",
+      "call_WJIMQ7jSK27hWq4shhR95Htw",
+      "call_Xc5nd0wZN9EeNGpBN91BgyoF",
+      "call_vzKQQ9wastM8j9vjp6IqsbQL",
+      "call_cvpOZBCRNcg1ALqEEkkn4Cq6",
+      "call_hz4Cz6iut1I9PncwovqQ10Id",
+      "call_6SoYZQgTZNigoaSplrbmYHiu",
+      "call_dlKYoDM9rQJOe80fTlLOMI9O",
+      "call_9qddRRNG6YQkvxWTcZXk1vCN",
+      "call_iwydoIPQLoBvZvVJMz3N7my6",
+      "call_Jnoi64ck5Cu8Zxt4rOt8haSr",
+      "call_UA3agP8cZDUJQWoPAp2P8i7f",
+      "call_NvTOiIdxbNjLZodsVApcyW3S",
+      "call_SA4XiBX9XTgNRVKt1s1IOh6e",
+      "call_kvK7u5zMkHqgSL9s7aRcogSA",
+      "call_Ay4yUsy6TapP0qrLWHOfd1rR"
+    ]
+  },
+  "fixture": {
+    "root": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E12\\state_matrix",
+    "before_inventory": {
+      "scenarios/01-valid-graph/docs/DECISIONS.md": {
+        "sha256": "6cb514929df536f9637b50c3616b63f7ba64c591989ff2559857b354fb528775",
+        "bytes": 1259
+      },
+      "scenarios/01-valid-graph/docs/PLAN.md": {
+        "sha256": "a9d7ba9a9d0c5f690eb0645c2bd33e4bced1eb8cc043be78fe51dffd4e5638cf",
+        "bytes": 382
+      },
+      "scenarios/02-unilateral/docs/DECISIONS.md": {
+        "sha256": "7c6ad94e4a311b9d5e6bb9f9246f47ad182ae901aaa0bfe743a2ecb62d805e42",
+        "bytes": 366
+      },
+      "scenarios/02-unilateral/docs/PLAN.md": {
+        "sha256": "31a0544e31669b4cfa24f51b715643abc9143b9cb42a22e41707362ad18f357a",
+        "bytes": 323
+      },
+      "scenarios/03-direction-mismatch/docs/DECISIONS.md": {
+        "sha256": "1c0212bd1bc5ee060db235199c30e7439a399b5bb294d3bbf2cca538fc32477c",
+        "bytes": 569
+      },
+      "scenarios/03-direction-mismatch/docs/PLAN.md": {
+        "sha256": "8d507ee4dc49b1ae7acef54f984707051b064977382fecabcfb8ba1efff1abd9",
+        "bytes": 304
+      },
+      "scenarios/04-duplicate-relation/docs/DECISIONS.md": {
+        "sha256": "b8b247a4a69b8f7ecce8f81f007b060faa52c9e747ac76a362bfe304c1c10712",
+        "bytes": 397
+      },
+      "scenarios/04-duplicate-relation/docs/PLAN.md": {
+        "sha256": "ab6e92707698eb8c174aa22b79f9dd81becad7883c2045b1a50d022da150697b",
+        "bytes": 268
+      },
+      "scenarios/05-duplicate-id/docs/DECISIONS.md": {
+        "sha256": "886af341956cd3d691b4ea62fdb76e0618319c4cc9302f5b62fbbb7a31b92a77",
+        "bytes": 388
+      },
+      "scenarios/05-duplicate-id/docs/PLAN.md": {
+        "sha256": "a619eb885f682070389d5a77673dfa5c9b7dec96faa4951c899fb528cd6c2997",
+        "bytes": 319
+      },
+      "scenarios/06-missing-state/docs/DECISIONS.md": {
+        "sha256": "a8420219f4d551a5a5befdd4f42c5293c23c5672fac35f65c5283f04c8c2d2cc",
+        "bytes": 163
+      },
+      "scenarios/06-missing-state/docs/PLAN.md": {
+        "sha256": "ab622d7d46c3b587519cd910caca95460a9e0c13fe08c9053b847d0137fb8491",
+        "bytes": 301
+      },
+      "scenarios/07-invalid-target/docs/DECISIONS.md": {
+        "sha256": "f94687578889263b0501b1ea36cfa6d9e17d66ca79fb44c0c5ac6212d9c61b4e",
+        "bytes": 201
+      },
+      "scenarios/07-invalid-target/docs/PLAN.md": {
+        "sha256": "d6fbb02e429fcfc01144074bb7c4ee45eb2f289252e5d6989542d0557d125544",
+        "bytes": 308
+      },
+      "scenarios/08-self-reference/docs/DECISIONS.md": {
+        "sha256": "6cbeb2a2a4ef779724bf871b953a928860a21b98bbbe4bea384924c7daa89b70",
+        "bytes": 245
+      },
+      "scenarios/08-self-reference/docs/PLAN.md": {
+        "sha256": "9f3e7b72a56c9ae31e80842befb8be8ca00b9a6a0110b27ae7a523470edc4e75",
+        "bytes": 296
+      },
+      "scenarios/09-cycle/docs/DECISIONS.md": {
+        "sha256": "b07646e31e922f0b1c4b4a7284699cd2e215506128212c82720d98942d0e7636",
+        "bytes": 451
+      },
+      "scenarios/09-cycle/docs/PLAN.md": {
+        "sha256": "a374132bff3c75f7607edb8f699284f6d27633c1a65fe63e615d7c1ac9c34f9d",
+        "bytes": 309
+      },
+      "scenarios/10-status-mismatch/docs/DECISIONS.md": {
+        "sha256": "443a9491026f29a3eef6d885826c47f8442c78f1c878ed715dbb268bb1f92955",
+        "bytes": 433
+      },
+      "scenarios/10-status-mismatch/docs/PLAN.md": {
+        "sha256": "85d5d7db9e4b895649d64e0d4d76cae1314bf51bc072742368a751a04960d865",
+        "bytes": 322
+      },
+      "scenarios/11-plan-crosscheck/docs/DECISIONS.md": {
+        "sha256": "982248b6ea6f080f2d034857c9b032234dd1de9800004ed64df60372dee88bbc",
+        "bytes": 754
+      },
+      "scenarios/11-plan-crosscheck/docs/PLAN.md": {
+        "sha256": "2f7d4e89b55ce7f2970c4a1caee3e6e23f220390172ae1058da504d7d87a7218",
+        "bytes": 381
+      },
+      "scenarios/12-selective-loading/docs/audits/ARCHIVE.md": {
+        "sha256": "156de4420a4e9beaddfe55a6545753942fe03c6131bfe373b5e58956a5b93a8a",
+        "bytes": 187
+      },
+      "scenarios/12-selective-loading/docs/DECISIONS.md": {
+        "sha256": "ca62021913ee0c48a9e9b3fa1639c587e628ab03a4989e92986406ce157a3b3f",
+        "bytes": 433
+      },
+      "scenarios/12-selective-loading/docs/PLAN.md": {
+        "sha256": "d7f669cb99d6f940b7f8942708bbd84fdb5f9153c70bdd4c50c32c7dca5a7627",
+        "bytes": 427
+      },
+      "scenarios/12-selective-loading/docs/PRD.md": {
+        "sha256": "18a6ec5971ff3ae8735cb2754c1ae11f9782a1090ec6dffa5b8734d75df2311e",
+        "bytes": 405
+      }
+    },
+    "after_inventory": {
+      "scenarios/01-valid-graph/docs/DECISIONS.md": {
+        "bytes": 1259,
+        "sha256": "6cb514929df536f9637b50c3616b63f7ba64c591989ff2559857b354fb528775"
+      },
+      "scenarios/01-valid-graph/docs/PLAN.md": {
+        "bytes": 382,
+        "sha256": "a9d7ba9a9d0c5f690eb0645c2bd33e4bced1eb8cc043be78fe51dffd4e5638cf"
+      },
+      "scenarios/02-unilateral/docs/DECISIONS.md": {
+        "bytes": 366,
+        "sha256": "7c6ad94e4a311b9d5e6bb9f9246f47ad182ae901aaa0bfe743a2ecb62d805e42"
+      },
+      "scenarios/02-unilateral/docs/PLAN.md": {
+        "bytes": 323,
+        "sha256": "31a0544e31669b4cfa24f51b715643abc9143b9cb42a22e41707362ad18f357a"
+      },
+      "scenarios/03-direction-mismatch/docs/DECISIONS.md": {
+        "bytes": 569,
+        "sha256": "1c0212bd1bc5ee060db235199c30e7439a399b5bb294d3bbf2cca538fc32477c"
+      },
+      "scenarios/03-direction-mismatch/docs/PLAN.md": {
+        "bytes": 304,
+        "sha256": "8d507ee4dc49b1ae7acef54f984707051b064977382fecabcfb8ba1efff1abd9"
+      },
+      "scenarios/04-duplicate-relation/docs/DECISIONS.md": {
+        "bytes": 397,
+        "sha256": "b8b247a4a69b8f7ecce8f81f007b060faa52c9e747ac76a362bfe304c1c10712"
+      },
+      "scenarios/04-duplicate-relation/docs/PLAN.md": {
+        "bytes": 268,
+        "sha256": "ab6e92707698eb8c174aa22b79f9dd81becad7883c2045b1a50d022da150697b"
+      },
+      "scenarios/05-duplicate-id/docs/DECISIONS.md": {
+        "bytes": 388,
+        "sha256": "886af341956cd3d691b4ea62fdb76e0618319c4cc9302f5b62fbbb7a31b92a77"
+      },
+      "scenarios/05-duplicate-id/docs/PLAN.md": {
+        "bytes": 319,
+        "sha256": "a619eb885f682070389d5a77673dfa5c9b7dec96faa4951c899fb528cd6c2997"
+      },
+      "scenarios/06-missing-state/docs/DECISIONS.md": {
+        "bytes": 163,
+        "sha256": "a8420219f4d551a5a5befdd4f42c5293c23c5672fac35f65c5283f04c8c2d2cc"
+      },
+      "scenarios/06-missing-state/docs/PLAN.md": {
+        "bytes": 301,
+        "sha256": "ab622d7d46c3b587519cd910caca95460a9e0c13fe08c9053b847d0137fb8491"
+      },
+      "scenarios/07-invalid-target/docs/DECISIONS.md": {
+        "bytes": 201,
+        "sha256": "f94687578889263b0501b1ea36cfa6d9e17d66ca79fb44c0c5ac6212d9c61b4e"
+      },
+      "scenarios/07-invalid-target/docs/PLAN.md": {
+        "bytes": 308,
+        "sha256": "d6fbb02e429fcfc01144074bb7c4ee45eb2f289252e5d6989542d0557d125544"
+      },
+      "scenarios/08-self-reference/docs/DECISIONS.md": {
+        "bytes": 245,
+        "sha256": "6cbeb2a2a4ef779724bf871b953a928860a21b98bbbe4bea384924c7daa89b70"
+      },
+      "scenarios/08-self-reference/docs/PLAN.md": {
+        "bytes": 296,
+        "sha256": "9f3e7b72a56c9ae31e80842befb8be8ca00b9a6a0110b27ae7a523470edc4e75"
+      },
+      "scenarios/09-cycle/docs/DECISIONS.md": {
+        "bytes": 451,
+        "sha256": "b07646e31e922f0b1c4b4a7284699cd2e215506128212c82720d98942d0e7636"
+      },
+      "scenarios/09-cycle/docs/PLAN.md": {
+        "bytes": 309,
+        "sha256": "a374132bff3c75f7607edb8f699284f6d27633c1a65fe63e615d7c1ac9c34f9d"
+      },
+      "scenarios/10-status-mismatch/docs/DECISIONS.md": {
+        "bytes": 433,
+        "sha256": "443a9491026f29a3eef6d885826c47f8442c78f1c878ed715dbb268bb1f92955"
+      },
+      "scenarios/10-status-mismatch/docs/PLAN.md": {
+        "bytes": 322,
+        "sha256": "85d5d7db9e4b895649d64e0d4d76cae1314bf51bc072742368a751a04960d865"
+      },
+      "scenarios/11-plan-crosscheck/docs/DECISIONS.md": {
+        "bytes": 754,
+        "sha256": "982248b6ea6f080f2d034857c9b032234dd1de9800004ed64df60372dee88bbc"
+      },
+      "scenarios/11-plan-crosscheck/docs/PLAN.md": {
+        "bytes": 381,
+        "sha256": "2f7d4e89b55ce7f2970c4a1caee3e6e23f220390172ae1058da504d7d87a7218"
+      },
+      "scenarios/12-selective-loading/docs/audits/ARCHIVE.md": {
+        "bytes": 187,
+        "sha256": "156de4420a4e9beaddfe55a6545753942fe03c6131bfe373b5e58956a5b93a8a"
+      },
+      "scenarios/12-selective-loading/docs/DECISIONS.md": {
+        "bytes": 433,
+        "sha256": "ca62021913ee0c48a9e9b3fa1639c587e628ab03a4989e92986406ce157a3b3f"
+      },
+      "scenarios/12-selective-loading/docs/PLAN.md": {
+        "bytes": 427,
+        "sha256": "d7f669cb99d6f940b7f8942708bbd84fdb5f9153c70bdd4c50c32c7dca5a7627"
+      },
+      "scenarios/12-selective-loading/docs/PRD.md": {
+        "bytes": 405,
+        "sha256": "18a6ec5971ff3ae8735cb2754c1ae11f9782a1090ec6dffa5b8734d75df2311e"
+      }
+    },
+    "changed_files": []
+  },
+  "variant_id": "state_matrix",
+  "permissions": "read-only",
+  "expected": {
+    "changed_files": [],
+    "forbidden_changes": [
+      "**"
+    ],
+    "required_evidence": [
+      "EV_TOOL_CALL_LOG",
+      "EV_ADR_PROJECTION",
+      "EV_STATE_DIFF",
+      "EV_CONTEXT_TRACE"
+    ],
+    "forbidden_actions": [
+      "load ADR reasons or decision bodies into the initial context",
+      "silently accept a malformed replacement graph",
+      "read audit bodies when the current state does not depend on them",
+      "guess missing recovery fields"
+    ],
+    "assertion_subjects": [
+      "load_order.first_project_document",
+      "initial_adr_projection.fields",
+      "initial_context.adr_reason_or_body_count",
+      "replacement_variants.expected_results_match",
+      "key_fields.accuracy"
+    ]
+  }
+}

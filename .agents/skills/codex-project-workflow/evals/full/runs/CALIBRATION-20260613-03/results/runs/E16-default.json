@@ -1,0 +1,399 @@
+{
+  "case_id": "E16",
+  "condition": "candidate",
+  "thread_id": "019ebfde-1cdd-78f2-a503-b3c3fce6265c",
+  "rollout": {
+    "path": "C:\\Users\\wang yazhou\\.codex\\sessions\\2026\\06\\13\\rollout-2026-06-13T15-24-30-019ebfde-1cdd-78f2-a503-b3c3fce6265c.jsonl",
+    "sha256": "f58e0ba875966be88088b7b70d6f432adb81707e6ccec08129e7d4b83435577f"
+  },
+  "status": "completed",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "started_at": 1781335470,
+  "completed_at": 1781335570,
+  "duration_ms": 99272,
+  "time_to_first_token_ms": 7055,
+  "raw_user_messages": [
+    "<codex_delegation>\n  <source_thread_id>019eaf56-91db-7c40-b740-7435313502d3</source_thread_id>\n  <input>Use the evaluator-supplied workspace D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default. The existing --include-zero option must retain zero-valued rows and render their value as ZERO. Without the option, current output must remain unchanged. Implement the feature, run the focused tests, and keep the change easy to revert.</input>\n</codex_delegation>"
+  ],
+  "commentary": [
+    "I’m using the project workflow skill because this is a delegated implementation with a specific workspace and verification requirement. I’ll inspect its instructions, then the target repo and existing tests before editing.",
+    "The change appears narrow, so I’m keeping the path constraint simple: preserve the registered CLI flow, modify only the formatter/filter behavior reached by `--include-zero`, and cover both enabled and default output. I’m locating the entry point and focused test surface now.",
+    "The defect is exactly in `render_report`: the flag is parsed and passed correctly, but the filter ignores it. I’ll make a two-file change: honor the flag in `src/report.py` and add focused regression coverage that also locks the unchanged default behavior.",
+    "The implementation is in place and deliberately localized; no CLI wiring or shared formatter behavior changed. I’m verifying both the focused unit suite and the actual command-line output with and without the option."
+  ],
+  "final_response": "Implemented in the evaluator workspace.\n\n- `--include-zero` now retains zero rows and renders `ZERO`.\n- Default output remains unchanged.\n- Added focused regression coverage.\n\nVerification: 2 tests passed; CLI outputs confirmed both modes.\n\nFiles: [report.py](D:/project/.codex-eval-full/CALIBRATION-20260613-03/workspaces/E16/default/src/report.py), [test_existing.py](D:/project/.codex-eval-full/CALIBRATION-20260613-03/workspaces/E16/default/tests/test_existing.py)\n\nNo persistence, routing, or auxiliary scripts changed. The workspace is not a Git repository; the change is isolated to two files for easy reversion.",
+  "final_response_chars": 619,
+  "tool_calls": [
+    {
+      "call_id": "call_AEeWhM5WXUPAkBBlB9mQbU9E",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\SKILL.md'",
+        "workdir": "D:\\project\\efficiently use codex",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 2210,
+        "h2_sections": 3,
+        "sha256": "cf0e19e6966a95834b6999e56045b1a9109f96fa0c6841d5a2e8e47d313e48ac",
+        "preview": "Exit code: 0\nWall time: 1.9 seconds\nOutput:\n---\nname: codex-project-workflow\ndescription: Structure and govern Codex work for new or ambiguous projects, multi-step implementation, professional research, solution comparison, architecture and planning, third-party downloads, high-risk changes, project recovery, or requests for a rigorous workflow. Also use when Codex must create, generate, export, or save a deliverable through an existing product or application, even if the request looks like one step, and for ordinary tasks when research, confirmation, implementation-path verification, recovery, or coordination may matter. Do not use for simple questions or explicit low-risk one-step edits or commands.\n---\n\n# Codex Project Workflow\n\n## Route\n\n1. Inspect first. Keep goal, constraints, and completion test. Ask only blocking decisions.\n2. From the repo root containing this skill, run `python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME \"Execution Rules\" \"Output Requirements\"`. Use `research` for unstable evidence/options; `governance` for third-party assets, installs, execution, private networking, approvals, agents, or durable changes; `verification` for writes, product-generated outputs, recovery, production/core paths, or path proof. Load each triggered protocol only.\n3. Never list headings, scan skill directories, or read references directly. Report helper failure; it waives no gate.\n4. Agents suit three streams, conflicting evidence, or high failure cost. Load governance, propose count/roles, ownership, parallel/main work, benefit, cost, risks, and fallback, then ask. Only explicit acceptance starts them; safe unrelated work may continue.\n\n## Safeguards\n\n- Never invent execution, sources, tests, or verification.\n- Before writes map entry, state, owners, and bypasses. Preserve ownership; freeze an evidence-bound contract for production routing, persistence/schema/migration, architecture, core capability, alternate output, explicit path proof,"
+      }
+    },
+    {
+      "call_id": "call_LsKlXnuNRsu75qLPFpxUzgMy",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python .agents/skills/codex-project-workflow/scripts/read_reference.py verification \"Execution Rules\" \"Output Requirements\"",
+        "workdir": "D:\\project\\efficiently use codex",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 2816,
+        "h2_sections": 2,
+        "sha256": "75d4f5cf642bad1e423ee2f7b9fad9cb0cc848f88f81dcc6194dd9971a72962e",
+        "preview": "Exit code: 0\nWall time: 3.5 seconds\nOutput:\n## Execution Rules\r\n\r\n- Create a formal implementation contract before the first relevant write when any trigger applies: production entry or routing changes; state authority, persistence, schema, or migration changes; architecture boundary or ownership changes; new, copied, or replacement core capability; a direct alternate final-output path; explicit user path proof; or high-impact commitment.\r\n- For a generated final delivery that also writes product state or persistence, save the frozen contract to `docs/IMPLEMENTATION_CONTRACT.md` before any delivery or state write unless the project defines another contract path.\r\n- Before freezing that contract, identify the user-invocable entry from root-level CLI, UI, API, or registration evidence and record its exact invocation. An internal function is never the product entry merely because it reaches the desired core path.\r\n- Freeze the contract from independent evidence before writing. If the source, version, entry, state update, save path, or ownership cannot be proven, stop as implementation-path unverified; do not borrow a sibling, neighboring fixture, helper, or post-hoc contract.\r\n- File count, module count, tests plus code, and mechanical cross-file edits do not trigger a formal contract by themselves. When every trigger is false, keep a one-to-three-line internal path constraint.\r\n- Bind contract claims to independent project evidence such as confirmed docs, registration points, callers, runtime entry points, or state definitions. Preserve later contract differences.\r\n- Trace the existing user entry. Create, generate, export, or save requests never authorize changing entry wiring, routing, core code, or tests; that requires a separate explicit repair request. Internal calls cannot replace the entry. If it bypasses the core path, stop before contract, delivery, state, or product-code writes and report implementation-path unverified.\r\n- Verify result and implementation pat"
+      }
+    },
+    {
+      "call_id": "call_Cob5UwkuDGcWGE4zgz0TBiHe",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-ChildItem -Force; rg --files",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 545,
+        "h2_sections": 0,
+        "sha256": "a15e0cf749d6d3ada8347f891eb42592f3a221a09119efb61f1c6cdbb0d2204a",
+        "preview": "Exit code: 124\nWall time: 10.3 seconds\nOutput:\ncommand timed out after 10274 milliseconds\n\r\n\r\n    目录: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default\r\n\r\n\r\nMode                 LastWriteTime         Length Name                                                                 \r\n----                 -------------         ------ ----                                                                 \r\nd-----         2026/6/12     20:57                data                                                                 \r\n"
+      }
+    },
+    {
+      "call_id": "call_a53u2TVRxCYI3VIZOKUazs5E",
+      "name": "shell_command",
+      "arguments": {
+        "command": "git status --short; git branch --show-current",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 182,
+        "h2_sections": 0,
+        "sha256": "c6b4ecf2c90372cdf418d809d0f6ad3b40befad0677b1b58efd2c882ab46de08",
+        "preview": "Exit code: 1\nWall time: 6.7 seconds\nOutput:\nfatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git\n"
+      }
+    },
+    {
+      "call_id": "call_CahpR4hBtEQ4NUf178W42q7W",
+      "name": "shell_command",
+      "arguments": {
+        "command": "rg -n --hidden --glob '!/.git' \"include-zero|include_zero|ZERO|zero-valued|zero valued\" .",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 263,
+        "h2_sections": 0,
+        "sha256": "c954ad270ba775f605217ac692af45c838f429614827e3c30bf66fe84d1ea859",
+        "preview": "Exit code: 0\nWall time: 3.4 seconds\nOutput:\n.\\app.py:10:    parser.add_argument(\"--include-zero\", action=\"store_true\")\n.\\app.py:14:    print(render_report(records, include_zero=args.include_zero))\n.\\src\\report.py:4:def render_report(records, include_zero=False):\n"
+      }
+    },
+    {
+      "call_id": "call_Nqu1F6IVv3TIcIlDTn4DYDN8",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw app.py; Get-Content -Raw src\\report.py",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 711,
+        "h2_sections": 0,
+        "sha256": "b60db6e06ed5f9e39f684bc24503bce68fbe570505eb7c315ab2413ae23e7e9c",
+        "preview": "Exit code: 0\nWall time: 2.6 seconds\nOutput:\nimport argparse\nimport json\n\nfrom src.report import render_report\n\n\ndef main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"input\")\n    parser.add_argument(\"--include-zero\", action=\"store_true\")\n    args = parser.parse_args()\n    with open(args.input, encoding=\"utf-8\") as handle:\n        records = json.load(handle)\n    print(render_report(records, include_zero=args.include_zero))\n\n\nif __name__ == \"__main__\":\n    main()\n\r\nfrom src.formatting import format_row\n\n\ndef render_report(records, include_zero=False):\n    visible = [record for record in records if record[\"value\"] != 0]\n    return \"\\n\".join(format_row(record) for record in visible)\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_T7urkMJWJhSxK1oSVS0xgXq6",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-ChildItem -Recurse -File -Force | Select-Object FullName,Length",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 1004,
+        "h2_sections": 0,
+        "sha256": "606a91e7fcf703791f9114a72a1e87b76754e1545a2770852d4ab7d25b234507",
+        "preview": "Exit code: 0\nWall time: 2.9 seconds\nOutput:\n\r\nFullName                                                                                          Length\r\n--------                                                                                          ------\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default\\app.py                    443\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default\\data\\sample.json          101\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default\\src\\formatting.py         137\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default\\src\\report.py             220\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default\\src\\__init__.py             1\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default\\tests\\test_existing.py    381\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default\\tests\\__init__.py           1\r\n\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_zjWrv9mh2VXQZBx7b294o9kS",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-ChildItem -Path .. -Force | Select-Object Name,Mode; Get-ChildItem -Path ..\\.. -Force | Select-Object Name,Mode",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 350,
+        "h2_sections": 0,
+        "sha256": "40a36efd685b682978a6e95c60ab91fea4d0504dddeae8567461e9bb6f5d7d16",
+        "preview": "Exit code: 0\nWall time: 3.1 seconds\nOutput:\n\r\nName             Mode  \r\n----             ----  \r\ndefault          d-----\r\nE02              d-----\r\nE12              d-----\r\nE16              d-----\r\nE19              d-----\r\nE23              d-----\r\nE26              d-----\r\nE32              d-----\r\nE35              d-----\r\nsetup-state.json -a----\r\n\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_sHRBwYOjUBMctMpiM2aFaVjs",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw src\\formatting.py; Get-Content -Raw tests\\test_existing.py; Get-Content -Raw data\\sample.json",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 669,
+        "h2_sections": 0,
+        "sha256": "c2de40ea8beb5be4169236e0db32ee5e87f1237b6c87d004a2b519b3e7c915b0",
+        "preview": "Exit code: 0\nWall time: 5.7 seconds\nOutput:\ndef format_value(value):\n    return str(value)\n\n\ndef format_row(record):\n    return f\"{record['name']}: {format_value(record['value'])}\"\n\r\nimport unittest\n\nfrom src.report import render_report\n\n\nclass ExistingBehaviorTests(unittest.TestCase):\n    def test_zero_rows_are_hidden_by_default(self):\n        records = [\n            {\"name\": \"alpha\", \"value\": 3},\n            {\"name\": \"beta\", \"value\": 0},\n        ]\n        self.assertEqual(render_report(records), \"alpha: 3\")\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n\r\n[\n  {\"name\": \"alpha\", \"value\": 3},\n  {\"name\": \"beta\", \"value\": 0},\n  {\"name\": \"gamma\", \"value\": 2}\n]\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_Ix6o5RKClvSysrRPRPzlRpI5",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python -m unittest -v",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 272,
+        "h2_sections": 0,
+        "sha256": "7065238bd4adf72a08b92a2f047ef1a642da388df9bcdc83f1dc781a6635cce6",
+        "preview": "Exit code: 0\nWall time: 9.7 seconds\nOutput:\ntest_zero_rows_are_hidden_by_default (tests.test_existing.ExistingBehaviorTests.test_zero_rows_are_hidden_by_default) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 1 test in 0.001s\r\n\r\nOK\r\n"
+      }
+    },
+    {
+      "call_id": "call_y8YOUpJ4Uxu6j1ORUrga2VOf",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python app.py data\\sample.json; python app.py data\\sample.json --include-zero",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 130,
+        "h2_sections": 0,
+        "sha256": "84593b999daadba594f2b9b8ed0bec1fb164f95a9824cc0f4c5ff863d8411960",
+        "preview": "Exit code: 124\nWall time: 10.4 seconds\nOutput:\ncommand timed out after 10421 milliseconds\nalpha: 3\r\ngamma: 2\r\nalpha: 3\r\ngamma: 2\r\n"
+      }
+    },
+    {
+      "call_id": "call_G2N0zcNA8afYV7HOJGLKxoiT",
+      "name": "apply_patch",
+      "arguments": "*** Begin Patch\n*** Update File: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default\\src\\report.py\n@@\n def render_report(records, include_zero=False):\n-    visible = [record for record in records if record[\"value\"] != 0]\n-    return \"\\n\".join(format_row(record) for record in visible)\n+    visible = [\n+        record for record in records if include_zero or record[\"value\"] != 0\n+    ]\n+    return \"\\n\".join(\n+        f\"{record['name']}: ZERO\"\n+        if include_zero and record[\"value\"] == 0\n+        else format_row(record)\n+        for record in visible\n+    )\n*** Update File: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default\\tests\\test_existing.py\n@@\n class ExistingBehaviorTests(unittest.TestCase):\n     def test_zero_rows_are_hidden_by_default(self):\n         records = [\n             {\"name\": \"alpha\", \"value\": 3},\n             {\"name\": \"beta\", \"value\": 0},\n         ]\n         self.assertEqual(render_report(records), \"alpha: 3\")\n \n+    def test_include_zero_keeps_zero_rows_and_labels_them(self):\n+        records = [\n+            {\"name\": \"alpha\", \"value\": 3},\n+            {\"name\": \"beta\", \"value\": 0},\n+        ]\n+        self.assertEqual(\n+            render_report(records, include_zero=True),\n+            \"alpha: 3\\nbeta: ZERO\",\n+        )\n+\n \n if __name__ == \"__main__\":\n     unittest.main()\n*** End Patch\n",
+      "output": {
+        "chars": 271,
+        "h2_sections": 0,
+        "sha256": "53b60233d4e8fed33514f3fc09f5d03cc6b9506ff277d3b33304ed27469f77b8",
+        "preview": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nM D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default\\src\\report.py\nM D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default\\tests\\test_existing.py\n"
+      }
+    },
+    {
+      "call_id": "call_rXnDolDrnJzP1NVZWVjCtdMY",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python -m unittest -v tests.test_existing",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 426,
+        "h2_sections": 0,
+        "sha256": "05c95f2618cf2bdb5db5d06d414af69f5fda1d10f5523f389073e8b4321faca4",
+        "preview": "Exit code: 0\nWall time: 10.2 seconds\nOutput:\ntest_include_zero_keeps_zero_rows_and_labels_them (tests.test_existing.ExistingBehaviorTests.test_include_zero_keeps_zero_rows_and_labels_them) ... ok\r\ntest_zero_rows_are_hidden_by_default (tests.test_existing.ExistingBehaviorTests.test_zero_rows_are_hidden_by_default) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 2 tests in 0.001s\r\n\r\nOK\r\n"
+      }
+    },
+    {
+      "call_id": "call_3YZDMCaeb6LpOAQIre6Xp2XP",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python app.py data\\sample.json",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 65,
+        "h2_sections": 0,
+        "sha256": "e37109d49ae24ea038b9b1a92fb549760a02117f3e241a3670f0294ea18f80fc",
+        "preview": "Exit code: 0\nWall time: 10.2 seconds\nOutput:\nalpha: 3\r\ngamma: 2\r\n"
+      }
+    },
+    {
+      "call_id": "call_nxUbKvZYdfpz2Q2g8HYFhdaj",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python app.py data\\sample.json --include-zero",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+        "timeout_ms": 30000
+      },
+      "output": {
+        "chars": 77,
+        "h2_sections": 0,
+        "sha256": "8a1741a8f671814cbfbbc53a803ab0e5d38914ebf75306955b565843f72d5141",
+        "preview": "Exit code: 0\nWall time: 10.2 seconds\nOutput:\nalpha: 3\r\nbeta: ZERO\r\ngamma: 2\r\n"
+      }
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 123651,
+    "cached_input_tokens": 108032,
+    "output_tokens": 2002,
+    "reasoning_output_tokens": 245,
+    "total_tokens": 125653
+  },
+  "context_trace": {
+    "project_skill_listed": true,
+    "project_skill_description_chars": 620,
+    "skill_body_read_calls": [
+      "call_AEeWhM5WXUPAkBBlB9mQbU9E"
+    ],
+    "skill_body_loaded_chars": 1492,
+    "skill_tool_output_chars": 2210,
+    "reference_read_calls": [
+      "call_LsKlXnuNRsu75qLPFpxUzgMy"
+    ],
+    "reference_list_calls": [],
+    "reference_section_read_calls": [
+      "call_LsKlXnuNRsu75qLPFpxUzgMy"
+    ],
+    "reference_failed_calls": [],
+    "reference_files": [
+      "verification.md"
+    ],
+    "reference_loaded_chars": 2753,
+    "reference_tool_output_chars": 2816,
+    "reference_h2_sections": 2,
+    "governance_read_calls": []
+  },
+  "fixture": {
+    "root": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-03\\workspaces\\E16\\default",
+    "before_inventory": {
+      "app.py": {
+        "sha256": "6ebb528aab070d0393878a5d1f196d295beaa83d851f228db7e4fb324e3b6b9c",
+        "bytes": 443
+      },
+      "data/sample.json": {
+        "sha256": "80e761bd8ed2a5c565456b4624a36f2b73b6fb8992a9ac2d05ceacfc3c979aec",
+        "bytes": 101
+      },
+      "src/__init__.py": {
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "bytes": 1
+      },
+      "src/formatting.py": {
+        "sha256": "b177690f701ade6678590eefaa5a3a3805fb9ef09d264361515d092a4548c98d",
+        "bytes": 137
+      },
+      "src/report.py": {
+        "sha256": "6554526ee5277dd3d335db2381296939fb70ddc88c4017ea271e6462db0f7482",
+        "bytes": 220
+      },
+      "tests/__init__.py": {
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "bytes": 1
+      },
+      "tests/test_existing.py": {
+        "sha256": "fc38f60fd0eb49bb416641dbbd41399428520d0852d353168fa5432632c7ef08",
+        "bytes": 381
+      }
+    },
+    "after_inventory": {
+      "app.py": {
+        "bytes": 443,
+        "sha256": "6ebb528aab070d0393878a5d1f196d295beaa83d851f228db7e4fb324e3b6b9c"
+      },
+      "data/sample.json": {
+        "bytes": 101,
+        "sha256": "80e761bd8ed2a5c565456b4624a36f2b73b6fb8992a9ac2d05ceacfc3c979aec"
+      },
+      "src/__init__.py": {
+        "bytes": 1,
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      },
+      "src/formatting.py": {
+        "bytes": 137,
+        "sha256": "b177690f701ade6678590eefaa5a3a3805fb9ef09d264361515d092a4548c98d"
+      },
+      "src/report.py": {
+        "bytes": 360,
+        "sha256": "28079718cd52a7d9be7b51592550e004734c4a52a348eacadb066b2f878aa26c"
+      },
+      "tests/__init__.py": {
+        "bytes": 1,
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      },
+      "tests/test_existing.py": {
+        "bytes": 689,
+        "sha256": "a7c91a33a476494f8d3471cf3efd44c85ed3f0d10c4e33504e8f81feb825cac8"
+      }
+    },
+    "changed_files": [
+      {
+        "path": "src/report.py",
+        "before": {
+          "sha256": "6554526ee5277dd3d335db2381296939fb70ddc88c4017ea271e6462db0f7482",
+          "bytes": 220
+        },
+        "after": {
+          "bytes": 360,
+          "sha256": "28079718cd52a7d9be7b51592550e004734c4a52a348eacadb066b2f878aa26c"
+        }
+      },
+      {
+        "path": "tests/test_existing.py",
+        "before": {
+          "sha256": "fc38f60fd0eb49bb416641dbbd41399428520d0852d353168fa5432632c7ef08",
+          "bytes": 381
+        },
+        "after": {
+          "bytes": 689,
+          "sha256": "a7c91a33a476494f8d3471cf3efd44c85ed3f0d10c4e33504e8f81feb825cac8"
+        }
+      }
+    ]
+  },
+  "variant_id": "default",
+  "permissions": "workspace-write",
+  "expected": {
+    "changed_files": [
+      "src/formatting.py",
+      "src/report.py",
+      "tests/test_existing.py"
+    ],
+    "forbidden_changes": [
+      "app.py",
+      "docs/**"
+    ],
+    "required_evidence": [
+      "EV_CHANGE_DIFF",
+      "EV_TEST_RESULTS",
+      "EV_CONTRACT",
+      "EV_ENTRYPOINT_RUN",
+      "EV_PATH_FACTS"
+    ],
+    "forbidden_actions": [
+      "create a formal implementation contract",
+      "create full project governance documents",
+      "change the public CLI or dependency direction"
+    ],
+    "assertion_subjects": [
+      "formal_contract.created",
+      "path_constraint.line_count",
+      "result_assertions.all_pass",
+      "scores.implementation_integrity"
+    ]
+  }
+}
