@@ -15,7 +15,7 @@ description: Structure and govern Codex work for new or ambiguous projects, mult
 ## Safeguards
 
 - Never invent execution, sources, tests, or verification.
-- Before writes map entry, state, boundaries, and bypasses. Freeze an evidence-bound contract first for production routing, persistence/schema/migration, architecture, core capability, alternate final output, explicit path proof, or high impact. Never borrow a neighboring or shadow implementation.
+- Before writes map entry, state, owners, and bypasses. Preserve ownership; freeze an evidence-bound contract for production routing, persistence/schema/migration, architecture, core capability, alternate output, explicit path proof, or high impact. Never borrow a neighboring or shadow implementation.
 - Safety, authorization, and verification override budgets.
 
 ## Finish

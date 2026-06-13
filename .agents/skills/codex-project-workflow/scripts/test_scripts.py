@@ -72,6 +72,20 @@ class ScriptTests(unittest.TestCase):
             "deliverable through an existing product or application",
             (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8"),
         )
+        self.assertIn(
+            "Preserve ownership",
+            (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8"),
+        )
+        governance = (SKILL_DIR / "references" / "governance.md").read_text(
+            encoding="utf-8"
+        )
+        for field in (
+            "added_codepoints",
+            "added_sections",
+            "reason",
+            "unknown_resolved",
+        ):
+            self.assertIn(field, governance)
         for path in (SKILL_DIR / "references").glob("*.md"):
             self.assertEqual(1, measure_context.reference_metrics(path)["h1_count"])
 
@@ -362,6 +376,27 @@ class ScriptTests(unittest.TestCase):
             validate_full_fixtures.valid_scripted_reply(
                 {"reply": "Missing trigger."}
             )
+        )
+
+    def test_full_migration_fixture_expects_prewrite_contract(self):
+        case = json.loads(
+            (
+                SKILL_DIR
+                / "evals"
+                / "full"
+                / "cases"
+                / "E32"
+                / "case.json"
+            ).read_text(encoding="utf-8")
+        )
+        variant = next(
+            item
+            for item in case["variants"]
+            if item["id"] == "full_high_risk_migration"
+        )
+        self.assertIn(
+            "docs/IMPLEMENTATION_CONTRACT.md",
+            variant["expected"]["changed_files"],
         )
 
     def test_full_eval_variant_selection(self):

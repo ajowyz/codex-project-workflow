@@ -1,0 +1,790 @@
+{
+  "format_version": "1.0",
+  "run_id": "CALIBRATION-20260613-02",
+  "source_manifest": "D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\CALIBRATION-20260613-02\\manifest.json",
+  "source_setup_state": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\setup-state.json",
+  "results": [
+    {
+      "case_id": "E02",
+      "variant_id": "low_risk_listing",
+      "thread_id": "019ebea8-503c-70a2-a5e6-36eac9afe271",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 15067,
+      "time_to_first_token_ms": 6741,
+      "final_response_chars": 51,
+      "total_tokens": 26872,
+      "tool_call_count": 1,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "variants.low_risk_listing.workflow"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "skill_tool_output_chars": 0,
+        "reference_read_calls": [],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [],
+        "reference_failed_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_tool_output_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "3ce4e430feb6e6d2ba8eabbecb48daa2d0e9dc4a20a01cea8eff0f0e1629498e"
+    },
+    {
+      "case_id": "E02",
+      "variant_id": "download",
+      "thread_id": "019ebea8-7963-7001-af0e-cb5346b78556",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 34150,
+      "time_to_first_token_ms": 12214,
+      "final_response_chars": 332,
+      "total_tokens": 57395,
+      "tool_call_count": 4,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "variants.boundary.minimum_gates_applied",
+        "variants.download.checks"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_TZ93HmRq5Rxz2t8lq4KsT0Sx"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2206,
+        "reference_read_calls": [
+          "call_G0oxrNfpG8TGCfzotK7VUeDO"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_G0oxrNfpG8TGCfzotK7VUeDO"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md"
+        ],
+        "reference_loaded_chars": 1426,
+        "reference_tool_output_chars": 1486,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "7022aa17e2e16867ed8e44b7cef58a6295cd17afb75878ef80c41428492a0a07"
+    },
+    {
+      "case_id": "E12",
+      "variant_id": "state_matrix",
+      "thread_id": "019ebea8-abbc-7441-a3a9-6837cc005d15",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 122656,
+      "time_to_first_token_ms": 7421,
+      "final_response_chars": 1381,
+      "total_tokens": 193531,
+      "tool_call_count": 11,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "load_order.first_project_document",
+        "initial_adr_projection.fields",
+        "initial_context.adr_reason_or_body_count",
+        "replacement_variants.expected_results_match",
+        "key_fields.accuracy"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_OxiM1gNVb6mxdYppLfpXqEVw"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2206,
+        "reference_read_calls": [
+          "call_ON4s6fyey4uNtN3Rw3SHQghl"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_ON4s6fyey4uNtN3Rw3SHQghl"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "verification.md"
+        ],
+        "reference_loaded_chars": 2753,
+        "reference_tool_output_chars": 2816,
+        "reference_h2_sections": 2,
+        "governance_read_calls": [
+          "call_2I4Tg4ViTPg7gyXHhGDCCutD",
+          "call_ufVDM8JRscyTeUpjmOw3u2YE",
+          "call_g8Wq8hyJOE9PjDv4ze6ObzwJ",
+          "call_O4PByUa7lFih9Da4tStVeDcs"
+        ]
+      },
+      "rollout_sha256": "5bdc2d6d268632b7ce61ba443d13dad5166b45a316a71436b79b153b2967d6d8"
+    },
+    {
+      "case_id": "E16",
+      "variant_id": "default",
+      "thread_id": "019ebea8-dfdc-7c10-856e-038d7e925cc3",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 73743,
+      "time_to_first_token_ms": 6875,
+      "final_response_chars": 566,
+      "total_tokens": 112818,
+      "tool_call_count": 13,
+      "changed_files": [
+        "src/report.py",
+        "tests/test_existing.py"
+      ],
+      "expected_changed_files": [
+        "src/formatting.py",
+        "src/report.py",
+        "tests/test_existing.py"
+      ],
+      "expected_assertion_subjects": [
+        "formal_contract.created",
+        "path_constraint.line_count",
+        "result_assertions.all_pass",
+        "scores.implementation_integrity"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_U8m2JO0gHQgIVyLaRQhU88Y9"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2206,
+        "reference_read_calls": [
+          "call_6b8D2Bqr5A3dU4PiiyAbUU2a",
+          "call_cEFEFipdMwHKrI9gIC7IAZxj"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_6b8D2Bqr5A3dU4PiiyAbUU2a",
+          "call_cEFEFipdMwHKrI9gIC7IAZxj"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4179,
+        "reference_tool_output_chars": 4302,
+        "reference_h2_sections": 4,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "219da1475a8b02bee4a3201977e7e562e0e1b4a03d3e1b821284b7eada5ac8e6"
+    },
+    {
+      "case_id": "E19",
+      "variant_id": "two_phase_network_scope",
+      "thread_id": "019ebea9-3aa7-7d02-85ac-711d9598c2b5",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 6568,
+      "time_to_first_token_ms": 4730,
+      "final_response_chars": 483,
+      "total_tokens": 89305,
+      "tool_call_count": 5,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "phase1.network_parameters.restricted_field_count",
+        "phase1.authorization.scope_recorded",
+        "phase2.reused_phase1_authorization"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_qODAQEFtvGQ9zwyHS9qefFo2"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2206,
+        "reference_read_calls": [
+          "call_cwxNX1fM9ueqY9e2Uoumtvgf"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_cwxNX1fM9ueqY9e2Uoumtvgf"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "research.md"
+        ],
+        "reference_loaded_chars": 1203,
+        "reference_tool_output_chars": 1263,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "df00a9ffd680eb852af20ee7b5624bc170479e7ae5977ca3aed806d195af3740"
+    },
+    {
+      "case_id": "E23",
+      "variant_id": "valid_approval_package",
+      "thread_id": "019ebea9-6862-7fd2-91aa-b9f3a966496f",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 104693,
+      "time_to_first_token_ms": 6675,
+      "final_response_chars": 850,
+      "total_tokens": 101777,
+      "tool_call_count": 13,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "approval.bound_fields"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_HhxqzF5GKs1xFghOaXGI5ESq"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2206,
+        "reference_read_calls": [
+          "call_u71noODhU4C3WK1eOzGVlUnd",
+          "call_qmhooIpNKlymBUgDjXB8SvZY"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_u71noODhU4C3WK1eOzGVlUnd",
+          "call_qmhooIpNKlymBUgDjXB8SvZY"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4179,
+        "reference_tool_output_chars": 4302,
+        "reference_h2_sections": 4,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "05469c1ad14ee242b76a69d98670d759c4d4e63b78e3bd57a362b0558f2f3a4a"
+    },
+    {
+      "case_id": "E23",
+      "variant_id": "candidate_mutated_after_approval",
+      "thread_id": "019ebea9-9ff7-7372-9318-4767899df90a",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 82497,
+      "time_to_first_token_ms": 7010,
+      "final_response_chars": 754,
+      "total_tokens": 98570,
+      "tool_call_count": 15,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "baseline_or_candidate_change.invalidates_old_approval"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_a3f4hCYh4f8NzcLQZFs4RrZz"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2206,
+        "reference_read_calls": [
+          "call_UBpU6fUXDzr10hqRXjxG0wFc",
+          "call_syYOQh41bqxyc1uvnD7BO83g"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_UBpU6fUXDzr10hqRXjxG0wFc",
+          "call_syYOQh41bqxyc1uvnD7BO83g"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4179,
+        "reference_tool_output_chars": 4302,
+        "reference_h2_sections": 4,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "52be08b9fb15c9fdd77097cc15376c99929d1218c5dc1cea7e92c39670d36170"
+    },
+    {
+      "case_id": "E23",
+      "variant_id": "regressed_candidate",
+      "thread_id": "019ebea9-d720-7a62-b35c-1572f29fdfe9",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 126363,
+      "time_to_first_token_ms": 7246,
+      "final_response_chars": 1073,
+      "total_tokens": 136437,
+      "tool_call_count": 18,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "rejected_or_regressed_candidate.active"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_ibAEF2GlaUVaYc1T4ZBixDOx"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2206,
+        "reference_read_calls": [
+          "call_Hzan3IbwfG2Gp6FOo3PsIqQa"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_Hzan3IbwfG2Gp6FOo3PsIqQa"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "verification.md"
+        ],
+        "reference_loaded_chars": 2753,
+        "reference_tool_output_chars": 2816,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "66d7bb19752693a1a8dd84395112ab17ef53ad1167fe134301e7d933ca6ac764"
+    },
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019ebeaa-3d79-7111-89a4-8c9a310a00d9",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 87676,
+      "time_to_first_token_ms": 8553,
+      "final_response_chars": 250,
+      "total_tokens": 127151,
+      "tool_call_count": 12,
+      "changed_files": [
+        "docs/IMPLEMENTATION_CONTRACT.md",
+        "output/model.json",
+        "runtime/state.json",
+        "runtime/trace.log"
+      ],
+      "expected_changed_files": [
+        "docs/IMPLEMENTATION_CONTRACT.md",
+        "output/model.json",
+        "runtime/state.json",
+        "runtime/trace.log"
+      ],
+      "expected_assertion_subjects": [
+        "formal_contract.frozen_before_first_write",
+        "formal_product_entry.used",
+        "auxiliary_script.generated_final_delivery",
+        "result_assertions.all_pass",
+        "scores.implementation_integrity"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_JLkzUsal98wyrSPoOnEqLZlr"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 13173,
+        "reference_read_calls": [
+          "call_6vTBusomOfuofpeXQPFC9Dhp",
+          "call_slviiAmvnvX1jQJlA3CFlUZM"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_6vTBusomOfuofpeXQPFC9Dhp",
+          "call_slviiAmvnvX1jQJlA3CFlUZM"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4179,
+        "reference_tool_output_chars": 4302,
+        "reference_h2_sections": 4,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "835bf5a9094a679194f97e50f62ea9f7e08fe85fd75fa19a58fffe62cb14c231"
+    },
+    {
+      "case_id": "E26",
+      "variant_id": "entry_bypass",
+      "thread_id": "019ebeaa-73f6-77f1-beb6-67dbda37846d",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 54718,
+      "time_to_first_token_ms": 8875,
+      "final_response_chars": 291,
+      "total_tokens": 76522,
+      "tool_call_count": 10,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "variants.entry_bypass.hard_failure"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_T0KoLKTnNPnLNPV3NpKzvJCm"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2206,
+        "reference_read_calls": [
+          "call_OP7vk8Aog2ayGUYYEtRUd4gj",
+          "call_1Ft13hc1ir4H5jE1YhvrQbsV"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_OP7vk8Aog2ayGUYYEtRUd4gj",
+          "call_1Ft13hc1ir4H5jE1YhvrQbsV"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4179,
+        "reference_tool_output_chars": 4300,
+        "reference_h2_sections": 4,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "d7e33878d19ace37812a7987902806fe5de9f3ae02157a14eadecb196d9ec7f7"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "negative_quick",
+      "thread_id": "019ebeaa-b142-74b3-aa0e-e0b5f78421f0",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 87841,
+      "time_to_first_token_ms": 11169,
+      "final_response_chars": 179,
+      "total_tokens": 55442,
+      "tool_call_count": 3,
+      "changed_files": [
+        "note.txt"
+      ],
+      "expected_changed_files": [
+        "note.txt"
+      ],
+      "expected_assertion_subjects": [
+        "context_trace.verifiable",
+        "all_fixtures.skill_description_codepoints",
+        "negative_quick.body_and_reference_codepoints",
+        "governance_corpus.bulk_loaded"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "skill_tool_output_chars": 0,
+        "reference_read_calls": [],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [],
+        "reference_failed_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_tool_output_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "3647aae76a71e3ed355d9fa26a747a7d762bac0b19cd0e86a2363e24abf37cbf"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "standard_cross_file",
+      "thread_id": "019ebeaa-f448-7aa3-9e52-e3463b94c754",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 85403,
+      "time_to_first_token_ms": 6743,
+      "final_response_chars": 613,
+      "total_tokens": 110196,
+      "tool_call_count": 15,
+      "changed_files": [
+        "src/labels.py",
+        "tests/test_labels.py"
+      ],
+      "expected_changed_files": [
+        "src/labels.py",
+        "tests/test_labels.py"
+      ],
+      "expected_assertion_subjects": [
+        "context_trace.verifiable",
+        "all_fixtures.skill_description_codepoints",
+        "explicit_quick_standard_full.core_body_codepoints",
+        "standard.reference_codepoints",
+        "standard.reference_h2_sections",
+        "governance_corpus.bulk_loaded"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_vD9yqLS3aSJTXc2ZGnt9zI3j"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2206,
+        "reference_read_calls": [
+          "call_aguqh8yiHDFRw00reWWgBKTu"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_aguqh8yiHDFRw00reWWgBKTu"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "verification.md"
+        ],
+        "reference_loaded_chars": 2753,
+        "reference_tool_output_chars": 2814,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "34e5a062e0ca12d00835d5c4ddf5b3722ef98260ae91ee48bda42cf8bf62c2a9"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "full_high_risk_migration",
+      "thread_id": "019ebeab-6625-7110-811b-70572475ec71",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 53884,
+      "time_to_first_token_ms": 5914,
+      "final_response_chars": 633,
+      "total_tokens": 273626,
+      "tool_call_count": 29,
+      "changed_files": [
+        "data/accounts.backup.json",
+        "data/accounts.json",
+        "docs/IMPLEMENTATION_CONTRACT.md",
+        "migration/result.json"
+      ],
+      "expected_changed_files": [
+        "data/accounts.json",
+        "data/accounts.backup.json",
+        "migration/result.json"
+      ],
+      "expected_assertion_subjects": [
+        "context_trace.verifiable",
+        "all_fixtures.skill_description_codepoints",
+        "explicit_quick_standard_full.core_body_codepoints",
+        "full.reference_codepoints",
+        "full.reference_h2_sections",
+        "governance_corpus.bulk_loaded"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_inNEA1RD0gwUmUuBzwBU6y84"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2206,
+        "reference_read_calls": [
+          "call_LZWFDAGVAtwvzJGGhVfH5KkE",
+          "call_JF77sEcjdVnmevSNix8QA1mI"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_LZWFDAGVAtwvzJGGhVfH5KkE",
+          "call_JF77sEcjdVnmevSNix8QA1mI"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4179,
+        "reference_tool_output_chars": 4302,
+        "reference_h2_sections": 4,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "d81be88e84f3959a53313da5088f1ca8c486b6988a19c7d7ae74052ba41c2a0b"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019ebeab-a3ae-73a1-aba1-393defb015cc",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 79246,
+      "time_to_first_token_ms": 11946,
+      "final_response_chars": 735,
+      "total_tokens": 106500,
+      "tool_call_count": 9,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "context_trace.verifiable",
+        "all_fixtures.skill_description_codepoints",
+        "hard_trigger_overage.fields",
+        "governance_corpus.bulk_loaded"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_JL0pus82rk3b78Ake0ZHze7B"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2206,
+        "reference_read_calls": [
+          "call_mv39H0WkO3s2Zbigu6pharzj",
+          "call_IAOzu9o1S0XAMijVIG0e3uSZ"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_mv39H0WkO3s2Zbigu6pharzj",
+          "call_IAOzu9o1S0XAMijVIG0e3uSZ"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4179,
+        "reference_tool_output_chars": 4302,
+        "reference_h2_sections": 4,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "7b68201fdc188460710bb1c2b9ec70b010de999746956659c4d34a6d9890d313"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "nested_h3_counting",
+      "thread_id": "019ebeab-dbe5-7de0-b43d-2a20bd9550b1",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 41724,
+      "time_to_first_token_ms": 7209,
+      "final_response_chars": 315,
+      "total_tokens": 72331,
+      "tool_call_count": 4,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "context_trace.verifiable",
+        "all_fixtures.skill_description_codepoints",
+        "h2_with_three_h3.counted_sections",
+        "governance_corpus.bulk_loaded"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_YG2sGAdLawPVyDXrhiAcExYZ"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2206,
+        "reference_read_calls": [
+          "call_KEnfi5MDLwWYYfRCm5CWphkx"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_KEnfi5MDLwWYYfRCm5CWphkx"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "verification.md"
+        ],
+        "reference_loaded_chars": 2753,
+        "reference_tool_output_chars": 2816,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "f0906c89d72649fc8a731c001a48b6bc15484e3cff18e9958bea7f59c77582ae"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019ebeac-18e3-74a3-927c-b2b9f12de297",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 15417,
+      "time_to_first_token_ms": 2360,
+      "final_response_chars": 151,
+      "total_tokens": 258261,
+      "tool_call_count": 22,
+      "changed_files": [
+        "src/client.py"
+      ],
+      "expected_changed_files": [
+        "src/client.py"
+      ],
+      "expected_assertion_subjects": [
+        "hard_triggers.applied",
+        "hard_triggers.omitted_for_budget",
+        "budget_overage.fields",
+        "network.parameters.restricted_identifier_count",
+        "dependency.install_started_before_confirmation",
+        "production_entry.verified"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_A3TAO9tEd8xOg4YYt0g5FlFj"
+        ],
+        "skill_body_loaded_chars": 1488,
+        "skill_tool_output_chars": 2204,
+        "reference_read_calls": [
+          "call_vFfpG73GZ5I1HW8vhKGOPENW",
+          "call_nZbdWDqF7vlTxclIRpRML4LK",
+          "call_sm8vKhZl7G7VS8rBPtbcpoiE"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_vFfpG73GZ5I1HW8vhKGOPENW",
+          "call_nZbdWDqF7vlTxclIRpRML4LK",
+          "call_sm8vKhZl7G7VS8rBPtbcpoiE"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "research.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 5382,
+        "reference_tool_output_chars": 5565,
+        "reference_h2_sections": 6,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "ba1fc9f5071ff75e6d1a976bb710c155ed8e1cc665efac78b0440afd74195fe5"
+    }
+  ]
+}

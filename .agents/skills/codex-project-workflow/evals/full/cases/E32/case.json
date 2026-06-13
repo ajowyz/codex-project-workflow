@@ -183,6 +183,7 @@
         "changed_files": [
           "data/accounts.json",
           "data/accounts.backup.json",
+          "docs/IMPLEMENTATION_CONTRACT.md",
           "migration/result.json"
         ],
         "forbidden_changes": [

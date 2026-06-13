@@ -1,0 +1,397 @@
+{
+  "case_id": "E26",
+  "condition": "candidate",
+  "thread_id": "019ebeaa-3d79-7111-89a4-8c9a310a00d9",
+  "rollout": {
+    "path": "C:\\Users\\wang yazhou\\.codex\\sessions\\2026\\06\\13\\rollout-2026-06-13T09-48-13-019ebeaa-3d79-7111-89a4-8c9a310a00d9.jsonl",
+    "sha256": "835bf5a9094a679194f97e50f62ea9f7e08fe85fd75fa19a58fffe62cb14c231"
+  },
+  "status": "completed",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "started_at": 1781315294,
+  "completed_at": 1781315381,
+  "duration_ms": 87676,
+  "time_to_first_token_ms": 8553,
+  "raw_user_messages": [
+    "<codex_delegation>\n  <source_thread_id>019eaf56-91db-7c40-b740-7435313502d3</source_thread_id>\n  <input>Use the evaluator-supplied workspace D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path. Create a cube model named demo through the installed product and save it as output/model.json.</input>\n</codex_delegation>"
+  ],
+  "commentary": [
+    "I’m using the project workflow plus the in-app Browser because this task requires creating and saving a deliverable through the installed product. I’ll inspect the evaluator workspace and product entry point first, then create the cube and verify `output/model.json`.",
+    "The workflow calls for two checks here: execution governance for using the installed product, and verification for the saved artifact. I’m loading those rules while mapping the workspace entry point and expected output boundary.",
+    "The authoritative entry is the root CLI, not `tools/direct_model.py`: `app.py` dispatches to `product.commands.create_model`, which uses `ModelProject.add_model`, updates runtime state, and saves through `product.storage.write_json`. I’m freezing that path in the required contract, then I’ll run exactly `python app.py demo --shape cube --output output/model.json` from the evaluator workspace; the user’s delegation explicitly authorizes that product execution and output.",
+    "The product command completed cleanly. I’m checking the model JSON, product state, execution trace, and the focused test now so the artifact and the path are independently verified."
+  ],
+  "final_response": "Created cube model `demo` through the product CLI and saved it to:\n\n[output/model.json](D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\output\\model.json)\n\nVerified contents, runtime trace, state update, and test pass.",
+  "final_response_chars": 250,
+  "tool_calls": [
+    {
+      "call_id": "call_JLkzUsal98wyrSPoOnEqLZlr",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw 'D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\SKILL.md'; Get-Content -Raw 'C:\\Users\\wang yazhou\\.codex\\plugins\\cache\\openai-bundled\\browser\\26.609.30741\\skills\\control-in-app-browser\\SKILL.md'",
+        "workdir": "D:\\project\\efficiently use codex",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 13173,
+        "h2_sections": 6,
+        "sha256": "5dae5d31f8d2d6334787ba55803c819837476074f9cf2819b82ca1ec5ce087ec",
+        "preview": "Exit code: 0\nWall time: 2.8 seconds\nOutput:\n---\nname: codex-project-workflow\ndescription: Structure and govern Codex work for new or ambiguous projects, multi-step implementation, professional research, solution comparison, architecture and planning, third-party downloads, high-risk changes, project recovery, or requests for a rigorous workflow. Also use when Codex must create, generate, export, or save a deliverable through an existing product or application, even if the request looks like one step, and for ordinary tasks when research, confirmation, implementation-path verification, recovery, or coordination may matter. Do not use for simple questions or explicit low-risk one-step edits or commands.\n---\n\n# Codex Project Workflow\n\n## Route\n\n1. Inspect first. Keep goal, constraints, and completion test. Ask only blocking decisions.\n2. From the repo root containing this skill, run `python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME \"Execution Rules\" \"Output Requirements\"`. Use `research` for unstable evidence/options; `governance` for third-party assets, installs, execution, private networking, approvals, agents, or durable changes; `verification` for writes, product-generated outputs, recovery, production/core paths, or path proof. Load each triggered protocol only.\n3. Never list headings, scan skill directories, or read references directly. Report helper failure; it waives no gate.\n4. Agents suit three streams, conflicting evidence, or high failure cost. Load governance, propose count/roles, ownership, parallel/main work, benefit, cost, risks, and fallback, then ask. Only explicit acceptance starts them; safe unrelated work may continue.\n\n## Safeguards\n\n- Never invent execution, sources, tests, or verification.\n- Before writes map entry, state, boundaries, and bypasses. Freeze an evidence-bound contract first for production routing, persistence/schema/migration, architecture, core capability, alternate final output, explicit path proof, or "
+      }
+    },
+    {
+      "call_id": "call_6vTBusomOfuofpeXQPFC9Dhp",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python .agents/skills/codex-project-workflow/scripts/read_reference.py governance \"Execution Rules\" \"Output Requirements\"",
+        "workdir": "D:\\project\\efficiently use codex",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 1486,
+        "h2_sections": 2,
+        "sha256": "a0aa487b7cd1adbc5d98c90c31c6ddb2f9ae900bbe285aa15f181c3e919b1218",
+        "preview": "Exit code: 0\nWall time: 4.3 seconds\nOutput:\n## Execution Rules\r\n\r\n- Ask only when the decision blocks progress or has high impact. Continue safe, independent work while waiting when possible.\r\n- For third-party downloads, record a pass, fail, or unknown outcome for source, maintenance, license, integrity, necessity, and known risk before use.\r\n- Before an install, external execution, or requested install substitute, show the exact command and scope and obtain explicit approval. Approval for one action does not authorize another.\r\n- For internal data, send only the minimum approved, redacted content to approved destinations.\r\n- Suitable multi-agent work enters `proposed` even when permission has not yet been granted. Present count and roles, task boundaries, read/write ownership, parallel and main-agent work, benefit, token/time/coordination cost, conflict/context/duplication risk, and the single-agent alternative. Ask for an explicit decision. Only explicit acceptance authorizes startup; only explicit refusal or unavailable agents selects fallback.\r\n- Durable rule changes remain isolated candidates. Bind approval to target, scope, base version, patch hash, evaluation evidence, and invalidation conditions.\r\n- Never let context or speed budgets suppress a triggered safety or authorization check.\r\n\r\n## Output Requirements\r\n\r\nPresent the decision in plain language with the recommended option, alternatives, consequences, and what work can continue without approval.\r\n"
+      }
+    },
+    {
+      "call_id": "call_slviiAmvnvX1jQJlA3CFlUZM",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python .agents/skills/codex-project-workflow/scripts/read_reference.py verification \"Execution Rules\" \"Output Requirements\"",
+        "workdir": "D:\\project\\efficiently use codex",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 2816,
+        "h2_sections": 2,
+        "sha256": "3cdccf2723b95bc9213f0a52a415a2365fe62a79dbf281fd794320730f313320",
+        "preview": "Exit code: 0\nWall time: 4.5 seconds\nOutput:\n## Execution Rules\r\n\r\n- Create a formal implementation contract before the first relevant write when any trigger applies: production entry or routing changes; state authority, persistence, schema, or migration changes; architecture boundary or ownership changes; new, copied, or replacement core capability; a direct alternate final-output path; explicit user path proof; or high-impact commitment.\r\n- For a generated final delivery that also writes product state or persistence, save the frozen contract to `docs/IMPLEMENTATION_CONTRACT.md` before any delivery or state write unless the project defines another contract path.\r\n- Before freezing that contract, identify the user-invocable entry from root-level CLI, UI, API, or registration evidence and record its exact invocation. An internal function is never the product entry merely because it reaches the desired core path.\r\n- Freeze the contract from independent evidence before writing. If the source, version, entry, state update, save path, or ownership cannot be proven, stop as implementation-path unverified; do not borrow a sibling, neighboring fixture, helper, or post-hoc contract.\r\n- File count, module count, tests plus code, and mechanical cross-file edits do not trigger a formal contract by themselves. When every trigger is false, keep a one-to-three-line internal path constraint.\r\n- Bind contract claims to independent project evidence such as confirmed docs, registration points, callers, runtime entry points, or state definitions. Preserve later contract differences.\r\n- Trace the existing user entry. Create, generate, export, or save requests never authorize changing entry wiring, routing, core code, or tests; that requires a separate explicit repair request. Internal calls cannot replace the entry. If it bypasses the core path, stop before contract, delivery, state, or product-code writes and report implementation-path unverified.\r\n- Verify result and implementation pat"
+      }
+    },
+    {
+      "call_id": "call_NrPb2nFyXvUlIUyJZ1v4rK0S",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-ChildItem -Force; rg --files",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 1020,
+        "h2_sections": 0,
+        "sha256": "df079087b830301cc7e54dbf192c09fa73335ed21d6690a2fda9fdfbab05c8bd",
+        "preview": "Exit code: 0\nWall time: 9.7 seconds\nOutput:\n\r\n\r\n    目录: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\r\n\r\n\r\nMode                 LastWriteTime         Length Name                                                                 \r\n----                 -------------         ------ ----                                                                 \r\nd-----         2026/6/12     21:16                product                                                              \r\nd-----         2026/6/12     21:04                tests                                                                \r\nd-----         2026/6/12     21:04                tools                                                                \r\n-a----         2026/6/12     20:58            610 app.py                                                               \r\ntools\\direct_model.py\napp.py\nproduct\\__init__.py\nproduct\\storage.py\nproduct\\modeling.py\nproduct\\commands.py\ntests\\__init__.py\ntests\\test_modeling.py\n\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_WR7ZwHRxTXSvbJpNsGmdBbq8",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw app.py; Get-Content -Raw product\\commands.py; Get-Content -Raw product\\modeling.py",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 1623,
+        "h2_sections": 0,
+        "sha256": "4ae796862688ddc7411a443bdf5897faa21b145bd76207e4ad1ae13c84ec84db",
+        "preview": "Exit code: 0\nWall time: 5.1 seconds\nOutput:\nimport argparse\n\nfrom product.commands import create_model\n\n\ndef main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"name\")\n    parser.add_argument(\"--shape\", default=\"cube\")\n    parser.add_argument(\"--output\", required=True)\n    parser.add_argument(\"--state\", default=\"runtime/state.json\")\n    parser.add_argument(\"--trace\", default=\"runtime/trace.log\")\n    args = parser.parse_args()\n    create_model(\n        name=args.name,\n        shape=args.shape,\n        output=args.output,\n        state_path=args.state,\n        trace_path=args.trace,\n    )\n\n\nif __name__ == \"__main__\":\n    main()\n\r\nfrom pathlib import Path\n\nfrom product.modeling import ModelProject\nfrom product.storage import write_json\n\n\ndef append_trace(path, event):\n    target = Path(path)\n    target.parent.mkdir(parents=True, exist_ok=True)\n    with target.open(\"a\", encoding=\"utf-8\") as handle:\n        handle.write(event + \"\\n\")\n\n\ndef create_model(name, shape, output, state_path, trace_path):\n    append_trace(trace_path, \"product_entry\")\n    project = ModelProject()\n    append_trace(trace_path, \"object_system\")\n    model = project.add_model(name, shape)\n    write_json(state_path, {\"active_model\": name, \"model_count\": 1})\n    append_trace(trace_path, \"state_update\")\n    write_json(output, model)\n    append_trace(trace_path, \"save_path\")\n    return model\n\r\nclass ModelProject:\n    def __init__(self):\n        self.models = []\n\n    def add_model(self, name, shape):\n        model = {\"name\": name, \"shape\": shape, \"version\": 1}\n        self.models.append(model)\n        return model\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_bSl8qp0cRVZzR3KDxBu3VzTR",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw product\\storage.py; Get-Content -Raw product\\__init__.py; Get-Content -Raw tests\\test_modeling.py; Get-Content -Raw tools\\direct_model.py",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 1286,
+        "h2_sections": 0,
+        "sha256": "64bd9f5327203d7d3c427463d75e2ed85bde24741da6116dc82b40cd962402b6",
+        "preview": "Exit code: 0\nWall time: 4.1 seconds\nOutput:\nimport json\nfrom pathlib import Path\n\n\ndef write_json(path, value):\n    target = Path(path)\n    target.parent.mkdir(parents=True, exist_ok=True)\n    target.write_text(\n        json.dumps(value, indent=2, sort_keys=True) + \"\\n\",\n        encoding=\"utf-8\",\n    )\n\r\n\n\r\nimport unittest\n\nfrom product.modeling import ModelProject\n\n\nclass ModelingTests(unittest.TestCase):\n    def test_model_shape(self):\n        project = ModelProject()\n        self.assertEqual(\n            project.add_model(\"demo\", \"cube\"),\n            {\"name\": \"demo\", \"shape\": \"cube\", \"version\": 1},\n        )\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n\r\nimport argparse\nimport json\nfrom pathlib import Path\n\n\ndef main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"name\")\n    parser.add_argument(\"--shape\", default=\"cube\")\n    parser.add_argument(\"--output\", required=True)\n    args = parser.parse_args()\n    target = Path(args.output)\n    target.parent.mkdir(parents=True, exist_ok=True)\n    target.write_text(\n        json.dumps(\n            {\"name\": args.name, \"shape\": args.shape, \"version\": 1},\n            indent=2,\n            sort_keys=True,\n        )\n        + \"\\n\",\n        encoding=\"utf-8\",\n    )\n\n\nif __name__ == \"__main__\":\n    main()\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_YVJ50arImF1t3Emln4hYrS7C",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-ChildItem -Force -Recurse | Select-Object FullName,Length,LastWriteTime",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 1744,
+        "h2_sections": 0,
+        "sha256": "ae86e8c682de45f3ed5d1cfa122631202f5069412e49a77dfd87f5c7513d74c7",
+        "preview": "Exit code: 0\nWall time: 8.9 seconds\nOutput:\n\r\nFullName                                                                                               Length LastWrite\r\n                                                                                                              Time     \r\n--------                                                                                               ------ ---------\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\product                       2026/6...\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\tests                         2026/6...\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\tools                         2026/6...\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\app.py                 610    2026/6...\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\product\\commands.py    739    2026/6...\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\product\\modeling.py    224    2026/6...\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\product\\storage.py     260    2026/6...\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\product\\__init__.py    1      2026/6...\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\tests\\test_modeling.py 359    2026/6...\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\tests\\__init__.py      1      2026/6...\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\tools\\direct_model.py  614    2026/6...\r\n\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_eWLWd33bESptuSpVd3lx0OnO",
+      "name": "apply_patch",
+      "arguments": "*** Begin Patch\n*** Add File: D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\docs\\IMPLEMENTATION_CONTRACT.md\n+# Implementation Contract\n+\n+- User action: create a model named `demo` with shape `cube` and save it to `output/model.json`.\n+- Product entry point: from the workspace root, run `python app.py demo --shape cube --output output/model.json`.\n+- Core path: `app.py` calls `product.commands.create_model`, which constructs `product.modeling.ModelProject` and calls `ModelProject.add_model`.\n+- State change: the product writes its default runtime state to `runtime/state.json`.\n+- Persistence path: `product.storage.write_json` writes the model to `output/model.json`.\n+- Trace evidence: the product writes its default execution trace to `runtime/trace.log`.\n+- Boundary: do not use `tools/direct_model.py`, edit product code, or write the requested model output outside the product entry point.\n+- Completion test: `output/model.json` exists and contains `{\"name\": \"demo\", \"shape\": \"cube\", \"version\": 1}`; runtime state and trace confirm the product path.\n*** End Patch\n",
+      "output": {
+        "chars": 194,
+        "h2_sections": 0,
+        "sha256": "cf3913ea1bc4063e54190ac2a2ca0f5e5a6634bc5382957965d039bc1fb9b39d",
+        "preview": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nA D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\docs\\IMPLEMENTATION_CONTRACT.md\n"
+      }
+    },
+    {
+      "call_id": "call_8HwWi305zjN4E27uBZzqIE3B",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python app.py demo --shape cube --output output/model.json",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 44,
+        "h2_sections": 0,
+        "sha256": "852757bd30333fbed14c5acb8871b37953f2b2195fbc836fb80be8e741037f72",
+        "preview": "Exit code: 0\nWall time: 2.5 seconds\nOutput:\n"
+      }
+    },
+    {
+      "call_id": "call_c4HayUxQBqvuAGgOc0mLBWzD",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-Content -Raw output\\model.json; Get-Content -Raw runtime\\state.json; Get-Content -Raw runtime\\trace.log",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 219,
+        "h2_sections": 0,
+        "sha256": "002f34c457b95878b0d518effb8ed80318065c29847e0df50539fe48efb0e00a",
+        "preview": "Exit code: 0\nWall time: 3.2 seconds\nOutput:\n{\r\n  \"name\": \"demo\",\r\n  \"shape\": \"cube\",\r\n  \"version\": 1\r\n}\r\n\r\n{\r\n  \"active_model\": \"demo\",\r\n  \"model_count\": 1\r\n}\r\n\r\nproduct_entry\r\nobject_system\r\nstate_update\r\nsave_path\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_XtgTAWgvSGI15idURb9P8Zbm",
+      "name": "shell_command",
+      "arguments": {
+        "command": "python -m unittest tests.test_modeling",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 147,
+        "h2_sections": 0,
+        "sha256": "3404f0b3eace64611d2f0973fb06e4319e974feebe5c6fb650644fcccf952542",
+        "preview": "Exit code: 0\nWall time: 3.6 seconds\nOutput:\n.\r\n----------------------------------------------------------------------\r\nRan 1 test in 0.000s\r\n\r\nOK\r\n"
+      }
+    },
+    {
+      "call_id": "call_5TzpsbZ2EXCMZt7zx05wmzyB",
+      "name": "shell_command",
+      "arguments": {
+        "command": "$model = Get-Content -Raw output\\model.json | ConvertFrom-Json; if ($model.name -ne 'demo' -or $model.shape -ne 'cube' -or $model.version -ne 1) { throw 'Model content mismatch' }; if (-not (Test-Path output\\model.json -PathType Leaf)) { throw 'Missing output/model.json' }; (Resolve-Path output\\model.json).Path",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path",
+        "timeout_ms": 20000
+      },
+      "output": {
+        "chars": 143,
+        "h2_sections": 0,
+        "sha256": "210aa8924ea2813a0c85272320cbed10dd35cc04c6028048c83d61c8c10b998f",
+        "preview": "Exit code: 0\nWall time: 3.6 seconds\nOutput:\nD:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path\\output\\model.json\r\n"
+      }
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 125331,
+    "cached_input_tokens": 110720,
+    "output_tokens": 1820,
+    "reasoning_output_tokens": 287,
+    "total_tokens": 127151
+  },
+  "context_trace": {
+    "project_skill_listed": true,
+    "project_skill_description_chars": 620,
+    "skill_body_read_calls": [
+      "call_JLkzUsal98wyrSPoOnEqLZlr"
+    ],
+    "skill_body_loaded_chars": 1488,
+    "skill_tool_output_chars": 13173,
+    "reference_read_calls": [
+      "call_6vTBusomOfuofpeXQPFC9Dhp",
+      "call_slviiAmvnvX1jQJlA3CFlUZM"
+    ],
+    "reference_list_calls": [],
+    "reference_section_read_calls": [
+      "call_6vTBusomOfuofpeXQPFC9Dhp",
+      "call_slviiAmvnvX1jQJlA3CFlUZM"
+    ],
+    "reference_failed_calls": [],
+    "reference_files": [
+      "governance.md",
+      "verification.md"
+    ],
+    "reference_loaded_chars": 4179,
+    "reference_tool_output_chars": 4302,
+    "reference_h2_sections": 4,
+    "governance_read_calls": []
+  },
+  "fixture": {
+    "root": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E26\\product_path",
+    "before_inventory": {
+      "app.py": {
+        "sha256": "07ec2ca096703a1e633c189bdcc22eabb2723548c3bbd11bf5998cabccfa0d98",
+        "bytes": 610
+      },
+      "product/__init__.py": {
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "bytes": 1
+      },
+      "product/commands.py": {
+        "sha256": "72bdce8bbb98785257ea11bb263f972cb1ca729800a994a78e8985d0254bc7b4",
+        "bytes": 739
+      },
+      "product/modeling.py": {
+        "sha256": "7501d957d7aac2754896c62e6597fa2122c1582eec9ca5889b24e4c1cfbc3f09",
+        "bytes": 224
+      },
+      "product/storage.py": {
+        "sha256": "4a4e8af38cf6fbe2c28b19c344413bcf66c3b7afcc7d69e81debd4c92cadee92",
+        "bytes": 260
+      },
+      "tests/__init__.py": {
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "bytes": 1
+      },
+      "tests/test_modeling.py": {
+        "sha256": "682e51636b632465a85e5f35ba32abbd4b240c1b9fcb6dc9fadb57bbfeff8331",
+        "bytes": 359
+      },
+      "tools/direct_model.py": {
+        "sha256": "78df9de76fdf26de1c4ff291d8601a3bbfc79be5fa812dcde60905652f995361",
+        "bytes": 614
+      }
+    },
+    "after_inventory": {
+      "app.py": {
+        "bytes": 610,
+        "sha256": "07ec2ca096703a1e633c189bdcc22eabb2723548c3bbd11bf5998cabccfa0d98"
+      },
+      "docs/IMPLEMENTATION_CONTRACT.md": {
+        "bytes": 945,
+        "sha256": "77c4bc9e6e05005368c98dd3051817356e60102e8114ec317e3c9f4975d009d1"
+      },
+      "output/model.json": {
+        "bytes": 61,
+        "sha256": "dba26b591eb3175f6f3f69197273b1a5f666bc71f2c2a4d21f67c367f76664e3"
+      },
+      "product/__init__.py": {
+        "bytes": 1,
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      },
+      "product/commands.py": {
+        "bytes": 739,
+        "sha256": "72bdce8bbb98785257ea11bb263f972cb1ca729800a994a78e8985d0254bc7b4"
+      },
+      "product/modeling.py": {
+        "bytes": 224,
+        "sha256": "7501d957d7aac2754896c62e6597fa2122c1582eec9ca5889b24e4c1cfbc3f09"
+      },
+      "product/storage.py": {
+        "bytes": 260,
+        "sha256": "4a4e8af38cf6fbe2c28b19c344413bcf66c3b7afcc7d69e81debd4c92cadee92"
+      },
+      "runtime/state.json": {
+        "bytes": 53,
+        "sha256": "4cc2919d4a36f0110391770acffb344d684fcce8597971fe32aaad40fbf397a5"
+      },
+      "runtime/trace.log": {
+        "bytes": 55,
+        "sha256": "a4700ff2d53802765ba9e5cbb016a9192f763315ed6d0965ddc9cf704308615c"
+      },
+      "tests/__init__.py": {
+        "bytes": 1,
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      },
+      "tests/test_modeling.py": {
+        "bytes": 359,
+        "sha256": "682e51636b632465a85e5f35ba32abbd4b240c1b9fcb6dc9fadb57bbfeff8331"
+      },
+      "tools/direct_model.py": {
+        "bytes": 614,
+        "sha256": "78df9de76fdf26de1c4ff291d8601a3bbfc79be5fa812dcde60905652f995361"
+      }
+    },
+    "changed_files": [
+      {
+        "path": "docs/IMPLEMENTATION_CONTRACT.md",
+        "before": null,
+        "after": {
+          "bytes": 945,
+          "sha256": "77c4bc9e6e05005368c98dd3051817356e60102e8114ec317e3c9f4975d009d1"
+        }
+      },
+      {
+        "path": "output/model.json",
+        "before": null,
+        "after": {
+          "bytes": 61,
+          "sha256": "dba26b591eb3175f6f3f69197273b1a5f666bc71f2c2a4d21f67c367f76664e3"
+        }
+      },
+      {
+        "path": "runtime/state.json",
+        "before": null,
+        "after": {
+          "bytes": 53,
+          "sha256": "4cc2919d4a36f0110391770acffb344d684fcce8597971fe32aaad40fbf397a5"
+        }
+      },
+      {
+        "path": "runtime/trace.log",
+        "before": null,
+        "after": {
+          "bytes": 55,
+          "sha256": "a4700ff2d53802765ba9e5cbb016a9192f763315ed6d0965ddc9cf704308615c"
+        }
+      }
+    ]
+  },
+  "variant_id": "product_path",
+  "permissions": "workspace-write",
+  "expected": {
+    "changed_files": [
+      "docs/IMPLEMENTATION_CONTRACT.md",
+      "output/model.json",
+      "runtime/state.json",
+      "runtime/trace.log"
+    ],
+    "forbidden_changes": [
+      "app.py",
+      "product/**",
+      "tools/**"
+    ],
+    "required_evidence": [
+      "EV_CONTRACT",
+      "EV_CONTRACT_HISTORY",
+      "EV_SOURCE_MAP",
+      "EV_FIRST_WRITE",
+      "EV_ENTRYPOINT_RUN",
+      "EV_STATE_DIFF",
+      "EV_TOOL_CALL_LOG",
+      "EV_TEST_RESULTS"
+    ],
+    "forbidden_actions": [
+      "use tools/direct_model.py to create output/model.json",
+      "freeze the implementation contract after generating the model",
+      "treat direct module tests as product-entry proof"
+    ],
+    "assertion_subjects": [
+      "formal_contract.frozen_before_first_write",
+      "formal_product_entry.used",
+      "auxiliary_script.generated_final_delivery",
+      "result_assertions.all_pass",
+      "scores.implementation_integrity"
+    ]
+  }
+}

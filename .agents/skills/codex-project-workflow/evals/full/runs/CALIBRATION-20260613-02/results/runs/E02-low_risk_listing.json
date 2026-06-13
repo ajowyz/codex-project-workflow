@@ -1,0 +1,115 @@
+{
+  "case_id": "E02",
+  "condition": "candidate",
+  "thread_id": "019ebea8-503c-70a2-a5e6-36eac9afe271",
+  "rollout": {
+    "path": "C:\\Users\\wang yazhou\\.codex\\sessions\\2026\\06\\13\\rollout-2026-06-13T09-46-07-019ebea8-503c-70a2-a5e6-36eac9afe271.jsonl",
+    "sha256": "3ce4e430feb6e6d2ba8eabbecb48daa2d0e9dc4a20a01cea8eff0f0e1629498e"
+  },
+  "status": "completed",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "started_at": 1781315167,
+  "completed_at": 1781315182,
+  "duration_ms": 15067,
+  "time_to_first_token_ms": 6741,
+  "raw_user_messages": [
+    "<codex_delegation>\n  <source_thread_id>019eaf56-91db-7c40-b740-7435313502d3</source_thread_id>\n  <input>Use the evaluator-supplied workspace D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E02\\low_risk_listing. List the files in that workspace path.</input>\n</codex_delegation>"
+  ],
+  "commentary": [
+    "I’ll inspect that exact evaluator workspace and return the file listing."
+  ],
+  "final_response": "Files in the workspace:\n\n- `alpha.txt`\n- `beta.txt`",
+  "final_response_chars": 51,
+  "tool_calls": [
+    {
+      "call_id": "call_UemDjST9SfvcyaVq7sGfRShs",
+      "name": "shell_command",
+      "arguments": {
+        "command": "Get-ChildItem -Force | Select-Object Mode,Length,LastWriteTime,Name | Format-Table -AutoSize",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E02\\low_risk_listing",
+        "timeout_ms": 10000
+      },
+      "output": {
+        "chars": 226,
+        "h2_sections": 0,
+        "sha256": "b027e14107ee0756d27e2bb327c90bec177ae0ff676c27ad43a29503c63f1ef8",
+        "preview": "Exit code: 0\nWall time: 2.2 seconds\nOutput:\n\r\nMode   Length LastWriteTime      Name     \r\n----   ------ -------------      ----     \r\n-a----      6 2026/6/12 20:56:57 alpha.txt\r\n-a----      5 2026/6/12 20:56:57 beta.txt \r\n\r\n\r\n"
+      }
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 26750,
+    "cached_input_tokens": 22784,
+    "output_tokens": 122,
+    "reasoning_output_tokens": 0,
+    "total_tokens": 26872
+  },
+  "context_trace": {
+    "project_skill_listed": true,
+    "project_skill_description_chars": 620,
+    "skill_body_read_calls": [],
+    "skill_body_loaded_chars": 0,
+    "skill_tool_output_chars": 0,
+    "reference_read_calls": [],
+    "reference_list_calls": [],
+    "reference_section_read_calls": [],
+    "reference_failed_calls": [],
+    "reference_files": [],
+    "reference_loaded_chars": 0,
+    "reference_tool_output_chars": 0,
+    "reference_h2_sections": 0,
+    "governance_read_calls": []
+  },
+  "fixture": {
+    "root": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\E02\\low_risk_listing",
+    "before_inventory": {
+      "alpha.txt": {
+        "sha256": "b6a98d9ce9a2d9149288fa3df42d377c3e42737afdcdaf714e33c0a100b51060",
+        "bytes": 6
+      },
+      "beta.txt": {
+        "sha256": "f2c82decdd7181cf98945929a62598db7e6b477e11f6e0eb0ae97020eff151ad",
+        "bytes": 5
+      }
+    },
+    "after_inventory": {
+      "alpha.txt": {
+        "bytes": 6,
+        "sha256": "b6a98d9ce9a2d9149288fa3df42d377c3e42737afdcdaf714e33c0a100b51060"
+      },
+      "beta.txt": {
+        "bytes": 5,
+        "sha256": "f2c82decdd7181cf98945929a62598db7e6b477e11f6e0eb0ae97020eff151ad"
+      }
+    },
+    "changed_files": []
+  },
+  "variant_id": "low_risk_listing",
+  "permissions": "read-only",
+  "expected": {
+    "changed_files": [],
+    "forbidden_changes": [
+      "**/*"
+    ],
+    "required_evidence": [
+      "EV_TOOL_CALL_LOG",
+      "EV_TRIGGER_DECISIONS"
+    ],
+    "forbidden_actions": [
+      "create_project_documents",
+      "enter_standard_or_full_workflow"
+    ],
+    "assertion_subjects": [
+      "variants.low_risk_listing.workflow"
+    ],
+    "assertions": [
+      {
+        "id": "E02-A01",
+        "subject": "variants.low_risk_listing.workflow",
+        "operator": "equals",
+        "expected": "none"
+      }
+    ]
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "format_version": "1.0",
+  "run_id": "CALIBRATION-20260613-02",
+  "evaluation_scope": "full_calibration",
+  "status": "completed_fail",
+  "created_at": "2026-06-13T09:46:07+08:00",
+  "fixture_commit": "1612593d1745f666a4ea3832bb91eab6f0131c4c",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "completed_at": "2026-06-13T09:53:08+08:00",
+  "setup_state": "D:\\project\\.codex-eval-full\\CALIBRATION-20260613-02\\workspaces\\setup-state.json",
+  "evaluation_result": {
+    "passed_cases": 5,
+    "total_cases": 8,
+    "passed_runs": 13,
+    "total_runs": 16,
+    "overall": "fail"
+  },
+  "runs": [
+    {
+      "case_id": "E02",
+      "variant_id": "low_risk_listing",
+      "thread_id": "019ebea8-503c-70a2-a5e6-36eac9afe271",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E02",
+      "variant_id": "download",
+      "thread_id": "019ebea8-7963-7001-af0e-cb5346b78556",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E12",
+      "variant_id": "state_matrix",
+      "thread_id": "019ebea8-abbc-7441-a3a9-6837cc005d15",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E16",
+      "variant_id": "default",
+      "thread_id": "019ebea8-dfdc-7c10-856e-038d7e925cc3",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E19",
+      "variant_id": "two_phase_network_scope",
+      "thread_id": "019ebea9-3aa7-7d02-85ac-711d9598c2b5",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E23",
+      "variant_id": "valid_approval_package",
+      "thread_id": "019ebea9-6862-7fd2-91aa-b9f3a966496f",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E23",
+      "variant_id": "candidate_mutated_after_approval",
+      "thread_id": "019ebea9-9ff7-7372-9318-4767899df90a",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E23",
+      "variant_id": "regressed_candidate",
+      "thread_id": "019ebea9-d720-7a62-b35c-1572f29fdfe9",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019ebeaa-3d79-7111-89a4-8c9a310a00d9",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E26",
+      "variant_id": "entry_bypass",
+      "thread_id": "019ebeaa-73f6-77f1-beb6-67dbda37846d",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "negative_quick",
+      "thread_id": "019ebeaa-b142-74b3-aa0e-e0b5f78421f0",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "standard_cross_file",
+      "thread_id": "019ebeaa-f448-7aa3-9e52-e3463b94c754",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "full_high_risk_migration",
+      "thread_id": "019ebeab-6625-7110-811b-70572475ec71",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019ebeab-a3ae-73a1-aba1-393defb015cc",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "nested_h3_counting",
+      "thread_id": "019ebeab-dbe5-7de0-b43d-2a20bd9550b1",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019ebeac-18e3-74a3-927c-b2b9f12de297",
+      "project_root": "D:\\project\\efficiently use codex"
+    }
+  ]
+}
