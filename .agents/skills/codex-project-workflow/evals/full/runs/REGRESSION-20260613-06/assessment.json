@@ -1,0 +1,141 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-06",
+  "assessed_at": "2026-06-13T15:15:21+08:00",
+  "assessment_method": "Manual evidence review of recovered rollout order, exact approvals and tool parameters, context trace, fixture inventory diff, formal entry runs, state and rollback evidence, and independent focused tests. Earlier no-output systemError turns were infrastructure-invalid and produced no fixture writes.",
+  "runs": {
+    "E16:default": {
+      "thread_id": "019ebeb4-e3c2-79e1-8050-052987021488",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 2,
+        "workflow_fit": 1,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 2,
+        "output_efficiency": 1
+      },
+      "total_score": 14,
+      "hard_failures": [],
+      "assertion_results": {
+        "formal_contract.created": {
+          "passed": true,
+          "evidence": "No formal contract file was created; the bounded reporting change did not trigger a formal contract."
+        },
+        "path_constraint.line_count": {
+          "passed": true,
+          "evidence": "The run fixed the internal path to app.py flag ownership, report.py visibility ownership, formatting.py value rendering, and focused tests before editing."
+        },
+        "result_assertions.all_pass": {
+          "passed": true,
+          "evidence": "Two focused tests passed and both root CLI modes produced the expected default and include-zero output."
+        },
+        "scores.implementation_integrity": {
+          "passed": true,
+          "evidence": "ZERO rendering was implemented in the existing formatting owner, visibility remained in report.py, and app.py was unchanged."
+        }
+      },
+      "result": "pass"
+    },
+    "E32:full_high_risk_migration": {
+      "thread_id": "019ebeb5-098f-78b0-aa9d-2af1d7ba8bf7",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 2,
+        "workflow_fit": 2,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 2,
+        "output_efficiency": 1
+      },
+      "total_score": 15,
+      "hard_failures": [],
+      "assertion_results": {
+        "context_trace.verifiable": {
+          "passed": true,
+          "evidence": "The rollout proves entry and state inspection, pre-write contract creation, scoped approval, formal migration, same-entry validation, and rollback hashing."
+        },
+        "all_fixtures.skill_description_codepoints": {
+          "passed": true,
+          "evidence": "The exposed skill description was 620 code points."
+        },
+        "explicit_quick_standard_full.core_body_codepoints": {
+          "passed": true,
+          "evidence": "The core skill body was 1,492 code points, within the 1,500 limit."
+        },
+        "full.reference_codepoints": {
+          "passed": true,
+          "evidence": "Governance and verification extraction totaled 4,311 collected code points, below the 6,000 full-mode limit."
+        },
+        "full.reference_h2_sections": {
+          "passed": true,
+          "evidence": "Exactly four required reference H2 sections were loaded."
+        },
+        "governance_corpus.bulk_loaded": {
+          "passed": true,
+          "evidence": "Only the required governance and verification sections were loaded; the unrelated governance archive was not used."
+        }
+      },
+      "result": "pass"
+    },
+    "E35:four_hard_triggers": {
+      "thread_id": "019ebeb5-38fb-7072-ad5a-20d0997153a5",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 2,
+        "workflow_fit": 2,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 2,
+        "output_efficiency": 1
+      },
+      "total_score": 15,
+      "hard_failures": [],
+      "assertion_results": {
+        "hard_triggers.applied": {
+          "passed": true,
+          "evidence": "Freshness research, network redaction, dependency confirmation, and implementation-path verification were all applied."
+        },
+        "hard_triggers.omitted_for_budget": {
+          "passed": true,
+          "evidence": "No hard trigger was suppressed to fit the one-section and 900-codepoint initial budget."
+        },
+        "budget_overage.fields": {
+          "passed": true,
+          "evidence": "The final response reported added_codepoints=4623, added_sections=5, reason, and unknown_resolved; the rollout contains the matching deterministic calculation."
+        },
+        "network.parameters.restricted_identifier_count": {
+          "passed": true,
+          "evidence": "The approved public requests contained none of the project code, internal path, or private symbol."
+        },
+        "dependency.install_started_before_confirmation": {
+          "passed": true,
+          "evidence": "The first local simulation attempt followed exact tool approval. After execution policy changed the command, the run displayed the substitute and obtained a second tool-level approval before it succeeded."
+        },
+        "production_entry.verified": {
+          "passed": true,
+          "evidence": "The explicit unit test and python app.py --self-test both passed through app.py, app.run, and src.client.normalize_event."
+        }
+      },
+      "result": "pass"
+    }
+  },
+  "cases": {
+    "E16": {
+      "variant_ids": ["default"],
+      "result": "pass"
+    },
+    "E32": {
+      "variant_ids": ["full_high_risk_migration"],
+      "result": "pass"
+    },
+    "E35": {
+      "variant_ids": ["four_hard_triggers"],
+      "result": "pass"
+    }
+  },
+  "overall_result": "pass"
+}

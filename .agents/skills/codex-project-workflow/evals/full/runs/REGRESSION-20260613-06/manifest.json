@@ -1,0 +1,39 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-06",
+  "evaluation_scope": "targeted_regression",
+  "status": "completed_pass",
+  "created_at": "2026-06-13T09:59:51+08:00",
+  "fixture_commit": "2d222e11c70c07ca91a01370ec54424ff0a9dd3f",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "completed_at": "2026-06-13T15:06:33+08:00",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260613-06\\workspaces\\setup-state.json",
+  "evaluation_result": {
+    "passed_cases": 3,
+    "total_cases": 3,
+    "passed_runs": 3,
+    "total_runs": 3,
+    "overall": "pass"
+  },
+  "runs": [
+    {
+      "case_id": "E16",
+      "variant_id": "default",
+      "thread_id": "019ebeb4-e3c2-79e1-8050-052987021488",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "full_high_risk_migration",
+      "thread_id": "019ebeb5-098f-78b0-aa9d-2af1d7ba8bf7",
+      "project_root": "D:\\project\\efficiently use codex"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019ebeb5-38fb-7072-ad5a-20d0997153a5",
+      "project_root": "D:\\project\\efficiently use codex"
+    }
+  ]
+}

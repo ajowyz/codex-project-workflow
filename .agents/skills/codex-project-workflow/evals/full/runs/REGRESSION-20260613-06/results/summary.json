@@ -1,0 +1,184 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260613-06",
+  "source_manifest": "D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260613-06\\manifest.json",
+  "source_setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260613-06\\workspaces\\setup-state.json",
+  "results": [
+    {
+      "case_id": "E16",
+      "variant_id": "default",
+      "thread_id": "019ebeb4-e3c2-79e1-8050-052987021488",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 760736,
+      "time_to_first_token_ms": 3418,
+      "final_response_chars": 711,
+      "total_tokens": 126356,
+      "tool_call_count": 13,
+      "changed_files": [
+        "src/formatting.py",
+        "src/report.py",
+        "tests/test_existing.py"
+      ],
+      "expected_changed_files": [
+        "src/formatting.py",
+        "src/report.py",
+        "tests/test_existing.py"
+      ],
+      "expected_assertion_subjects": [
+        "formal_contract.created",
+        "path_constraint.line_count",
+        "result_assertions.all_pass",
+        "scores.implementation_integrity"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_eOwExpsa4yn7Up74vZ3tdZoS"
+        ],
+        "skill_body_loaded_chars": 1492,
+        "skill_tool_output_chars": 2210,
+        "reference_read_calls": [
+          "call_0OxbZY76RkAc6YUoef4cVoFG",
+          "call_kxUKlOUOYrYlETVzrvAiB5qN"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_0OxbZY76RkAc6YUoef4cVoFG",
+          "call_kxUKlOUOYrYlETVzrvAiB5qN"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4311,
+        "reference_tool_output_chars": 4435,
+        "reference_h2_sections": 4,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "10bff4ac60feae2ccfe3c667878db93b4eab90175e8f41b1bc9fadf95d9ed91e"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "full_high_risk_migration",
+      "thread_id": "019ebeb5-098f-78b0-aa9d-2af1d7ba8bf7",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 732683,
+      "time_to_first_token_ms": 3620,
+      "final_response_chars": 454,
+      "total_tokens": 193858,
+      "tool_call_count": 22,
+      "changed_files": [
+        "data/accounts.backup.json",
+        "data/accounts.json",
+        "docs/IMPLEMENTATION_CONTRACT.md",
+        "migration/result.json"
+      ],
+      "expected_changed_files": [
+        "data/accounts.json",
+        "data/accounts.backup.json",
+        "docs/IMPLEMENTATION_CONTRACT.md",
+        "migration/result.json"
+      ],
+      "expected_assertion_subjects": [
+        "context_trace.verifiable",
+        "all_fixtures.skill_description_codepoints",
+        "explicit_quick_standard_full.core_body_codepoints",
+        "full.reference_codepoints",
+        "full.reference_h2_sections",
+        "governance_corpus.bulk_loaded"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_vHgGkXfM6DkyAjVztPurZ23q"
+        ],
+        "skill_body_loaded_chars": 1492,
+        "skill_tool_output_chars": 2210,
+        "reference_read_calls": [
+          "call_ozc80DXTewqn8FrwUPFl4APn",
+          "call_GZppXS0jcafaobhJ2Mi437jy"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_ozc80DXTewqn8FrwUPFl4APn",
+          "call_GZppXS0jcafaobhJ2Mi437jy"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4311,
+        "reference_tool_output_chars": 4433,
+        "reference_h2_sections": 4,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "22d14777e2dd3a1be6d7755803637f87d150f0e099a8874b8328395107e1d95d"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019ebeb5-38fb-7072-ad5a-20d0997153a5",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 816454,
+      "time_to_first_token_ms": 4831,
+      "final_response_chars": 1223,
+      "total_tokens": 216213,
+      "tool_call_count": 20,
+      "changed_files": [
+        "src/client.py"
+      ],
+      "expected_changed_files": [
+        "src/client.py"
+      ],
+      "expected_assertion_subjects": [
+        "hard_triggers.applied",
+        "hard_triggers.omitted_for_budget",
+        "budget_overage.fields",
+        "network.parameters.restricted_identifier_count",
+        "dependency.install_started_before_confirmation",
+        "production_entry.verified"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_ztZzqonwZfNAITNBwOKQLtcf"
+        ],
+        "skill_body_loaded_chars": 1492,
+        "skill_tool_output_chars": 2210,
+        "reference_read_calls": [
+          "call_tUaCNDJxs1lX8PHf0NkJX27Y",
+          "call_tesDURaflZ3w3j8t7tbHZicV",
+          "call_saxNyZ64BYb9rXtWEr89aAsH"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_tUaCNDJxs1lX8PHf0NkJX27Y",
+          "call_tesDURaflZ3w3j8t7tbHZicV",
+          "call_saxNyZ64BYb9rXtWEr89aAsH"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "research.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 5514,
+        "reference_tool_output_chars": 5698,
+        "reference_h2_sections": 6,
+        "governance_read_calls": []
+      },
+      "rollout_sha256": "6a55d2af9aa012676e2d1da84c7d63be61a5f5eed2a5e3959fe8f729de070a61"
+    }
+  ]
+}
