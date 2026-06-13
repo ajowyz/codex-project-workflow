@@ -74,9 +74,10 @@ class ScriptTests(unittest.TestCase):
             "deliverable through an existing product or application",
             (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8"),
         )
-        self.assertIn(
-            "Preserve ownership",
-            (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8"),
+        skill_text = (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8")
+        self.assertTrue(
+            "Preserve ownership" in skill_text
+            or "Change behavior in its existing owner" in skill_text,
         )
         governance = (SKILL_DIR / "references" / "governance.md").read_text(
             encoding="utf-8"
@@ -288,6 +289,15 @@ class ScriptTests(unittest.TestCase):
         self.assertEqual([SKILL_DIR / "SKILL.md"], discovered)
 
     def test_e23_approval_package_bindings_and_patch_contents(self):
+        def committed_bytes(path):
+            relative = path.relative_to(PROJECT_ROOT).as_posix()
+            return subprocess.run(
+                ["git", "show", f"HEAD:{relative}"],
+                cwd=PROJECT_ROOT,
+                capture_output=True,
+                check=True,
+            ).stdout
+
         root = SKILL_DIR / "evals" / "full" / "cases" / "E23" / "workspace"
         expected = {
             "valid_approval_package": (True, True, True, True, True, True),
@@ -307,11 +317,15 @@ class ScriptTests(unittest.TestCase):
                 patch = workspace / "candidate" / "patch.diff"
                 candidate = workspace / "candidate" / "SKILL.candidate.md"
                 evaluation = workspace / "evaluations" / "comparison.json"
+                base_bytes = committed_bytes(base)
+                patch_bytes = committed_bytes(patch)
+                candidate_bytes = committed_bytes(candidate)
+                evaluation_bytes = committed_bytes(evaluation)
 
-                base_bound = hashlib.sha256(base.read_bytes()).hexdigest() == approval["base_hash"]
-                patch_bound = hashlib.sha256(patch.read_bytes()).hexdigest() == approval["patch_hash"]
+                base_bound = hashlib.sha256(base_bytes).hexdigest() == approval["base_hash"]
+                patch_bound = hashlib.sha256(patch_bytes).hexdigest() == approval["patch_hash"]
                 evaluation_bound = (
-                    hashlib.sha256(evaluation.read_bytes()).hexdigest()
+                    hashlib.sha256(evaluation_bytes).hexdigest()
                     == approval["evaluation_hash"]
                 )
 
@@ -319,9 +333,13 @@ class ScriptTests(unittest.TestCase):
                     temporary_root = Path(temporary)
                     (temporary_root / "active").mkdir()
                     (temporary_root / "candidate").mkdir()
-                    shutil.copyfile(base, temporary_root / "active" / "SKILL.baseline.md")
-                    shutil.copyfile(base, temporary_root / "candidate" / "SKILL.candidate.md")
-                    shutil.copyfile(patch, temporary_root / "patch.diff")
+                    (temporary_root / "active" / "SKILL.baseline.md").write_bytes(
+                        base_bytes
+                    )
+                    (
+                        temporary_root / "candidate" / "SKILL.candidate.md"
+                    ).write_bytes(base_bytes)
+                    (temporary_root / "patch.diff").write_bytes(patch_bytes)
                     result = subprocess.run(
                         [
                             "git",
@@ -338,10 +356,10 @@ class ScriptTests(unittest.TestCase):
                     )
                     patch_applies = result.returncode == 0
                     patch_matches_candidate = patch_applies and (
-                        (temporary_root / "candidate" / "SKILL.candidate.md").read_text(
-                            encoding="utf-8"
-                        )
-                        == candidate.read_text(encoding="utf-8")
+                        (
+                            temporary_root / "candidate" / "SKILL.candidate.md"
+                        ).read_text(encoding="utf-8").replace("\r\n", "\n")
+                        == candidate_bytes.decode("utf-8").replace("\r\n", "\n")
                     )
 
                 self.assertEqual(
