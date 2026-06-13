@@ -1,0 +1,98 @@
+diff --git a/.agents/skills/codex-project-workflow/SKILL.md b/.agents/skills/codex-project-workflow/SKILL.md
+index afb2504..d2fae1e 100644
+--- a/.agents/skills/codex-project-workflow/SKILL.md
++++ b/.agents/skills/codex-project-workflow/SKILL.md
+@@ -7,17 +7,18 @@ description: Structure and govern Codex work for new or ambiguous projects, mult
+ 
+ ## Route
+ 
+-1. Inspect first. Keep goal, constraints, and completion test. Ask only blocking decisions.
+-2. From the repo root containing this skill, run `python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`. Use `research` for unstable evidence/options; `governance` for third-party assets, installs, execution, private networking, approvals, agents, or durable changes; `verification` for writes, product-generated outputs, recovery, production/core paths, or path proof. Load each triggered protocol only.
+-3. Never list headings, scan skill directories, or read references directly. Report helper failure; it waives no gate.
+-4. Agents suit three streams, conflicting evidence, or high failure cost. Load governance, propose count/roles, ownership, parallel/main work, benefit, cost, risks, and fallback, then ask. Only explicit acceptance starts them; safe unrelated work may continue.
++1. Inspect first: goal, constraints, completion test; ask only blockers.
++2. Run `python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`. Load only triggered `research` (unstable evidence), `governance` (assets, execution, networking, approvals, agents, durable changes), or `verification` (writes, product output, recovery, path proof).
++3. Never scan skill dirs/read refs directly. Helper failure waives no gate.
++4. Research, dependency handling, and implementation are separate streams. If three are requested, the next action after protocol loading is a governance proposal; execute none first. Acceptance starts agents; no decision stays `proposed`; refusal/unavailability selects fallback.
+ 
+ ## Safeguards
+ 
+ - Never invent execution, sources, tests, or verification.
+-- Before writes map entry, state, owners, and bypasses. Preserve ownership; freeze an evidence-bound contract for production routing, persistence/schema/migration, architecture, core capability, alternate output, explicit path proof, or high impact. Never borrow a neighboring or shadow implementation.
++- Before writes map entry/state/owners/bypasses. Change behavior in its existing owner.
++- If a generated delivery's product writes state, save `docs/IMPLEMENTATION_CONTRACT.md` before the product run. Otherwise contracts and protocol records stay in the execution trace unless a file is required; do not create research/governance docs by default.
+ - Safety, authorization, and verification override budgets.
+ 
+ ## Finish
+ 
+-Verify result/path. Keep durable changes isolated until approved.
++Verify result and path. Keep durable changes isolated until approved.
+diff --git a/.agents/skills/codex-project-workflow/references/governance.md b/.agents/skills/codex-project-workflow/references/governance.md
+index 2ccceda..edef956 100644
+--- a/.agents/skills/codex-project-workflow/references/governance.md
++++ b/.agents/skills/codex-project-workflow/references/governance.md
+@@ -14,14 +14,15 @@ Identify the action, affected scope, reversibility, data involved, permissions,
+ 
+ ## Execution Rules
+ 
+-- Ask only when the decision blocks progress or has high impact. Continue safe, independent work while waiting when possible.
+-- For third-party downloads, record a pass, fail, or unknown outcome for source, maintenance, license, integrity, necessity, and known risk before use.
+-- Before an install, external execution, or requested install substitute, show the exact command and scope and obtain explicit approval. Approval for one action does not authorize another.
+-- For internal data, send only the minimum approved, redacted content to approved destinations.
+-- Suitable multi-agent work enters `proposed` even when permission has not yet been granted. Present count and roles, task boundaries, read/write ownership, parallel and main-agent work, benefit, token/time/coordination cost, conflict/context/duplication risk, and the single-agent alternative. Ask for an explicit decision. Only explicit acceptance authorizes startup; only explicit refusal or unavailable agents selects fallback.
+-- Durable rule changes remain isolated candidates. Bind approval to target, scope, base version, patch hash, evaluation evidence, and invalidation conditions.
+-- Never let context or speed budgets suppress a triggered safety or authorization check.
+-- When hard triggers exceed a stated context budget, report `added_codepoints`, `added_sections`, `reason`, and `unknown_resolved`.
++- Ask only when a decision blocks progress or has high impact. Continue safe independent work when allowed.
++- Protocol records belong in the execution trace or final response, not project files, unless the user or project explicitly requires a file.
++- Before third-party use, record pass, fail, or unknown for source, maintenance, license, integrity, necessity, and known risk.
++- Before install, external execution, or a substitute, show the exact command and scope and obtain explicit approval. One approval authorizes only that action.
++- Send only approved, minimum, redacted internal data to approved destinations.
++- Research, dependency, and implementation are separate streams. If all three are requested, the next user-facing action after protocols is a proposal; execute none first. Proposal preparation may read only a named budget artifact. Keep a nonempty main work package; for writes, main owns responsibility tracing, implementation, and final verification until agents are accepted. State roles, boundaries, ownership, parallel work, benefit, cost/risks, and fallback. Include every triggered approval packet: exact sanitized query, public targets/fields/purpose/phase, and exact command/scope. Ask explicitly. No decision or unrelated approval leaves `proposed`; start no agents or agent-owned work. Exact action approval lets main do only that action without starting agents or fallback. Acceptance starts agents; refusal or unavailable agents selects fallback. Pending work is main-assigned, independent, or action-approved only.
++- Keep durable rule changes in isolated candidates bound to target, scope, base, patch hash, evidence, and invalidation conditions.
++- Safety and authorization checks override context or speed budgets.
++- For hard-trigger overage, sum every helper's emitted NFC metrics; never reconstruct text. Compute `added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)` and `added_sections=max(0, emitted_H2_blocks-budget_H2_blocks)`. Count repeated outputs and same-titled H2 blocks separately; nested H3 headings do not add sections. Every final response, including later approval follow-ups, must repeat exactly one aggregate machine-readable line with unquoted numbers: `added_codepoints=N, added_sections=N, reason=TEXT, unknown_resolved=TEXT`.
+ 
+ ## Stop Conditions
+ 
+diff --git a/.agents/skills/codex-project-workflow/references/verification.md b/.agents/skills/codex-project-workflow/references/verification.md
+index 57a52b9..2b3ea25 100644
+--- a/.agents/skills/codex-project-workflow/references/verification.md
++++ b/.agents/skills/codex-project-workflow/references/verification.md
+@@ -14,16 +14,15 @@ Identify the goal, completion tests, existing entry points, state authority, per
+ 
+ ## Execution Rules
+ 
+-- Create a formal implementation contract before the first relevant write when any trigger applies: production entry or routing changes; state authority, persistence, schema, or migration changes; architecture boundary or ownership changes; new, copied, or replacement core capability; a direct alternate final-output path; explicit user path proof; or high-impact commitment.
+-- For a generated final delivery that also writes product state or persistence, save the frozen contract to `docs/IMPLEMENTATION_CONTRACT.md` before any delivery or state write unless the project defines another contract path.
+-- Before freezing that contract, identify the user-invocable entry from root-level CLI, UI, API, or registration evidence and record its exact invocation. An internal function is never the product entry merely because it reaches the desired core path.
+-- Freeze the contract from independent evidence before writing. If the source, version, entry, state update, save path, or ownership cannot be proven, stop as implementation-path unverified; do not borrow a sibling, neighboring fixture, helper, or post-hoc contract.
+-- File count, module count, tests plus code, and mechanical cross-file edits do not trigger a formal contract by themselves. When every trigger is false, keep a one-to-three-line internal path constraint.
+-- Bind contract claims to independent project evidence such as confirmed docs, registration points, callers, runtime entry points, or state definitions. Preserve later contract differences.
+-- Trace the existing user entry. Create, generate, export, or save requests never authorize changing entry wiring, routing, core code, or tests; that requires a separate explicit repair request. Internal calls cannot replace the entry. If it bypasses the core path, stop before contract, delivery, state, or product-code writes and report implementation-path unverified.
+-- Verify result and implementation path separately. An output can be correct while the implementation is unacceptable.
+-- For recovery, read compact `PLAN.md` first. The initial ADR projection is exactly `id`, `title`, `governance_state`, `replaces_ids`, `replaced_by_id`, and `body_anchor`. Extract only headings and allowed metadata lines; do not sample ledger lines or bodies to discover format. Load only referenced bodies afterward.
+-- For context accounting, one `##` block plus all nested `###` content is one section. Report the enclosing H2 count, not the nested-heading count.
++- Before relevant writes, freeze an evidence-bound contract in the execution trace for routing, state/schema/migration, architecture/ownership, core capability, alternate output, path proof, or high impact. A contract is not a project file by default.
++- If a generated delivery invokes a product that writes state or persistence, create `docs/IMPLEMENTATION_CONTRACT.md` before the first product invocation, even when product code is unchanged. Otherwise path-proof, process-risk, and code-only owner-change contracts stay non-file unless the user or project requires a file.
++- Identify the user-invocable CLI, UI, API, or registration entry before freezing. Bind claims to independent docs, registrations, callers, entries, or state definitions. If entry, state, save path, or ownership is unproven, stop as implementation-path unverified; never borrow neighboring, helper, shadow, or post-hoc evidence.
++- File/module count, tests plus code, and mechanical cross-file edits do not trigger a contract. If every trigger is false, keep a one-to-three-line path constraint.
++- Map requested behavior to its existing responsibility owner. Change each relevant owner; do not duplicate owner logic in callers, entries, tests, helpers, or output paths. For bounded work inspect only the target, owners/callers, and adjacent tests.
++- Trace the existing user entry. Generate/export/save requests do not authorize repairing entry wiring or core code. If the entry bypasses the core path, stop before contract, delivery, state, or product-code writes.
++- Verify result and implementation path separately. Correct output does not prove acceptable implementation.
++- For recovery, read compact `PLAN.md` first. The initial ADR projection is exactly `id`, `title`, `governance_state`, `replaces_ids`, `replaced_by_id`, and `body_anchor`. Extract only headings and allowed metadata lines; load referenced bodies afterward.
++- One `##` block plus nested `###` content is one context section.
+ 
+ ## Stop Conditions
+ 
+@@ -31,8 +30,8 @@ Stop when completion assertions pass, the required path evidence exists, and rem
+ 
+ ## Output Requirements
+ 
+-Report user action, product entry point, core path, state or persistence change, result, tests, auxiliary scripts, deviations, and unverified paths. If path evidence is insufficient, say: result verified, implementation path unverified.
++Report user action, product entry, core path, state/persistence change, result, tests, auxiliary scripts, deviations, and unverified paths. If evidence is insufficient, say: result verified, implementation path unverified.
+ 
+ ## Failure And Degradation
+ 
+-Do not declare complete after a bypass, post-hoc contract, mock-only path proof, hidden branch, hard-coded result, or unapproved external script. Revert to the confirmed path, request a contract change, or report the limitation.
++Do not declare complete after a bypass, post-hoc contract, mock-only proof, hidden branch, hard-coded result, or unapproved external script. Revert to the confirmed path, request a contract change, or report the limitation.

@@ -1,40 +1,39 @@
 {
   "schema_version": "1.0",
-  "candidate_id": "CAND-20260614-04",
-  "parent_candidate_id": "CAND-20260614-03",
-  "created_at": "2026-06-14T02:25:00+08:00",
-  "status": "regression_failed_superseded",
-  "superseded_by": "CAND-20260614-05",
+  "candidate_id": "CAND-20260614-05",
+  "parent_candidate_id": "CAND-20260614-04",
+  "created_at": "2026-06-14T02:43:00+08:00",
+  "status": "preflight_passed_pending_isolated_evaluation",
   "base_commit": "679b905",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
     {
       "active_path": ".agents/skills/codex-project-workflow/SKILL.md",
       "base_sha256": "3e1ad434124780ec1a47353705f291ab8314c2ba366886d5a8f76b3305c46bf1",
-      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260614-04/SKILL.candidate.md",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260614-05/SKILL.candidate.md",
       "candidate_sha256": "20050123d4a604f5af2337d0366636433b52a6c32b4fd74da095d88513b8ceba"
     },
     {
       "active_path": ".agents/skills/codex-project-workflow/references/governance.md",
       "base_sha256": "a9b9d4689ad3f8fd2b8d4c112bc784bbfd31834630f2232900362518e09e654a",
-      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260614-04/references/governance.md",
-      "candidate_sha256": "f62dba16143a773721b484385db8d75dc4050313a09e8e73d2290cb73f946643"
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260614-05/references/governance.md",
+      "candidate_sha256": "b9d9b548cfb8a87a81da3ae7b48f088dc77059991d8d2d3210eef3766b876737"
     },
     {
       "active_path": ".agents/skills/codex-project-workflow/references/verification.md",
       "base_sha256": "45bf582d3da94319324630f2f944e498b2848c4a67e88a404b9cad9ef8877fc8",
-      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260614-04/references/verification.md",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260614-05/references/verification.md",
       "candidate_sha256": "294787f58b729f1963e8a0c28fcc1eda335704e0ab60f9916f258847eb91ae87"
     }
   ],
   "patch": {
-    "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260614-04/patch.diff",
-    "sha256": "778cbb128094f59682059072f166fe9095350009461e686a0e06e5eff48268dc"
+    "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260614-05/patch.diff",
+    "sha256": "970d440587f67aa8b94389d2b4ca6ade12c43d6364eb5900bfa3c72a9a9a02f5"
   },
   "scope": [
-    "retain CAND-20260614-03 product-contract, ownership, proposal-order, and non-file protocol behavior",
-    "make exact action approval authorize only that action without starting agents or selecting fallback",
-    "require one aggregate machine-readable overage line with unquoted numbers in every later final response"
+    "retain CAND-20260614-04 contract, ownership, action-approval, and aggregate-overage behavior",
+    "require every three-stream proposal to preserve a nonempty main-agent work package",
+    "include all triggered research and execution approval packets in the proposal before asking"
   ],
   "preflight": {
     "status": "pass",
@@ -43,11 +42,11 @@
     "full_fixtures": "31/31 cases, 61 variants valid",
     "skill_body_chars": 1357,
     "skill_description_chars": 620,
-    "governance_selected_codepoints": 2356,
+    "governance_selected_codepoints": 2483,
     "verification_selected_codepoints": 2239
   },
   "evaluation": {
-    "status": "fail",
+    "status": "pending",
     "required_regressions": [
       "E26:product_path",
       "E32:hard_trigger_overage",
@@ -57,16 +56,11 @@
       "REGRESSION-20260613-07:E02:download",
       "REGRESSION-20260613-07:E32:standard_cross_file",
       "REGRESSION-20260613-08:E16:default",
-      "REGRESSION-20260614-12:E26:product_path"
+      "REGRESSION-20260614-12:E26:product_path",
+      "REGRESSION-20260614-13:E32:hard_trigger_overage"
     ],
-    "evidence_paths": [
-      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260614-13/results/summary.json",
-      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260614-13/assessment.json"
-    ],
-    "evidence_sha256": [
-      "e2134d1194db9e7971a345ff48b4216c10ef2206494d0734259b762585677515",
-      "fbee42b45806e3dc7772813d191e67e82c4c4627dac1e8bd15cd90f06d12a9db"
-    ]
+    "evidence_paths": [],
+    "evidence_sha256": []
   },
   "activation": {
     "allowed": false,

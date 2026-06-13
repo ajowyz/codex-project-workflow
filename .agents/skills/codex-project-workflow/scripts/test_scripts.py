@@ -94,7 +94,7 @@ class ScriptTests(unittest.TestCase):
 
     def test_current_candidate_budget_and_semantics(self):
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260614-04"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260614-05"
         )
         skill_path = candidate_dir / "SKILL.candidate.md"
         metrics = measure_context.skill_metrics(skill_path)
@@ -124,8 +124,10 @@ class ScriptTests(unittest.TestCase):
                 len(unicodedata.normalize("NFC", selected)),
                 2500,
             )
-        self.assertIn("explicit refusal or unavailable agents selects fallback", governance)
-        self.assertIn("Exact approval of a displayed action authorizes main", governance)
+        self.assertIn("refusal or unavailable agents selects fallback", governance)
+        self.assertIn("Keep a nonempty main work package", governance)
+        self.assertIn("Include every triggered approval packet", governance)
+        self.assertIn("Exact action approval lets main", governance)
         self.assertIn("including later approval follow-ups", governance)
         self.assertIn("with unquoted numbers", governance)
         self.assertIn("added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)", governance)
@@ -144,7 +146,7 @@ class ScriptTests(unittest.TestCase):
             return hashlib.sha256(normalized).hexdigest()
 
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260614-04"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260614-05"
         )
         manifest = json.loads(
             (candidate_dir / "manifest.json").read_text(encoding="utf-8")
