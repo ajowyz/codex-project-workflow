@@ -69,7 +69,7 @@ def minimal_variant_cover(case):
     raise ValueError(f"{case['case_id']}: no assertion-covering variant set")
 
 
-def setup_selected(selections, output_root):
+def setup_selected(selections, output_root, source_commit=None):
     validate_full_fixtures.validate()
     output_root.mkdir(parents=True, exist_ok=True)
     runs = []
@@ -107,7 +107,7 @@ def setup_selected(selections, output_root):
 
     state = {
         "format_version": "1.0",
-        "source_commit": json.loads(
+        "source_commit": source_commit or json.loads(
             (FULL_DIR / "batch_manifest.json").read_text(encoding="utf-8")
         )["activation_commit"],
         "output_root": str(output_root.resolve()),
@@ -135,9 +135,14 @@ def targeted_selections(case_ids, requested_variants=None):
     return selections
 
 
-def setup(case_ids, output_root, requested_variants=None):
+def setup(
+    case_ids,
+    output_root,
+    requested_variants=None,
+    source_commit=None,
+):
     selections = targeted_selections(case_ids, requested_variants)
-    return setup_selected(selections, output_root)
+    return setup_selected(selections, output_root, source_commit)
 
 
 def calibration_selections():
@@ -160,6 +165,7 @@ def main():
     parser.add_argument("--calibration", action="store_true")
     parser.add_argument("--variant", action="append", default=[])
     parser.add_argument("--output-root", type=Path, required=True)
+    parser.add_argument("--source-commit")
     args = parser.parse_args()
 
     requested = {}
@@ -175,6 +181,7 @@ def main():
         path = setup_selected(
             calibration_selections(),
             args.output_root.resolve(),
+            args.source_commit,
         )
     else:
         if not args.cases:
@@ -185,7 +192,12 @@ def main():
                 "--variant case must also be selected with --case: "
                 + ", ".join(sorted(unknown_cases))
             )
-        path = setup(args.cases, args.output_root.resolve(), requested)
+        path = setup(
+            args.cases,
+            args.output_root.resolve(),
+            requested,
+            args.source_commit,
+        )
     print(path)
     return 0
 

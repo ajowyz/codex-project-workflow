@@ -755,6 +755,16 @@ class ScriptTests(unittest.TestCase):
             ),
         )
 
+    def test_full_setup_accepts_isolated_source_commit(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            state_path = setup_full_eval.setup(
+                ["E02"],
+                Path(temporary) / "workspaces",
+                source_commit="candidate-commit",
+            )
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            self.assertEqual("candidate-commit", state["source_commit"])
+
     def test_full_eval_minimal_variant_cover(self):
         case = {
             "case_id": "E99",
