@@ -12,6 +12,12 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_DIR = SCRIPT_DIR.parent
 FULL_DIR = SKILL_DIR / "evals" / "full"
 CASES_DIR = FULL_DIR / "cases"
+BLIND_EVAL_BOUNDARY = (
+    "Blind evaluation boundary: use only the supplied workspace, the active "
+    "skill entry, and its referenced protocols. Do not inspect parent or peer "
+    "threads, evaluator definitions, oracle files, prior run results, "
+    "assessments, or expected answers."
+)
 
 
 def sha256(path):
@@ -82,7 +88,11 @@ def setup_selected(selections, output_root):
             ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
         )
         workspace = str(destination.resolve())
-        prompt = variant["prompt"].replace("{workspace}", workspace)
+        prompt = (
+            BLIND_EVAL_BOUNDARY
+            + "\n\n"
+            + variant["prompt"].replace("{workspace}", workspace)
+        )
         runs.append(
             {
                 "case_id": case_id,

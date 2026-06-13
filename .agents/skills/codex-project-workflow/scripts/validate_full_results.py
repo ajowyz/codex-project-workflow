@@ -74,6 +74,66 @@ def validate_changed_files(actual_paths, expected_patterns, hard_failures):
     return matches
 
 
+def validate_evaluation_isolation(isolation, hard_failures):
+    if isolation is None:
+        return
+    detected = isolation.get("oracle_access_detected")
+    require(
+        isinstance(detected, bool),
+        "evaluation isolation detection must be boolean",
+    )
+    has_failure = "evaluator_oracle_access" in hard_failures
+    require(
+        not detected or has_failure,
+        "evaluator oracle access must be recorded as evaluator_oracle_access",
+    )
+    require(
+        detected or not has_failure,
+        "evaluator_oracle_access recorded without detected oracle access",
+    )
+
+
+def validate_prompt_integrity(integrity, hard_failures):
+    if integrity is None:
+        return
+    valid = integrity.get("valid")
+    require(isinstance(valid, bool), "prompt integrity must be boolean")
+    has_failure = "evaluation_prompt_contamination" in hard_failures
+    require(
+        valid or has_failure,
+        "prompt contamination must be recorded as evaluation_prompt_contamination",
+    )
+    require(
+        not valid or not has_failure,
+        "evaluation_prompt_contamination recorded for an exact scripted prompt",
+    )
+
+
+def validate_machine_assertions(result, assertion_results):
+    overage = result.get("context_overage")
+    if overage is not None:
+        subject_map = {
+            "hard_trigger_overage.fields": overage["fields_complete"],
+            "hard_trigger_overage.values_accurate": overage["values_accurate"],
+            "budget_overage.fields": overage["fields_complete"],
+            "budget_overage.values_accurate": overage["values_accurate"],
+        }
+        for subject, expected_pass in subject_map.items():
+            if subject not in assertion_results:
+                continue
+            require(
+                assertion_results[subject]["passed"] == expected_pass,
+                f"{subject}: assessment disagrees with machine overage trace",
+            )
+    agent = result.get("agent_authorization")
+    if agent and "multi_agent.pending_state" in assertion_results:
+        require(
+            assertion_results["multi_agent.pending_state"]["passed"]
+            == (agent.get("pending_state") == "proposed"),
+            "multi_agent.pending_state: assessment disagrees with machine authorization trace",
+        )
+
+
 def evaluation_expectations(summary):
     manifest = load_json(Path(summary["source_manifest"]))
     scope = manifest.get("evaluation_scope", "full_calibration")
@@ -161,6 +221,14 @@ def validate(summary_path, assessment_path):
             result["expected_changed_files"],
             record["hard_failures"],
         )
+        validate_evaluation_isolation(
+            result.get("evaluation_isolation"),
+            record["hard_failures"],
+        )
+        validate_prompt_integrity(
+            result.get("prompt_integrity"),
+            record["hard_failures"],
+        )
 
         assertions = record["assertion_results"]
         require(
@@ -181,6 +249,7 @@ def validate(summary_path, assessment_path):
                 and assertion["evidence"].strip(),
                 f"{case_id}.{subject}: evidence required",
             )
+        validate_machine_assertions(result, assertions)
 
         computed_pass = (
             not record["hard_failures"]

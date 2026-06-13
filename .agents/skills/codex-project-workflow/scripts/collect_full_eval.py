@@ -2,6 +2,7 @@
 import argparse
 import importlib.util
 import json
+import re
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -39,6 +40,47 @@ def load_expected(case_id, variant_id):
     return variants[0]["expected"]
 
 
+def delegation_inputs(raw_messages):
+    result = []
+    for message in raw_messages:
+        match = re.search(r"<input>(.*?)</input>", message, flags=re.DOTALL)
+        if match:
+            result.append(match.group(1).strip())
+    return result
+
+
+def reply_text(reply):
+    return reply["reply"] if isinstance(reply, dict) else reply
+
+
+def prompt_integrity(raw_messages, setup):
+    inputs = delegation_inputs(raw_messages)
+    expected_prompt = setup["prompt"].strip()
+    expected_replies = [
+        reply_text(reply).strip()
+        for reply in setup["scripted_user_replies"]
+    ]
+    observed_prompt = inputs[0] if inputs else None
+    observed_replies = inputs[1:]
+    unexpected = [
+        message for message in observed_replies
+        if message not in expected_replies
+    ]
+    return {
+        "initial_prompt_matches": observed_prompt == expected_prompt,
+        "expected_reply_count": len(expected_replies),
+        "observed_scripted_replies": [
+            message for message in observed_replies
+            if message in expected_replies
+        ],
+        "unexpected_user_messages": unexpected,
+        "valid": (
+            observed_prompt == expected_prompt
+            and not unexpected
+        ),
+    }
+
+
 def collect(manifest_path, sessions_root, setup_state_path, output_dir):
     validate_full_fixtures.validate()
     manifest = load_json(manifest_path)
@@ -72,6 +114,10 @@ def collect(manifest_path, sessions_root, setup_state_path, output_dir):
         parsed["variant_id"] = run["variant_id"]
         parsed["permissions"] = setup["permissions"]
         parsed["expected"] = load_expected(*key)
+        parsed["prompt_integrity"] = prompt_integrity(
+            parsed["raw_user_messages"],
+            setup,
+        )
         results.append(parsed)
         (raw_dir / f"{run['case_id']}-{run['variant_id']}.json").write_text(
             json.dumps(parsed, ensure_ascii=False, indent=2),
@@ -107,6 +153,10 @@ def collect(manifest_path, sessions_root, setup_state_path, output_dir):
                 "expected_changed_files": result["expected"]["changed_files"],
                 "expected_assertion_subjects": result["expected"]["assertion_subjects"],
                 "context_trace": result["context_trace"],
+                "evaluation_isolation": result["evaluation_isolation"],
+                "context_overage": result["context_overage"],
+                "agent_authorization": result["agent_authorization"],
+                "prompt_integrity": result["prompt_integrity"],
                 "rollout_sha256": result["rollout"]["sha256"],
             }
             for result in results

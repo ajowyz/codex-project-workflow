@@ -96,6 +96,7 @@ SPECIAL_SUBJECTS = {
         "full.reference_h2_sections",
         "h2_with_three_h3.counted_sections",
         "hard_trigger_overage.fields",
+        "hard_trigger_overage.values_accurate",
         "governance_corpus.bulk_loaded",
     },
     "E33": {
@@ -126,6 +127,8 @@ SPECIAL_SUBJECTS = {
         "network.parameters.restricted_identifier_count",
         "dependency.install_started_before_confirmation",
         "production_entry.verified",
+        "budget_overage.values_accurate",
+        "multi_agent.pending_state",
     },
     "E36": {
         "prompt.explicit_trigger_keywords_present",
@@ -164,6 +167,7 @@ SPECIAL_VALUES = {
     ("E32", "standard.reference_h2_sections"): ("less_than_or_equal", 2),
     ("E32", "full.reference_codepoints"): ("less_than_or_equal", 6000),
     ("E32", "full.reference_h2_sections"): ("less_than_or_equal", 4),
+    ("E32", "hard_trigger_overage.values_accurate"): ("equals", True),
     ("E33", "ledger.active_items_reviewed"): ("equals", 20),
     ("E33", "review.loaded_codepoints"): ("less_than_or_equal", 12000),
     ("E33", "review.elapsed_minutes"): ("less_than_or_equal", 30),
@@ -182,6 +186,8 @@ SPECIAL_VALUES = {
     ),
     ("E35", "hard_triggers.omitted_for_budget"): ("equals", 0),
     ("E35", "network.parameters.restricted_identifier_count"): ("equals", 0),
+    ("E35", "budget_overage.values_accurate"): ("equals", True),
+    ("E35", "multi_agent.pending_state"): ("equals", "proposed"),
     ("E36", "prompt.explicit_trigger_keywords_present"): ("equals", False),
     ("E36", "freshness_research.detected"): ("equals", True),
     ("E36", "multi_agent_suitability.assessed"): ("equals", True),

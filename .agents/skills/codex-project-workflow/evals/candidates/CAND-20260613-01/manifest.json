@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "CAND-20260613-01",
+  "created_at": "2026-06-13T21:00:59+08:00",
+  "status": "preflight_passed_pending_isolated_evaluation",
+  "base_commit": "76324e3648ac93e7eac36b028935a9e1af9838b8",
+  "hash_algorithm": "sha256-raw-bytes",
+  "targets": [
+    {
+      "active_path": ".agents/skills/codex-project-workflow/SKILL.md",
+      "base_sha256": "3e1ad434124780ec1a47353705f291ab8314c2ba366886d5a8f76b3305c46bf1",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260613-01/SKILL.candidate.md",
+      "candidate_sha256": "2e44fd65e3c6c6dd3767bb5f00af4bdb753cb3a428eac9e91beffb9349ed2ea9"
+    },
+    {
+      "active_path": ".agents/skills/codex-project-workflow/references/governance.md",
+      "base_sha256": "0044ba0cc26964d439c755764f17577dc1ed870b3c5538745720d47d55468a07",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260613-01/references/governance.md",
+      "candidate_sha256": "b7a0d901c438ad7ce195ec2b62ea3c6ef5b072f40c535f707e7425bcf3120b55"
+    },
+    {
+      "active_path": ".agents/skills/codex-project-workflow/references/verification.md",
+      "base_sha256": "45bf582d3da94319324630f2f944e498b2848c4a67e88a404b9cad9ef8877fc8",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260613-01/references/verification.md",
+      "candidate_sha256": "1685c65b0682a811be1d3472b4367e4085954f4a472080386d961e04490e4836"
+    }
+  ],
+  "patch": {
+    "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260613-01/patch.diff",
+    "sha256": "9e33e3f5ea93b7040c8bc521042d94c64477767375add811e94c0274489c1deb"
+  },
+  "scope": [
+    "clarify triggered protocol loading and helper-output accounting",
+    "preserve proposed multi-agent state until explicit acceptance or refusal",
+    "make context-overage calculations deterministic",
+    "keep path-proof-only contracts non-persistent",
+    "require behavior changes in the existing responsibility owner"
+  ],
+  "preflight": {
+    "script_tests": {
+      "command": "python .agents/skills/codex-project-workflow/scripts/test_scripts.py",
+      "result": "41 passed"
+    },
+    "behavior_fixtures": {
+      "command": "python .agents/skills/codex-project-workflow/scripts/validate_evals.py",
+      "result": "36 cases, 148 assertions valid"
+    },
+    "full_fixtures": {
+      "command": "python .agents/skills/codex-project-workflow/scripts/validate_full_fixtures.py",
+      "result": "31/31 cases, 61 variants valid"
+    }
+  },
+  "evaluation": {
+    "status": "pending",
+    "required_regressions": [
+      "E02:download",
+      "E16:default",
+      "E26:product_path",
+      "E32:standard_cross_file",
+      "E32:hard_trigger_overage",
+      "E35:four_hard_triggers"
+    ],
+    "evidence_path": null,
+    "evidence_sha256": null
+  },
+  "activation": {
+    "allowed": false,
+    "requires_explicit_user_approval": true,
+    "invalidation_conditions": [
+      "base commit or any active target hash changes",
+      "candidate, patch, target list, or scope changes",
+      "required regression evidence changes or regresses",
+      "a hard failure or evaluator contamination is detected",
+      "activation approval refers to a different candidate id or hash set"
+    ]
+  }
+}

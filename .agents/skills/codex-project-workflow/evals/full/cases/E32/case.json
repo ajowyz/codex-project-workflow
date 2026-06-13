@@ -275,6 +275,7 @@
           "context_trace.verifiable",
           "all_fixtures.skill_description_codepoints",
           "hard_trigger_overage.fields",
+          "hard_trigger_overage.values_accurate",
           "governance_corpus.bulk_loaded"
         ],
         "assertions": [
@@ -300,6 +301,12 @@
               "reason",
               "unknown_resolved"
             ]
+          },
+          {
+            "id": "E32-A12",
+            "subject": "hard_trigger_overage.values_accurate",
+            "operator": "equals",
+            "expected": true
           },
           {
             "id": "E32-A11",
