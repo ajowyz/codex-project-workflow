@@ -155,9 +155,12 @@ class ScriptTests(unittest.TestCase):
         )
         self.assertFalse(manifest["activation"]["allowed"])
         self.assertEqual("sha256-nfc-lf-utf8", manifest["hash_algorithm"])
-        self.assertEqual(
-            "preflight_passed_pending_isolated_evaluation",
+        self.assertIn(
             manifest["status"],
+            {
+                "preflight_passed_pending_isolated_evaluation",
+                "preflight_passed_regression_blocked_infrastructure",
+            },
         )
 
         active_states = set()

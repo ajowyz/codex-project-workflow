@@ -1,0 +1,71 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260618-16",
+  "evaluation_scope": "targeted_regression",
+  "status": "invalid_infrastructure",
+  "created_at": "2026-06-18T17:34:00+08:00",
+  "completed_at": "2026-06-18T17:38:00+08:00",
+  "fixture_commit": "d526715dba160275e0eb273b41fc8ec9d1cdfc92",
+  "candidate_id": "CAND-20260618-06",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260618-16\\workspaces\\setup-state.json",
+  "invalid_reason": "Three consecutive batches returned systemError before the first model output for every selected case. No candidate behavior was observed and no result was scored.",
+  "excluded_infrastructure_runs": [
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019eda14-c813-7eb0-a30b-744e684cf2ab",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\38e6\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019eda15-1516-7a62-b8a6-033f6a50d164",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\e166\\efficiently use codex"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019eda15-59a8-75e3-bcb0-cf55d74caaa7",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\ba5c\\efficiently use codex"
+    },
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019eda16-22e9-7bc3-b1c2-cc8d98016428",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\4112\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019eda16-75ce-7da1-aaa1-04509be37415",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\b709\\efficiently use codex"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019eda16-bb54-7020-8726-165a32c2945f",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\dc10\\efficiently use codex"
+    },
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019eda17-5f8b-7c11-9dc7-6a52b67f5402",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\ced3\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019eda17-ab6d-7191-9dd1-091cc354def5",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\a999\\efficiently use codex"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019eda17-f20b-7e03-9faa-d19f8f8f82b7",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\712f\\efficiently use codex"
+    }
+  ],
+  "runs": []
+}

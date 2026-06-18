@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260618-06",
   "parent_candidate_id": "CAND-20260614-05",
   "created_at": "2026-06-18T17:31:00+08:00",
-  "status": "preflight_passed_pending_isolated_evaluation",
+  "status": "preflight_passed_regression_blocked_infrastructure",
   "base_commit": "13f833e",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -46,7 +46,7 @@
     "verification_selected_codepoints": 2237
   },
   "evaluation": {
-    "status": "pending_isolated_evaluation",
+    "status": "blocked_infrastructure",
     "required_regressions": [
       "E26:product_path",
       "E32:hard_trigger_overage",
@@ -57,6 +57,16 @@
     ],
     "source_failure_sha256": [
       "2566a61b4a749da4f0df7d1de35ae621e738c9de3848bdadbae704f2a3c48ca8"
+    ],
+    "evidence_paths": [
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-16/manifest.json"
+    ],
+    "evidence_sha256": [
+      "56e9b544c62d67c742a51a35fd45c51f50078c4ef7ea7c45a474abd39593cce4"
+    ],
+    "blocker_summary": [
+      "REGRESSION-20260618-16 attempted three consecutive E26/E32/E35 batches from frozen commit d526715dba160275e0eb273b41fc8ec9d1cdfc92.",
+      "All nine threads returned systemError before first model output, so no CAND-20260618-06 behavior was observed or scored."
     ]
   },
   "activation": {
