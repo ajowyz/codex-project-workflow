@@ -94,7 +94,7 @@ class ScriptTests(unittest.TestCase):
 
     def test_current_candidate_budget_and_semantics(self):
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260614-05"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260618-06"
         )
         skill_path = candidate_dir / "SKILL.candidate.md"
         metrics = measure_context.skill_metrics(skill_path)
@@ -102,8 +102,8 @@ class ScriptTests(unittest.TestCase):
         self.assertLessEqual(metrics["body_chars"], 1500)
 
         skill_text = skill_path.read_text(encoding="utf-8")
-        self.assertIn("no decision stays `proposed`", skill_text)
-        self.assertIn("the next action after protocol loading is a governance proposal", skill_text)
+        self.assertIn("No decision stays `proposed`", skill_text)
+        self.assertIn("show one governance proposal before any web, command, or write", skill_text)
         self.assertIn("Change behavior in its existing owner", skill_text)
         self.assertIn("docs/IMPLEMENTATION_CONTRACT.md", skill_text)
         self.assertIn("do not create research/governance docs by default", skill_text)
@@ -126,7 +126,9 @@ class ScriptTests(unittest.TestCase):
             )
         self.assertIn("refusal or unavailable agents selects fallback", governance)
         self.assertIn("Keep a nonempty main work package", governance)
-        self.assertIn("Include every triggered approval packet", governance)
+        self.assertIn("do not search, execute, install/simulate, write, or verify before it", governance)
+        self.assertIn("and every approval packet", governance)
+        self.assertIn("it is not refusal, unavailability, or fallback", governance)
         self.assertIn("Exact action approval lets main", governance)
         self.assertIn("including later approval follow-ups", governance)
         self.assertIn("with unquoted numbers", governance)
@@ -146,7 +148,7 @@ class ScriptTests(unittest.TestCase):
             return hashlib.sha256(normalized).hexdigest()
 
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260614-05"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260618-06"
         )
         manifest = json.loads(
             (candidate_dir / "manifest.json").read_text(encoding="utf-8")
@@ -236,6 +238,25 @@ class ScriptTests(unittest.TestCase):
             summary["reference_metrics"],
         )
         self.assertEqual(len(payload), summary["content_codepoints"])
+        self.assertEqual(2, summary["h2_sections"])
+
+    def test_output_summary_sums_multiple_reference_metrics(self):
+        first = "## Execution Rules\n\nalpha"
+        second = "## Output Requirements\n\nbeta"
+        output = (
+            "Exit code: 0\nOutput:\n"
+            f"{read_reference.output_with_metrics(first)}\n"
+            f"{read_reference.output_with_metrics(second)}\n"
+        )
+        summary = collect_smoke.output_summary(output)
+        self.assertEqual(
+            {
+                "codepoints": len(first) + len(second),
+                "h2_sections": 2,
+            },
+            summary["reference_metrics"],
+        )
+        self.assertEqual(len(first) + len(second), summary["content_codepoints"])
         self.assertEqual(2, summary["h2_sections"])
 
     def test_overage_line_is_machine_readable_and_unquoted(self):
@@ -501,6 +522,47 @@ class ScriptTests(unittest.TestCase):
         self.assertEqual(2, trace["reference_h2_sections"])
         self.assertEqual(["research.md"], trace["reference_files"])
         self.assertGreater(trace["reference_loaded_chars"], 0)
+
+    def test_smoke_collector_traces_combined_reference_reader_command(self):
+        calls = [
+            {
+                "call_id": "combined",
+                "name": "shell_command",
+                "arguments": {
+                    "command": (
+                        "python .agents/skills/codex-project-workflow/scripts/"
+                        "read_reference.py research \"Execution Rules\" "
+                        "\"Output Requirements\"; "
+                        "python .agents/skills/codex-project-workflow/scripts/"
+                        "read_reference.py governance \"Execution Rules\" "
+                        "\"Output Requirements\"; "
+                        "python .agents/skills/codex-project-workflow/scripts/"
+                        "read_reference.py verification \"Execution Rules\" "
+                        "\"Output Requirements\""
+                    )
+                },
+                "output": collect_smoke.output_summary(
+                    "Exit code: 0\nOutput:\n"
+                    "## Execution Rules\n\nresearch\n\n"
+                    "<!-- codex-reference-metrics "
+                    "codepoints=1205 h2_sections=2 -->\n"
+                    "## Execution Rules\n\ngovernance\n\n"
+                    "<!-- codex-reference-metrics "
+                    "codepoints=2483 h2_sections=2 -->\n"
+                    "## Execution Rules\n\nverification\n\n"
+                    "<!-- codex-reference-metrics "
+                    "codepoints=2239 h2_sections=2 -->\n"
+                ),
+            }
+        ]
+        trace = collect_smoke.reference_call_trace(calls, SKILL_DIR)
+        self.assertEqual(["combined"], trace["reference_section_read_calls"])
+        self.assertEqual(6, trace["reference_h2_sections"])
+        self.assertEqual(5927, trace["reference_loaded_chars"])
+        self.assertEqual(
+            ["governance.md", "research.md", "verification.md"],
+            trace["reference_files"],
+        )
 
     def test_smoke_collector_counts_failed_emitted_reference_content(self):
         calls = [

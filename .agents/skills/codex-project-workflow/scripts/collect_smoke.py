@@ -66,18 +66,23 @@ def output_summary(output):
     marker = "\nOutput:\n"
     if marker in normalized:
         content = normalized.split(marker, 1)[1]
-    reference_metrics = None
-    metrics_match = re.search(
+    metric_matches = re.findall(
         r"\n\n<!-- codex-reference-metrics "
-        r"codepoints=(\d+) h2_sections=(\d+) -->\n?\Z",
+        r"codepoints=(\d+) h2_sections=(\d+) -->",
         content,
     )
-    if metrics_match:
+    reference_metrics = None
+    if metric_matches:
         reference_metrics = {
-            "codepoints": int(metrics_match.group(1)),
-            "h2_sections": int(metrics_match.group(2)),
+            "codepoints": sum(int(match[0]) for match in metric_matches),
+            "h2_sections": sum(int(match[1]) for match in metric_matches),
         }
-        content = content[:metrics_match.start()]
+        content = re.sub(
+            r"\n\n<!-- codex-reference-metrics "
+            r"codepoints=\d+ h2_sections=\d+ -->",
+            "",
+            content,
+        )
     return {
         "chars": len(output),
         "content_codepoints": (
@@ -204,7 +209,7 @@ def reference_call_trace(tool_calls, trace_skill_dir):
         serialized = normalize_path_text(json.dumps(arguments, ensure_ascii=False))
         output = call.get("output")
         command = arguments.get("command", "") if isinstance(arguments, dict) else ""
-        helper_match = re.search(
+        helper_matches = re.findall(
             r"read_reference\.py[\"']?\s+([A-Za-z0-9_.-]+)",
             command,
             flags=re.IGNORECASE,
@@ -215,12 +220,13 @@ def reference_call_trace(tool_calls, trace_skill_dir):
             if normalize_path_text(f"references/{path.name}").lower()
             in serialized.lower()
         ]
-        helper_path = (
-            path_by_stem.get(Path(helper_match.group(1)).stem.casefold())
-            if helper_match
-            else None
-        )
-        if not direct_paths and helper_path is None:
+        helper_paths = [
+            path_by_stem[stem]
+            for name in helper_matches
+            for stem in [Path(name).stem.casefold()]
+            if stem in path_by_stem
+        ]
+        if not direct_paths and not helper_paths:
             continue
 
         result["reference_read_calls"].append(call["call_id"])
@@ -234,16 +240,16 @@ def reference_call_trace(tool_calls, trace_skill_dir):
         if failed:
             result["reference_failed_calls"].append(call["call_id"])
 
-        if helper_path is not None:
+        if helper_paths:
             if output and output["h2_sections"]:
-                loaded_references.add(helper_path)
+                loaded_references.update(helper_paths)
                 result["reference_section_read_calls"].append(call["call_id"])
                 result["reference_loaded_chars"] += output.get(
                     "content_codepoints",
                     output["chars"],
                 )
             elif not failed:
-                loaded_references.add(helper_path)
+                loaded_references.update(helper_paths)
                 result["reference_list_calls"].append(call["call_id"])
             continue
 

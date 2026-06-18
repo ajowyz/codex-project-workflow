@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260614-05",
   "parent_candidate_id": "CAND-20260614-04",
   "created_at": "2026-06-14T02:43:00+08:00",
-  "status": "preflight_passed_pending_isolated_evaluation",
+  "status": "regression_failed",
   "base_commit": "679b905",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -46,7 +46,7 @@
     "verification_selected_codepoints": 2239
   },
   "evaluation": {
-    "status": "blocked_infrastructure",
+    "status": "failed",
     "required_regressions": [
       "E26:product_path",
       "E32:hard_trigger_overage",
@@ -60,10 +60,20 @@
       "REGRESSION-20260614-13:E32:hard_trigger_overage"
     ],
     "evidence_paths": [
-      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260614-14/manifest.json"
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260614-14/manifest.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-15/manifest.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-15/results/summary.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-15/assessment.json"
     ],
     "evidence_sha256": [
-      "1c7b71be7eb8347a7b8d56c0a8990371dfb97e697fa4ae317bc81c0714fb2882"
+      "1c7b71be7eb8347a7b8d56c0a8990371dfb97e697fa4ae317bc81c0714fb2882",
+      "c80c63774d57ced8303be39a43f722be0d8f1d2151dc8aa1bdae6d3303da0637",
+      "5c8aea686b718267b85fc58fea63945725d5bc229cd304e6127bcd0726c7f419",
+      "2566a61b4a749da4f0df7d1de35ae621e738c9de3848bdadbae704f2a3c48ca8"
+    ],
+    "failure_summary": [
+      "REGRESSION-20260618-15 passed E26:product_path and E32:hard_trigger_overage.",
+      "E35:four_hard_triggers failed because public research and the local dependency simulation started before scripted approval, and no multi-agent proposal/pending state was shown."
     ]
   },
   "activation": {
