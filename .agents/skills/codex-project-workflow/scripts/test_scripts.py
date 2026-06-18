@@ -94,7 +94,7 @@ class ScriptTests(unittest.TestCase):
 
     def test_current_candidate_budget_and_semantics(self):
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260618-07"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260618-08"
         )
         skill_path = candidate_dir / "SKILL.candidate.md"
         metrics = measure_context.skill_metrics(skill_path)
@@ -103,6 +103,7 @@ class ScriptTests(unittest.TestCase):
 
         skill_text = skill_path.read_text(encoding="utf-8")
         self.assertIn("multi-agent governance proposal", skill_text)
+        self.assertIn("matching explicit approval", skill_text)
         self.assertIn("Keep agents `proposed`", skill_text)
         self.assertIn("Change behavior in its existing owner", skill_text)
         self.assertIn("docs/IMPLEMENTATION_CONTRACT.md", skill_text)
@@ -124,14 +125,16 @@ class ScriptTests(unittest.TestCase):
                 len(unicodedata.normalize("NFC", selected)),
                 2500,
             )
-        self.assertIn("refusal or unavailable agents selects fallback", governance)
+        self.assertIn("refusal/unavailable selects fallback", governance)
         self.assertIn("Keep nonempty main work", governance)
         self.assertIn("do not search, execute, install/sim, write, or verify before it", governance)
         self.assertIn("Propose roles and mark agent state `proposed`", governance)
         self.assertIn("every approval packet", governance)
         self.assertIn("powershell -NoProfile -ExecutionPolicy Bypass -File tools/simulate_install.ps1", governance)
-        self.assertIn("No decision/unrelated approval is not refusal", governance)
-        self.assertIn("Exact action approval lets main", governance)
+        self.assertIn("Ask and wait", governance)
+        self.assertIn("No decision/unrelated approval is not action approval", governance)
+        self.assertIn("Exact matching action approval lets main", governance)
+        self.assertIn("local reads/planning", governance)
         self.assertIn("including approval follow-ups", governance)
         self.assertIn("aggregate unquoted line", governance)
         self.assertIn("added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)", governance)
@@ -150,7 +153,7 @@ class ScriptTests(unittest.TestCase):
             return hashlib.sha256(normalized).hexdigest()
 
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260618-07"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260618-08"
         )
         manifest = json.loads(
             (candidate_dir / "manifest.json").read_text(encoding="utf-8")
