@@ -94,7 +94,7 @@ class ScriptTests(unittest.TestCase):
 
     def test_current_candidate_budget_and_semantics(self):
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260618-06"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260618-07"
         )
         skill_path = candidate_dir / "SKILL.candidate.md"
         metrics = measure_context.skill_metrics(skill_path)
@@ -102,8 +102,8 @@ class ScriptTests(unittest.TestCase):
         self.assertLessEqual(metrics["body_chars"], 1500)
 
         skill_text = skill_path.read_text(encoding="utf-8")
-        self.assertIn("No decision stays `proposed`", skill_text)
-        self.assertIn("show one governance proposal before any web, command, or write", skill_text)
+        self.assertIn("multi-agent governance proposal", skill_text)
+        self.assertIn("Keep agents `proposed`", skill_text)
         self.assertIn("Change behavior in its existing owner", skill_text)
         self.assertIn("docs/IMPLEMENTATION_CONTRACT.md", skill_text)
         self.assertIn("do not create research/governance docs by default", skill_text)
@@ -125,15 +125,17 @@ class ScriptTests(unittest.TestCase):
                 2500,
             )
         self.assertIn("refusal or unavailable agents selects fallback", governance)
-        self.assertIn("Keep a nonempty main work package", governance)
-        self.assertIn("do not search, execute, install/simulate, write, or verify before it", governance)
-        self.assertIn("and every approval packet", governance)
-        self.assertIn("it is not refusal, unavailability, or fallback", governance)
+        self.assertIn("Keep nonempty main work", governance)
+        self.assertIn("do not search, execute, install/sim, write, or verify before it", governance)
+        self.assertIn("Propose roles and mark agent state `proposed`", governance)
+        self.assertIn("every approval packet", governance)
+        self.assertIn("powershell -NoProfile -ExecutionPolicy Bypass -File tools/simulate_install.ps1", governance)
+        self.assertIn("No decision/unrelated approval is not refusal", governance)
         self.assertIn("Exact action approval lets main", governance)
-        self.assertIn("including later approval follow-ups", governance)
-        self.assertIn("with unquoted numbers", governance)
+        self.assertIn("including approval follow-ups", governance)
+        self.assertIn("aggregate unquoted line", governance)
         self.assertIn("added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)", governance)
-        self.assertIn("helper's emitted NFC metrics", governance)
+        self.assertIn("helper-emitted NFC metrics", governance)
         self.assertIn("not project files", governance)
         self.assertIn("A contract is not a project file by default", verification)
         self.assertIn("before the first product invocation", verification)
@@ -148,7 +150,7 @@ class ScriptTests(unittest.TestCase):
             return hashlib.sha256(normalized).hexdigest()
 
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260618-06"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260618-07"
         )
         manifest = json.loads(
             (candidate_dir / "manifest.json").read_text(encoding="utf-8")

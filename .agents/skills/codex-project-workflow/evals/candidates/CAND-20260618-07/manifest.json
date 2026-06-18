@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "CAND-20260618-07",
+  "parent_candidate_id": "CAND-20260618-06",
+  "created_at": "2026-06-18T22:31:00+08:00",
+  "status": "preflight_passed_pending_isolated_evaluation",
+  "base_commit": "a3e8e4c",
+  "hash_algorithm": "sha256-nfc-lf-utf8",
+  "targets": [
+    {
+      "active_path": ".agents/skills/codex-project-workflow/SKILL.md",
+      "base_sha256": "3e1ad434124780ec1a47353705f291ab8314c2ba366886d5a8f76b3305c46bf1",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260618-07/SKILL.candidate.md",
+      "candidate_sha256": "9e3d0f236cfc877b4837bcd812b474ef3ec821fbbd40033e3c4b3794ed5b0bfa"
+    },
+    {
+      "active_path": ".agents/skills/codex-project-workflow/references/governance.md",
+      "base_sha256": "a9b9d4689ad3f8fd2b8d4c112bc784bbfd31834630f2232900362518e09e654a",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260618-07/references/governance.md",
+      "candidate_sha256": "4d046b7ada18e88fac51ed14c46974be3c066c2b73db20dfc2655f8f1088cbce"
+    },
+    {
+      "active_path": ".agents/skills/codex-project-workflow/references/verification.md",
+      "base_sha256": "45bf582d3da94319324630f2f944e498b2848c4a67e88a404b9cad9ef8877fc8",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260618-07/references/verification.md",
+      "candidate_sha256": "294787f58b729f1963e8a0c28fcc1eda335704e0ab60f9916f258847eb91ae87"
+    }
+  ],
+  "patch": {
+    "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260618-07/patch.diff",
+    "sha256": "7e7c7963b50da45b8d654484c601d9def349e7d47039f7b79d6bccf82e6b0c85"
+  },
+  "scope": [
+    "retain CAND-20260618-06 first-proposal and no-unapproved-action behavior",
+    "require the first governance proposal for three-stream tasks to be a multi-agent proposal that marks agent state proposed",
+    "require local PowerShell simulation approval packets to display the complete -NoProfile -ExecutionPolicy Bypass command"
+  ],
+  "preflight": {
+    "status": "pass",
+    "script_tests": "48 passed",
+    "behavior_fixtures": "36 cases, 148 assertions valid",
+    "full_fixtures": "31/31 cases, 61 variants valid",
+    "skill_body_chars": 1333,
+    "skill_description_chars": 620,
+    "governance_selected_codepoints": 2499,
+    "verification_selected_codepoints": 2237
+  },
+  "evaluation": {
+    "status": "pending_isolated_evaluation",
+    "required_regressions": [
+      "E26:product_path",
+      "E32:hard_trigger_overage",
+      "E35:four_hard_triggers"
+    ],
+    "source_failure_evidence": [
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-17/assessment.json"
+    ],
+    "source_failure_sha256": [
+      "8d38b7cc12cc8de1bb933a71c8b27cc23e77f3ef5b30b591ea315fcf0988521b"
+    ]
+  },
+  "activation": {
+    "allowed": false,
+    "requires_explicit_user_approval": true,
+    "invalidation_conditions": [
+      "base commit or any active target hash changes",
+      "candidate, patch, target list, or scope changes",
+      "required regression evidence changes or regresses",
+      "a hard failure or evaluator contamination is detected",
+      "activation approval refers to a different candidate id or hash set"
+    ]
+  }
+}

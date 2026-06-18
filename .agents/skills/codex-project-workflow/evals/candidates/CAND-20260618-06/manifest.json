@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260618-06",
   "parent_candidate_id": "CAND-20260614-05",
   "created_at": "2026-06-18T17:31:00+08:00",
-  "status": "preflight_passed_regression_blocked_infrastructure",
+  "status": "regression_failed",
   "base_commit": "13f833e",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -46,7 +46,7 @@
     "verification_selected_codepoints": 2237
   },
   "evaluation": {
-    "status": "blocked_infrastructure",
+    "status": "failed",
     "required_regressions": [
       "E26:product_path",
       "E32:hard_trigger_overage",
@@ -59,14 +59,24 @@
       "2566a61b4a749da4f0df7d1de35ae621e738c9de3848bdadbae704f2a3c48ca8"
     ],
     "evidence_paths": [
-      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-16/manifest.json"
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-16/manifest.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-17/manifest.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-17/results/summary.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-17/assessment.json"
     ],
     "evidence_sha256": [
-      "56e9b544c62d67c742a51a35fd45c51f50078c4ef7ea7c45a474abd39593cce4"
+      "56e9b544c62d67c742a51a35fd45c51f50078c4ef7ea7c45a474abd39593cce4",
+      "c29dcf40db73f255cb45e8e60410b105db869a1b2ce93c9b89bf16e2c56643c3",
+      "bb4c458871dafb115936206adfddcad0c1d8345f4469c41c4eaf1e03a439d04e",
+      "8d38b7cc12cc8de1bb933a71c8b27cc23e77f3ef5b30b591ea315fcf0988521b"
     ],
     "blocker_summary": [
       "REGRESSION-20260618-16 attempted three consecutive E26/E32/E35 batches from frozen commit d526715dba160275e0eb273b41fc8ec9d1cdfc92.",
       "All nine threads returned systemError before first model output, so no CAND-20260618-06 behavior was observed or scored."
+    ],
+    "failure_summary": [
+      "REGRESSION-20260618-17 passed E26:product_path and E32:hard_trigger_overage.",
+      "E35:four_hard_triggers failed because no multi-agent proposal/pending state was shown, the dependency simulation approval packet omitted -NoProfile, and no implementation or formal entry verification occurred."
     ]
   },
   "activation": {
