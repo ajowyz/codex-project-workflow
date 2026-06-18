@@ -162,6 +162,7 @@ class ScriptTests(unittest.TestCase):
             {
                 "preflight_passed_pending_isolated_evaluation",
                 "preflight_passed_regression_blocked_infrastructure",
+                "regression_failed",
             },
         )
 
