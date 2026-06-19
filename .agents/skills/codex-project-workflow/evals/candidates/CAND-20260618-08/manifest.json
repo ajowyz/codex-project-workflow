@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260618-08",
   "parent_candidate_id": "CAND-20260618-07",
   "created_at": "2026-06-18T22:48:00+08:00",
-  "status": "preflight_passed_regression_blocked_infrastructure",
+  "status": "preflight_passed_regression_failed",
   "base_commit": "3e099f3",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -47,7 +47,7 @@
     "verification_selected_codepoints": 2239
   },
   "evaluation": {
-    "status": "blocked_infrastructure",
+    "status": "failed",
     "required_regressions": [
       "E26:product_path",
       "E32:hard_trigger_overage",
@@ -61,16 +61,25 @@
     ],
     "evidence_paths": [
       ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-19/manifest.json",
-      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-19/results/summary.json"
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-19/results/summary.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-20/manifest.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-20/results/summary.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-20/assessment.json"
     ],
     "evidence_sha256": [
       "93277fe06a24de5b9ee901d1b2ebbb90b00dd8fc8ade089c470777f202715ce7",
-      "faef342e4a2dc47b715f61ea9af98971aac2a2f0866a6f19d80d9efdf3ca137c"
+      "faef342e4a2dc47b715f61ea9af98971aac2a2f0866a6f19d80d9efdf3ca137c",
+      "2f9c091857fb9f87e602a5ae1e52f75fdfbd6b939fa8329b9b0ac5b8c4c71808",
+      "289492357781825ec72c5e46100932bb8a144c2d0b73a6058f73d22db5fcc6a4",
+      "e75c0c02a5075e07e557a6f843625fd79f1522ca5330ee2f9cbfa94212395e65"
     ],
     "blocker_summary": [
       "REGRESSION-20260618-19 ran from frozen CAND-20260618-08 activation commit 96d69ea5208355f4ff45e725eabd9d867c0e8014.",
       "E26:product_path and E32:hard_trigger_overage completed with expected file scopes, no evaluator oracle access, and accurate E32 overage reporting.",
-      "E35:four_hard_triggers returned systemError before first model output in three independent worktrees, so the required CAND-20260618-08 behavior was not observed or scored."
+      "E35:four_hard_triggers returned systemError before first model output in three independent worktrees, so the required CAND-20260618-08 behavior was not observed or scored.",
+      "REGRESSION-20260619-20 reran E35 from the same frozen activation commit and produced a valid behavioral sample.",
+      "E35 waited for matching web/search and command/install-sim approvals, but stopped after read-only path inspection because it required an extra implementation/verification approval after the displayed main-agent write scope.",
+      "E35 therefore changed no files and did not run python app.py --self-test; overage reporting and multi_agent.pending_state passed after collector compatibility was corrected."
     ]
   },
   "activation": {

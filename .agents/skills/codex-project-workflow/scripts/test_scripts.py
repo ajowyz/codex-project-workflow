@@ -94,7 +94,7 @@ class ScriptTests(unittest.TestCase):
 
     def test_current_candidate_budget_and_semantics(self):
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260618-08"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260619-09"
         )
         skill_path = candidate_dir / "SKILL.candidate.md"
         metrics = measure_context.skill_metrics(skill_path)
@@ -102,12 +102,13 @@ class ScriptTests(unittest.TestCase):
         self.assertLessEqual(metrics["body_chars"], 1500)
 
         skill_text = skill_path.read_text(encoding="utf-8")
-        self.assertIn("multi-agent governance proposal", skill_text)
+        self.assertIn("multi-agent proposal", skill_text)
         self.assertIn("matching explicit approval", skill_text)
-        self.assertIn("Keep agents `proposed`", skill_text)
-        self.assertIn("Change behavior in its existing owner", skill_text)
+        self.assertIn("keeps agents `proposed`", skill_text)
+        self.assertIn("without another approval", skill_text)
+        self.assertIn("Change behavior in existing owner", skill_text)
         self.assertIn("docs/IMPLEMENTATION_CONTRACT.md", skill_text)
-        self.assertIn("do not create research/governance docs by default", skill_text)
+        self.assertIn("no research/governance docs by default", skill_text)
 
         governance = (
             candidate_dir / "references" / "governance.md"
@@ -128,12 +129,13 @@ class ScriptTests(unittest.TestCase):
         self.assertIn("refusal/unavailable selects fallback", governance)
         self.assertIn("Keep nonempty main work", governance)
         self.assertIn("do not search, execute, install/sim, write, or verify before it", governance)
-        self.assertIn("Propose roles and mark agent state `proposed`", governance)
-        self.assertIn("every approval packet", governance)
+        self.assertIn("Propose roles and mark state `proposed`", governance)
+        self.assertIn("approval packets", governance)
         self.assertIn("powershell -NoProfile -ExecutionPolicy Bypass -File tools/simulate_install.ps1", governance)
         self.assertIn("Ask and wait", governance)
         self.assertIn("No decision/unrelated approval is not action approval", governance)
-        self.assertIn("Exact matching action approval lets main", governance)
+        self.assertIn("Exact action approval lets main", governance)
+        self.assertIn("displayed-scope main implementation/verification continue", governance)
         self.assertIn("local reads/planning", governance)
         self.assertIn("including approval follow-ups", governance)
         self.assertIn("aggregate unquoted line", governance)
@@ -153,7 +155,7 @@ class ScriptTests(unittest.TestCase):
             return hashlib.sha256(normalized).hexdigest()
 
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260618-08"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260619-09"
         )
         manifest = json.loads(
             (candidate_dir / "manifest.json").read_text(encoding="utf-8")
@@ -163,8 +165,10 @@ class ScriptTests(unittest.TestCase):
         self.assertIn(
             manifest["status"],
             {
+                "draft_pending_preflight",
                 "preflight_passed_pending_isolated_evaluation",
                 "preflight_passed_regression_blocked_infrastructure",
+                "preflight_passed_regression_failed",
                 "regression_failed",
             },
         )
@@ -484,7 +488,7 @@ class ScriptTests(unittest.TestCase):
                 "call_id": "list",
                 "name": "shell_command",
                 "arguments": {
-                    "command": (
+                    "cmd": (
                         "python .agents/skills/codex-project-workflow/"
                         "scripts/read_reference.py research"
                     )
@@ -658,6 +662,17 @@ class ScriptTests(unittest.TestCase):
             [],
         )
         self.assertEqual("proposed", clean["pending_state"])
+        alternate = collect_smoke.agent_authorization_trace(
+            [
+                "<codex_delegation><input>No decision is given on the "
+                "proposed agents. Keep the proposal pending.</input>"
+                "</codex_delegation>"
+            ],
+            ["The proposed agents remain pending and were not started."],
+            "",
+            [],
+        )
+        self.assertEqual("proposed", alternate["pending_state"])
         fallback = collect_smoke.agent_authorization_trace(
             [
                 "<codex_delegation><input>No decision is given on the "

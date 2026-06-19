@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "CAND-20260619-09",
+  "parent_candidate_id": "CAND-20260618-08",
+  "created_at": "2026-06-19T12:55:00+08:00",
+  "status": "preflight_passed_pending_isolated_evaluation",
+  "base_commit": "3e099f3",
+  "hash_algorithm": "sha256-nfc-lf-utf8",
+  "targets": [
+    {
+      "active_path": ".agents/skills/codex-project-workflow/SKILL.md",
+      "base_sha256": "3e1ad434124780ec1a47353705f291ab8314c2ba366886d5a8f76b3305c46bf1",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260619-09/SKILL.candidate.md",
+      "candidate_sha256": "56340e5e909e2b16a3e8dd6476ca6e5df0ac7df2f2e28fbbea9cadb71538bf58"
+    },
+    {
+      "active_path": ".agents/skills/codex-project-workflow/references/governance.md",
+      "base_sha256": "a9b9d4689ad3f8fd2b8d4c112bc784bbfd31834630f2232900362518e09e654a",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260619-09/references/governance.md",
+      "candidate_sha256": "286cb5c632e813da021eb727263195845b59e0251556a66e88decaff86f4c604"
+    },
+    {
+      "active_path": ".agents/skills/codex-project-workflow/references/verification.md",
+      "base_sha256": "45bf582d3da94319324630f2f944e498b2848c4a67e88a404b9cad9ef8877fc8",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260619-09/references/verification.md",
+      "candidate_sha256": "294787f58b729f1963e8a0c28fcc1eda335704e0ab60f9916f258847eb91ae87"
+    }
+  ],
+  "patch": {
+    "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260619-09/patch.diff",
+    "sha256": "7adf8027702cf21a9bad8d58148c293ab75224596bb6da1f3953090c672a29a2"
+  },
+  "scope": [
+    "retain CAND-20260618-08 matching explicit approval behavior for web/search and command/install-sim",
+    "after a no-decision multi-agent reply, keep agents proposed and continue displayed-scope main-agent implementation and verification without requesting a separate implementation approval",
+    "make helper reference loading observable as one helper command per triggered protocol",
+    "preserve CAND-20260618-08 implementation ownership, contract, and formal-entry verification rules"
+  ],
+  "preflight": {
+    "status": "pass",
+    "script_tests": "48 passed",
+    "behavior_fixtures": "36 cases, 148 assertions valid",
+    "full_fixtures": "31/31 cases, 61 variants valid",
+    "skill_body_chars": 1486,
+    "skill_description_chars": 620,
+    "governance_selected_codepoints": 2477,
+    "verification_selected_codepoints": 2239
+  },
+  "evaluation": {
+    "status": "pending",
+    "required_regressions": [
+      "E26:product_path",
+      "E32:hard_trigger_overage",
+      "E35:four_hard_triggers"
+    ],
+    "source_failure_evidence": [
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-20/assessment.json"
+    ],
+    "source_failure_sha256": [
+      "e75c0c02a5075e07e557a6f843625fd79f1522ca5330ee2f9cbfa94212395e65"
+    ],
+    "evidence_paths": [],
+    "evidence_sha256": [],
+    "blocker_summary": [
+      "REGRESSION-20260619-20 proved CAND-20260618-08 no longer has the previous premature web/search or install-sim approval bug.",
+      "The remaining E35 failure is over-conservatism: after no-decision on proposed agents, the run stopped before displayed-scope main-agent implementation and formal-entry verification.",
+      "CAND-20260619-09 is a minimal wording candidate to remove that extra implementation approval requirement while preserving action-specific web and install approvals."
+    ]
+  },
+  "activation": {
+    "allowed": false,
+    "requires_explicit_user_approval": true,
+    "invalidation_conditions": [
+      "base commit or any active target hash changes",
+      "candidate, patch, target list, or scope changes",
+      "required regression evidence changes or regresses",
+      "a hard failure or evaluator contamination is detected",
+      "activation approval refers to a different candidate id or hash set"
+    ]
+  }
+}

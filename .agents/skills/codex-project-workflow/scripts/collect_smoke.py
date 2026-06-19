@@ -105,6 +105,13 @@ def normalize_path_text(value):
     return re.sub(r"/+", "/", value.replace("\\", "/"))
 
 
+def command_argument(arguments):
+    if not isinstance(arguments, dict):
+        return ""
+    command = arguments.get("command", arguments.get("cmd", ""))
+    return command if isinstance(command, str) else ""
+
+
 def evaluation_isolation_trace(
     tool_calls,
     thread_id,
@@ -159,8 +166,8 @@ def evaluation_isolation_trace(
         if not normalized_project or not isinstance(arguments, dict):
             continue
         workdir = arguments.get("workdir")
-        command = arguments.get("command", "")
-        if not isinstance(workdir, str) or not isinstance(command, str):
+        command = command_argument(arguments)
+        if not isinstance(workdir, str):
             continue
         normalized_workdir = normalize_path_text(
             str(Path(workdir).resolve())
@@ -208,7 +215,7 @@ def reference_call_trace(tool_calls, trace_skill_dir):
         arguments = call.get("arguments")
         serialized = normalize_path_text(json.dumps(arguments, ensure_ascii=False))
         output = call.get("output")
-        command = arguments.get("command", "") if isinstance(arguments, dict) else ""
+        command = command_argument(arguments)
         helper_matches = re.findall(
             r"read_reference\.py[\"']?\s+([A-Za-z0-9_.-]+)",
             command,
@@ -372,6 +379,7 @@ def agent_authorization_trace(
         re.search(
             r"(?i)(?:remains?|stays?) `?proposed`?|"
             r"proposal (?:is |remains? )?pending|"
+            r"proposed agents? (?:remain|remains|stays?) pending|"
             r"keep (?:that |the )?proposal pending",
             assistant_text,
         )
