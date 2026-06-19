@@ -14,16 +14,15 @@ Identify the goal, completion tests, existing entry points, state authority, per
 
 ## Execution Rules
 
-- Create a formal implementation contract before the first relevant write when any trigger applies: production entry or routing changes; state authority, persistence, schema, or migration changes; architecture boundary or ownership changes; new, copied, or replacement core capability; a direct alternate final-output path; explicit user path proof; or high-impact commitment.
-- For a generated final delivery that also writes product state or persistence, save the frozen contract to `docs/IMPLEMENTATION_CONTRACT.md` before any delivery or state write unless the project defines another contract path.
-- Before freezing that contract, identify the user-invocable entry from root-level CLI, UI, API, or registration evidence and record its exact invocation. An internal function is never the product entry merely because it reaches the desired core path.
-- Freeze the contract from independent evidence before writing. If the source, version, entry, state update, save path, or ownership cannot be proven, stop as implementation-path unverified; do not borrow a sibling, neighboring fixture, helper, or post-hoc contract.
-- File count, module count, tests plus code, and mechanical cross-file edits do not trigger a formal contract by themselves. When every trigger is false, keep a one-to-three-line internal path constraint.
-- Bind contract claims to independent project evidence such as confirmed docs, registration points, callers, runtime entry points, or state definitions. Preserve later contract differences.
-- Trace the existing user entry. Create, generate, export, or save requests never authorize changing entry wiring, routing, core code, or tests; that requires a separate explicit repair request. Internal calls cannot replace the entry. If it bypasses the core path, stop before contract, delivery, state, or product-code writes and report implementation-path unverified.
-- Verify result and implementation path separately. An output can be correct while the implementation is unacceptable.
-- For recovery, read compact `PLAN.md` first. The initial ADR projection is exactly `id`, `title`, `governance_state`, `replaces_ids`, `replaced_by_id`, and `body_anchor`. Extract only headings and allowed metadata lines; do not sample ledger lines or bodies to discover format. Load only referenced bodies afterward.
-- For context accounting, one `##` block plus all nested `###` content is one section. Report the enclosing H2 count, not the nested-heading count.
+- Before relevant writes, freeze an evidence-bound contract in the execution trace for routing, state/schema/migration, architecture/ownership, core capability, alternate output, path proof, or high impact. A contract is not a project file by default.
+- If a generated delivery invokes a product that writes state or persistence, create `docs/IMPLEMENTATION_CONTRACT.md` before the first product invocation, even when product code is unchanged. Otherwise path-proof, process-risk, and code-only owner-change contracts stay non-file unless the user or project requires a file.
+- Identify the user-invocable CLI, UI, API, or registration entry before freezing. Bind claims to independent docs, registrations, callers, entries, or state definitions. If entry, state, save path, or ownership is unproven, stop as implementation-path unverified; never borrow neighboring, helper, shadow, or post-hoc evidence.
+- File/module count, tests plus code, and mechanical cross-file edits do not trigger a contract. If every trigger is false, keep a one-to-three-line path constraint.
+- Map requested behavior to its existing responsibility owner. Change each relevant owner; do not duplicate owner logic in callers, entries, tests, helpers, or output paths. For bounded work inspect only the target, owners/callers, and adjacent tests.
+- Trace the existing user entry. Generate/export/save requests do not authorize repairing entry wiring or core code. If the entry bypasses the core path, stop before contract, delivery, state, or product-code writes.
+- Verify result and implementation path separately. Correct output does not prove acceptable implementation.
+- For recovery, read compact `PLAN.md` first. The initial ADR projection is exactly `id`, `title`, `governance_state`, `replaces_ids`, `replaced_by_id`, and `body_anchor`. Extract only headings and allowed metadata lines; load referenced bodies afterward.
+- One `##` block plus nested `###` content is one context section.
 
 ## Stop Conditions
 
@@ -31,8 +30,8 @@ Stop when completion assertions pass, the required path evidence exists, and rem
 
 ## Output Requirements
 
-Report user action, product entry point, core path, state or persistence change, result, tests, auxiliary scripts, deviations, and unverified paths. If path evidence is insufficient, say: result verified, implementation path unverified.
+Report user action, product entry, core path, state/persistence change, result, tests, auxiliary scripts, deviations, and unverified paths. If evidence is insufficient, say: result verified, implementation path unverified.
 
 ## Failure And Degradation
 
-Do not declare complete after a bypass, post-hoc contract, mock-only path proof, hidden branch, hard-coded result, or unapproved external script. Revert to the confirmed path, request a contract change, or report the limitation.
+Do not declare complete after a bypass, post-hoc contract, mock-only proof, hidden branch, hard-coded result, or unapproved external script. Revert to the confirmed path, request a contract change, or report the limitation.

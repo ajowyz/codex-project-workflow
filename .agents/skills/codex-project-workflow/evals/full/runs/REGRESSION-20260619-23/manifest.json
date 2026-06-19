@@ -1,0 +1,27 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260619-23",
+  "evaluation_scope": "targeted_regression",
+  "status": "assessed_passed",
+  "created_at": "2026-06-19T18:40:00+08:00",
+  "completed_at": "2026-06-19T18:44:44+08:00",
+  "fixture_commit": "c0ac4dac1963d133ea1c784b8dccf9d349070341",
+  "candidate_id": "CAND-20260619-09",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260619-23\\workspaces\\setup-state.json",
+  "runs": [
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019edf79-9dbb-75b1-bdc2-f0a5324886d7",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\11fb\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019edf79-eac2-7f23-85a5-a7f3cb799eaf",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\7f44\\efficiently use codex"
+    }
+  ]
+}

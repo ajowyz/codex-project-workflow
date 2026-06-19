@@ -14,14 +14,15 @@ Identify the action, affected scope, reversibility, data involved, permissions, 
 
 ## Execution Rules
 
-- Ask only when the decision blocks progress or has high impact. Continue safe, independent work while waiting when possible.
-- For third-party downloads, record a pass, fail, or unknown outcome for source, maintenance, license, integrity, necessity, and known risk before use.
-- Before an install, external execution, or requested install substitute, show the exact command and scope and obtain explicit approval. Approval for one action does not authorize another.
-- For internal data, send only the minimum approved, redacted content to approved destinations.
-- Suitable multi-agent work enters `proposed` even when permission has not yet been granted. Present count and roles, task boundaries, read/write ownership, parallel and main-agent work, benefit, token/time/coordination cost, conflict/context/duplication risk, and the single-agent alternative. Ask for an explicit decision. Only explicit acceptance authorizes startup; only explicit refusal or unavailable agents selects fallback.
-- Durable rule changes remain isolated candidates. Bind approval to target, scope, base version, patch hash, evaluation evidence, and invalidation conditions.
-- Never let context or speed budgets suppress a triggered safety or authorization check.
-- When hard triggers exceed a stated context budget, report `added_codepoints`, `added_sections`, `reason`, and `unknown_resolved`.
+- Ask only when a decision blocks progress or has high impact. Continue safe independent work when allowed.
+- Protocol records stay in trace/final, not project files, unless explicitly required.
+- Before third-party use, record pass/fail/unknown for source, maintenance, license, integrity, necessity, risk.
+- Before install/external execution/substitute, show exact command/scope and obtain explicit approval. One approval authorizes only that action.
+- Send only approved, minimum, redacted internal data to approved destinations.
+- When research, dependency, and implementation are all requested, show a multi-agent governance proposal; do not search, execute, install/sim, write, or verify before it. Prep reads only named budget, safety, task, dependency, path-fact files. Keep nonempty main work; until agents are accepted, main owns tracing, implementation, and final verification. Propose roles and mark state `proposed`; include boundaries, ownership, parallel work, benefit, costs/risks, fallback, and approval packets: exact sanitized query, public targets/fields/purpose/phase, command/scope. For PowerShell simulation, display `powershell -NoProfile -ExecutionPolicy Bypass -File tools/simulate_install.ps1`. Ask and wait. No decision/unrelated approval is not action approval, refusal, unavailability, or fallback. Exact action approval lets main do only that action without agents. No-decision keeps agents `proposed`; displayed-scope main implementation/verification continue without another approval. Acceptance starts agents; refusal/unavailable selects fallback. Pending work is local reads/planning, displayed-scope main, independent, or action-approved work only.
+- Keep durable rule changes in isolated candidates bound to target, scope, base, patch hash, evidence, and invalidation conditions.
+- Safety/authorization override context or speed budgets.
+- For hard-trigger overage, sum helper-emitted NFC metrics; never reconstruct text. Use `added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)` and `added_sections=max(0, emitted_H2_blocks-budget_H2_blocks)`. Count repeated/same-titled H2 outputs separately; H3s add no sections. Every final response, including approval follow-ups, repeats one aggregate unquoted line: `added_codepoints=N, added_sections=N, reason=TEXT, unknown_resolved=TEXT`.
 
 ## Stop Conditions
 
@@ -29,7 +30,7 @@ Stop governance work after the decision is recorded with scope and expiry, the a
 
 ## Output Requirements
 
-Present the decision in plain language with the recommended option, alternatives, consequences, and what work can continue without approval.
+Give the decision, recommendation, alternatives, consequences, and work allowed without approval.
 
 ## Failure And Degradation
 

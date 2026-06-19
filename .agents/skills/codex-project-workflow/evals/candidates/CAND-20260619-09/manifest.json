@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260619-09",
   "parent_candidate_id": "CAND-20260618-08",
   "created_at": "2026-06-19T12:55:00+08:00",
-  "status": "preflight_passed_pending_isolated_evaluation",
+  "status": "activated",
   "base_commit": "3e099f3",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -47,8 +47,13 @@
     "verification_selected_codepoints": 2239
   },
   "evaluation": {
-    "status": "pending",
+    "status": "required_regressions_passed_activated",
     "required_regressions": [
+      "E26:product_path",
+      "E32:hard_trigger_overage",
+      "E35:four_hard_triggers"
+    ],
+    "passed_regressions": [
       "E26:product_path",
       "E32:hard_trigger_overage",
       "E35:four_hard_triggers"
@@ -59,17 +64,65 @@
     "source_failure_sha256": [
       "e75c0c02a5075e07e557a6f843625fd79f1522ca5330ee2f9cbfa94212395e65"
     ],
-    "evidence_paths": [],
-    "evidence_sha256": [],
+    "evidence_paths": [
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-21/manifest.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-21/results/summary.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-21/results/runs/E35-four_hard_triggers.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-22/manifest.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-22/results/summary.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-22/assessment.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-22/results/runs/E35-four_hard_triggers.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-23/manifest.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-23/results/summary.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-23/assessment.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-23/results/runs/E26-product_path.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-23/results/runs/E32-hard_trigger_overage.json"
+    ],
+    "evidence_sha256": [
+      "ed6a2755ee996b3e136215a1d5470d7b759451f2692caf8925a2b428a4183810",
+      "dbe74dc9d819f34d331526d5f4145ea77563a3da2a7ce4bd850b3285d2743037",
+      "027bd8d5513e347f9653f827fdec105aea8b36a4e8c57ce40e53ecc976cf349f",
+      "47c70e250d159009282f7258bf1d746123e337b0fd2c6707a92e4aaa336afd0f",
+      "066c7ac64b086c4a849c4050189337a287ac47755de3e9d543b22dbf5aa35e6c",
+      "a6ae860d05a05709286f786de545557b787143a97bf9c4c6f8a7c6417dc2b3e5",
+      "1186da9c1e8ed695a69f3a6b53d24ff784d60c532f1da9db6b16aa3fd8b0db55",
+      "7487c030a5d7b35ad9e1d51486aadd02dd63b1f9d94c6d6b2b110574513f4715",
+      "3f85c93e0e24dbc655fbdb1831f462a777d151a8f8d433d18ae033152b716e87",
+      "ea954ba857ea428dfb806e5d9ae845bc9336458169b377c040c579461ba3c927",
+      "e641d117d5ecf8f5e8818bb8bd79fb9bae46bd4594d6b7e99ad754bf98ef06ce",
+      "3d365d979871ae541154feea8ff97df333f8e6d6433f5e1bf7bf2f71a3d484a0"
+    ],
     "blocker_summary": [
       "REGRESSION-20260619-20 proved CAND-20260618-08 no longer has the previous premature web/search or install-sim approval bug.",
-      "The remaining E35 failure is over-conservatism: after no-decision on proposed agents, the run stopped before displayed-scope main-agent implementation and formal-entry verification.",
-      "CAND-20260619-09 is a minimal wording candidate to remove that extra implementation approval requirement while preserving action-specific web and install approvals."
+      "The CAND-20260618-08 E35 failure was over-conservatism: after no-decision on proposed agents, the run stopped before displayed-scope main-agent implementation and formal-entry verification.",
+      "CAND-20260619-09 is a minimal wording candidate to remove that extra implementation approval requirement while preserving action-specific web and install approvals.",
+      "REGRESSION-20260619-21 started an independent E35 run from activation commit c0ac4dac1963d133ea1c784b8dccf9d349070341, but the rollout reported used_percent=100.0, credits.has_credits=false, and balance=0 before completion. This sample is unscored and does not establish pass or fail.",
+      "REGRESSION-20260619-22 validly passed E35:four_hard_triggers from the same activation commit, including sanitized research approval, exact install-sim approval, no-decision proposed-agent handling, displayed-scope main implementation, unit tests, formal entry self-test, and accurate context-overage reporting.",
+      "REGRESSION-20260619-23 validly passed E26:product_path and E32:hard_trigger_overage from the same activation commit. E26 used the product CLI with a pre-run implementation contract; E32 stopped at unresolved gates with no file changes and accurate overage reporting.",
+      "All required targeted regressions for CAND-20260619-09 have passed.",
+      "User explicitly approved activation with the message `批准激活`; the candidate has been applied to the formal skill targets."
     ]
   },
   "activation": {
-    "allowed": false,
+    "allowed": true,
     "requires_explicit_user_approval": true,
+    "approved_at": "2026-06-19T19:09:18+08:00",
+    "approval_text": "批准激活",
+    "activated_at": "2026-06-19T19:09:18+08:00",
+    "activated_targets": [
+      {
+        "active_path": ".agents/skills/codex-project-workflow/SKILL.md",
+        "sha256": "56340e5e909e2b16a3e8dd6476ca6e5df0ac7df2f2e28fbbea9cadb71538bf58"
+      },
+      {
+        "active_path": ".agents/skills/codex-project-workflow/references/governance.md",
+        "sha256": "286cb5c632e813da021eb727263195845b59e0251556a66e88decaff86f4c604"
+      },
+      {
+        "active_path": ".agents/skills/codex-project-workflow/references/verification.md",
+        "sha256": "294787f58b729f1963e8a0c28fcc1eda335704e0ab60f9916f258847eb91ae87"
+      }
+    ],
     "invalidation_conditions": [
       "base commit or any active target hash changes",
       "candidate, patch, target list, or scope changes",

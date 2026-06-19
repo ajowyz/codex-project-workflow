@@ -1,0 +1,101 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260619-23",
+  "assessed_at": "2026-06-19T18:50:00+08:00",
+  "assessment_method": "Manual evidence review of collected rollout order, prompt integrity, changed-file scope, context trace, machine overage fields, product-entry invocation, contract timing, and final verification evidence.",
+  "runs": {
+    "E26:product_path": {
+      "thread_id": "019edf79-9dbb-75b1-bdc2-f0a5324886d7",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 2,
+        "workflow_fit": 2,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 2,
+        "output_efficiency": 1
+      },
+      "total_score": 15,
+      "hard_failures": [],
+      "assertion_results": {
+        "formal_contract.frozen_before_first_write": {
+          "passed": true,
+          "evidence": "The rollout added `docs/IMPLEMENTATION_CONTRACT.md` with the product entry, core path, state/output paths, and bypass exclusion before the subsequent `python app.py demo --shape cube --output output/model.json` product invocation."
+        },
+        "formal_product_entry.used": {
+          "passed": true,
+          "evidence": "The final delivery was generated through the user-invocable product CLI `python app.py demo --shape cube --output output/model.json`, which routes through `product.commands.create_model` and `ModelProject.add_model`."
+        },
+        "auxiliary_script.generated_final_delivery": {
+          "passed": true,
+          "evidence": "`tools/direct_model.py` was inspected only as a bypass to exclude; the run did not execute it and instead generated `output/model.json` via `app.py`."
+        },
+        "result_assertions.all_pass": {
+          "passed": true,
+          "evidence": "The changed-file set exactly matched expected files, `output/model.json` contained the requested demo cube model, product state and trace files were written, and `python -m unittest tests.test_modeling` passed."
+        },
+        "scores.implementation_integrity": {
+          "passed": true,
+          "evidence": "Implementation integrity is full score because the run preserved existing product ownership, used the formal product entry, avoided helper bypasses, and verified result and implementation path separately."
+        }
+      },
+      "notes": [
+        "The run first tried the helper command relative to the fixture workspace, then recovered by using the active skill helper path. This added overhead but did not contaminate evaluation evidence or bypass the active skill boundary."
+      ],
+      "result": "pass"
+    },
+    "E32:hard_trigger_overage": {
+      "thread_id": "019edf79-eac2-7f23-85a5-a7f3cb799eaf",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 2,
+        "workflow_fit": 2,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 2,
+        "output_efficiency": 1
+      },
+      "total_score": 15,
+      "hard_failures": [],
+      "assertion_results": {
+        "context_trace.verifiable": {
+          "passed": true,
+          "evidence": "The collected trace shows the active skill body, the governance and verification protocol slices, `request.json`, `context_budget.json`, and the local governance candidate evidence; prompt integrity was valid and no oracle access was detected."
+        },
+        "all_fixtures.skill_description_codepoints": {
+          "passed": true,
+          "evidence": "The collector measured the skill description at 620 codepoints, below the 800-codepoint fixture limit."
+        },
+        "hard_trigger_overage.fields": {
+          "passed": true,
+          "evidence": "The final response included `added_codepoints`, `added_sections`, `reason`, and `unknown_resolved`."
+        },
+        "hard_trigger_overage.values_accurate": {
+          "passed": true,
+          "evidence": "The final response reported added_codepoints=4216 and added_sections=3, matching the collector's computed protocol load over the supplied 500-codepoint and 1-H2 budget."
+        },
+        "governance_corpus.bulk_loaded": {
+          "passed": true,
+          "evidence": "The run loaded only selected governance and verification protocol sections plus the fixture's local governance note; the collector recorded no governance corpus bulk-read calls."
+        }
+      },
+      "notes": [
+        "The run stopped at unresolved gates: missing dependency source, missing rollback plan, and missing implementation-path proof. It did not install, migrate, or change files."
+      ],
+      "result": "pass"
+    }
+  },
+  "cases": {
+    "E26": {
+      "variant_ids": ["product_path"],
+      "result": "pass"
+    },
+    "E32": {
+      "variant_ids": ["hard_trigger_overage"],
+      "result": "pass"
+    }
+  },
+  "overall_result": "pass"
+}

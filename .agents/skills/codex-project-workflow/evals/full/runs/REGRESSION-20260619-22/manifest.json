@@ -1,0 +1,21 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260619-22",
+  "evaluation_scope": "targeted_regression",
+  "status": "assessed_passed",
+  "created_at": "2026-06-19T18:27:00+08:00",
+  "completed_at": "2026-06-19T18:31:06+08:00",
+  "fixture_commit": "c0ac4dac1963d133ea1c784b8dccf9d349070341",
+  "candidate_id": "CAND-20260619-09",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260619-22\\workspaces\\setup-state.json",
+  "runs": [
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019edf6c-544a-74d0-81eb-34a96a45add6",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\15ac\\efficiently use codex"
+    }
+  ]
+}

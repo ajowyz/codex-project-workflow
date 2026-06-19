@@ -77,7 +77,8 @@ class ScriptTests(unittest.TestCase):
         skill_text = (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8")
         self.assertTrue(
             "Preserve ownership" in skill_text
-            or "Change behavior in its existing owner" in skill_text,
+            or "Change behavior in its existing owner" in skill_text
+            or "Change behavior in existing owner" in skill_text,
         )
         governance = (SKILL_DIR / "references" / "governance.md").read_text(
             encoding="utf-8"
@@ -160,17 +161,22 @@ class ScriptTests(unittest.TestCase):
         manifest = json.loads(
             (candidate_dir / "manifest.json").read_text(encoding="utf-8")
         )
-        self.assertFalse(manifest["activation"]["allowed"])
         self.assertEqual("sha256-nfc-lf-utf8", manifest["hash_algorithm"])
         self.assertIn(
             manifest["status"],
             {
+                "activated",
                 "draft_pending_preflight",
                 "preflight_passed_pending_isolated_evaluation",
                 "preflight_passed_regression_blocked_infrastructure",
                 "preflight_passed_regression_failed",
+                "regression_passed_pending_activation_approval",
                 "regression_failed",
             },
+        )
+        self.assertEqual(
+            manifest["status"] == "activated",
+            manifest["activation"]["allowed"],
         )
 
         active_states = set()
@@ -673,6 +679,17 @@ class ScriptTests(unittest.TestCase):
             [],
         )
         self.assertEqual("proposed", alternate["pending_state"])
+        concise = collect_smoke.agent_authorization_trace(
+            [
+                "<codex_delegation><input>No decision is given on the "
+                "proposed agents. Keep the proposal pending.</input>"
+                "</codex_delegation>"
+            ],
+            ["Agents remain pending and were not started."],
+            "",
+            [],
+        )
+        self.assertEqual("proposed", concise["pending_state"])
         fallback = collect_smoke.agent_authorization_trace(
             [
                 "<codex_delegation><input>No decision is given on the "

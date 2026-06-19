@@ -7,17 +7,18 @@ description: Structure and govern Codex work for new or ambiguous projects, mult
 
 ## Route
 
-1. Inspect first. Keep goal, constraints, and completion test. Ask only blocking decisions.
-2. From the repo root containing this skill, run `python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`. Use `research` for unstable evidence/options; `governance` for third-party assets, installs, execution, private networking, approvals, agents, or durable changes; `verification` for writes, product-generated outputs, recovery, production/core paths, or path proof. Load each triggered protocol only.
-3. Never list headings, scan skill directories, or read references directly. Report helper failure; it waives no gate.
-4. Agents suit three streams, conflicting evidence, or high failure cost. Load governance, propose count/roles, ownership, parallel/main work, benefit, cost, risks, and fallback, then ask. Only explicit acceptance starts them; safe unrelated work may continue.
+1. Inspect first: goal, constraints, completion test; ask only blockers.
+2. Run one helper command per protocol: `python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`. Load only `research` (unstable evidence), `governance` (assets, execution, networking, approvals, agents, durable changes), or `verification` (writes, product output, recovery, path proof).
+3. Never scan skill dirs/read refs directly. Helper failure waives no gate.
+4. If research/dependency/implementation coexist, stop after protocols; show one multi-agent proposal before web, command, write, or verify. Then web/search and command/install-sim need matching explicit approval; no-decision/unrelated approval authorizes neither. No-decision keeps agents `proposed`; main continues displayed-scope writes and verification without another approval. Acceptance starts agents; refusal/unavailable selects fallback.
 
 ## Safeguards
 
 - Never invent execution, sources, tests, or verification.
-- Before writes map entry, state, owners, and bypasses. Preserve ownership; freeze an evidence-bound contract for production routing, persistence/schema/migration, architecture, core capability, alternate output, explicit path proof, or high impact. Never borrow a neighboring or shadow implementation.
+- Before writes map entry/state/owners/bypasses. Change behavior in existing owner.
+- If generated delivery product writes state, save `docs/IMPLEMENTATION_CONTRACT.md` before product run. Otherwise keep contracts/protocol records in trace unless a file is required; no research/governance docs by default.
 - Safety, authorization, and verification override budgets.
 
 ## Finish
 
-Verify result/path. Keep durable changes isolated until approved.
+Verify result/path. Keep durable changes isolated.

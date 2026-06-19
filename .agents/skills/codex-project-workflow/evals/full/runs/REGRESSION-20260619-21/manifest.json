@@ -1,0 +1,46 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260619-21",
+  "evaluation_scope": "targeted_regression",
+  "status": "blocked_usage_unscored",
+  "created_at": "2026-06-19T14:00:00+08:00",
+  "completed_at": "2026-06-19T14:11:16+08:00",
+  "fixture_commit": "c0ac4dac1963d133ea1c784b8dccf9d349070341",
+  "candidate_id": "CAND-20260619-09",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260619-21\\workspaces\\setup-state.json",
+  "thread_status_at_stop": "systemError",
+  "invalid_reason": "The E35 thread produced partial behavior and accepted the scripted replies, but the rollout reported used_percent=100.0, credits.has_credits=false, and balance=0 before any final response, research action, dependency simulation, unit test, or formal entry verification. Per user instruction, no further thread messages were sent and this sample is unscored.",
+  "rate_limit_evidence": {
+    "limit_id": "premium",
+    "used_percent": 100.0,
+    "has_credits": false,
+    "balance": "0"
+  },
+  "diagnostic_evidence": {
+    "summary": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-21/results/summary.json",
+    "run_result": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260619-21/results/runs/E35-four_hard_triggers.json",
+    "rollout_sha256": "780c60e8971ddfe60016839525cda901c61f975ab4f7046925813916303208e0",
+    "observed_changed_files": [
+      "src/client.py"
+    ],
+    "missing_completion_evidence": [
+      "final response",
+      "public research action",
+      "dependency simulation command",
+      "python -m unittest discover -s tests",
+      "python app.py --self-test",
+      "budget overage final fields",
+      "proposed agent pending final report"
+    ]
+  },
+  "runs": [
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019ede7c-3ae3-7891-bc3b-ed473036751a",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\3666\\efficiently use codex"
+    }
+  ]
+}
