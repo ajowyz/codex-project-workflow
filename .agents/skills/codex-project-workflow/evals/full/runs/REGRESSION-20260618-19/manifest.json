@@ -1,0 +1,65 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260618-19",
+  "evaluation_scope": "targeted_regression",
+  "status": "blocked_infrastructure",
+  "created_at": "2026-06-19T11:40:00+08:00",
+  "completed_at": "2026-06-19T11:48:00+08:00",
+  "fixture_commit": "96d69ea5208355f4ff45e725eabd9d867c0e8014",
+  "candidate_id": "CAND-20260618-08",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260618-19\\workspaces\\setup-state.json",
+  "invalid_reason": "E26 and E32 completed, but E35 returned systemError before first model output in three consecutive independent worktrees. The required E35 behavior was not observed, so CAND-20260618-08 cannot be scored from this run.",
+  "completed_unscored_runs": [
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019edb39-d77c-73e0-81b8-a993936cf2b9",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\427b\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019edb3a-2886-70f2-a71c-6284146e303f",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\bfeb\\efficiently use codex"
+    }
+  ],
+  "excluded_infrastructure_runs": [
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019edb3a-7198-7ba1-82b5-e20c998020ac",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\f498\\efficiently use codex",
+      "reason": "systemError before first model output"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019edb3b-dee0-76a2-a7ca-afe753b5140b",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\25bd\\efficiently use codex",
+      "reason": "systemError before first model output"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019edb3c-cb32-7503-8a5d-5f9504de595c",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\99ea\\efficiently use codex",
+      "reason": "systemError before first model output"
+    }
+  ],
+  "runs": [
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019edb39-d77c-73e0-81b8-a993936cf2b9",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\427b\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019edb3a-2886-70f2-a71c-6284146e303f",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\bfeb\\efficiently use codex"
+    }
+  ]
+}

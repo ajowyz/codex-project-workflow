@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260618-08",
   "parent_candidate_id": "CAND-20260618-07",
   "created_at": "2026-06-18T22:48:00+08:00",
-  "status": "preflight_passed_pending_isolated_evaluation",
+  "status": "preflight_passed_regression_blocked_infrastructure",
   "base_commit": "3e099f3",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -47,7 +47,7 @@
     "verification_selected_codepoints": 2239
   },
   "evaluation": {
-    "status": "pending_isolated_evaluation",
+    "status": "blocked_infrastructure",
     "required_regressions": [
       "E26:product_path",
       "E32:hard_trigger_overage",
@@ -58,6 +58,19 @@
     ],
     "source_failure_sha256": [
       "34c894d5c32d8019d39ee3d5008576128cdde7952baf413184c405d724d221e4"
+    ],
+    "evidence_paths": [
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-19/manifest.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260618-19/results/summary.json"
+    ],
+    "evidence_sha256": [
+      "93277fe06a24de5b9ee901d1b2ebbb90b00dd8fc8ade089c470777f202715ce7",
+      "faef342e4a2dc47b715f61ea9af98971aac2a2f0866a6f19d80d9efdf3ca137c"
+    ],
+    "blocker_summary": [
+      "REGRESSION-20260618-19 ran from frozen CAND-20260618-08 activation commit 96d69ea5208355f4ff45e725eabd9d867c0e8014.",
+      "E26:product_path and E32:hard_trigger_overage completed with expected file scopes, no evaluator oracle access, and accurate E32 overage reporting.",
+      "E35:four_hard_triggers returned systemError before first model output in three independent worktrees, so the required CAND-20260618-08 behavior was not observed or scored."
     ]
   },
   "activation": {
