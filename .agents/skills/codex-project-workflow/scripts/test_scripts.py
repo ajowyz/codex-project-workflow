@@ -869,7 +869,7 @@ class ScriptTests(unittest.TestCase):
         )
 
     def test_external_workspace_fixtures_expose_their_paths(self):
-        for case_id in ("E16", "E26"):
+        for case_id in ("E12", "E16", "E26"):
             case = json.loads(
                 (
                     SKILL_DIR
@@ -886,6 +886,12 @@ class ScriptTests(unittest.TestCase):
                     variant["prompt"],
                     f"{case_id}:{variant['id']} omits its workspace",
                 )
+                if case_id == "E12":
+                    self.assertIn(
+                        "{workspace}/scenarios",
+                        variant["prompt"],
+                        f"{case_id}:{variant['id']} omits its scenario root",
+                    )
 
     def test_full_eval_variant_selection(self):
         case = {

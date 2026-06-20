@@ -1,0 +1,297 @@
+{
+  "format_version": "1.0",
+  "run_id": "CALIBRATION-20260620-04",
+  "source_manifest": "D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\CALIBRATION-20260620-04\\manifest.json",
+  "source_setup_state": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04\\workspaces\\setup-state.json",
+  "results": [
+    {
+      "case_id": "E02",
+      "variant_id": "low_risk_listing",
+      "thread_id": "019ee381-df7e-7730-a75d-99c08bf0e5c5",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 20509,
+      "time_to_first_token_ms": 8679,
+      "final_response_chars": 131,
+      "total_tokens": 35978,
+      "tool_call_count": 1,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "variants.low_risk_listing.workflow"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "skill_tool_output_chars": 0,
+        "reference_read_calls": [],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [],
+        "reference_failed_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_tool_output_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "evaluation_isolation": {
+        "cross_thread_read_calls": [],
+        "evaluator_artifact_calls": [],
+        "host_project_scan_calls": [],
+        "oracle_access_detected": false
+      },
+      "context_overage": null,
+      "agent_authorization": {
+        "no_decision_received": false,
+        "agent_start_calls": [],
+        "fallback_selected": false,
+        "pending_reported": false,
+        "pending_state": null
+      },
+      "prompt_integrity": {
+        "initial_prompt_matches": true,
+        "expected_reply_count": 0,
+        "observed_scripted_replies": [],
+        "unexpected_user_messages": [],
+        "valid": true
+      },
+      "rollout_sha256": "ec482266bed037b953b88c4ae69a1e87c5c68dc997f76aa3bbddd2190bee12f7"
+    },
+    {
+      "case_id": "E02",
+      "variant_id": "download",
+      "thread_id": "019ee381-df7e-7730-a75d-99b1e6ca1822",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 41971,
+      "time_to_first_token_ms": 9699,
+      "final_response_chars": 1071,
+      "total_tokens": 57862,
+      "tool_call_count": 5,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "variants.boundary.minimum_gates_applied",
+        "variants.download.checks"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_Lc1fYoHYVmDRFfrUKzZlSLTm"
+        ],
+        "skill_body_loaded_chars": 1486,
+        "skill_tool_output_chars": 2288,
+        "reference_read_calls": [
+          "call_vd0y9Qav4dkeIb9h6wKW1KzB",
+          "call_aJw5UE96tCCd0naWMpSyrh1x"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_vd0y9Qav4dkeIb9h6wKW1KzB",
+          "call_aJw5UE96tCCd0naWMpSyrh1x"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4716,
+        "reference_tool_output_chars": 5088,
+        "reference_h2_sections": 4,
+        "governance_read_calls": []
+      },
+      "evaluation_isolation": {
+        "cross_thread_read_calls": [],
+        "evaluator_artifact_calls": [],
+        "host_project_scan_calls": [],
+        "oracle_access_detected": false
+      },
+      "context_overage": null,
+      "agent_authorization": {
+        "no_decision_received": false,
+        "agent_start_calls": [],
+        "fallback_selected": false,
+        "pending_reported": false,
+        "pending_state": null
+      },
+      "prompt_integrity": {
+        "initial_prompt_matches": true,
+        "expected_reply_count": 0,
+        "observed_scripted_replies": [],
+        "unexpected_user_messages": [],
+        "valid": true
+      },
+      "rollout_sha256": "f9ac9b26a6cfe60a6a225c77887d37f1817828701070c4318401e239c71d2328"
+    },
+    {
+      "case_id": "E12",
+      "variant_id": "state_matrix",
+      "thread_id": "019ee381-df8e-7a50-9f18-602bb2de09a6",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 191764,
+      "time_to_first_token_ms": 8891,
+      "final_response_chars": 2117,
+      "total_tokens": 725088,
+      "tool_call_count": 22,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "load_order.first_project_document",
+        "initial_adr_projection.fields",
+        "initial_context.adr_reason_or_body_count",
+        "replacement_variants.expected_results_match",
+        "key_fields.accuracy"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_WDNykLV3YuojdZTbXysAoGGK"
+        ],
+        "skill_body_loaded_chars": 1486,
+        "skill_tool_output_chars": 2286,
+        "reference_read_calls": [
+          "call_FGCRqnSfy5KofcS1BD2UuXAW",
+          "call_eTqnlmxQBssyjcse3Kbm4ECY"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_FGCRqnSfy5KofcS1BD2UuXAW",
+          "call_eTqnlmxQBssyjcse3Kbm4ECY"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4716,
+        "reference_tool_output_chars": 5088,
+        "reference_h2_sections": 4,
+        "governance_read_calls": [
+          "call_ISKSpvwuPZBZyGQ2zIhpen4Q",
+          "call_gxH915eGSvrcmNBdmjQ6bdwY",
+          "call_6M4YGbIo2qHtfmzdG9RKNW4w",
+          "call_a3VxBhHI4eg30gbY31oaGXVQ",
+          "call_1IlJJALgW9wmUOi3PAv7MZNo"
+        ]
+      },
+      "evaluation_isolation": {
+        "cross_thread_read_calls": [],
+        "evaluator_artifact_calls": [
+          "call_QIH9ecyclNLlF7dGO3zaZO8Y",
+          "call_yLQ6NE1wkuwpnQT0ecrpcTW6",
+          "call_wjQ0t9bUhgoyKcJz216O3swW",
+          "call_gxH915eGSvrcmNBdmjQ6bdwY",
+          "call_h7gZpTYEqMcTF9KVJQpH4Aj8",
+          "call_sOEvF6JTW3f3pn2e4VzQFxyV",
+          "call_6M4YGbIo2qHtfmzdG9RKNW4w",
+          "call_a3VxBhHI4eg30gbY31oaGXVQ",
+          "call_1IlJJALgW9wmUOi3PAv7MZNo"
+        ],
+        "host_project_scan_calls": [
+          "call_HzYn4mReKbMBuxCRZq1bj6IP",
+          "call_4Css1jOS4hLVL9Gvkax9spJm"
+        ],
+        "oracle_access_detected": true
+      },
+      "context_overage": null,
+      "agent_authorization": {
+        "no_decision_received": false,
+        "agent_start_calls": [],
+        "fallback_selected": false,
+        "pending_reported": false,
+        "pending_state": null
+      },
+      "prompt_integrity": {
+        "initial_prompt_matches": true,
+        "expected_reply_count": 0,
+        "observed_scripted_replies": [],
+        "unexpected_user_messages": [],
+        "valid": true
+      },
+      "rollout_sha256": "8e6b06a6c6dda4e12f9ef412de844e8851c7be491fbd111798f114b60e942947"
+    },
+    {
+      "case_id": "E16",
+      "variant_id": "default",
+      "thread_id": "019ee381-dfa0-79b0-8cbc-29d2fdc7cbf6",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 91740,
+      "time_to_first_token_ms": 8705,
+      "final_response_chars": 869,
+      "total_tokens": 243835,
+      "tool_call_count": 19,
+      "changed_files": [
+        "src/formatting.py",
+        "src/report.py",
+        "tests/test_existing.py"
+      ],
+      "expected_changed_files": [
+        "src/formatting.py",
+        "src/report.py",
+        "tests/test_existing.py"
+      ],
+      "expected_assertion_subjects": [
+        "formal_contract.created",
+        "path_constraint.line_count",
+        "result_assertions.all_pass",
+        "scores.implementation_integrity"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_oeAaDFpdp9SkCK1lEGoGdRQ7"
+        ],
+        "skill_body_loaded_chars": 1486,
+        "skill_tool_output_chars": 116,
+        "reference_read_calls": [
+          "call_puhftVmJdDpBL0CKg6VT1VbX"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_puhftVmJdDpBL0CKg6VT1VbX"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "verification.md"
+        ],
+        "reference_loaded_chars": 2239,
+        "reference_tool_output_chars": 2425,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "evaluation_isolation": {
+        "cross_thread_read_calls": [],
+        "evaluator_artifact_calls": [],
+        "host_project_scan_calls": [],
+        "oracle_access_detected": false
+      },
+      "context_overage": null,
+      "agent_authorization": {
+        "no_decision_received": false,
+        "agent_start_calls": [],
+        "fallback_selected": false,
+        "pending_reported": false,
+        "pending_state": null
+      },
+      "prompt_integrity": {
+        "initial_prompt_matches": true,
+        "expected_reply_count": 0,
+        "observed_scripted_replies": [],
+        "unexpected_user_messages": [],
+        "valid": true
+      },
+      "rollout_sha256": "68202ea0cb593abc8dcd0f701dcab25608172f394043e45358484d36f440e83e"
+    }
+  ]
+}

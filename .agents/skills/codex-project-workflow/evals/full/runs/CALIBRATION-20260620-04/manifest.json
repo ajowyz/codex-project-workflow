@@ -1,0 +1,56 @@
+{
+  "format_version": "1.0",
+  "run_id": "CALIBRATION-20260620-04",
+  "evaluation_scope": "calibration_batch",
+  "status": "batch_1_blocked_fixture_prompt_path_contamination",
+  "created_at": "2026-06-20T13:34:17+08:00",
+  "completed_at": "2026-06-20T13:43:00+08:00",
+  "fixture_commit": "c06bc96",
+  "activation_commit": "c06bc96",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04\\workspaces\\setup-state.json",
+  "batch_index": 1,
+  "batch_policy": "Run four threads at a time and stop immediately if any quota exhaustion or equivalent credit-limit signal appears.",
+  "quota_exhausted": false,
+  "diagnostic_summary": {
+    "valid_completed_runs": [
+      "E02:low_risk_listing",
+      "E02:download",
+      "E16:default"
+    ],
+    "invalidated_runs": [
+      "E12:state_matrix"
+    ],
+    "reason": "E12 prompt omitted the evaluator workspace path, so the desktop thread searched the host project fixture and was marked with evaluator_oracle_access.",
+    "next_action": "Fix the E12 prompt, add a regression assertion for the workspace/scenarios path, rerun E12, then resume the remaining calibration runs if quota is still available."
+  },
+  "runs": [
+    {
+      "case_id": "E02",
+      "variant_id": "low_risk_listing",
+      "thread_id": "019ee381-df7e-7730-a75d-99c08bf0e5c5",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\d731\\efficiently use codex"
+    },
+    {
+      "case_id": "E02",
+      "variant_id": "download",
+      "thread_id": "019ee381-df7e-7730-a75d-99b1e6ca1822",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\6bb7\\efficiently use codex"
+    },
+    {
+      "case_id": "E12",
+      "variant_id": "state_matrix",
+      "thread_id": "019ee381-df8e-7a50-9f18-602bb2de09a6",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\92dd\\efficiently use codex"
+    },
+    {
+      "case_id": "E16",
+      "variant_id": "default",
+      "thread_id": "019ee381-dfa0-79b0-8cbc-29d2fdc7cbf6",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\f16c\\efficiently use codex"
+    }
+  ],
+  "remaining_runs": 12,
+  "quota_stop_rule": "If quota is exhausted, stop without launching further threads and wait for the user's next command."
+}

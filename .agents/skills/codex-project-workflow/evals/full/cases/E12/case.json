@@ -8,7 +8,7 @@
     {
       "id": "state_matrix",
       "workspace": "workspace/state_matrix",
-      "prompt": "For each independent project under scenarios/, recover the compact state, build the deterministic ADR metadata projection, validate replacement relations and PLAN references, and report blocking conflicts. Read only the bodies needed for the current task.",
+      "prompt": "Use the evaluator-supplied workspace {workspace}. For each independent project under {workspace}/scenarios, recover the compact state, build the deterministic ADR metadata projection, validate replacement relations and PLAN references, and report blocking conflicts. Read only the bodies needed for the current task.",
       "permissions": "read-only",
       "scripted_user_replies": [],
       "expected": {
