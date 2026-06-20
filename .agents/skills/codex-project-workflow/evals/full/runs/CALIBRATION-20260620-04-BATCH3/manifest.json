@@ -1,0 +1,57 @@
+{
+  "format_version": "1.0",
+  "run_id": "CALIBRATION-20260620-04-BATCH3",
+  "evaluation_scope": "calibration_batch",
+  "status": "collected_valid",
+  "created_at": "2026-06-20T14:40:00+08:00",
+  "completed_at": "2026-06-20T14:40:00+08:00",
+  "fixture_commit": "c06bc96",
+  "activation_commit": "c06bc96",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04\\workspaces\\setup-state.json",
+  "batch_index": 3,
+  "batch_policy": "Run four threads at a time and stop immediately if any quota exhaustion or equivalent credit-limit signal appears.",
+  "runs": [
+    {
+      "case_id": "E26",
+      "variant_id": "product_path",
+      "thread_id": "019ee3be-c7d2-7c43-94ba-5f7cab5a93da",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\b95d\\efficiently use codex"
+    },
+    {
+      "case_id": "E26",
+      "variant_id": "entry_bypass",
+      "thread_id": "019ee3be-c813-74c2-bf43-b055bd7af26e",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\a535\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "negative_quick",
+      "thread_id": "019ee3be-c94e-7a50-a26b-2b874f1d8918",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\cbdc\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "standard_cross_file",
+      "thread_id": "019ee3be-c92e-7911-bc03-b78a9b3d0619",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\1791\\efficiently use codex"
+    }
+  ],
+  "result_summary": {
+    "completed_runs": 4,
+    "changed_files_match_expected": true,
+    "oracle_access_detected_any": false,
+    "prompt_integrity_all_valid": true,
+    "total_tokens": 853758,
+    "notes": [
+      "E26 product_path created the model through the product path with contract, output, state, and trace files.",
+      "E26 entry_bypass stopped without writing because the user entry bypassed the product command path.",
+      "E32 negative_quick loaded no skill body or references.",
+      "E32 standard_cross_file changed only src/labels.py and tests/test_labels.py."
+    ]
+  },
+  "remaining_runs_after_batch": 4,
+  "quota_exhausted": false,
+  "quota_stop_rule": "If quota is exhausted, stop without launching further threads and wait for the user's next command."
+}
