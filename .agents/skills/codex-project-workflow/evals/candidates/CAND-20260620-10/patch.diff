@@ -1,0 +1,42 @@
+diff --git a/.agents/skills/codex-project-workflow/SKILL.md b/.agents/skills/codex-project-workflow/SKILL.md
+index 4cd3216..007d0bf 100644
+--- a/.agents/skills/codex-project-workflow/SKILL.md
++++ b/.agents/skills/codex-project-workflow/SKILL.md
+@@ -10,15 +10,15 @@ description: Structure and govern Codex work for new or ambiguous projects, mult
+ 1. Inspect first: goal, constraints, completion test; ask only blockers.
+ 2. Run one helper command per protocol: `python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`. Load only `research` (unstable evidence), `governance` (assets, execution, networking, approvals, agents, durable changes), or `verification` (writes, product output, recovery, path proof).
+ 3. Never scan skill dirs/read refs directly. Helper failure waives no gate.
+-4. If research/dependency/implementation coexist, stop after protocols; show one multi-agent proposal before web, command, write, or verify. Then web/search and command/install-sim need matching explicit approval; no-decision/unrelated approval authorizes neither. No-decision keeps agents `proposed`; main continues displayed-scope writes and verification without another approval. Acceptance starts agents; refusal/unavailable selects fallback.
++4. If research/dependency/implementation coexist, stop after protocols; show one multi-agent proposal before web, command/install-sim, write, or verify. Web/search/open and install-sim wait for later exact approval; never pre-run/retro-count them. No-decision/unrelated approval authorizes neither and keeps agents `proposed`; main continues displayed writes/verification without new ask. Acceptance starts agents; refusal/unavailable selects fallback.
+ 
+ ## Safeguards
+ 
+-- Never invent execution, sources, tests, or verification.
+-- Before writes map entry/state/owners/bypasses. Change behavior in existing owner.
+-- If generated delivery product writes state, save `docs/IMPLEMENTATION_CONTRACT.md` before product run. Otherwise keep contracts/protocol records in trace unless a file is required; no research/governance docs by default.
++- Never invent execution, sources, tests, or proof.
++- Before writes map entry/state/owners/bypasses; edit existing owner.
++- If product delivery writes state, save `docs/IMPLEMENTATION_CONTRACT.md` before product run. Otherwise keep contracts/protocol records in trace unless required; no research/governance docs by default.
+ - Safety, authorization, and verification override budgets.
+ 
+ ## Finish
+ 
+-Verify result/path. Keep durable changes isolated.
++Verify result/path; repeat required overage lines in all finals. Keep durable changes isolated.
+diff --git a/.agents/skills/codex-project-workflow/references/governance.md b/.agents/skills/codex-project-workflow/references/governance.md
+index ff8e201..efbe172 100644
+--- a/.agents/skills/codex-project-workflow/references/governance.md
++++ b/.agents/skills/codex-project-workflow/references/governance.md
+@@ -19,10 +19,10 @@ Identify the action, affected scope, reversibility, data involved, permissions,
+ - Before third-party use, record pass/fail/unknown for source, maintenance, license, integrity, necessity, risk.
+ - Before install/external execution/substitute, show exact command/scope and obtain explicit approval. One approval authorizes only that action.
+ - Send only approved, minimum, redacted internal data to approved destinations.
+-- When research, dependency, and implementation are all requested, show a multi-agent governance proposal; do not search, execute, install/sim, write, or verify before it. Prep reads only named budget, safety, task, dependency, path-fact files. Keep nonempty main work; until agents are accepted, main owns tracing, implementation, and final verification. Propose roles and mark state `proposed`; include boundaries, ownership, parallel work, benefit, costs/risks, fallback, and approval packets: exact sanitized query, public targets/fields/purpose/phase, command/scope. For PowerShell simulation, display `powershell -NoProfile -ExecutionPolicy Bypass -File tools/simulate_install.ps1`. Ask and wait. No decision/unrelated approval is not action approval, refusal, unavailability, or fallback. Exact action approval lets main do only that action without agents. No-decision keeps agents `proposed`; displayed-scope main implementation/verification continue without another approval. Acceptance starts agents; refusal/unavailable selects fallback. Pending work is local reads/planning, displayed-scope main, independent, or action-approved work only.
++- When research, dependency, and implementation are all requested, show a multi-agent governance proposal; do not search, execute, install/sim, write, or verify before it. Prep reads only named budget, safety, task, dependency, path-fact files. Keep nonempty main work; until agents are accepted, main owns tracing, implementation, and final verification. Propose roles and mark state `proposed`; include boundaries, ownership, parallel work, benefit, costs/risks, fallback, and approval packets: exact sanitized query, public targets/fields/purpose/phase, command/scope. For PowerShell simulation, display `powershell -NoProfile -ExecutionPolicy Bypass -File tools/simulate_install.ps1`. Ask and wait. Web/search/open and install/sim must wait for a later exact action approval; an earlier or unapproved action cannot satisfy or be retroactively counted for that approval. No decision/unrelated approval is not action approval, refusal, unavailability, or fallback. Exact action approval lets main do only that action without agents. No-decision keeps agents `proposed`; displayed-scope main implementation/verification continue without another approval. Acceptance starts agents; refusal/unavailable selects fallback. Pending work is local reads/planning, displayed-scope main, independent, or action-approved work only.
+ - Keep durable rule changes in isolated candidates bound to target, scope, base, patch hash, evidence, and invalidation conditions.
+ - Safety/authorization override context or speed budgets.
+-- For hard-trigger overage, sum helper-emitted NFC metrics; never reconstruct text. Use `added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)` and `added_sections=max(0, emitted_H2_blocks-budget_H2_blocks)`. Count repeated/same-titled H2 outputs separately; H3s add no sections. Every final response, including approval follow-ups, repeats one aggregate unquoted line: `added_codepoints=N, added_sections=N, reason=TEXT, unknown_resolved=TEXT`.
++- For hard-trigger overage, sum helper-emitted NFC metrics; never reconstruct text. Use `added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)` and `added_sections=max(0, emitted_H2_blocks-budget_H2_blocks)`. Count repeated/same-titled H2 outputs separately; H3s add no sections. Every final response, including acknowledgement-only and approval follow-ups, repeats one aggregate unquoted line; never replace it with a bare acknowledgement: `added_codepoints=N, added_sections=N, reason=TEXT, unknown_resolved=TEXT`.
+ 
+ ## Stop Conditions
+ 

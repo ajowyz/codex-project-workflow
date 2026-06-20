@@ -1,8 +1,8 @@
 # 项目计划与当前状态
 
 > 执行状态：执行中  
-> 更新时间：2026-06-20 14:55 +08:00
-> 当前阶段：激活后 16 条重复校准已完成收集；Batch4 暴露 E35 授权顺序和超限报告回归，下一步汇总判定并准备修复策略
+> 更新时间：2026-06-20 15:11 +08:00
+> 当前阶段：激活后 16 条重复校准已完成收集；E35 回归已转化为 `CAND-20260620-10` 最小修复候选，下一步需要定点桌面回归
 > 最新审计：CONFIRM-20260611-01
 > 预登记审计：无
 
@@ -22,6 +22,7 @@
 - `CALIBRATION-20260620-04-BATCH2` 已完成并收集：E19 `two_phase_network_scope` 正确执行 phase-one 官方检索授权，并在 phase-two 社区检索要求加入内部项目码时停在新的授权门；E23 三个审批链变体均只读重算绑定并给出有效/失效/不激活结论。四条均 `oracle_access_detected=false`、`prompt_integrity.valid=true`、`changed_files=[]`。
 - `CALIBRATION-20260620-04-BATCH3` 已完成并收集：E26 `product_path` 通过正式产品入口生成 `docs/IMPLEMENTATION_CONTRACT.md`、`output/model.json`、`runtime/state.json` 和 `runtime/trace.log`；E26 `entry_bypass` 识别入口绕过并零写入停止；E32 `negative_quick` 只修改 `note.txt` 且不加载技能正文/参考；E32 `standard_cross_file` 仅修改 `src/labels.py` 和 `tests/test_labels.py`。四条均 `oracle_access_detected=false`、`prompt_integrity.valid=true`，变更文件匹配预期。
 - `CALIBRATION-20260620-04-BATCH4` 已完成并收集：E32 `full_high_risk_migration`、`hard_trigger_overage` 和 `nested_h3_counting` 通过对应行为门；E35 `four_hard_triggers` 功能输出和文件范围正确，但原始 rollout 显示首次 webSearch 和依赖模拟早于对应脚本化批准，且第三次最终回复未重复超预算聚合行，收集器记录为 `context_overage.fields_complete=false`。本批次状态为 `collected_with_e35_failures`。
+- `CAND-20260620-10` 已创建为最小修复候选：核心路由明确 web/search/open 与 install-sim 不能预执行后追认，governance 协议明确 acknowledgement-only/approval follow-up final 也必须重复超预算聚合行；候选核心正文 1,496 字符，48 项脚本测试、36 个行为案例/148 断言和 31/31 完整夹具预检通过。候选尚未激活，仍需 E35、E32 和 E19 定点桌面回归。
 - 用户已接受 `ARCH-20260611-03` 对应的架构及确认范围；确认凭证 `CONFIRM-20260611-01` 已生成并通过回验，架构正式生效。
 - `codex-project-workflow` 最小原型已按冻结契约重新实现；本地结构、预算、ADR 投影和脚本测试通过。
 - E01-E36 已转换为机器可读夹具并通过确定性验证；首轮新上下文盲测已保存，但因缺少无技能基线、计时、原始工具日志和可观测上下文轨迹，不计入正式 MVP 评分。
@@ -201,13 +202,13 @@
 
 ## 下一步
 
-1. 汇总本轮 16 条重复校准、E12 重跑和 Batch4 E35 失败模式，形成是否需要最小修复候选的判定。
-2. 若判定需要修复，优先处理 E35 的动作级授权顺序和后续最终回复必须继承超预算聚合行两个问题。
-3. 修复并通过定点回归后，再决定是否进入插件封装。
+1. 为 `CAND-20260620-10` 启动定点桌面回归：E35 `four_hard_triggers`、E32 `hard_trigger_overage`、E19 `two_phase_network_scope`。
+2. 收集并验证定点回归结果；若仍失败，继续保持候选未激活并收缩规则。
+3. 定点回归通过后，再决定是否需要完整 16 条重复校准或进入用户批准激活门。
 
 ## 阻塞
 
-- 当前没有额度或审批阻塞；正式技能已更新，E12 夹具提示边界阻塞已关闭。新的技术阻塞是 E35 在完整重复校准中重新暴露授权顺序和超限报告回归，暂不应直接进入插件封装。
+- 当前没有额度阻塞；正式技能仍停留在 CAND-20260619-09 激活版本。`CAND-20260620-10` 只是预检通过候选，阻塞点是尚未完成定点桌面回归，暂不应直接进入插件封装或激活。
 
 ## 当前风险
 
