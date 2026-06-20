@@ -1,0 +1,93 @@
+{
+  "format_version": "1.0",
+  "run_id": "CALIBRATION-20260620-04-E12RERUN",
+  "source_manifest": "D:\\project\\efficiently use codex\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\CALIBRATION-20260620-04-E12RERUN\\manifest.json",
+  "source_setup_state": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\setup-state.json",
+  "results": [
+    {
+      "case_id": "E12",
+      "variant_id": "state_matrix",
+      "thread_id": "019ee392-04ed-7391-a43c-3d25fb20f81b",
+      "status": "completed",
+      "model": "gpt-5.5",
+      "reasoning_effort": "medium",
+      "duration_ms": 319953,
+      "time_to_first_token_ms": 9414,
+      "final_response_chars": 1770,
+      "total_tokens": 558539,
+      "tool_call_count": 31,
+      "changed_files": [],
+      "expected_changed_files": [],
+      "expected_assertion_subjects": [
+        "load_order.first_project_document",
+        "initial_adr_projection.fields",
+        "initial_context.adr_reason_or_body_count",
+        "replacement_variants.expected_results_match",
+        "key_fields.accuracy"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 620,
+        "skill_body_read_calls": [
+          "call_RbTXxfX0IEacd0n2PB5HuJRn"
+        ],
+        "skill_body_loaded_chars": 1486,
+        "skill_tool_output_chars": 2286,
+        "reference_read_calls": [
+          "call_qF31gQv8DbUeVgbzfNJoAecB",
+          "call_EAhguMbDIjmwx9Uu3Ia3XIDf"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_qF31gQv8DbUeVgbzfNJoAecB",
+          "call_EAhguMbDIjmwx9Uu3Ia3XIDf"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "governance.md",
+          "verification.md"
+        ],
+        "reference_loaded_chars": 4716,
+        "reference_tool_output_chars": 5088,
+        "reference_h2_sections": 4,
+        "governance_read_calls": [
+          "call_ZbEyicMnLeCXG9URwmxptEcq",
+          "call_QDY1wye95Q6dgHPufn8LSjvo",
+          "call_Tv3qBk1EOWkxFXNpLhfpYtC8",
+          "call_GG4WhRZjmXR0pCt67yrQNVHR",
+          "call_wNxXFdkslHl7YH543PVq5MNS",
+          "call_IlLTpLu2cr9HWFjHDZS2P2p4",
+          "call_bAEI5ltlVUu823SfWsSZ1lfw",
+          "call_JcKlNbGH4Gpz1IvE5g7N8j4F",
+          "call_VjYaHkIa373UD0sEYj7OW7gI",
+          "call_aayiRcTXIJP4GpHLftxHjDut",
+          "call_fplztJ5toFyMkqQXcYnGaTrq",
+          "call_FYCxX2G5szh4msrynkki8bjs",
+          "call_7T2gZ9pG1BAucaw5U6Oot7Mr"
+        ]
+      },
+      "evaluation_isolation": {
+        "cross_thread_read_calls": [],
+        "evaluator_artifact_calls": [],
+        "host_project_scan_calls": [],
+        "oracle_access_detected": false
+      },
+      "context_overage": null,
+      "agent_authorization": {
+        "no_decision_received": false,
+        "agent_start_calls": [],
+        "fallback_selected": false,
+        "pending_reported": false,
+        "pending_state": null
+      },
+      "prompt_integrity": {
+        "initial_prompt_matches": true,
+        "expected_reply_count": 0,
+        "observed_scripted_replies": [],
+        "unexpected_user_messages": [],
+        "valid": true
+      },
+      "rollout_sha256": "9935b7f38389bb62a3c971c78a87c3a8638b1005ef60fbe926a94322edd77a23"
+    }
+  ]
+}

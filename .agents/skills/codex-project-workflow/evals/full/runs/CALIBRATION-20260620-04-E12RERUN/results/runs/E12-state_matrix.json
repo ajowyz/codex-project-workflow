@@ -1,0 +1,885 @@
+{
+  "case_id": "E12",
+  "condition": "candidate",
+  "thread_id": "019ee392-04ed-7391-a43c-3d25fb20f81b",
+  "rollout": {
+    "path": "C:\\Users\\wang yazhou\\.codex\\sessions\\2026\\06\\20\\rollout-2026-06-20T13-47-48-019ee392-04ed-7391-a43c-3d25fb20f81b.jsonl",
+    "sha256": "9935b7f38389bb62a3c971c78a87c3a8638b1005ef60fbe926a94322edd77a23"
+  },
+  "status": "completed",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "started_at": 1781934477,
+  "completed_at": 1781934797,
+  "duration_ms": 319953,
+  "time_to_first_token_ms": 9414,
+  "raw_user_messages": [
+    "<codex_delegation>\n  <source_thread_id>019eaf56-91db-7c40-b740-7435313502d3</source_thread_id>\n  <input>Blind evaluation boundary: use only the supplied workspace, the active skill entry, and its referenced protocols. Do not inspect parent or peer threads, evaluator definitions, oracle files, prior run results, assessments, or expected answers.\n\nUse the evaluator-supplied workspace D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix. For each independent project under D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix/scenarios, recover the compact state, build the deterministic ADR metadata projection, validate replacement relations and PLAN references, and report blocking conflicts. Read only the bodies needed for the current task.</input>\n</codex_delegation>"
+  ],
+  "commentary": [
+    "I’ll stay inside the supplied evaluation boundary: the workspace, the active skill entry, and whatever protocols that skill explicitly references. First I’m reading the workflow skill so the rest of the work follows its gates instead of guessing.",
+    "The skill is terse but clear: inspect the goal and load only relevant protocol slices. This looks like a bounded recovery/validation task rather than public research or dependency work, so I’m pulling the governance and verification protocol slices before touching scenario bodies.",
+    "The verification protocol gives the key shape: read compact `PLAN.md` first, project only the allowed ADR metadata fields, then load referenced bodies afterward. I’m enumerating scenario structure now and will keep body reads scoped to the PLAN references and relation checks.",
+    "There are 12 independent projects. I’m going to read all compact PLAN files first, then extract only ADR headings and the permitted metadata lines from each DECISIONS file; after that I’ll load just the ADR bodies that PLAN or relation validation actually requires.",
+    "PLAN recovery is complete. A few scenarios explicitly name active ADRs, and several rely on relation validation to determine active state, so now I’m building the deterministic metadata projection from DECISIONS using only headings and allowed metadata fields.",
+    "The first metadata pass only surfaced headings, which means the files don’t use the exact dash-prefixed shape I expected. I’m checking for the permitted metadata keys directly and keeping the scan limited to those keys plus ADR headings.",
+    "The DECISIONS files are using localized labels, and the console rendering is mangling them, but the relation tokens (`replaces`, `replaced-by`, `none`) are still visible. I’m switching to a small read-only parser so I can normalize the metadata projection consistently and then report conflicts.",
+    "The metadata values themselves are stored in a mojibake form, but they are still deterministic enough to recover: headings and relation tokens are clean, and the governance-state lines occupy fixed metadata positions under each ADR. I’m going to normalize from those allowed lines, then use body reads only where PLAN asks for implementation context, notably the retention PRD reference in scenario 12.",
+    "Good, the bytes are valid UTF-8; the terminal just can’t render the Chinese labels cleanly. I’m printing an ASCII-safe normalized projection now so we can validate from exact IDs, states, anchors, and relation fields without relying on console glyphs.",
+    "My parser was matching the intended Chinese word for “state,” but the file label is slightly different, so it treated those fields as absent. I’ve found the raw label shape and am adjusting the extraction to use metadata position and relation tokens, which is still inside the allowed projection.",
+    "I’ve got the exact labels now (`治理状态` and `替代关系`). Next I’m running the validation pass: duplicate IDs, missing states, invalid relation targets, reciprocal relation mismatches, duplicate relation declarations, self-reference, cycles, status consistency, and PLAN active-decision cross-checks.",
+    "One small script bug: I used escaped label literals too literally, so it looked like all states were missing. Fixing that now with codepoint-built labels; after this pass the projection should be the usable one.",
+    "The label still isn’t matching because the first character is `治` in the bytes I inspected, but the metadata line differs from the expected phrase I used. I’m checking codepoints for the label itself and then I’ll normalize by “first metadata line after heading” if needed.",
+    "The only mismatch was the full-width colon literal crossing the shell boundary. I’m switching that too to a codepoint, and then the parser will stop being fussy.",
+    "The clean projection is now recovered. Per the recovery protocol, I’m doing the “afterward” body read only for PLAN-referenced ADRs: the active refs in scenarios 01, 02, 11, and 12, plus the PRD Retention Rules section that scenario 12 explicitly names."
+  ],
+  "final_response": "Completed the bounded recovery/validation pass inside the supplied workspace only.\n\nState translation used: `已确认` = active/confirmed, `已替代` = replaced.\n\n**Scenario Results**\n- `01-valid-graph`: active `ADR-004`, `ADR-005`, `ADR-006`; no blocking conflicts.\n- `02-unilateral`: active `ADR-002`; blocking conflict: `ADR-001.replaced_by_id=ADR-002`, but `ADR-002.replaces_ids` does not include `ADR-001`.\n- `03-direction-mismatch`: active `ADR-003`; blocking conflict: `ADR-001.replaced_by_id=ADR-003`, but `ADR-003.replaces_ids` only includes `ADR-002`.\n- `04-duplicate-relation`: active `ADR-002`; blocking conflict: `ADR-001` declares duplicate `replaced-by ADR-002`.\n- `05-duplicate-id`: blocking conflict: duplicate `ADR-001` IDs.\n- `06-missing-state`: blocking conflict: `ADR-001` is missing `governance_state`.\n- `07-invalid-target`: active `ADR-001`; blocking conflict: `ADR-001` replaces missing target `ADR-999`.\n- `08-self-reference`: blocking conflicts: `ADR-001` replaces itself, is replaced by itself, and forms a self-cycle.\n- `09-cycle`: blocking conflict: replacement cycle `ADR-001 -> ADR-002 -> ADR-001`.\n- `10-status-mismatch`: active `ADR-001`, `ADR-002`; blocking conflict: `ADR-001` has `replaced_by_id=ADR-002` but is still confirmed/active.\n- `11-plan-crosscheck`: actual active decisions are `ADR-001`, `ADR-002`, `ADR-004`; blocking conflicts: PLAN references replaced `ADR-003`, missing `ADR-999`, and omits active `ADR-002` and `ADR-004`.\n- `12-selective-loading`: active `ADR-001`, `ADR-002`; no blocking conflicts. Referenced PRD Retention Rules match `ADR-002`’s 30-day retention body.\n\nNo files were changed. No product entry, persistence change, tests, or auxiliary scripts were involved; this was a read-only recovery and validation pass.",
+  "final_response_chars": 1770,
+  "tool_calls": [
+    {
+      "call_id": "call_RbTXxfX0IEacd0n2PB5HuJRn",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath '.agents/skills/codex-project-workflow/SKILL.md'",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\e043\\efficiently use codex",
+        "max_output_tokens": 20000
+      },
+      "output": {
+        "chars": 2286,
+        "content_codepoints": 2158,
+        "h2_sections": 3,
+        "reference_metrics": null,
+        "sha256": "953f541eef491ddeba1b339979c185f877436f9e526522ae99323f7608306156",
+        "preview": "Chunk ID: 4ddd16\nWall time: 1.2381 seconds\nProcess exited with code 0\nOriginal token count: 546\nOutput:\n---\r\nname: codex-project-workflow\r\ndescription: Structure and govern Codex work for new or ambiguous projects, multi-step implementation, professional research, solution comparison, architecture and planning, third-party downloads, high-risk changes, project recovery, or requests for a rigorous workflow. Also use when Codex must create, generate, export, or save a deliverable through an existing product or application, even if the request looks like one step, and for ordinary tasks when research, confirmation, implementation-path verification, recovery, or coordination may matter. Do not use for simple questions or explicit low-risk one-step edits or commands.\r\n---\r\n\r\n# Codex Project Workflow\r\n\r\n## Route\r\n\r\n1. Inspect first: goal, constraints, completion test; ask only blockers.\r\n2. Run one helper command per protocol: `python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME \"Execution Rules\" \"Output Requirements\"`. Load only `research` (unstable evidence), `governance` (assets, execution, networking, approvals, agents, durable changes), or `verification` (writes, product output, recovery, path proof).\r\n3. Never scan skill dirs/read refs directly. Helper failure waives no gate.\r\n4. If research/dependency/implementation coexist, stop after protocols; show one multi-agent proposal before web, command, write, or verify. Then web/search and command/install-sim need matching explicit approval; no-decision/unrelated approval authorizes neither. No-decision keeps agents `proposed`; main continues displayed-scope writes and verification without another approval. Acceptance starts agents; refusal/unavailable selects fallback.\r\n\r\n## Safeguards\r\n\r\n- Never invent execution, sources, tests, or verification.\r\n- Before writes map entry/state/owners/bypasses. Change behavior in existing owner.\r\n- If generated delivery product writes state, save `docs/IMPLEMENT"
+      }
+    },
+    {
+      "call_id": "call_0mgfQAfVw0NHpHUG2LbYaFCm",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-ChildItem -LiteralPath 'D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix' -Force | Select-Object Name,Mode,Length",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\e043\\efficiently use codex",
+        "max_output_tokens": 12000
+      },
+      "output": {
+        "chars": 184,
+        "content_codepoints": 75,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "f3b3a97fe49b4d48c4a3daab22dd125771d9b055ba6f3727e48719e8cd0d0048",
+        "preview": "Chunk ID: 9f7ace\nWall time: 1.4917 seconds\nProcess exited with code 0\nOriginal token count: 21\nOutput:\n\r\nName      Mode   Length\r\n----      ----   ------\r\nscenarios d-----       \r\n\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_qF31gQv8DbUeVgbzfNJoAecB",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "python .agents/skills/codex-project-workflow/scripts/read_reference.py governance \"Execution Rules\" \"Output Requirements\"",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\e043\\efficiently use codex",
+        "max_output_tokens": 20000
+      },
+      "output": {
+        "chars": 2663,
+        "content_codepoints": 2477,
+        "h2_sections": 2,
+        "reference_metrics": {
+          "codepoints": 2477,
+          "h2_sections": 2
+        },
+        "sha256": "58b82f4922282a6bf34a82a5d38f91e925e86b50376f4401f9608cff2f843953",
+        "preview": "Chunk ID: 60410f\nWall time: 1.1425 seconds\nProcess exited with code 0\nOriginal token count: 640\nOutput:\n## Execution Rules\r\n\r\n- Ask only when a decision blocks progress or has high impact. Continue safe independent work when allowed.\r\n- Protocol records stay in trace/final, not project files, unless explicitly required.\r\n- Before third-party use, record pass/fail/unknown for source, maintenance, license, integrity, necessity, risk.\r\n- Before install/external execution/substitute, show exact command/scope and obtain explicit approval. One approval authorizes only that action.\r\n- Send only approved, minimum, redacted internal data to approved destinations.\r\n- When research, dependency, and implementation are all requested, show a multi-agent governance proposal; do not search, execute, install/sim, write, or verify before it. Prep reads only named budget, safety, task, dependency, path-fact files. Keep nonempty main work; until agents are accepted, main owns tracing, implementation, and final verification. Propose roles and mark state `proposed`; include boundaries, ownership, parallel work, benefit, costs/risks, fallback, and approval packets: exact sanitized query, public targets/fields/purpose/phase, command/scope. For PowerShell simulation, display `powershell -NoProfile -ExecutionPolicy Bypass -File tools/simulate_install.ps1`. Ask and wait. No decision/unrelated approval is not action approval, refusal, unavailability, or fallback. Exact action approval lets main do only that action without agents. No-decision keeps agents `proposed`; displayed-scope main implementation/verification continue without another approval. Acceptance starts agents; refusal/unavailable selects fallback. Pending work is local reads/planning, displayed-scope main, independent, or action-approved work only.\r\n- Keep durable rule changes in isolated candidates bound to target, scope, base, patch hash, evidence, and invalidation conditions.\r\n- Safety/authorization override context or speed b"
+      }
+    },
+    {
+      "call_id": "call_EAhguMbDIjmwx9Uu3Ia3XIDf",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "python .agents/skills/codex-project-workflow/scripts/read_reference.py verification \"Execution Rules\" \"Output Requirements\"",
+        "workdir": "C:\\Users\\wang yazhou\\.codex\\worktrees\\e043\\efficiently use codex",
+        "max_output_tokens": 20000
+      },
+      "output": {
+        "chars": 2425,
+        "content_codepoints": 2239,
+        "h2_sections": 2,
+        "reference_metrics": {
+          "codepoints": 2239,
+          "h2_sections": 2
+        },
+        "sha256": "fb0e3548aa6773ae85e71598abe6e7d7881c727e03fcac9d7901917c06320b50",
+        "preview": "Chunk ID: 5d4267\nWall time: 1.1321 seconds\nProcess exited with code 0\nOriginal token count: 581\nOutput:\n## Execution Rules\r\n\r\n- Before relevant writes, freeze an evidence-bound contract in the execution trace for routing, state/schema/migration, architecture/ownership, core capability, alternate output, path proof, or high impact. A contract is not a project file by default.\r\n- If a generated delivery invokes a product that writes state or persistence, create `docs/IMPLEMENTATION_CONTRACT.md` before the first product invocation, even when product code is unchanged. Otherwise path-proof, process-risk, and code-only owner-change contracts stay non-file unless the user or project requires a file.\r\n- Identify the user-invocable CLI, UI, API, or registration entry before freezing. Bind claims to independent docs, registrations, callers, entries, or state definitions. If entry, state, save path, or ownership is unproven, stop as implementation-path unverified; never borrow neighboring, helper, shadow, or post-hoc evidence.\r\n- File/module count, tests plus code, and mechanical cross-file edits do not trigger a contract. If every trigger is false, keep a one-to-three-line path constraint.\r\n- Map requested behavior to its existing responsibility owner. Change each relevant owner; do not duplicate owner logic in callers, entries, tests, helpers, or output paths. For bounded work inspect only the target, owners/callers, and adjacent tests.\r\n- Trace the existing user entry. Generate/export/save requests do not authorize repairing entry wiring or core code. If the entry bypasses the core path, stop before contract, delivery, state, or product-code writes.\r\n- Verify result and implementation path separately. Correct output does not prove acceptable implementation.\r\n- For recovery, read compact `PLAN.md` first. The initial ADR projection is exactly `id`, `title`, `governance_state`, `replaces_ids`, `replaced_by_id`, and `body_anchor`. Extract only headings and allowed metadata lin"
+      }
+    },
+    {
+      "call_id": "call_KX6yLl1UuU9LzorQcN7ZnlbH",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "rg --files",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 20000
+      },
+      "output": {
+        "chars": 1233,
+        "content_codepoints": 1129,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "fdf342f9fea1ec9b5bbd01fa0a0ea466455b7e6d6f43bf954c3925ce270e5943",
+        "preview": "Chunk ID: e74c0a\nWall time: 0.8350 seconds\nProcess exited with code 0\nOriginal token count: 283\nOutput:\nscenarios\\12-selective-loading\\docs\\PRD.md\nscenarios\\12-selective-loading\\docs\\PLAN.md\nscenarios\\12-selective-loading\\docs\\DECISIONS.md\nscenarios\\06-missing-state\\docs\\PLAN.md\nscenarios\\06-missing-state\\docs\\DECISIONS.md\nscenarios\\03-direction-mismatch\\docs\\PLAN.md\nscenarios\\03-direction-mismatch\\docs\\DECISIONS.md\nscenarios\\01-valid-graph\\docs\\PLAN.md\nscenarios\\01-valid-graph\\docs\\DECISIONS.md\nscenarios\\05-duplicate-id\\docs\\PLAN.md\nscenarios\\05-duplicate-id\\docs\\DECISIONS.md\nscenarios\\09-cycle\\docs\\PLAN.md\nscenarios\\09-cycle\\docs\\DECISIONS.md\nscenarios\\12-selective-loading\\docs\\audits\\ARCHIVE.md\nscenarios\\04-duplicate-relation\\docs\\DECISIONS.md\nscenarios\\04-duplicate-relation\\docs\\PLAN.md\nscenarios\\10-status-mismatch\\docs\\DECISIONS.md\nscenarios\\10-status-mismatch\\docs\\PLAN.md\nscenarios\\11-plan-crosscheck\\docs\\PLAN.md\nscenarios\\11-plan-crosscheck\\docs\\DECISIONS.md\nscenarios\\07-invalid-target\\docs\\PLAN.md\nscenarios\\07-invalid-target\\docs\\DECISIONS.md\nscenarios\\08-self-reference\\docs\\PLAN.md\nscenarios\\08-self-reference\\docs\\DECISIONS.md\nscenarios\\02-unilateral\\docs\\PLAN.md\nscenarios\\02-unilateral\\docs\\DECISIONS.md\n"
+      }
+    },
+    {
+      "call_id": "call_VUc4JiQW3FSnruK9EDNVxmvm",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-ChildItem -LiteralPath 'D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios' -Directory | Select-Object -ExpandProperty FullName",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 12000
+      },
+      "output": {
+        "chars": 1514,
+        "content_codepoints": 1398,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "9e2be0d4367a550bd4bc259ba576d2df32fa3fe459e2a20f7528ee1f298fa486",
+        "preview": "Chunk ID: 9b4461\nWall time: 1.1800 seconds\nProcess exited with code 0\nOriginal token count: 353\nOutput:\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\01-valid-graph\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\02-unilateral\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\03-direction-mismatch\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\04-duplicate-relation\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\05-duplicate-id\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\06-missing-state\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\07-invalid-target\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\08-self-reference\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\09-cycle\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\10-status-mismatch\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\11-plan-crosscheck\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\12-selective-loading\r\n"
+      }
+    },
+    {
+      "call_id": "call_gRrU7EpxuWpJJUvgaats89Ce",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\01-valid-graph\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 499,
+        "content_codepoints": 382,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "sha256": "8fff05822a1c86b4460aa4d1d0960d076105fee07aaae43590c5d10678febee6",
+        "preview": "Chunk ID: 6c4aaa\nWall time: 1.7836 seconds\nProcess exited with code 0\nOriginal token count: 99\nOutput:\n# Implementation Plan\r\n\r\n> Execution status: in progress\r\n> Updated: 2026-06-12 10:00 +08:00\r\n> Current phase: restore release state\r\n\r\n## Current Snapshot\r\n\r\n- Goal: prepare the current release.\r\n- Key constraints: use active ADRs only.\r\n- Completed: replacement decisions recorded.\r\n- Next: apply ADR-004 and ADR-005.\r\n- Blockers: none.\r\n- Related active decisions: ADR-004, ADR-005, ADR-006.\r\n"
+      }
+    },
+    {
+      "call_id": "call_pEZltVvGGhInmbjUx4v50r9I",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\02-unilateral\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 439,
+        "content_codepoints": 323,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "sha256": "0501bb3f897b9a428c4f5bb3770c8b8a90aaa29f55740af303ceea44bb70bec7",
+        "preview": "Chunk ID: f9e057\nWall time: 1.9701 seconds\nProcess exited with code 0\nOriginal token count: 84\nOutput:\n# Implementation Plan\r\n\r\n> Execution status: in progress\r\n> Updated: 2026-06-12 10:00 +08:00\r\n> Current phase: restore deployment state\r\n\r\n## Current Snapshot\r\n\r\n- Goal: resume deployment work.\r\n- Completed: decision file assembled.\r\n- Next: use ADR-002.\r\n- Blockers: validate decision relations.\r\n- Related active decisions: ADR-002.\r\n"
+      }
+    },
+    {
+      "call_id": "call_ln68tNy9hrWSKLHh2rjUh7Dt",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\03-direction-mismatch\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 419,
+        "content_codepoints": 304,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "sha256": "91a3fd54a94316a4bb3d3669c55476901192386dc8bcabb5b86f772afad337a6",
+        "preview": "Chunk ID: c99a6c\nWall time: 1.9548 seconds\nProcess exited with code 0\nOriginal token count: 79\nOutput:\n# Implementation Plan\r\n\r\n> Execution status: in progress\r\n> Updated: 2026-06-12 10:00 +08:00\r\n> Current phase: restore storage state\r\n\r\n## Current Snapshot\r\n\r\n- Goal: resume storage implementation.\r\n- Completed: decisions drafted.\r\n- Next: validate active storage decision.\r\n- Blockers: decision relation conflict.\r\n"
+      }
+    },
+    {
+      "call_id": "call_cdpKabVq1GkakzDYKqxVd4R3",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\04-duplicate-relation\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 383,
+        "content_codepoints": 268,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "sha256": "f21a0196d4e51597b8d0859f3102f926b2a42ee302179a5873580fbfd9c1277e",
+        "preview": "Chunk ID: 5eb233\nWall time: 2.1364 seconds\nProcess exited with code 0\nOriginal token count: 70\nOutput:\n# Implementation Plan\r\n\r\n> Execution status: in progress\r\n> Updated: 2026-06-12 10:00 +08:00\r\n> Current phase: restore API state\r\n\r\n## Current Snapshot\r\n\r\n- Goal: resume API work.\r\n- Completed: decisions assembled.\r\n- Next: validate ADR metadata.\r\n- Blockers: parser validation.\r\n"
+      }
+    },
+    {
+      "call_id": "call_jTTAH6gZ7ZaEoVcqtRghs3xV",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\05-duplicate-id\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 434,
+        "content_codepoints": 319,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "sha256": "dabc6ad0ff2c9006a9b7effce2287ff6dd89572c27a0e0c9b4b7a8965cd60abc",
+        "preview": "Chunk ID: 0b22ed\nWall time: 2.0560 seconds\nProcess exited with code 0\nOriginal token count: 83\nOutput:\n# Implementation Plan\r\n\r\n> Execution status: in progress\r\n> Updated: 2026-06-12 10:00 +08:00\r\n> Current phase: restore notification state\r\n\r\n## Current Snapshot\r\n\r\n- Goal: resume notification work.\r\n- Completed: decision file assembled.\r\n- Next: determine the active notification decision.\r\n- Blockers: decision index validation.\r\n"
+      }
+    },
+    {
+      "call_id": "call_ZAbo0YWDm8WbgjfOX6DvQerH",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\06-missing-state\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 416,
+        "content_codepoints": 301,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "sha256": "c7f4a7f7bd8a9e9661fc66db96e433fbfc060bac85080e08cdc7691d922f970e",
+        "preview": "Chunk ID: 0d2d9d\nWall time: 1.9083 seconds\nProcess exited with code 0\nOriginal token count: 79\nOutput:\n# Implementation Plan\r\n\r\n> Execution status: in progress\r\n> Updated: 2026-06-12 10:00 +08:00\r\n> Current phase: restore cache state\r\n\r\n## Current Snapshot\r\n\r\n- Goal: resume cache work.\r\n- Completed: decision file assembled.\r\n- Next: determine the active cache decision.\r\n- Blockers: decision metadata incomplete.\r\n"
+      }
+    },
+    {
+      "call_id": "call_ZP6TGsYjcZIdB2k5OPUKZVWT",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\07-invalid-target\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 423,
+        "content_codepoints": 308,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "sha256": "2ceb6afdfacfe9bd16c5aedb06ecab6d161ce0ec4f09bf831aa1232bdd2e6788",
+        "preview": "Chunk ID: d4f4e9\nWall time: 1.8411 seconds\nProcess exited with code 0\nOriginal token count: 80\nOutput:\n# Implementation Plan\r\n\r\n> Execution status: in progress\r\n> Updated: 2026-06-12 10:00 +08:00\r\n> Current phase: restore indexing state\r\n\r\n## Current Snapshot\r\n\r\n- Goal: resume indexing work.\r\n- Completed: decision file assembled.\r\n- Next: validate the current index decision.\r\n- Blockers: replacement target validation.\r\n"
+      }
+    },
+    {
+      "call_id": "call_oGxTwNTLQGW9FGByvndPM3i5",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\08-self-reference\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 411,
+        "content_codepoints": 296,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "sha256": "e43d409786f7365e4e7d98ca3d9c5b7aec9b5426033d74779741420b46cdd9cb",
+        "preview": "Chunk ID: b38b9b\nWall time: 1.7977 seconds\nProcess exited with code 0\nOriginal token count: 77\nOutput:\n# Implementation Plan\r\n\r\n> Execution status: in progress\r\n> Updated: 2026-06-12 10:00 +08:00\r\n> Current phase: restore export state\r\n\r\n## Current Snapshot\r\n\r\n- Goal: resume export work.\r\n- Completed: decision file assembled.\r\n- Next: validate the export decision.\r\n- Blockers: replacement graph validation.\r\n"
+      }
+    },
+    {
+      "call_id": "call_32YswdzIiMvdaYZVE94yEY4O",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\09-cycle\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 424,
+        "content_codepoints": 309,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "sha256": "b123351ab184dcf2e3f035aa9df1dc79eeffa1f5c68d2100318009ca3336b525",
+        "preview": "Chunk ID: 63300b\nWall time: 1.3246 seconds\nProcess exited with code 0\nOriginal token count: 81\nOutput:\n# Implementation Plan\r\n\r\n> Execution status: in progress\r\n> Updated: 2026-06-12 10:00 +08:00\r\n> Current phase: restore scheduler state\r\n\r\n## Current Snapshot\r\n\r\n- Goal: resume scheduler work.\r\n- Completed: decisions assembled.\r\n- Next: determine the active scheduler decision.\r\n- Blockers: replacement graph validation.\r\n"
+      }
+    },
+    {
+      "call_id": "call_KPXClc70mxpeWxHvkw4fsKtw",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\10-status-mismatch\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 437,
+        "content_codepoints": 322,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "sha256": "3dccdf5d173a8f2e83cf2e0fb44ee3f78e59eb0463e11a03c0c308660f95589a",
+        "preview": "Chunk ID: a90c10\nWall time: 1.4764 seconds\nProcess exited with code 0\nOriginal token count: 84\nOutput:\n# Implementation Plan\r\n\r\n> Execution status: in progress\r\n> Updated: 2026-06-12 10:00 +08:00\r\n> Current phase: restore authentication state\r\n\r\n## Current Snapshot\r\n\r\n- Goal: resume authentication work.\r\n- Completed: decisions assembled.\r\n- Next: validate the active authentication decision.\r\n- Blockers: governance-state validation.\r\n"
+      }
+    },
+    {
+      "call_id": "call_TX4RXwjpBMdQdM8KJKdzSyta",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\11-plan-crosscheck\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 498,
+        "content_codepoints": 381,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "sha256": "1f2098a61428c9cc3d1ff14137a51c13db78022c0f6df717d5647632b70a6211",
+        "preview": "Chunk ID: 651518\nWall time: 1.3120 seconds\nProcess exited with code 0\nOriginal token count: 99\nOutput:\n# Implementation Plan\r\n\r\n> Execution status: in progress\r\n> Updated: 2026-06-12 10:00 +08:00\r\n> Current phase: restore release state\r\n\r\n## Current Snapshot\r\n\r\n- Goal: resume release work.\r\n- Key constraints: use active decisions.\r\n- Completed: release candidate assembled.\r\n- Next: apply referenced decisions.\r\n- Blockers: none recorded.\r\n- Related active decisions: ADR-001, ADR-003, ADR-999.\r\n"
+      }
+    },
+    {
+      "call_id": "call_RFSCRS8dmuph7xC53ulj1Yj0",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\12-selective-loading\\docs\\PLAN.md'",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 545,
+        "content_codepoints": 427,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "sha256": "20d674aa3e7dfe7ff71162edaca941c6fdf3e2ad6baa117d6daefdacab7e727d",
+        "preview": "Chunk ID: adc1cb\nWall time: 1.3623 seconds\nProcess exited with code 0\nOriginal token count: 111\nOutput:\n# Implementation Plan\r\n\r\n> Execution status: in progress\r\n> Updated: 2026-06-12 10:00 +08:00\r\n> Current phase: retention update\r\n\r\n## Current Snapshot\r\n\r\n- Goal: apply the confirmed retention rule.\r\n- Key constraints: preserve the public export format.\r\n- Completed: product baseline and decisions recorded.\r\n- Next: implement ADR-002 using the PRD Retention Rules section.\r\n- Blockers: none.\r\n- Related active decisions: ADR-001, ADR-002.\r\n"
+      }
+    },
+    {
+      "call_id": "call_ZbEyicMnLeCXG9URwmxptEcq",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-ChildItem -LiteralPath 'scenarios' -Directory | Sort-Object Name | ForEach-Object { $scenario=$_.Name; Write-Output \"### $scenario\"; Select-String -LiteralPath (Join-Path $_.FullName 'docs\\DECISIONS.md') -Pattern '^(##\\s+|-\\s*(id|title|governance_state|replaces_ids|replaced_by_id|body_anchor):)' | ForEach-Object { $_.Line }; Write-Output '' }",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 50000
+      },
+      "output": {
+        "chars": 1164,
+        "content_codepoints": 1008,
+        "h2_sections": 28,
+        "reference_metrics": null,
+        "sha256": "febde8e27760f0ccceabd8380915718831a58c75fa14b192088f782515720ae9",
+        "preview": "Chunk ID: 558c4f\nWall time: 1.2507 seconds\nProcess exited with code 0\nOriginal token count: 265\nOutput:\n### 01-valid-graph\r\n## ADR-001: Legacy queue\r\n## ADR-002: Legacy retry\r\n## ADR-003: Unified delivery\r\n## ADR-004: Current delivery\r\n## ADR-005: Metrics\r\n## ADR-006: Alerting\r\n\r\n### 02-unilateral\r\n## ADR-001: Old deploy path\r\n## ADR-002: New deploy path\r\n\r\n### 03-direction-mismatch\r\n## ADR-001: Old storage\r\n## ADR-002: Alternate storage\r\n## ADR-003: Current storage\r\n\r\n### 04-duplicate-relation\r\n## ADR-001: Old API\r\n## ADR-002: Current API\r\n\r\n### 05-duplicate-id\r\n## ADR-001: Email notifications\r\n## ADR-001: Push notifications\r\n\r\n### 06-missing-state\r\n## ADR-001: Cache policy\r\n\r\n### 07-invalid-target\r\n## ADR-001: Current index\r\n\r\n### 08-self-reference\r\n## ADR-001: Export format\r\n\r\n### 09-cycle\r\n## ADR-001: Scheduler A\r\n## ADR-002: Scheduler B\r\n\r\n### 10-status-mismatch\r\n## ADR-001: Old authentication\r\n## ADR-002: Current authentication\r\n\r\n### 11-plan-crosscheck\r\n## ADR-001: Logging\r\n## ADR-002: Metrics\r\n## ADR-003: Old deployment\r\n## ADR-004: Current deployment\r\n\r\n### 12-selective-loading\r\n## ADR-001: Export format\r\n## ADR-002: Retention period\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_QDY1wye95Q6dgHPufn8LSjvo",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Select-String -Path 'scenarios\\*\\docs\\DECISIONS.md' -Pattern 'id|title|governance_state|replaces_ids|replaced_by_id|body_anchor' | Select-Object Path,LineNumber,Line",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 40000
+      },
+      "output": {
+        "chars": 715,
+        "content_codepoints": 603,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "5f6594dbb745c45f82b41f130e337baa13e44ed9ca29ce4d79b028cb4640c0f3",
+        "preview": "Chunk ID: 0b7459\nWall time: 1.1273 seconds\nProcess exited with code 0\nOriginal token count: 153\nOutput:\n\r\nPath                                                                                                                   \r\n----                                                                                                                   \r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\08-self-reference...\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\09-cycle\\docs\\DEC...\r\nD:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios\\09-cycle\\docs\\DEC...\r\n\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_Tv3qBk1EOWkxFXNpLhfpYtC8",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "Get-Content -LiteralPath 'scenarios\\01-valid-graph\\docs\\DECISIONS.md' -TotalCount 80",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 12000
+      },
+      "output": {
+        "chars": 1129,
+        "content_codepoints": 987,
+        "h2_sections": 6,
+        "reference_metrics": null,
+        "sha256": "e4e64e3129ee53e7ddc242a2dc8e00a8e0ce70702be058222e26e7547587f383",
+        "preview": "Chunk ID: 85ce9e\nWall time: 1.0302 seconds\nProcess exited with code 0\nOriginal token count: 393\nOutput:\n# Decisions\r\n\r\n## ADR-001: Legacy queue\r\n\r\n- 娌荤悊鐘舵€侊細宸叉浛浠?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鏇夸唬鍏崇郴锛歳eplaced-by ADR-003\r\n- 鍐冲畾鍐呭锛歎se the legacy queue.\r\n- 鍘熷洜锛欼nitial delivery choice.\r\n\r\n## ADR-002: Legacy retry\r\n\r\n- 娌荤悊鐘舵€侊細宸叉浛浠?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鏇夸唬鍏崇郴锛歳eplaced-by ADR-003\r\n- 鍐冲畾鍐呭锛歎se fixed retries.\r\n- 鍘熷洜锛欼nitial retry policy.\r\n\r\n## ADR-003: Unified delivery\r\n\r\n- 娌荤悊鐘舵€侊細宸叉浛浠?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鏇夸唬鍏崇郴锛歳eplaces ADR-001, ADR-002\r\n- 鏇夸唬鍏崇郴锛歳eplaced-by ADR-004\r\n- 鍐冲畾鍐呭锛歎nify queue and retry policy.\r\n- 鍘熷洜锛歍his decision replaces older policy text; prose is not a relation field.\r\n\r\n## ADR-004: Current delivery\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細鐙珛澶嶆牳\r\n- 鏇夸唬鍏崇郴锛歳eplaces ADR-003\r\n- 鍐冲畾鍐呭锛歎se the current delivery service.\r\n- 鍘熷洜锛欼t supports current reliability requirements.\r\n\r\n## ADR-005: Metrics\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細宸查獙璇?- 鏇夸唬鍏崇郴锛氭棤\r\n- 鍐冲畾鍐呭锛歊ecord delivery metrics.\r\n- 鍘熷洜锛歄perational visibility.\r\n\r\n## ADR-006: Alerting\r\n\r\n- 娌荤悊鐘舵€侊細宸茬‘璁?- 璇佹嵁鐘舵€侊細宸茶嚜鏌?- 鍐冲畾鍐呭锛欰lert on sustained delivery failure.\r\n- 鍘熷洜锛歀imit unnoticed outages.\r\n"
+      }
+    },
+    {
+      "call_id": "call_GG4WhRZjmXR0pCt67yrQNVHR",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "@'\nfrom pathlib import Path\nroot=Path(r'D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix\\scenarios')\nfor p in sorted(root.glob('*/docs/DECISIONS.md')):\n    print('###', p.parts[-3])\n    txt=p.read_text(encoding='utf-8')\n    for i,line in enumerate(txt.splitlines(),1):\n        if line.startswith('## ') or any(tok in line.lower() for tok in ['replaces','replaced-by']) or '治理状态' in line or '替代关系' in line:\n            print(f'{i}: {line}')\n    print()\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 50000
+      },
+      "output": {
+        "chars": 2120,
+        "content_codepoints": 1940,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "e002d3fe412c03ce7b941eea73130c6f200536e483ae75a6b7eb259458869d11",
+        "preview": "Chunk ID: 614702\nWall time: 2.1588 seconds\nProcess exited with code 0\nOriginal token count: 592\nOutput:\n### 01-valid-graph\r\n3: ## ADR-001: Legacy queue\r\n7: - �����ϵ��replaced-by ADR-003\r\n11: ## ADR-002: Legacy retry\r\n15: - �����ϵ��replaced-by ADR-003\r\n19: ## ADR-003: Unified delivery\r\n23: - �����ϵ��replaces ADR-001, ADR-002\r\n24: - �����ϵ��replaced-by ADR-004\r\n26: - ԭ��This decision replaces older policy text; prose is not a relation field.\r\n28: ## ADR-004: Current delivery\r\n32: - �����ϵ��replaces ADR-003\r\n36: ## ADR-005: Metrics\r\n44: ## ADR-006: Alerting\r\n\r\n### 02-unilateral\r\n3: ## ADR-001: Old deploy path\r\n7: - �����ϵ��replaced-by ADR-002\r\n11: ## ADR-002: New deploy path\r\n\r\n### 03-direction-mismatch\r\n3: ## ADR-001: Old storage\r\n7: - �����ϵ��replaced-by ADR-003\r\n11: ## ADR-002: Alternate storage\r\n15: - �����ϵ��replaced-by ADR-003\r\n19: ## ADR-003: Current storage\r\n23: - �����ϵ��replaces ADR-002\r\n\r\n### 04-duplicate-relation\r\n3: ## ADR-001: Old API\r\n7: - �����ϵ��replaced-by ADR-002\r\n8: - �����ϵ��replaced-by ADR-002\r\n12: ## ADR-002: Current API\r\n16: - �����ϵ��replaces ADR-001\r\n\r\n### 05-duplicate-id\r\n3: ## ADR-001: Email notifications\r\n11: ## ADR-001: Push notifications\r\n\r\n### 06-missing-state\r\n3: ## ADR-001: Cache policy\r\n\r\n### 07-invalid-target\r\n3: ## ADR-001: Current index\r\n7: - �����ϵ��replaces ADR-999\r\n\r\n### 08-self-reference\r\n3: ## ADR-001: Export format\r\n7: - �����ϵ��replaces ADR-001\r\n8: - �����ϵ��replaced-by ADR-001\r\n\r\n### 09-cycle\r\n3: ## ADR-001: Scheduler A\r\n7: - �����ϵ��replaces ADR-002\r\n8: - �����ϵ��replaced-by ADR-002\r\n12: ## ADR-002: Scheduler B\r\n16: - �����ϵ��replaces ADR-001\r\n17: - �����ϵ��replaced-by ADR-001\r\n\r\n### 10-status-mismatch\r\n3: ## ADR-001: Old authentication\r\n7: - �����ϵ��replaced-by ADR-002\r\n11: ## ADR-002: Current authentication\r\n15: - �����ϵ��replaces ADR-001\r\n\r\n### 11-plan-crosscheck\r\n3: ## ADR-001: Logging\r\n11: ## ADR-002: Metrics\r\n19: ## ADR-003: Old deployment\r\n23: - �����ϵ��replaced-by ADR-004\r\n27: ## ADR-004: Current deployment\r\n31: - "
+      }
+    },
+    {
+      "call_id": "call_wNxXFdkslHl7YH543PVq5MNS",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "@'\nfrom pathlib import Path\np=Path(r'scenarios\\01-valid-graph\\docs\\DECISIONS.md')\nb=p.read_bytes()\nfor enc in ['utf-8','utf-8-sig','gb18030','big5','cp936']:\n    try:\n        txt=b.decode(enc)\n        print('ENC', enc)\n        print('\\n'.join(txt.splitlines()[3:9]))\n    except Exception as e:\n        print('ERR', enc, e)\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 12000
+      },
+      "output": {
+        "chars": 665,
+        "content_codepoints": 544,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "8f7b2bcb814970e55f43432c5e5b36f5a358c4d5598a2091b655a1058b948d87",
+        "preview": "Chunk ID: b26797\nWall time: 1.5780 seconds\nProcess exited with code 0\nOriginal token count: 181\nOutput:\nENC utf-8\r\n\r\n- ����״̬�������\r\n- ֤��״̬������֤\r\n- �����ϵ��replaced-by ADR-003\r\n- �������ݣ�Use the legacy queue.\r\n- ԭ��Initial delivery choice.\r\nENC utf-8-sig\r\n\r\n- ����״̬�������\r\n- ֤��״̬������֤\r\n- �����ϵ��replaced-by ADR-003\r\n- �������ݣ�Use the legacy queue.\r\n- ԭ��Initial delivery choice.\r\nERR gb18030 'gb18030' codec can't decode byte 0x80 in position 51: illegal multibyte sequence\r\nERR big5 'big5' codec can't decode byte 0x90 in position 45: illegal multibyte sequence\r\nERR cp936 'gbk' codec can't decode byte 0x80 in position 51: illegal multibyte sequence\r\n"
+      }
+    },
+    {
+      "call_id": "call_IlLTpLu2cr9HWFjHDZS2P2p4",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "@'\nfrom pathlib import Path\nb=Path('scenarios/01-valid-graph/docs/DECISIONS.md').read_bytes().splitlines()[4]\nprint(b)\nprint(list(b[:30]))\nfor enc in ['latin1','cp1252']:\n    s=b.decode(enc)\n    print(enc, repr(s))\n    try:\n        recovered=s.encode('cp1252').decode('utf-8')\n        print('recov', recovered)\n    except Exception as e: print('recov err',e)\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 524,
+        "content_codepoints": 415,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "31dc9297c506abb9c317d66e6ca206e5711d4f89719b2f18fb4c308e0a8d65d5",
+        "preview": "Chunk ID: 1a3f86\nWall time: 1.2382 seconds\nProcess exited with code 1\nOriginal token count: 105\nOutput:\nb'- \\xe6\\xb2\\xbb\\xe7\\x90\\x86\\xe7\\x8a\\xb6\\xe6\\x80\\x81\\xef\\xbc\\x9a\\xe5\\xb7\\xb2\\xe6\\x9b\\xbf\\xe4\\xbb\\xa3'\r\n[45, 32, 230, 178, 187, 231, 144, 134, 231, 138, 182, 230, 128, 129, 239, 188, 154, 229, 183, 178, 230, 155, 191, 228, 187, 163]\r\nlatin1 Traceback (most recent call last):\r\n  File \"<stdin>\", line 7, in <module>\r\nUnicodeEncodeError: 'gbk' codec can't encode character '\\xe6' in position 3: illegal multibyte sequence\r\n"
+      }
+    },
+    {
+      "call_id": "call_bAEI5ltlVUu823SfWsSZ1lfw",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "@'\nfrom pathlib import Path\nimport re, json\nroot=Path('scenarios')\nfor scen in sorted([p for p in root.iterdir() if p.is_dir()]):\n    txt=(scen/'docs'/'DECISIONS.md').read_text(encoding='utf-8')\n    blocks=[]; cur=None; body=[]; start=None\n    for i,line in enumerate(txt.splitlines(),1):\n        m=re.match(r'^##\\s+(ADR-\\d+):\\s*(.+)$', line)\n        if m:\n            if cur: blocks.append(cur)\n            cur={'id':m.group(1),'title':m.group(2),'body_anchor':line,'line':i,'governance_state':None,'replaces_ids':[],'replaced_by_id':None,'relations_raw':[]}\n            continue\n        if cur and line.startswith('- '):\n            if '状态' in line and cur['governance_state'] is None:\n                cur['governance_state']=line.split('：',1)[1] if '：' in line else line\n            if '关系' in line:\n                cur['relations_raw'].append(line)\n                low=line.lower()\n                if 'replaced-by' in low:\n                    ids=re.findall(r'ADR-\\d+', line)\n                    cur['replaced_by_id']=ids[0] if ids else None\n                elif 'replaces' in low:\n                    cur['replaces_ids']=re.findall(r'ADR-\\d+', line)\n    if cur: blocks.append(cur)\n    print('###', scen.name)\n    print(json.dumps(blocks, ensure_ascii=True, separators=(',',':')))\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 50000
+      },
+      "output": {
+        "chars": 5347,
+        "content_codepoints": 5218,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "6f0b7a249ae2491c7ded282ec6a7c4b5b9330fecb9d63d0c2b8153f6a28802c2",
+        "preview": "Chunk ID: 645ccb\nWall time: 1.3479 seconds\nProcess exited with code 0\nOriginal token count: 1311\nOutput:\n### 01-valid-graph\r\n[{\"id\":\"ADR-001\",\"title\":\"Legacy queue\",\"body_anchor\":\"## ADR-001: Legacy queue\",\"line\":3,\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"relations_raw\":[]},{\"id\":\"ADR-002\",\"title\":\"Legacy retry\",\"body_anchor\":\"## ADR-002: Legacy retry\",\"line\":11,\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"relations_raw\":[]},{\"id\":\"ADR-003\",\"title\":\"Unified delivery\",\"body_anchor\":\"## ADR-003: Unified delivery\",\"line\":19,\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"relations_raw\":[]},{\"id\":\"ADR-004\",\"title\":\"Current delivery\",\"body_anchor\":\"## ADR-004: Current delivery\",\"line\":28,\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"relations_raw\":[]},{\"id\":\"ADR-005\",\"title\":\"Metrics\",\"body_anchor\":\"## ADR-005: Metrics\",\"line\":36,\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"relations_raw\":[]},{\"id\":\"ADR-006\",\"title\":\"Alerting\",\"body_anchor\":\"## ADR-006: Alerting\",\"line\":44,\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"relations_raw\":[]}]\r\n### 02-unilateral\r\n[{\"id\":\"ADR-001\",\"title\":\"Old deploy path\",\"body_anchor\":\"## ADR-001: Old deploy path\",\"line\":3,\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"relations_raw\":[]},{\"id\":\"ADR-002\",\"title\":\"New deploy path\",\"body_anchor\":\"## ADR-002: New deploy path\",\"line\":11,\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"relations_raw\":[]}]\r\n### 03-direction-mismatch\r\n[{\"id\":\"ADR-001\",\"title\":\"Old storage\",\"body_anchor\":\"## ADR-001: Old storage\",\"line\":3,\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"relations_raw\":[]},{\"id\":\"ADR-002\",\"title\":\"Alternate storage\",\"body_anchor\":\"## ADR-002: Alternate storage\",\"line\":11,\"governance_state\":null,\"replaces_ids\":[],\"replaced_by_id\":null,\"relations_raw\":[]},{\"id\":\"ADR-003\",\"title\":\"Current storage\",\"body_anchor\":\"## ADR-003"
+      }
+    },
+    {
+      "call_id": "call_JcKlNbGH4Gpz1IvE5g7N8j4F",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "@'\nfrom pathlib import Path\nfor line in Path('scenarios/01-valid-graph/docs/DECISIONS.md').read_text(encoding='utf-8').splitlines()[3:9]:\n    print(line.encode('unicode_escape').decode())\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 363,
+        "content_codepoints": 254,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "cc1c8e1efef3593879933353ac36bb85bfd66a43af6a5fc7d6a1b3154bbe53af",
+        "preview": "Chunk ID: 47ec6a\nWall time: 2.1967 seconds\nProcess exited with code 0\nOriginal token count: 65\nOutput:\n\r\n- \\u6cbb\\u7406\\u72b6\\u6001\\uff1a\\u5df2\\u66ff\\u4ee3\r\n- \\u8bc1\\u636e\\u72b6\\u6001\\uff1a\\u5df2\\u9a8c\\u8bc1\r\n- \\u66ff\\u4ee3\\u5173\\u7cfb\\uff1areplaced-by ADR-003\r\n- \\u51b3\\u5b9a\\u5185\\u5bb9\\uff1aUse the legacy queue.\r\n- \\u539f\\u56e0\\uff1aInitial delivery choice.\r\n"
+      }
+    },
+    {
+      "call_id": "call_VjYaHkIa373UD0sEYj7OW7gI",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "@'\nfrom pathlib import Path\nimport re, json\nroot=Path('scenarios')\nSTATE='\\u6cbb\\u7406\\u72b6\\u6001'\nREL='\\u66ff\\u4ee3\\u5173\\u7cfb'\nNONE='\\u65e0'\nCONF='\\u5df2\\u786e\\u8ba4'\nREPL='\\u5df2\\u66ff\\u4ee3'\n\ndef parse_plan(path):\n    txt=path.read_text(encoding='utf-8')\n    refs=[]\n    for line in txt.splitlines():\n        if 'Related active decisions:' in line:\n            refs=re.findall(r'ADR-\\d+', line)\n    return {'refs':refs,'text':txt}\n\ndef parse_dec(path):\n    txt=path.read_text(encoding='utf-8')\n    blocks=[]; cur=None\n    for i,line in enumerate(txt.splitlines(),1):\n        m=re.match(r'^##\\s+(ADR-\\d+):\\s*(.+)$', line)\n        if m:\n            if cur: blocks.append(cur)\n            cur={'id':m.group(1),'title':m.group(2),'governance_state':None,'replaces_ids':[],'replaced_by_id':None,'body_anchor':line,'line':i,'relation_lines':[]}\n            continue\n        if not cur or not line.startswith('- '):\n            continue\n        if line.startswith('- '+STATE+'：'):\n            cur['governance_state']=line.split('：',1)[1]\n        if line.startswith('- '+REL+'：'):\n            val=line.split('：',1)[1].strip()\n            cur['relation_lines'].append(val)\n            low=val.lower()\n            if low.startswith('replaced-by'):\n                ids=re.findall(r'ADR-\\d+', val)\n                if ids: cur['replaced_by_id']=ids[0]\n            elif low.startswith('replaces'):\n                cur['replaces_ids'].extend(re.findall(r'ADR-\\d+', val))\n    if cur: blocks.append(cur)\n    return blocks\n\ndef active_ids(blocks):\n    return [b['id'] for b in blocks if b['governance_state']==CONF]\n\ndef conflicts(blocks, plan_refs):\n    out=[]\n    ids=[b['id'] for b in blocks]\n    counts={x:ids.count(x) for x in set(ids)}\n    dups=[x for x,c in counts.items() if c>1]\n    if dups: out.append('duplicate id(s): '+', '.join(sorted(dups)))\n    if dups:\n        # duplicate IDs make target validation ambiguous; still report local field conflicts\n        pass\n    idset=set(ids)\n    for b in blocks:\n        if not b['governance_state']:\n            out.append(f'{b[\"id\"]} missing governance_state')\n        # duplicate relation declaration same value\n        if len(b['relation_lines']) != len(set(b['relation_lines'])):\n            vals=[v for v in set(b['relation_lines']) if b['relation_lines'].count(v)>1]\n            out.append(f'{b[\"id\"]} duplicate relation declaration: '+', '.join(vals))\n        # invalid/self targets\n        for t in b['replaces_ids']:\n            if t==b['id']: out.append(f'{b[\"id\"]} self-reference in replaces_ids')\n            if t not in idset: out.append(f'{b[\"id\"]} replaces missing target {t}')\n        if b['replaced_by_id']:\n            t=b['replaced_by_id']\n            if t==b['id']: out.append(f'{b[\"id\"]} self-reference in replaced_by_id')\n            if t not in idset: out.append(f'{b[\"id\"]} replaced_by missing target {t}')\n    # reciprocal mismatches only if ids unique enough\n    by={b['id']:b for b in blocks}\n    if not dups:\n        for b in blocks:\n            for old in b['replaces_ids']:\n                if old in by and by[old]['replaced_by_id'] != b['id']:\n                    out.append(f'relation mismatch: {b[\"id\"]} replaces {old}, but {old}.replaced_by_id={by[old][\"replaced_by_id\"]}')\n            if b['replaced_by_id'] and b['replaced_by_id'] in by:\n                new=by[b['replaced_by_id']]\n                if b['id'] not in new['replaces_ids']:\n                    out.append(f'relation mismatch: {b[\"id\"]}.replaced_by_id={new[\"id\"]}, but {new[\"id\"]}.replaces_ids lacks {b[\"id\"]}')\n        # status consistency: replaced items should be 已替代, confirmed should not have replaced_by\n        for b in blocks:\n            if b['replaced_by_id'] and b['governance_state'] != REPL:\n                out.append(f'status mismatch: {b[\"id\"]} has replaced_by_id but governance_state={b[\"governance_state\"]}')\n            if b['governance_state']==CONF and b['replaced_by_id']:\n                out.append(f'status mismatch: {b[\"id\"]} is active/confirmed but replaced_by_id={b[\"replaced_by_id\"]}')\n        # cycles in replaces graph edges b -> old\n        graph={b['id']:b['replaces_ids'][:] for b in blocks}\n        seen_cycles=set()\n        def dfs(n,path):\n            for m in graph.get(n,[]):\n                if m in path:\n                    cyc=path[path.index(m):]+[m]\n                    key=tuple(cyc)\n                    # canonicalize rotation ignoring closing repeat\n                    base=cyc[:-1]\n                    rots=[tuple(base[i:]+base[:i]) for i in range(len(base))]\n                    ckey=min(rots)\n                    if ckey not in seen_cycles:\n                        seen_cycles.add(ckey); out.append('replacement cycle: '+' -> '.join(cyc))\n                else:\n                    dfs(m,path+[m])\n        for n in graph: dfs(n,[n])\n        for r in plan_refs:\n            if r not in by:\n                out.append(f'PLAN references missing active decision {r}')\n            elif by[r]['governance_state'] != CONF:\n                out.append(f'PLAN references non-active decision {r} state={by[r][\"governance_state\"]}')\n        for a in active_ids(blocks):\n            # If plan has an explicit Related active decisions list, it should match all active IDs.\n            if plan_refs and a not in plan_refs:\n                out.append(f'PLAN omits active decision {a}')\n    return out\n\nsummary={}\nfor scen in sorted([p for p in root.iterdir() if p.is_dir()]):\n    blocks=parse_dec(scen/'docs'/'DECISIONS.md')\n    refs=parse_plan(scen/'docs'/'PLAN.md')['refs']\n    # clean projection fields only\n    proj=[{k:b[k] for k in ['id','title','governance_state','replaces_ids','replaced_by_id','body_anchor']} for b in blocks]\n    summary[scen.name]={'plan_refs':refs,'projection':proj,'active_ids':active_ids(blocks),'conflicts':conflicts(blocks,refs)}\nprint(json.dumps(summary, ensure_ascii=True, indent=2))\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 60000
+      },
+      "output": {
+        "chars": 10107,
+        "content_codepoints": 9629,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "09993ccf861b45c421bd257559cbdab9240b2c0096caedd5ce2f42d65659a347",
+        "preview": "Chunk ID: 2109f4\nWall time: 1.8805 seconds\nProcess exited with code 0\nOriginal token count: 2501\nOutput:\n{\r\n  \"01-valid-graph\": {\r\n    \"plan_refs\": [\r\n      \"ADR-004\",\r\n      \"ADR-005\",\r\n      \"ADR-006\"\r\n    ],\r\n    \"projection\": [\r\n      {\r\n        \"id\": \"ADR-001\",\r\n        \"title\": \"Legacy queue\",\r\n        \"governance_state\": null,\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-001: Legacy queue\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-002\",\r\n        \"title\": \"Legacy retry\",\r\n        \"governance_state\": null,\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-002: Legacy retry\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-003\",\r\n        \"title\": \"Unified delivery\",\r\n        \"governance_state\": null,\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-003: Unified delivery\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-004\",\r\n        \"title\": \"Current delivery\",\r\n        \"governance_state\": null,\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-004: Current delivery\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-005\",\r\n        \"title\": \"Metrics\",\r\n        \"governance_state\": null,\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-005: Metrics\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-006\",\r\n        \"title\": \"Alerting\",\r\n        \"governance_state\": null,\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-006: Alerting\"\r\n      }\r\n    ],\r\n    \"active_ids\": [],\r\n    \"conflicts\": [\r\n      \"ADR-001 missing governance_state\",\r\n      \"ADR-002 missing governance_state\",\r\n      \"ADR-003 missing governance_state\",\r\n      \"ADR-004 missing governance_state\",\r\n      \"ADR-005 missing governance_state\",\r\n      \"ADR-006 missing governance_state\",\r\n      \"PLAN references non-active decision ADR-004 state=None\",\r\n      \"PLAN references non-active "
+      }
+    },
+    {
+      "call_id": "call_aayiRcTXIJP4GpHLftxHjDut",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "@'\nfrom pathlib import Path\nimport re, json\nroot=Path('scenarios')\nSTATE=''.join(map(chr,[0x6cbb,0x7406,0x72b6,0x6001]))\nREL=''.join(map(chr,[0x66ff,0x4ee3,0x5173,0x7cfb]))\nCONF=''.join(map(chr,[0x5df2,0x786e,0x8ba4]))\nREPL=''.join(map(chr,[0x5df2,0x66ff,0x4ee3]))\n\ndef parse_plan(path):\n    txt=path.read_text(encoding='utf-8')\n    refs=[]\n    for line in txt.splitlines():\n        if 'Related active decisions:' in line:\n            refs=re.findall(r'ADR-\\d+', line)\n    return refs\n\ndef parse_dec(path):\n    txt=path.read_text(encoding='utf-8')\n    blocks=[]; cur=None\n    for i,line in enumerate(txt.splitlines(),1):\n        m=re.match(r'^##\\s+(ADR-\\d+):\\s*(.+)$', line)\n        if m:\n            if cur: blocks.append(cur)\n            cur={'id':m.group(1),'title':m.group(2),'governance_state':None,'replaces_ids':[],'replaced_by_id':None,'body_anchor':line,'line':i,'relation_lines':[]}\n            continue\n        if not cur or not line.startswith('- '): continue\n        if line.startswith('- '+STATE+'：'):\n            cur['governance_state']=line.split('：',1)[1]\n        if line.startswith('- '+REL+'：'):\n            val=line.split('：',1)[1].strip(); cur['relation_lines'].append(val)\n            low=val.lower()\n            if low.startswith('replaced-by'):\n                ids=re.findall(r'ADR-\\d+', val); cur['replaced_by_id']=ids[0] if ids else None\n            elif low.startswith('replaces'):\n                cur['replaces_ids'].extend(re.findall(r'ADR-\\d+', val))\n    if cur: blocks.append(cur)\n    return blocks\n\ndef active_ids(blocks): return [b['id'] for b in blocks if b['governance_state']==CONF]\n\ndef conflicts(blocks, plan_refs):\n    out=[]; ids=[b['id'] for b in blocks]; counts={x:ids.count(x) for x in set(ids)}; dups=sorted([x for x,c in counts.items() if c>1]); idset=set(ids)\n    if dups: out.append('duplicate id(s): '+', '.join(dups))\n    for b in blocks:\n        if not b['governance_state']: out.append(f'{b[\"id\"]} missing governance_state')\n        if len(b['relation_lines']) != len(set(b['relation_lines'])):\n            vals=[v for v in sorted(set(b['relation_lines'])) if b['relation_lines'].count(v)>1]\n            out.append(f'{b[\"id\"]} duplicate relation declaration: '+', '.join(vals))\n        for t in b['replaces_ids']:\n            if t==b['id']: out.append(f'{b[\"id\"]} self-reference in replaces_ids')\n            if t not in idset: out.append(f'{b[\"id\"]} replaces missing target {t}')\n        if b['replaced_by_id']:\n            t=b['replaced_by_id']\n            if t==b['id']: out.append(f'{b[\"id\"]} self-reference in replaced_by_id')\n            if t not in idset: out.append(f'{b[\"id\"]} replaced_by missing target {t}')\n    if not dups:\n        by={b['id']:b for b in blocks}\n        for b in blocks:\n            for old in b['replaces_ids']:\n                if old in by and by[old]['replaced_by_id'] != b['id']:\n                    out.append(f'relation mismatch: {b[\"id\"]} replaces {old}, but {old}.replaced_by_id={by[old][\"replaced_by_id\"]}')\n            if b['replaced_by_id'] and b['replaced_by_id'] in by:\n                new=by[b['replaced_by_id']]\n                if b['id'] not in new['replaces_ids']:\n                    out.append(f'relation mismatch: {b[\"id\"]}.replaced_by_id={new[\"id\"]}, but {new[\"id\"]}.replaces_ids lacks {b[\"id\"]}')\n        for b in blocks:\n            if b['replaced_by_id'] and b['governance_state'] != REPL:\n                out.append(f'status mismatch: {b[\"id\"]} has replaced_by_id but governance_state={b[\"governance_state\"]}')\n        graph={b['id']:b['replaces_ids'][:] for b in blocks}; seen=set()\n        def dfs(n,path):\n            for m in graph.get(n,[]):\n                if m in path:\n                    cyc=path[path.index(m):]+[m]; base=cyc[:-1]\n                    rots=[tuple(base[i:]+base[:i]) for i in range(len(base))]\n                    key=min(rots)\n                    if key not in seen: seen.add(key); out.append('replacement cycle: '+' -> '.join(cyc))\n                else: dfs(m,path+[m])\n        for n in graph: dfs(n,[n])\n        for r in plan_refs:\n            if r not in by: out.append(f'PLAN references missing active decision {r}')\n            elif by[r]['governance_state'] != CONF: out.append(f'PLAN references non-active decision {r} state={by[r][\"governance_state\"]}')\n        for a in active_ids(blocks):\n            if plan_refs and a not in plan_refs: out.append(f'PLAN omits active decision {a}')\n    return out\nsummary={}\nfor scen in sorted([p for p in root.iterdir() if p.is_dir()]):\n    blocks=parse_dec(scen/'docs'/'DECISIONS.md'); refs=parse_plan(scen/'docs'/'PLAN.md')\n    proj=[{k:b[k] for k in ['id','title','governance_state','replaces_ids','replaced_by_id','body_anchor']} for b in blocks]\n    summary[scen.name]={'plan_refs':refs,'projection':proj,'active_ids':active_ids(blocks),'conflicts':conflicts(blocks,refs)}\nprint(json.dumps(summary, ensure_ascii=True, indent=2))\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 60000
+      },
+      "output": {
+        "chars": 10107,
+        "content_codepoints": 9629,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "9335fc8441ea95dcc05ecdf78425f0cb25686676314767b8b475f22a5bdae01f",
+        "preview": "Chunk ID: 155bf8\nWall time: 1.0066 seconds\nProcess exited with code 0\nOriginal token count: 2501\nOutput:\n{\r\n  \"01-valid-graph\": {\r\n    \"plan_refs\": [\r\n      \"ADR-004\",\r\n      \"ADR-005\",\r\n      \"ADR-006\"\r\n    ],\r\n    \"projection\": [\r\n      {\r\n        \"id\": \"ADR-001\",\r\n        \"title\": \"Legacy queue\",\r\n        \"governance_state\": null,\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-001: Legacy queue\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-002\",\r\n        \"title\": \"Legacy retry\",\r\n        \"governance_state\": null,\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-002: Legacy retry\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-003\",\r\n        \"title\": \"Unified delivery\",\r\n        \"governance_state\": null,\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-003: Unified delivery\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-004\",\r\n        \"title\": \"Current delivery\",\r\n        \"governance_state\": null,\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-004: Current delivery\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-005\",\r\n        \"title\": \"Metrics\",\r\n        \"governance_state\": null,\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-005: Metrics\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-006\",\r\n        \"title\": \"Alerting\",\r\n        \"governance_state\": null,\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-006: Alerting\"\r\n      }\r\n    ],\r\n    \"active_ids\": [],\r\n    \"conflicts\": [\r\n      \"ADR-001 missing governance_state\",\r\n      \"ADR-002 missing governance_state\",\r\n      \"ADR-003 missing governance_state\",\r\n      \"ADR-004 missing governance_state\",\r\n      \"ADR-005 missing governance_state\",\r\n      \"ADR-006 missing governance_state\",\r\n      \"PLAN references non-active decision ADR-004 state=None\",\r\n      \"PLAN references non-active "
+      }
+    },
+    {
+      "call_id": "call_fplztJ5toFyMkqQXcYnGaTrq",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "@'\nfrom pathlib import Path\nline=Path('scenarios/01-valid-graph/docs/DECISIONS.md').read_text(encoding='utf-8').splitlines()[4]\nprint(line.encode('unicode_escape').decode())\nprint([hex(ord(c)) for c in line[:10]])\nSTATE=''.join(map(chr,[0x6cbb,0x7406,0x72b6,0x6001]))\nREL=''.join(map(chr,[0x66ff,0x4ee3,0x5173,0x7cfb]))\nprint(STATE.encode('unicode_escape').decode(), line.startswith('- '+STATE+'：'), STATE in line)\nprint(REL.encode('unicode_escape').decode(), REL in line)\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 10000
+      },
+      "output": {
+        "chars": 322,
+        "content_codepoints": 215,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "ccaad46f1d1c8484f615db3f661927a256b687a325235d879832c8e97f85a9a3",
+        "preview": "Chunk ID: 5463ff\nWall time: 1.1222 seconds\nProcess exited with code 0\nOriginal token count: 55\nOutput:\n- \\u6cbb\\u7406\\u72b6\\u6001\\uff1a\\u5df2\\u66ff\\u4ee3\r\n['0x2d', '0x20', '0x6cbb', '0x7406', '0x72b6', '0x6001', '0xff1a', '0x5df2', '0x66ff', '0x4ee3']\r\n\\u6cbb\\u7406\\u72b6\\u6001 False True\r\n\\u66ff\\u4ee3\\u5173\\u7cfb False\r\n"
+      }
+    },
+    {
+      "call_id": "call_FYCxX2G5szh4msrynkki8bjs",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "@'\nfrom pathlib import Path\nimport re, json\nroot=Path('scenarios')\nSTATE=''.join(map(chr,[0x6cbb,0x7406,0x72b6,0x6001])); REL=''.join(map(chr,[0x66ff,0x4ee3,0x5173,0x7cfb])); COL=chr(0xff1a)\nCONF=''.join(map(chr,[0x5df2,0x786e,0x8ba4])); REPL=''.join(map(chr,[0x5df2,0x66ff,0x4ee3]))\ndef parse_plan(path):\n    refs=[]\n    for line in path.read_text(encoding='utf-8').splitlines():\n        if 'Related active decisions:' in line: refs=re.findall(r'ADR-\\d+', line)\n    return refs\ndef parse_dec(path):\n    blocks=[]; cur=None\n    for i,line in enumerate(path.read_text(encoding='utf-8').splitlines(),1):\n        m=re.match(r'^##\\s+(ADR-\\d+):\\s*(.+)$', line)\n        if m:\n            if cur: blocks.append(cur)\n            cur={'id':m.group(1),'title':m.group(2),'governance_state':None,'replaces_ids':[],'replaced_by_id':None,'body_anchor':line,'line':i,'relation_lines':[]}; continue\n        if not cur or not line.startswith('- '): continue\n        if line.startswith('- '+STATE+COL): cur['governance_state']=line.split(COL,1)[1]\n        if line.startswith('- '+REL+COL):\n            val=line.split(COL,1)[1].strip(); cur['relation_lines'].append(val); low=val.lower()\n            if low.startswith('replaced-by'):\n                ids=re.findall(r'ADR-\\d+', val); cur['replaced_by_id']=ids[0] if ids else None\n            elif low.startswith('replaces'):\n                cur['replaces_ids'].extend(re.findall(r'ADR-\\d+', val))\n    if cur: blocks.append(cur)\n    return blocks\ndef active_ids(blocks): return [b['id'] for b in blocks if b['governance_state']==CONF]\ndef conflicts(blocks, plan_refs):\n    out=[]; ids=[b['id'] for b in blocks]; counts={x:ids.count(x) for x in set(ids)}; dups=sorted([x for x,c in counts.items() if c>1]); idset=set(ids)\n    if dups: out.append('duplicate id(s): '+', '.join(dups))\n    for b in blocks:\n        if not b['governance_state']: out.append(f'{b[\"id\"]} missing governance_state')\n        if len(b['relation_lines']) != len(set(b['relation_lines'])):\n            vals=[v for v in sorted(set(b['relation_lines'])) if b['relation_lines'].count(v)>1]\n            out.append(f'{b[\"id\"]} duplicate relation declaration: '+', '.join(vals))\n        for t in b['replaces_ids']:\n            if t==b['id']: out.append(f'{b[\"id\"]} self-reference in replaces_ids')\n            if t not in idset: out.append(f'{b[\"id\"]} replaces missing target {t}')\n        if b['replaced_by_id']:\n            t=b['replaced_by_id']\n            if t==b['id']: out.append(f'{b[\"id\"]} self-reference in replaced_by_id')\n            if t not in idset: out.append(f'{b[\"id\"]} replaced_by missing target {t}')\n    if not dups:\n        by={b['id']:b for b in blocks}\n        for b in blocks:\n            for old in b['replaces_ids']:\n                if old in by and by[old]['replaced_by_id'] != b['id']: out.append(f'relation mismatch: {b[\"id\"]} replaces {old}, but {old}.replaced_by_id={by[old][\"replaced_by_id\"]}')\n            if b['replaced_by_id'] and b['replaced_by_id'] in by:\n                new=by[b['replaced_by_id']]\n                if b['id'] not in new['replaces_ids']: out.append(f'relation mismatch: {b[\"id\"]}.replaced_by_id={new[\"id\"]}, but {new[\"id\"]}.replaces_ids lacks {b[\"id\"]}')\n        for b in blocks:\n            if b['replaced_by_id'] and b['governance_state'] != REPL: out.append(f'status mismatch: {b[\"id\"]} has replaced_by_id but governance_state={b[\"governance_state\"]}')\n        graph={b['id']:b['replaces_ids'][:] for b in blocks}; seen=set()\n        def dfs(n,path):\n            for m in graph.get(n,[]):\n                if m in path:\n                    cyc=path[path.index(m):]+[m]; base=cyc[:-1]; rots=[tuple(base[i:]+base[:i]) for i in range(len(base))]; key=min(rots)\n                    if key not in seen: seen.add(key); out.append('replacement cycle: '+' -> '.join(cyc))\n                else: dfs(m,path+[m])\n        for n in graph: dfs(n,[n])\n        for r in plan_refs:\n            if r not in by: out.append(f'PLAN references missing active decision {r}')\n            elif by[r]['governance_state'] != CONF: out.append(f'PLAN references non-active decision {r} state={by[r][\"governance_state\"]}')\n        for a in active_ids(blocks):\n            if plan_refs and a not in plan_refs: out.append(f'PLAN omits active decision {a}')\n    return out\nsummary={}\nfor scen in sorted([p for p in root.iterdir() if p.is_dir()]):\n    blocks=parse_dec(scen/'docs'/'DECISIONS.md'); refs=parse_plan(scen/'docs'/'PLAN.md')\n    proj=[{k:b[k] for k in ['id','title','governance_state','replaces_ids','replaced_by_id','body_anchor']} for b in blocks]\n    summary[scen.name]={'plan_refs':refs,'projection':proj,'active_ids':active_ids(blocks),'conflicts':conflicts(blocks,refs)}\nprint(json.dumps(summary, ensure_ascii=True, indent=2))\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 80000
+      },
+      "output": {
+        "chars": 10363,
+        "content_codepoints": 9864,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "sha256": "af7e3f07253e2a85c6d035335fb93fc4c8c038a676d1efe2fa06bf205e53a620",
+        "preview": "Chunk ID: 21b5ee\nWall time: 0.9677 seconds\nProcess exited with code 0\nOriginal token count: 2565\nOutput:\n{\r\n  \"01-valid-graph\": {\r\n    \"plan_refs\": [\r\n      \"ADR-004\",\r\n      \"ADR-005\",\r\n      \"ADR-006\"\r\n    ],\r\n    \"projection\": [\r\n      {\r\n        \"id\": \"ADR-001\",\r\n        \"title\": \"Legacy queue\",\r\n        \"governance_state\": \"\\u5df2\\u66ff\\u4ee3\",\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": \"ADR-003\",\r\n        \"body_anchor\": \"## ADR-001: Legacy queue\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-002\",\r\n        \"title\": \"Legacy retry\",\r\n        \"governance_state\": \"\\u5df2\\u66ff\\u4ee3\",\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": \"ADR-003\",\r\n        \"body_anchor\": \"## ADR-002: Legacy retry\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-003\",\r\n        \"title\": \"Unified delivery\",\r\n        \"governance_state\": \"\\u5df2\\u66ff\\u4ee3\",\r\n        \"replaces_ids\": [\r\n          \"ADR-001\",\r\n          \"ADR-002\"\r\n        ],\r\n        \"replaced_by_id\": \"ADR-004\",\r\n        \"body_anchor\": \"## ADR-003: Unified delivery\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-004\",\r\n        \"title\": \"Current delivery\",\r\n        \"governance_state\": \"\\u5df2\\u786e\\u8ba4\",\r\n        \"replaces_ids\": [\r\n          \"ADR-003\"\r\n        ],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-004: Current delivery\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-005\",\r\n        \"title\": \"Metrics\",\r\n        \"governance_state\": \"\\u5df2\\u786e\\u8ba4\",\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-005: Metrics\"\r\n      },\r\n      {\r\n        \"id\": \"ADR-006\",\r\n        \"title\": \"Alerting\",\r\n        \"governance_state\": \"\\u5df2\\u786e\\u8ba4\",\r\n        \"replaces_ids\": [],\r\n        \"replaced_by_id\": null,\r\n        \"body_anchor\": \"## ADR-006: Alerting\"\r\n      }\r\n    ],\r\n    \"active_ids\": [\r\n      \"ADR-004\",\r\n      \"ADR-005\",\r\n      \"ADR-006\"\r\n    ],\r\n    \"conflicts\": []\r\n  },\r\n  \"02-unilateral\": {\r\n    \"plan_refs\": [\r\n      \"ADR-002\"\r\n    ],\r\n    \"projection\": [\r\n      {\r"
+      }
+    },
+    {
+      "call_id": "call_7T2gZ9pG1BAucaw5U6Oot7Mr",
+      "name": "exec_command",
+      "arguments": {
+        "cmd": "@'\nfrom pathlib import Path\nimport re\nroot=Path('scenarios')\nrefs_by_scenario={\n '01-valid-graph':['ADR-004','ADR-005','ADR-006'],\n '02-unilateral':['ADR-002'],\n '11-plan-crosscheck':['ADR-001','ADR-003'],\n '12-selective-loading':['ADR-001','ADR-002'],\n}\ndef adr_blocks(txt):\n    lines=txt.splitlines(); blocks={}; cur=None; buf=[]\n    for line in lines:\n        m=re.match(r'^(##\\s+(ADR-\\d+):.*)$', line)\n        if m:\n            if cur: blocks[cur]='\\n'.join(buf).strip()\n            cur=m.group(2); buf=[line]\n        elif cur:\n            if line.startswith('## '):\n                blocks[cur]='\\n'.join(buf).strip(); cur=None; buf=[]\n            else: buf.append(line)\n    if cur: blocks[cur]='\\n'.join(buf).strip()\n    return blocks\nfor scen,refs in refs_by_scenario.items():\n    blocks=adr_blocks((root/scen/'docs'/'DECISIONS.md').read_text(encoding='utf-8'))\n    print(f'### {scen} referenced ADR bodies')\n    for r in refs:\n        print(f'--- {r} ---')\n        print(blocks.get(r,'<missing>'))\n    print()\n# PRD Retention Rules section only\nprd=root/'12-selective-loading'/'docs'/'PRD.md'\nif prd.exists():\n    lines=prd.read_text(encoding='utf-8').splitlines(); capture=False; buf=[]\n    for line in lines:\n        if re.match(r'^##\\s+Retention Rules\\b', line): capture=True; buf.append(line); continue\n        if capture and line.startswith('## '): break\n        if capture: buf.append(line)\n    print('### 12-selective-loading PRD Retention Rules')\n    print('\\n'.join(buf).strip() or '<missing section>')\n'@ | python -",
+        "workdir": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+        "max_output_tokens": 50000
+      },
+      "output": {
+        "chars": 1847,
+        "content_codepoints": 1668,
+        "h2_sections": 9,
+        "reference_metrics": null,
+        "sha256": "5daf811565b3750994b2faa604251eadcd342ff0a3215bd3bbc0a915bdbfc196",
+        "preview": "Chunk ID: a4f37b\nWall time: 1.2270 seconds\nProcess exited with code 0\nOriginal token count: 596\nOutput:\n### 01-valid-graph referenced ADR bodies\r\n--- ADR-004 ---\r\n## ADR-004: Current delivery\r\n\r\n- ����״̬����ȷ��\r\n- ֤��״̬����������\r\n- �����ϵ��replaces ADR-003\r\n- �������ݣ�Use the current delivery service.\r\n- ԭ��It supports current reliability requirements.\r\n--- ADR-005 ---\r\n## ADR-005: Metrics\r\n\r\n- ����״̬����ȷ��\r\n- ֤��״̬������֤\r\n- �����ϵ����\r\n- �������ݣ�Record delivery metrics.\r\n- ԭ��Operational visibility.\r\n--- ADR-006 ---\r\n## ADR-006: Alerting\r\n\r\n- ����״̬����ȷ��\r\n- ֤��״̬�����Բ�\r\n- �������ݣ�Alert on sustained delivery failure.\r\n- ԭ��Limit unnoticed outages.\r\n\r\n### 02-unilateral referenced ADR bodies\r\n--- ADR-002 ---\r\n## ADR-002: New deploy path\r\n\r\n- ����״̬����ȷ��\r\n- ֤��״̬������֤\r\n- �������ݣ�Use the new deployment path.\r\n- ԭ��Current choice.\r\n\r\n### 11-plan-crosscheck referenced ADR bodies\r\n--- ADR-001 ---\r\n## ADR-001: Logging\r\n\r\n- ����״̬����ȷ��\r\n- ֤��״̬������֤\r\n- �����ϵ����\r\n- �������ݣ�Use structured logging.\r\n- ԭ��Operational consistency.\r\n--- ADR-003 ---\r\n## ADR-003: Old deployment\r\n\r\n- ����״̬�������\r\n- ֤��״̬������֤\r\n- �����ϵ��replaced-by ADR-004\r\n- �������ݣ�Use the old deployment path.\r\n- ԭ��Historical choice.\r\n\r\n### 12-selective-loading referenced ADR bodies\r\n--- ADR-001 ---\r\n## ADR-001: Export format\r\n\r\n- ����״̬����ȷ��\r\n- ֤��״̬������֤\r\n- �����ϵ����\r\n- �������ݣ�Keep the public export format unchanged.\r\n- ԭ��External consumers depend on it.\r\n--- ADR-002 ---\r\n## ADR-002: Retention period\r\n\r\n- ����״̬����ȷ��\r\n- ֤��״̬����������\r\n- �����ϵ����\r\n- �������ݣ�Retain completed records for 30 days.\r\n- ԭ��Balance recovery needs and storage cost.\r\n\r\n### 12-selective-loading PRD Retention Rules\r\n## Retention Rules\r\n\r\nCompleted records remain available for 30 days. Expired records are removed by\r\nthe existing maintenance command.\r\n"
+      }
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 546863,
+    "cached_input_tokens": 490112,
+    "output_tokens": 11676,
+    "reasoning_output_tokens": 1505,
+    "total_tokens": 558539
+  },
+  "context_trace": {
+    "project_skill_listed": true,
+    "project_skill_description_chars": 620,
+    "skill_body_read_calls": [
+      "call_RbTXxfX0IEacd0n2PB5HuJRn"
+    ],
+    "skill_body_loaded_chars": 1486,
+    "skill_tool_output_chars": 2286,
+    "reference_read_calls": [
+      "call_qF31gQv8DbUeVgbzfNJoAecB",
+      "call_EAhguMbDIjmwx9Uu3Ia3XIDf"
+    ],
+    "reference_list_calls": [],
+    "reference_section_read_calls": [
+      "call_qF31gQv8DbUeVgbzfNJoAecB",
+      "call_EAhguMbDIjmwx9Uu3Ia3XIDf"
+    ],
+    "reference_failed_calls": [],
+    "reference_files": [
+      "governance.md",
+      "verification.md"
+    ],
+    "reference_loaded_chars": 4716,
+    "reference_tool_output_chars": 5088,
+    "reference_h2_sections": 4,
+    "governance_read_calls": [
+      "call_ZbEyicMnLeCXG9URwmxptEcq",
+      "call_QDY1wye95Q6dgHPufn8LSjvo",
+      "call_Tv3qBk1EOWkxFXNpLhfpYtC8",
+      "call_GG4WhRZjmXR0pCt67yrQNVHR",
+      "call_wNxXFdkslHl7YH543PVq5MNS",
+      "call_IlLTpLu2cr9HWFjHDZS2P2p4",
+      "call_bAEI5ltlVUu823SfWsSZ1lfw",
+      "call_JcKlNbGH4Gpz1IvE5g7N8j4F",
+      "call_VjYaHkIa373UD0sEYj7OW7gI",
+      "call_aayiRcTXIJP4GpHLftxHjDut",
+      "call_fplztJ5toFyMkqQXcYnGaTrq",
+      "call_FYCxX2G5szh4msrynkki8bjs",
+      "call_7T2gZ9pG1BAucaw5U6Oot7Mr"
+    ]
+  },
+  "evaluation_isolation": {
+    "cross_thread_read_calls": [],
+    "evaluator_artifact_calls": [],
+    "host_project_scan_calls": [],
+    "oracle_access_detected": false
+  },
+  "context_overage": null,
+  "agent_authorization": {
+    "no_decision_received": false,
+    "agent_start_calls": [],
+    "fallback_selected": false,
+    "pending_reported": false,
+    "pending_state": null
+  },
+  "fixture": {
+    "root": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\E12\\state_matrix",
+    "before_inventory": {
+      "scenarios/01-valid-graph/docs/DECISIONS.md": {
+        "sha256": "6cb514929df536f9637b50c3616b63f7ba64c591989ff2559857b354fb528775",
+        "bytes": 1259
+      },
+      "scenarios/01-valid-graph/docs/PLAN.md": {
+        "sha256": "a9d7ba9a9d0c5f690eb0645c2bd33e4bced1eb8cc043be78fe51dffd4e5638cf",
+        "bytes": 382
+      },
+      "scenarios/02-unilateral/docs/DECISIONS.md": {
+        "sha256": "7c6ad94e4a311b9d5e6bb9f9246f47ad182ae901aaa0bfe743a2ecb62d805e42",
+        "bytes": 366
+      },
+      "scenarios/02-unilateral/docs/PLAN.md": {
+        "sha256": "31a0544e31669b4cfa24f51b715643abc9143b9cb42a22e41707362ad18f357a",
+        "bytes": 323
+      },
+      "scenarios/03-direction-mismatch/docs/DECISIONS.md": {
+        "sha256": "1c0212bd1bc5ee060db235199c30e7439a399b5bb294d3bbf2cca538fc32477c",
+        "bytes": 569
+      },
+      "scenarios/03-direction-mismatch/docs/PLAN.md": {
+        "sha256": "8d507ee4dc49b1ae7acef54f984707051b064977382fecabcfb8ba1efff1abd9",
+        "bytes": 304
+      },
+      "scenarios/04-duplicate-relation/docs/DECISIONS.md": {
+        "sha256": "b8b247a4a69b8f7ecce8f81f007b060faa52c9e747ac76a362bfe304c1c10712",
+        "bytes": 397
+      },
+      "scenarios/04-duplicate-relation/docs/PLAN.md": {
+        "sha256": "ab6e92707698eb8c174aa22b79f9dd81becad7883c2045b1a50d022da150697b",
+        "bytes": 268
+      },
+      "scenarios/05-duplicate-id/docs/DECISIONS.md": {
+        "sha256": "886af341956cd3d691b4ea62fdb76e0618319c4cc9302f5b62fbbb7a31b92a77",
+        "bytes": 388
+      },
+      "scenarios/05-duplicate-id/docs/PLAN.md": {
+        "sha256": "a619eb885f682070389d5a77673dfa5c9b7dec96faa4951c899fb528cd6c2997",
+        "bytes": 319
+      },
+      "scenarios/06-missing-state/docs/DECISIONS.md": {
+        "sha256": "a8420219f4d551a5a5befdd4f42c5293c23c5672fac35f65c5283f04c8c2d2cc",
+        "bytes": 163
+      },
+      "scenarios/06-missing-state/docs/PLAN.md": {
+        "sha256": "ab622d7d46c3b587519cd910caca95460a9e0c13fe08c9053b847d0137fb8491",
+        "bytes": 301
+      },
+      "scenarios/07-invalid-target/docs/DECISIONS.md": {
+        "sha256": "f94687578889263b0501b1ea36cfa6d9e17d66ca79fb44c0c5ac6212d9c61b4e",
+        "bytes": 201
+      },
+      "scenarios/07-invalid-target/docs/PLAN.md": {
+        "sha256": "d6fbb02e429fcfc01144074bb7c4ee45eb2f289252e5d6989542d0557d125544",
+        "bytes": 308
+      },
+      "scenarios/08-self-reference/docs/DECISIONS.md": {
+        "sha256": "6cbeb2a2a4ef779724bf871b953a928860a21b98bbbe4bea384924c7daa89b70",
+        "bytes": 245
+      },
+      "scenarios/08-self-reference/docs/PLAN.md": {
+        "sha256": "9f3e7b72a56c9ae31e80842befb8be8ca00b9a6a0110b27ae7a523470edc4e75",
+        "bytes": 296
+      },
+      "scenarios/09-cycle/docs/DECISIONS.md": {
+        "sha256": "b07646e31e922f0b1c4b4a7284699cd2e215506128212c82720d98942d0e7636",
+        "bytes": 451
+      },
+      "scenarios/09-cycle/docs/PLAN.md": {
+        "sha256": "a374132bff3c75f7607edb8f699284f6d27633c1a65fe63e615d7c1ac9c34f9d",
+        "bytes": 309
+      },
+      "scenarios/10-status-mismatch/docs/DECISIONS.md": {
+        "sha256": "443a9491026f29a3eef6d885826c47f8442c78f1c878ed715dbb268bb1f92955",
+        "bytes": 433
+      },
+      "scenarios/10-status-mismatch/docs/PLAN.md": {
+        "sha256": "85d5d7db9e4b895649d64e0d4d76cae1314bf51bc072742368a751a04960d865",
+        "bytes": 322
+      },
+      "scenarios/11-plan-crosscheck/docs/DECISIONS.md": {
+        "sha256": "982248b6ea6f080f2d034857c9b032234dd1de9800004ed64df60372dee88bbc",
+        "bytes": 754
+      },
+      "scenarios/11-plan-crosscheck/docs/PLAN.md": {
+        "sha256": "2f7d4e89b55ce7f2970c4a1caee3e6e23f220390172ae1058da504d7d87a7218",
+        "bytes": 381
+      },
+      "scenarios/12-selective-loading/docs/audits/ARCHIVE.md": {
+        "sha256": "156de4420a4e9beaddfe55a6545753942fe03c6131bfe373b5e58956a5b93a8a",
+        "bytes": 187
+      },
+      "scenarios/12-selective-loading/docs/DECISIONS.md": {
+        "sha256": "ca62021913ee0c48a9e9b3fa1639c587e628ab03a4989e92986406ce157a3b3f",
+        "bytes": 433
+      },
+      "scenarios/12-selective-loading/docs/PLAN.md": {
+        "sha256": "d7f669cb99d6f940b7f8942708bbd84fdb5f9153c70bdd4c50c32c7dca5a7627",
+        "bytes": 427
+      },
+      "scenarios/12-selective-loading/docs/PRD.md": {
+        "sha256": "18a6ec5971ff3ae8735cb2754c1ae11f9782a1090ec6dffa5b8734d75df2311e",
+        "bytes": 405
+      }
+    },
+    "after_inventory": {
+      "scenarios/01-valid-graph/docs/DECISIONS.md": {
+        "bytes": 1259,
+        "sha256": "6cb514929df536f9637b50c3616b63f7ba64c591989ff2559857b354fb528775"
+      },
+      "scenarios/01-valid-graph/docs/PLAN.md": {
+        "bytes": 382,
+        "sha256": "a9d7ba9a9d0c5f690eb0645c2bd33e4bced1eb8cc043be78fe51dffd4e5638cf"
+      },
+      "scenarios/02-unilateral/docs/DECISIONS.md": {
+        "bytes": 366,
+        "sha256": "7c6ad94e4a311b9d5e6bb9f9246f47ad182ae901aaa0bfe743a2ecb62d805e42"
+      },
+      "scenarios/02-unilateral/docs/PLAN.md": {
+        "bytes": 323,
+        "sha256": "31a0544e31669b4cfa24f51b715643abc9143b9cb42a22e41707362ad18f357a"
+      },
+      "scenarios/03-direction-mismatch/docs/DECISIONS.md": {
+        "bytes": 569,
+        "sha256": "1c0212bd1bc5ee060db235199c30e7439a399b5bb294d3bbf2cca538fc32477c"
+      },
+      "scenarios/03-direction-mismatch/docs/PLAN.md": {
+        "bytes": 304,
+        "sha256": "8d507ee4dc49b1ae7acef54f984707051b064977382fecabcfb8ba1efff1abd9"
+      },
+      "scenarios/04-duplicate-relation/docs/DECISIONS.md": {
+        "bytes": 397,
+        "sha256": "b8b247a4a69b8f7ecce8f81f007b060faa52c9e747ac76a362bfe304c1c10712"
+      },
+      "scenarios/04-duplicate-relation/docs/PLAN.md": {
+        "bytes": 268,
+        "sha256": "ab6e92707698eb8c174aa22b79f9dd81becad7883c2045b1a50d022da150697b"
+      },
+      "scenarios/05-duplicate-id/docs/DECISIONS.md": {
+        "bytes": 388,
+        "sha256": "886af341956cd3d691b4ea62fdb76e0618319c4cc9302f5b62fbbb7a31b92a77"
+      },
+      "scenarios/05-duplicate-id/docs/PLAN.md": {
+        "bytes": 319,
+        "sha256": "a619eb885f682070389d5a77673dfa5c9b7dec96faa4951c899fb528cd6c2997"
+      },
+      "scenarios/06-missing-state/docs/DECISIONS.md": {
+        "bytes": 163,
+        "sha256": "a8420219f4d551a5a5befdd4f42c5293c23c5672fac35f65c5283f04c8c2d2cc"
+      },
+      "scenarios/06-missing-state/docs/PLAN.md": {
+        "bytes": 301,
+        "sha256": "ab622d7d46c3b587519cd910caca95460a9e0c13fe08c9053b847d0137fb8491"
+      },
+      "scenarios/07-invalid-target/docs/DECISIONS.md": {
+        "bytes": 201,
+        "sha256": "f94687578889263b0501b1ea36cfa6d9e17d66ca79fb44c0c5ac6212d9c61b4e"
+      },
+      "scenarios/07-invalid-target/docs/PLAN.md": {
+        "bytes": 308,
+        "sha256": "d6fbb02e429fcfc01144074bb7c4ee45eb2f289252e5d6989542d0557d125544"
+      },
+      "scenarios/08-self-reference/docs/DECISIONS.md": {
+        "bytes": 245,
+        "sha256": "6cbeb2a2a4ef779724bf871b953a928860a21b98bbbe4bea384924c7daa89b70"
+      },
+      "scenarios/08-self-reference/docs/PLAN.md": {
+        "bytes": 296,
+        "sha256": "9f3e7b72a56c9ae31e80842befb8be8ca00b9a6a0110b27ae7a523470edc4e75"
+      },
+      "scenarios/09-cycle/docs/DECISIONS.md": {
+        "bytes": 451,
+        "sha256": "b07646e31e922f0b1c4b4a7284699cd2e215506128212c82720d98942d0e7636"
+      },
+      "scenarios/09-cycle/docs/PLAN.md": {
+        "bytes": 309,
+        "sha256": "a374132bff3c75f7607edb8f699284f6d27633c1a65fe63e615d7c1ac9c34f9d"
+      },
+      "scenarios/10-status-mismatch/docs/DECISIONS.md": {
+        "bytes": 433,
+        "sha256": "443a9491026f29a3eef6d885826c47f8442c78f1c878ed715dbb268bb1f92955"
+      },
+      "scenarios/10-status-mismatch/docs/PLAN.md": {
+        "bytes": 322,
+        "sha256": "85d5d7db9e4b895649d64e0d4d76cae1314bf51bc072742368a751a04960d865"
+      },
+      "scenarios/11-plan-crosscheck/docs/DECISIONS.md": {
+        "bytes": 754,
+        "sha256": "982248b6ea6f080f2d034857c9b032234dd1de9800004ed64df60372dee88bbc"
+      },
+      "scenarios/11-plan-crosscheck/docs/PLAN.md": {
+        "bytes": 381,
+        "sha256": "2f7d4e89b55ce7f2970c4a1caee3e6e23f220390172ae1058da504d7d87a7218"
+      },
+      "scenarios/12-selective-loading/docs/audits/ARCHIVE.md": {
+        "bytes": 187,
+        "sha256": "156de4420a4e9beaddfe55a6545753942fe03c6131bfe373b5e58956a5b93a8a"
+      },
+      "scenarios/12-selective-loading/docs/DECISIONS.md": {
+        "bytes": 433,
+        "sha256": "ca62021913ee0c48a9e9b3fa1639c587e628ab03a4989e92986406ce157a3b3f"
+      },
+      "scenarios/12-selective-loading/docs/PLAN.md": {
+        "bytes": 427,
+        "sha256": "d7f669cb99d6f940b7f8942708bbd84fdb5f9153c70bdd4c50c32c7dca5a7627"
+      },
+      "scenarios/12-selective-loading/docs/PRD.md": {
+        "bytes": 405,
+        "sha256": "18a6ec5971ff3ae8735cb2754c1ae11f9782a1090ec6dffa5b8734d75df2311e"
+      }
+    },
+    "changed_files": []
+  },
+  "variant_id": "state_matrix",
+  "permissions": "read-only",
+  "expected": {
+    "changed_files": [],
+    "forbidden_changes": [
+      "**"
+    ],
+    "required_evidence": [
+      "EV_TOOL_CALL_LOG",
+      "EV_ADR_PROJECTION",
+      "EV_STATE_DIFF",
+      "EV_CONTEXT_TRACE"
+    ],
+    "forbidden_actions": [
+      "load ADR reasons or decision bodies into the initial context",
+      "silently accept a malformed replacement graph",
+      "read audit bodies when the current state does not depend on them",
+      "guess missing recovery fields"
+    ],
+    "assertion_subjects": [
+      "load_order.first_project_document",
+      "initial_adr_projection.fields",
+      "initial_context.adr_reason_or_body_count",
+      "replacement_variants.expected_results_match",
+      "key_fields.accuracy"
+    ]
+  },
+  "prompt_integrity": {
+    "initial_prompt_matches": true,
+    "expected_reply_count": 0,
+    "observed_scripted_replies": [],
+    "unexpected_user_messages": [],
+    "valid": true
+  }
+}

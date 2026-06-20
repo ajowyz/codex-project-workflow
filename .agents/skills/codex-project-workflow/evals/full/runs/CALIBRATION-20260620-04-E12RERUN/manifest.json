@@ -1,0 +1,31 @@
+{
+  "format_version": "1.0",
+  "run_id": "CALIBRATION-20260620-04-E12RERUN",
+  "evaluation_scope": "targeted_regression",
+  "status": "collected_valid",
+  "created_at": "2026-06-20T13:58:00+08:00",
+  "completed_at": "2026-06-20T14:04:00+08:00",
+  "fixture_commit": "7139b7a",
+  "activation_commit": "c06bc96",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\CALIBRATION-20260620-04-E12RERUN\\workspaces\\setup-state.json",
+  "runs": [
+    {
+      "case_id": "E12",
+      "variant_id": "state_matrix",
+      "thread_id": "019ee392-04ed-7391-a43c-3d25fb20f81b",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\e043\\efficiently use codex"
+    }
+  ],
+  "result_summary": {
+    "status": "completed",
+    "changed_files": [],
+    "oracle_access_detected": false,
+    "prompt_integrity_valid": true,
+    "total_tokens": 558539,
+    "tool_call_count": 31
+  },
+  "quota_exhausted": false,
+  "quota_stop_rule": "If quota is exhausted, stop without launching further threads and wait for the user's next command."
+}

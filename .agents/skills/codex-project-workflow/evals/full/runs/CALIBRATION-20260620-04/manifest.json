@@ -23,7 +23,8 @@
       "E12:state_matrix"
     ],
     "reason": "E12 prompt omitted the evaluator workspace path, so the desktop thread searched the host project fixture and was marked with evaluator_oracle_access.",
-    "next_action": "Fix the E12 prompt, add a regression assertion for the workspace/scenarios path, rerun E12, then resume the remaining calibration runs if quota is still available."
+    "next_action": "E12 was rerun in CALIBRATION-20260620-04-E12RERUN and collected as valid. Resume the remaining calibration runs if quota is still available.",
+    "replacement_run": "CALIBRATION-20260620-04-E12RERUN"
   },
   "runs": [
     {
