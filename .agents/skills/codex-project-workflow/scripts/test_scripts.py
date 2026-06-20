@@ -95,7 +95,7 @@ class ScriptTests(unittest.TestCase):
 
     def test_current_candidate_budget_and_semantics(self):
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260619-09"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260620-10"
         )
         skill_path = candidate_dir / "SKILL.candidate.md"
         metrics = measure_context.skill_metrics(skill_path)
@@ -104,12 +104,12 @@ class ScriptTests(unittest.TestCase):
 
         skill_text = skill_path.read_text(encoding="utf-8")
         self.assertIn("multi-agent proposal", skill_text)
-        self.assertIn("matching explicit approval", skill_text)
+        self.assertIn("later exact approval", skill_text)
         self.assertIn("keeps agents `proposed`", skill_text)
-        self.assertIn("without another approval", skill_text)
+        self.assertIn("without new ask", skill_text)
         self.assertIn("Change behavior in existing owner", skill_text)
         self.assertIn("docs/IMPLEMENTATION_CONTRACT.md", skill_text)
-        self.assertIn("no research/governance docs by default", skill_text)
+        self.assertIn("no research/governance docs", skill_text)
 
         governance = (
             candidate_dir / "references" / "governance.md"
@@ -127,22 +127,23 @@ class ScriptTests(unittest.TestCase):
                 len(unicodedata.normalize("NFC", selected)),
                 2500,
             )
-        self.assertIn("refusal/unavailable selects fallback", governance)
+        self.assertIn("refusal/unavailable picks fallback", governance)
         self.assertIn("Keep nonempty main work", governance)
-        self.assertIn("do not search, execute, install/sim, write, or verify before it", governance)
-        self.assertIn("Propose roles and mark state `proposed`", governance)
+        self.assertIn("before search, execution/install-sim, write, or verify", governance)
+        self.assertIn("Propose roles, state `proposed`", governance)
         self.assertIn("approval packets", governance)
         self.assertIn("powershell -NoProfile -ExecutionPolicy Bypass -File tools/simulate_install.ps1", governance)
         self.assertIn("Ask and wait", governance)
+        self.assertIn("pre-runs never count", governance)
         self.assertIn("No decision/unrelated approval is not action approval", governance)
         self.assertIn("Exact action approval lets main", governance)
         self.assertIn("displayed-scope main implementation/verification continue", governance)
         self.assertIn("local reads/planning", governance)
-        self.assertIn("including approval follow-ups", governance)
+        self.assertIn("approval follow-up", governance)
         self.assertIn("aggregate unquoted line", governance)
         self.assertIn("added_codepoints=max(0, actual_loaded_codepoints-budget_codepoints)", governance)
         self.assertIn("helper-emitted NFC metrics", governance)
-        self.assertIn("not project files", governance)
+        self.assertIn("not files, unless required", governance)
         self.assertIn("A contract is not a project file by default", verification)
         self.assertIn("before the first product invocation", verification)
         self.assertIn("code-only owner-change contracts stay non-file", verification)
@@ -156,7 +157,7 @@ class ScriptTests(unittest.TestCase):
             return hashlib.sha256(normalized).hexdigest()
 
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260619-09"
+            SKILL_DIR / "evals" / "candidates" / "CAND-20260620-10"
         )
         manifest = json.loads(
             (candidate_dir / "manifest.json").read_text(encoding="utf-8")
@@ -170,6 +171,7 @@ class ScriptTests(unittest.TestCase):
                 "preflight_passed_pending_isolated_evaluation",
                 "preflight_passed_regression_blocked_infrastructure",
                 "preflight_passed_regression_failed",
+                "preflight_passed_regression_pending",
                 "regression_passed_pending_activation_approval",
                 "regression_failed",
             },

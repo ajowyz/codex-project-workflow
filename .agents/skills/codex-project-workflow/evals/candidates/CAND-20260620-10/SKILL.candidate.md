@@ -15,10 +15,10 @@ description: Structure and govern Codex work for new or ambiguous projects, mult
 ## Safeguards
 
 - Never invent execution, sources, tests, or proof.
-- Before writes map entry/state/owners/bypasses; edit existing owner.
-- If product delivery writes state, save `docs/IMPLEMENTATION_CONTRACT.md` before product run. Otherwise keep contracts/protocol records in trace unless required; no research/governance docs by default.
+- Before writes map entry/state/owners/bypasses. Change behavior in existing owner.
+- If product delivery writes state, save `docs/IMPLEMENTATION_CONTRACT.md` before product run. Otherwise keep contracts/protocol records in trace unless required; no research/governance docs.
 - Safety, authorization, and verification override budgets.
 
 ## Finish
 
-Verify result/path; repeat required overage lines in all finals. Keep durable changes isolated.
+Verify result/path; repeat overage lines in all finals. Keep durable changes isolated.
