@@ -250,3 +250,9 @@
 - Evidence: `REGRESSION-20260621-11` collected E35 `four_hard_triggers`, E19 `two_phase_network_scope`, and E32 `hard_trigger_overage`; `validate_full_results.py` reported 3/3 targeted regression cases passed, overall=pass.
 - Important note: E35 produced one web_search action with the same approved query repeated internally, but no distinct second query, source-target change, or open_page after approval.
 - Next step: request explicit user approval before formally activating CAND-20260620-11, or run a wider repeat calibration if desired before activation.
+
+## Update 2026-06-21 CAND-20260620-11 Activation
+
+- Current stage: CAND-20260620-11 is formally activated on `master` after explicit user approval.
+- Evidence: activation merge brought in the active `SKILL.md`, active governance reference, `REGRESSION-20260621-11` evidence, and the collector prompt-integrity adaptation.
+- Next step: continue from the activated workflow rules; run broader calibration only if later behavior suggests drift or regression.

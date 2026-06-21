@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260620-11",
   "parent_candidate_id": "CAND-20260620-10",
   "created_at": "2026-06-20T22:00:00+08:00",
-  "status": "regression_passed_pending_activation_approval",
+  "status": "activated",
   "base_commit": "1607330",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -44,7 +44,7 @@
     "verification_selected_h2_sections": 2
   },
   "evaluation": {
-    "status": "passed",
+    "status": "required_regressions_passed_activated",
     "required_regressions": [
       "E35:four_hard_triggers",
       "E19:two_phase_network_scope",
@@ -63,12 +63,26 @@
     "blocker_summary": [
       "REGRESSION-20260620-10 fixed the earlier pre-run behavior but failed E35 because the run sent a second web search query after approval for only the displayed sanitized query.",
       "CAND-20260620-11 is a wording-only candidate that makes exact network approval non-expandable and requires a new approval packet for any extra query, source, or open.",
-      "REGRESSION-20260621-11 passed E35, E19, and E32; formal activation still requires explicit user approval."
+      "REGRESSION-20260621-11 passed E35, E19, and E32.",
+      "User explicitly approved activation with the message `\u6fc0\u6d3b`; the candidate has been applied to the formal skill targets."
     ]
   },
   "activation": {
-    "allowed": false,
+    "allowed": true,
     "requires_explicit_user_approval": true,
+    "approved_at": "2026-06-21T11:20:55+08:00",
+    "approval_text": "\u6fc0\u6d3b",
+    "activated_at": "2026-06-21T11:20:55+08:00",
+    "activated_targets": [
+      {
+        "active_path": ".agents/skills/codex-project-workflow/SKILL.md",
+        "sha256": "e28ba88d7d4c45fb309d0ddb6f9b9f96119e53779e5611b7b63750d6f8e0c844"
+      },
+      {
+        "active_path": ".agents/skills/codex-project-workflow/references/governance.md",
+        "sha256": "0e9675b6de8da15fe18340268fc8fa45a40eb617024aa547802482d72049a7d2"
+      }
+    ],
     "invalidation_conditions": [
       "base commit or any active target hash changes",
       "candidate, patch, target list, or scope changes",
