@@ -78,7 +78,8 @@ class ScriptTests(unittest.TestCase):
         self.assertTrue(
             "Preserve ownership" in skill_text
             or "Change behavior in its existing owner" in skill_text
-            or "Change behavior in existing owner" in skill_text,
+            or "Change behavior in existing owner" in skill_text
+            or "edit existing owner" in skill_text,
         )
         governance = (SKILL_DIR / "references" / "governance.md").read_text(
             encoding="utf-8"
