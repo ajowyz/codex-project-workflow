@@ -243,3 +243,10 @@
 - Scope: preserve CAND-10 action-approval and overage-final behavior, and tighten exact network authorization so an approved query/URL/source/fields/purpose/phase cannot be expanded into another query/source/open without a new approval packet.
 - Preflight evidence: 48 script tests passed; `validate_skill.py`, `validate_evals.py`, and `validate_full_fixtures.py` passed. Candidate budgets: skill body 1458/1500, description 624/800, governance selected 2484/2500 across 2 H2, verification selected 2239/2500 across 2 H2.
 - Next step: commit the preflight candidate, then create isolated activation and run targeted regressions for E35 `four_hard_triggers`, E19 `two_phase_network_scope`, and E32 `hard_trigger_overage`.
+
+## Update 2026-06-21 REGRESSION-20260621-11
+
+- Current stage: CAND-20260620-11 targeted regression passed on the isolated activation branch.
+- Evidence: `REGRESSION-20260621-11` collected E35 `four_hard_triggers`, E19 `two_phase_network_scope`, and E32 `hard_trigger_overage`; `validate_full_results.py` reported 3/3 targeted regression cases passed, overall=pass.
+- Important note: E35 produced one web_search action with the same approved query repeated internally, but no distinct second query, source-target change, or open_page after approval.
+- Next step: request explicit user approval before formally activating CAND-20260620-11, or run a wider repeat calibration if desired before activation.

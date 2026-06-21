@@ -650,6 +650,18 @@ class ScriptTests(unittest.TestCase):
             setup,
         )
         self.assertTrue(clean["valid"])
+        nested = collect_full_eval.prompt_integrity(
+            [
+                "<codex_delegation><input>&lt;codex_delegation&gt;"
+                "&lt;input&gt;Original fixture prompt.&lt;/input&gt;"
+                "&lt;/codex_delegation&gt;</input></codex_delegation>",
+                "<codex_delegation><input>&lt;codex_delegation&gt;"
+                "&lt;input&gt;Approved.&lt;/input&gt;"
+                "&lt;/codex_delegation&gt;</input></codex_delegation>",
+            ],
+            setup,
+        )
+        self.assertTrue(nested["valid"])
         contaminated = collect_full_eval.prompt_integrity(
             [
                 "<codex_delegation><input>Original fixture prompt.</input>"
