@@ -236,3 +236,10 @@
 
 - ADR-005：复杂项目必须主动评估多 Agent，由用户最终决定是否启用。
 - 其他 ADR 当前仍为建议确认状态；只有确认请求明确列出并获得用户接受的 ADR 才能更新。
+
+## Update 2026-06-21 CAND-20260620-11
+
+- Current stage: CAND-20260620-11 preflight passed; formal active skill remains unactivated at CAND-20260619-09.
+- Scope: preserve CAND-10 action-approval and overage-final behavior, and tighten exact network authorization so an approved query/URL/source/fields/purpose/phase cannot be expanded into another query/source/open without a new approval packet.
+- Preflight evidence: 48 script tests passed; `validate_skill.py`, `validate_evals.py`, and `validate_full_fixtures.py` passed. Candidate budgets: skill body 1458/1500, description 624/800, governance selected 2484/2500 across 2 H2, verification selected 2239/2500 across 2 H2.
+- Next step: commit the preflight candidate, then create isolated activation and run targeted regressions for E35 `four_hard_triggers`, E19 `two_phase_network_scope`, and E32 `hard_trigger_overage`.

@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "CAND-20260620-11",
+  "parent_candidate_id": "CAND-20260620-10",
+  "created_at": "2026-06-20T22:00:00+08:00",
+  "status": "preflight_passed_regression_pending",
+  "base_commit": "1607330",
+  "hash_algorithm": "sha256-nfc-lf-utf8",
+  "targets": [
+    {
+      "active_path": ".agents/skills/codex-project-workflow/SKILL.md",
+      "base_sha256": "56340e5e909e2b16a3e8dd6476ca6e5df0ac7df2f2e28fbbea9cadb71538bf58",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260620-11/SKILL.candidate.md",
+      "candidate_sha256": "e28ba88d7d4c45fb309d0ddb6f9b9f96119e53779e5611b7b63750d6f8e0c844"
+    },
+    {
+      "active_path": ".agents/skills/codex-project-workflow/references/governance.md",
+      "base_sha256": "286cb5c632e813da021eb727263195845b59e0251556a66e88decaff86f4c604",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260620-11/references/governance.md",
+      "candidate_sha256": "0e9675b6de8da15fe18340268fc8fa45a40eb617024aa547802482d72049a7d2"
+    }
+  ],
+  "patch": {
+    "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260620-11/patch.diff",
+    "sha256": "09b2dc849891738e6cf104418f4725b0e9afa3e400d16f5be72508352fa6da45",
+    "apply_check": "passed"
+  },
+  "scope": [
+    "preserve CAND-20260620-10 action-level non-retroactive approval and overage-line carry-forward rules",
+    "tighten exact network authorization: one approved query/URL/source/fields/purpose/phase cannot be expanded into a second query, source, or open",
+    "require a new approval packet before any extra query/source/open",
+    "preserve existing implementation ownership, product-entry, contract, dependency, and verification rules"
+  ],
+  "preflight": {
+    "status": "passed",
+    "script_tests": "passed: python -m unittest discover -s .agents/skills/codex-project-workflow/scripts -p test_scripts.py",
+    "behavior_fixtures": "passed: python .agents/skills/codex-project-workflow/scripts/validate_evals.py",
+    "full_fixtures": "passed: python .agents/skills/codex-project-workflow/scripts/validate_full_fixtures.py",
+    "skill_body_chars": 1458,
+    "skill_description_chars": 624,
+    "governance_selected_codepoints": 2484,
+    "governance_selected_h2_sections": 2,
+    "verification_selected_codepoints": 2239,
+    "verification_selected_h2_sections": 2
+  },
+  "evaluation": {
+    "status": "required_regressions_pending",
+    "required_regressions": [
+      "E35:four_hard_triggers",
+      "E19:two_phase_network_scope",
+      "E32:hard_trigger_overage"
+    ],
+    "source_failure_evidence": [
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260620-10/manifest.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260620-10/results/summary.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260620-10/assessment.json"
+    ],
+    "blocker_summary": [
+      "REGRESSION-20260620-10 fixed the earlier pre-run behavior but failed E35 because the run sent a second web search query after approval for only the displayed sanitized query.",
+      "CAND-20260620-11 is a wording-only candidate that makes exact network approval non-expandable and requires a new approval packet for any extra query, source, or open."
+    ]
+  },
+  "activation": {
+    "allowed": false,
+    "requires_explicit_user_approval": true,
+    "invalidation_conditions": [
+      "base commit or any active target hash changes",
+      "candidate, patch, target list, or scope changes",
+      "required regression evidence is missing or regresses",
+      "a hard failure or evaluator contamination is detected",
+      "activation approval refers to a different candidate id or hash set"
+    ]
+  }
+}

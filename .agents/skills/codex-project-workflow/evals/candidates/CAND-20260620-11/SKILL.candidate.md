@@ -1,0 +1,24 @@
+---
+name: codex-project-workflow
+description: Structure and govern Codex work for new or ambiguous projects, multi-step implementation, professional research, solution comparison, architecture and planning, third-party downloads, high-risk changes, project recovery, or requests for a rigorous workflow. Also use when Codex needs to create, generate, export, or save a deliverable through an existing product or application, even if the request looks like one step, and for ordinary tasks when research, confirmation, implementation-path verification, recovery, or coordination may matter. Do not use for simple questions or explicit low-risk one-step edits or commands.
+---
+
+# Codex Project Workflow
+
+## Route
+
+1. Inspect first: goal, constraints, completion test; ask only blockers.
+2. Run one helper command per protocol: `python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`. Load only `research`, `governance`, or `verification`.
+3. Never scan skill dirs/read refs directly. Helper failure waives no gate.
+4. If research/dependency/implementation coexist, stop after protocols; show one multi-agent proposal before web, command/install-sim, write, or verify. Web/search/open and install-sim wait for later exact approval; approval covers only shown query/URL/source/fields/purpose/phase or command/scope. Extra query/source/open needs new approval; pre-runs never count. No-decision/unrelated approval authorizes neither and keeps agents `proposed`; main continues displayed writes/verification without new ask. Acceptance starts agents; refusal/unavailable selects fallback.
+
+## Safeguards
+
+- Never invent execution, sources, tests, or proof.
+- Before writes map entry/state/owners/bypasses; edit existing owner.
+- If product delivery writes state, save `docs/IMPLEMENTATION_CONTRACT.md` before product run. Otherwise keep contracts/protocol records in trace unless required; no research/governance docs.
+- Safety, authorization, and verification override budgets.
+
+## Finish
+
+Verify result/path; repeat overage lines in all finals. Keep durable changes isolated.
