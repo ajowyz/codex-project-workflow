@@ -1,0 +1,55 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260621-11",
+  "evaluation_scope": "targeted_regression",
+  "status": "assessed_passed",
+  "created_at": "2026-06-21T10:39:23+08:00",
+  "completed_at": "2026-06-21T11:08:43+08:00",
+  "fixture_commit": "a7b7569",
+  "candidate_id": "CAND-20260620-11",
+  "candidate_branch": "codex/cand-20260620-11-activation",
+  "candidate_activation_commit": "72327f1",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260621-11\\workspaces\\setup-state.json",
+  "runs": [
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019ee816-cba8-7ac1-a249-142c3cda510a",
+      "status": "completed_passed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260621-11\\workspaces\\E35\\four_hard_triggers",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\d728\\efficiently use codex"
+    },
+    {
+      "case_id": "E19",
+      "variant_id": "two_phase_network_scope",
+      "thread_id": "019ee816-cbd9-7bd2-91ce-1354ae334793",
+      "status": "completed_passed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260621-11\\workspaces\\E19\\two_phase_network_scope",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\f61f\\efficiently use codex"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019ee816-cc34-7140-9fc6-f5d04e674248",
+      "status": "completed_passed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260621-11\\workspaces\\E32\\hard_trigger_overage",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\7d5b\\efficiently use codex"
+    }
+  ],
+  "approval_request": {
+    "needed": false,
+    "reason": "starting three independent Codex evaluation threads is multi-threaded agent coordination",
+    "requested_runs": [
+      "E35:four_hard_triggers",
+      "E19:two_phase_network_scope",
+      "E32:hard_trigger_overage"
+    ]
+  },
+  "result": {
+    "overall": "pass",
+    "summary": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260621-11/results/summary.json",
+    "assessment": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260621-11/assessment.json"
+  }
+}

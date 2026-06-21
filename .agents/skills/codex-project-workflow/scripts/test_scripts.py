@@ -78,7 +78,8 @@ class ScriptTests(unittest.TestCase):
         self.assertTrue(
             "Preserve ownership" in skill_text
             or "Change behavior in its existing owner" in skill_text
-            or "Change behavior in existing owner" in skill_text,
+            or "Change behavior in existing owner" in skill_text
+            or "edit existing owner" in skill_text,
         )
         governance = (SKILL_DIR / "references" / "governance.md").read_text(
             encoding="utf-8"
@@ -649,6 +650,18 @@ class ScriptTests(unittest.TestCase):
             setup,
         )
         self.assertTrue(clean["valid"])
+        nested = collect_full_eval.prompt_integrity(
+            [
+                "<codex_delegation><input>&lt;codex_delegation&gt;"
+                "&lt;input&gt;Original fixture prompt.&lt;/input&gt;"
+                "&lt;/codex_delegation&gt;</input></codex_delegation>",
+                "<codex_delegation><input>&lt;codex_delegation&gt;"
+                "&lt;input&gt;Approved.&lt;/input&gt;"
+                "&lt;/codex_delegation&gt;</input></codex_delegation>",
+            ],
+            setup,
+        )
+        self.assertTrue(nested["valid"])
         contaminated = collect_full_eval.prompt_integrity(
             [
                 "<codex_delegation><input>Original fixture prompt.</input>"

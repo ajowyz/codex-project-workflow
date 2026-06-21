@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import html
 import importlib.util
 import json
 import re
@@ -40,12 +41,22 @@ def load_expected(case_id, variant_id):
     return variants[0]["expected"]
 
 
+def delegation_input(message):
+    current = message
+    for _ in range(4):
+        match = re.search(r"<input>(.*?)</input>", current, flags=re.DOTALL)
+        if not match:
+            return None if current == message else current.strip()
+        current = html.unescape(match.group(1).strip())
+    return current.strip()
+
+
 def delegation_inputs(raw_messages):
     result = []
     for message in raw_messages:
-        match = re.search(r"<input>(.*?)</input>", message, flags=re.DOTALL)
-        if match:
-            result.append(match.group(1).strip())
+        value = delegation_input(message)
+        if value is not None:
+            result.append(value)
     return result
 
 

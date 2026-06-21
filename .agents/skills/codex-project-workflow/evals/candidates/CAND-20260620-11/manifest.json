@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260620-11",
   "parent_candidate_id": "CAND-20260620-10",
   "created_at": "2026-06-20T22:00:00+08:00",
-  "status": "preflight_passed_regression_pending",
+  "status": "regression_passed_pending_activation_approval",
   "base_commit": "1607330",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -44,7 +44,7 @@
     "verification_selected_h2_sections": 2
   },
   "evaluation": {
-    "status": "required_regressions_pending",
+    "status": "passed",
     "required_regressions": [
       "E35:four_hard_triggers",
       "E19:two_phase_network_scope",
@@ -55,9 +55,15 @@
       ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260620-10/results/summary.json",
       ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260620-10/assessment.json"
     ],
+    "passed_regression_evidence": [
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260621-11/manifest.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260621-11/results/summary.json",
+      ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260621-11/assessment.json"
+    ],
     "blocker_summary": [
       "REGRESSION-20260620-10 fixed the earlier pre-run behavior but failed E35 because the run sent a second web search query after approval for only the displayed sanitized query.",
-      "CAND-20260620-11 is a wording-only candidate that makes exact network approval non-expandable and requires a new approval packet for any extra query, source, or open."
+      "CAND-20260620-11 is a wording-only candidate that makes exact network approval non-expandable and requires a new approval packet for any extra query, source, or open.",
+      "REGRESSION-20260621-11 passed E35, E19, and E32; formal activation still requires explicit user approval."
     ]
   },
   "activation": {
