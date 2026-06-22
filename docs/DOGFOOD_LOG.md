@@ -87,3 +87,68 @@ Verification:
 - Run plugin install smoke.
 - Run existing script unit tests.
 - Run whitespace diff check.
+
+## DOGFOOD-04A Long Conversation Handoff Template
+
+Date: 2026-06-23
+
+Scope: add a reusable handoff template for moving a long project conversation into a fresh Codex thread, and surface the same behavior in product and plugin-package documentation.
+
+Boundary:
+
+- Allowed files: `docs/TASK_TEMPLATES.md`, `docs/PRODUCT_MANUAL.md`, `plugins/codex-project-workflow/README.md`, `plugins/codex-project-workflow/docs/USER_GUIDE.md`, and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+- Do not treat the new template as proof that recovery works; verify with file inspection and existing checks.
+
+Evidence:
+
+- The project already has `docs/STATE_CONTRACT.md` for minimal new-thread state reconstruction.
+- Existing task templates covered continuing work and pause/resume, but did not provide a direct long-conversation-to-fresh-thread prompt.
+- Long conversations can mix old decisions, compressed summaries, and current state; recovery should start from project files and git status.
+
+Action:
+
+- Added a "长对话转新线程交接" template to `docs/TASK_TEMPLATES.md`.
+- Added a long conversation and fresh-thread handoff section to `docs/PRODUCT_MANUAL.md`.
+- Added fresh-thread handoff guidance to the source plugin README and package user guide.
+
+Verification:
+
+- Run targeted text search for the new template and package docs.
+- Run whitespace diff check.
+- Run plugin install smoke to confirm packaging smoke remains unaffected.
+
+## DOGFOOD-04B Handoff Verification Loop
+
+Date: 2026-06-23
+
+Scope: record a dogfood signal from DOGFOOD-04A: after documenting the long-conversation handoff template, Codex did not proactively call out that the template itself should be validated in a fresh thread.
+
+Boundary:
+
+- Allowed files: `docs/DOGFOOD_LOG.md`, `docs/TASK_TEMPLATES.md`, and `docs/PRODUCT_MANUAL.md`.
+- No active skill rule changes.
+- No reference protocol changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+- Do not upgrade this directly into a core rule; treat it as a project dogfood and documentation acceptance-loop fix.
+
+Finding:
+
+- This is primarily an acceptance-loop gap, with a secondary execution-habit issue.
+- It is not primarily a template-content gap: DOGFOOD-04A added a usable fresh-thread recovery prompt, but the verification checklist did not require trying or recommending a real fresh-thread recovery smoke.
+- Documenting a workflow is not the same as proving that the workflow was exercised.
+
+Minimal fix:
+
+- Add a reminder to the long-conversation handoff template that changes to recovery or handoff guidance should be followed by a fresh-thread read-only recovery smoke.
+- Add the same acceptance-loop reminder to the product manual.
+
+Fresh-thread smoke:
+
+- First broad recovery smoke thread completed after a slower run. It used the full DOGFOOD-04A/04B recovery prompt and reported current goal, completed work, next step, blockers, risks, git status, DOGFOOD-04A, and DOGFOOD-04B.
+- A second minimal fresh-thread smoke also passed. It used current project files and git status only, with no old chat, file edits, commits, browsing, or agent startup.
+- The minimal smoke recovered that DOGFOOD-04A added the long-conversation/fresh-thread handoff docs and DOGFOOD-04B added the verification-loop reminder.
+- Evidence reported by the smoke: `docs/DOGFOOD_LOG.md` has DOGFOOD-04A and DOGFOOD-04B sections; `README.md` points to `docs/DOCUMENT_INDEX.md`; `docs/DOCUMENT_INDEX.md` lists `docs/DOGFOOD_LOG.md` as a current verification/status record; git modified files are `docs/DOGFOOD_LOG.md`, `docs/PRODUCT_MANUAL.md`, `docs/TASK_TEMPLATES.md`, `plugins/codex-project-workflow/README.md`, and `plugins/codex-project-workflow/docs/USER_GUIDE.md`.
+- Smoke risk: the minimal smoke checked only the requested read-only sources and git status/name-status; it did not independently inspect every modified target document beyond the DOGFOOD log record.

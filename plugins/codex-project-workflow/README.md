@@ -46,6 +46,12 @@ For professional research or solution comparison, add:
 First explain what sources, methods, and alternatives you will compare. Ask before browsing.
 ```
 
+For a long conversation or a handoff to a fresh thread, use:
+
+```text
+I am moving a long project conversation into this fresh thread. Do not rely only on the old chat or a compact summary. First recover the project state from the project entry docs, plan or status docs, and git status. Report the current goal, completed work, next step, blockers, risks, and any missing or conflicting evidence before editing files.
+```
+
 ## Install Smoke
 
 After install or update, use a fresh Codex thread to verify that the loaded skill path comes from the plugin cache and that `governance`, `research`, and `verification` can be read through the plugin-local helper.

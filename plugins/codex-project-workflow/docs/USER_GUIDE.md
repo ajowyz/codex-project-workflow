@@ -20,6 +20,18 @@ Risk: what must stay stable.
 Verification: how I want the result proven.
 ```
 
+## Long Conversations And Fresh Threads
+
+For long projects, do not treat the chat transcript as the only project memory. Before switching threads, keep the current goal, stage, completed work, next step, blockers, risks, and validation evidence in project files such as `README.md`, `docs/PLAN.md`, or another visible status document.
+
+In a fresh thread, ask Codex to recover state before editing:
+
+```text
+I am continuing a long project in a fresh thread. First read the project entry docs, plan or status docs, and git status. Report the current goal, completed work, next step, blockers, risks, and missing evidence before modifying files.
+```
+
+Recovery does not expand prior authorization. External research, dependency installation, destructive operations, high-impact decisions, and multi-agent activation still need fresh scoped confirmation.
+
 ## Confirmation Boundaries
 
 Codex can normally proceed with local read-only inspection, local non-destructive edits, nearby tests, documentation updates, and local commits inside an approved stage.
