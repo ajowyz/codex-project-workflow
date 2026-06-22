@@ -29,3 +29,11 @@ The helper checks the plugin-local `references/` directory first. A development-
 ## Validation
 
 Before publishing or installing this plugin, validate the manifest, the packaged skill, the helper path, and the absence of excluded assets. The official plugin validator should be used when its Python dependencies are available.
+
+From this repository root, the current verified package can be checked with:
+
+```text
+python scripts/verify_plugin_install_smoke.py
+```
+
+See the source repository docs for the full manual, task templates, install/update notes, and extension roadmap.
