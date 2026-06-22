@@ -5,6 +5,7 @@ import importlib.util
 import json
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 import unicodedata
@@ -13,6 +14,7 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_DIR = SCRIPT_DIR.parent
 PROJECT_ROOT = SKILL_DIR.parents[2]
+CURRENT_CANDIDATE_ID = "CAND-20260622-12"
 
 
 def load(name: str):
@@ -96,7 +98,7 @@ class ScriptTests(unittest.TestCase):
 
     def test_current_candidate_budget_and_semantics(self):
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260620-11"
+            SKILL_DIR / "evals" / "candidates" / CURRENT_CANDIDATE_ID
         )
         skill_path = candidate_dir / "SKILL.candidate.md"
         metrics = measure_context.skill_metrics(skill_path)
@@ -105,6 +107,7 @@ class ScriptTests(unittest.TestCase):
 
         skill_text = skill_path.read_text(encoding="utf-8")
         self.assertIn("multi-agent proposal", skill_text)
+        self.assertIn("<skill_dir>/scripts/read_reference.py", skill_text)
         self.assertIn("later exact approval", skill_text)
         self.assertIn("Extra query/source/open needs new approval", skill_text)
         self.assertIn("keeps agents `proposed`", skill_text)
@@ -113,12 +116,14 @@ class ScriptTests(unittest.TestCase):
         self.assertIn("docs/IMPLEMENTATION_CONTRACT.md", skill_text)
         self.assertIn("no research/governance docs", skill_text)
 
-        governance = (
-            candidate_dir / "references" / "governance.md"
-        ).read_text(encoding="utf-8")
-        verification = (
-            candidate_dir / "references" / "verification.md"
-        ).read_text(encoding="utf-8")
+        def reference_text(name):
+            candidate_reference = candidate_dir / "references" / name
+            if candidate_reference.is_file():
+                return candidate_reference.read_text(encoding="utf-8")
+            return (SKILL_DIR / "references" / name).read_text(encoding="utf-8")
+
+        governance = reference_text("governance.md")
+        verification = reference_text("verification.md")
         for text in (governance, verification):
             sections = dict(read_reference.parse_sections(text))
             selected = "\n\n".join(
@@ -160,7 +165,7 @@ class ScriptTests(unittest.TestCase):
             return hashlib.sha256(normalized).hexdigest()
 
         candidate_dir = (
-            SKILL_DIR / "evals" / "candidates" / "CAND-20260620-11"
+            SKILL_DIR / "evals" / "candidates" / CURRENT_CANDIDATE_ID
         )
         manifest = json.loads(
             (candidate_dir / "manifest.json").read_text(encoding="utf-8")
@@ -263,6 +268,53 @@ class ScriptTests(unittest.TestCase):
         )
         self.assertEqual(len(payload), summary["content_codepoints"])
         self.assertEqual(2, summary["h2_sections"])
+
+    def test_reference_reader_prefers_script_source_dir(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            plugin_skill = root / "plugin" / "skills" / "codex-project-workflow"
+            plugin_script_dir = plugin_skill / "scripts"
+            plugin_refs = plugin_skill / "references"
+            plugin_script_dir.mkdir(parents=True)
+            plugin_refs.mkdir()
+            shutil.copyfile(
+                SKILL_DIR / "scripts" / "read_reference.py",
+                plugin_script_dir / "read_reference.py",
+            )
+            (plugin_refs / "governance.md").write_text(
+                "# Governance\n\n## Execution Rules\n\nplugin-source\n",
+                encoding="utf-8",
+            )
+
+            repo_like = (
+                root
+                / "workspace"
+                / ".agents"
+                / "skills"
+                / "codex-project-workflow"
+                / "references"
+            )
+            repo_like.mkdir(parents=True)
+            (repo_like / "governance.md").write_text(
+                "# Governance\n\n## Execution Rules\n\nrepo-fallback\n",
+                encoding="utf-8",
+            )
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(plugin_script_dir / "read_reference.py"),
+                    "governance",
+                    "Execution Rules",
+                ],
+                cwd=root / "workspace",
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertIn("plugin-source", result.stdout)
+            self.assertNotIn("repo-fallback", result.stdout)
 
     def test_output_summary_sums_multiple_reference_metrics(self):
         first = "## Execution Rules\n\nalpha"

@@ -270,3 +270,17 @@
 - Evidence: `docs/PLUGIN_PACKAGING.md` defines the first plugin boundary, packageable assets, excluded assets, pre-packaging gates, install-time smoke gates, and a P1 helper path portability blocker.
 - Scope: documentation only; no marketplace entry, plugin manifest, Hook, MCP, app connector, or installed cache was changed.
 - Next step: create a minimal candidate for helper path portability before scaffolding the actual plugin.
+
+## Update 2026-06-22 Model Context Strategy
+
+- Current stage: model/context upgrade compatibility has a documented strategy, but no active skill budget has been changed.
+- Evidence: `docs/MODEL_CONTEXT_STRATEGY.md` defines S/M/L/XL context tiers, profile fields, upgrade calibration, hard invariants, and risk controls; `docs/USER_GUIDE.md` now points users to this strategy.
+- Scope: documentation and future calibration only; safety, authorization, implementation-path verification, multi-agent approval, and candidate activation gates remain unchanged.
+- Next step: continue CAND-20260622-12 helper path portability preflight, then use model-profile calibration only when a real model/runtime change needs it.
+
+## Update 2026-06-22 CAND-20260622-12 Preflight
+
+- Current stage: CAND-20260622-12 helper path portability candidate passed local preflight and is not activated.
+- Evidence: candidate `SKILL.candidate.md`, `patch.diff`, and `manifest.json` were created under `.agents/skills/codex-project-workflow/evals/candidates/CAND-20260622-12`; 49 script tests, skill validation, eval validation, full fixture validation, active CAND-11 regression result validation, and a local plugin-path smoke passed.
+- Scope: isolated candidate only; active `SKILL.md` remains CAND-20260620-11.
+- Next step: run E32/E35 targeted regression or an equivalent isolated activation run before any CAND-12 activation.

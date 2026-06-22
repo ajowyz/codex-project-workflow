@@ -98,3 +98,60 @@
 | 没有把个人项目数据列入插件资产 | 通过 | 封装清单排除 memory、PLAN 历史、rollout 和私有路径 |
 | 发现实际封装风险 | 通过 | helper 路径不可移植被列为 P1 |
 | 给出下一候选方向 | 通过 | 建议先做 helper 路径可移植候选 |
+
+## UX-20260622-03 模型上下文升级策略
+
+### 用户输入
+
+```text
+后面大模型更新，上下文变大了，应该怎么去兼容或者是改变
+```
+
+随后用户要求按建议执行。
+
+### 任务解释
+
+本轮目标是把“上下文变大后如何兼容”的建议落成可执行策略，而不是直接放宽当前 active skill 的上下文预算。
+
+### 实际执行路径
+
+1. 保持 active skill 不变。
+2. 新增 `docs/MODEL_CONTEXT_STRATEGY.md`，定义 S/M/L/XL 能力档位、策略配置字段、升级校准流程和风险防护。
+3. 更新 `docs/USER_GUIDE.md`，让使用者知道模型升级后不会自动触发更重流程。
+4. 更新 `docs/PLAN.md`，把模型上下文策略登记为后续校准入口。
+
+### 验收检查
+
+| 检查项 | 状态 | 证据 |
+| --- | --- | --- |
+| 没有因为未来模型能力直接放宽 active skill | 通过 | `SKILL.md` 未作为本策略步骤的目标 |
+| 保留薄核心和按需加载 | 通过 | `MODEL_CONTEXT_STRATEGY.md` 第 1、7 节 |
+| 提供可调档位而非固定单点规则 | 通过 | S/M/L/XL 档位表 |
+| 明确升级校准流程 | 通过 | 升级校准流程第 1-6 步 |
+| 安全和实现路径确认门不降级 | 通过 | hard invariants 与风险防护表 |
+
+## UX-20260622-04 CAND-12 helper 路径可移植预检
+
+### 任务解释
+
+插件封装准备发现 helper 调用说明写死仓库 `.agents` 路径。本轮创建隔离候选 `CAND-20260622-12`，只改变候选文件和测试指针，不修改 active skill。
+
+### 实际执行路径
+
+1. 创建 `CAND-20260622-12` 候选目录。
+2. 新增候选 `SKILL.candidate.md`，把 helper 调用改为优先使用当前技能源目录 `<skill_dir>/scripts/read_reference.py`，仓库 `.agents` 路径只作为存在时 fallback。
+3. 新增候选 `patch.diff` 和 `manifest.json`，绑定 active skill 基线哈希、候选哈希、patch 哈希和失效条件。
+4. 更新脚本测试的当前候选指针，让预检验证 CAND-12。
+5. 运行脚本单测、skill 结构验证、行为 fixture、full fixture 和最近激活回归结果验证。
+6. 增加本地插件路径 smoke，验证复制到插件式技能源目录的 `read_reference.py` 优先读取同目录 `references/`，不会借用工作区 `.agents` fallback。
+
+### 验收检查
+
+| 检查项 | 状态 | 证据 |
+| --- | --- | --- |
+| active skill 未改变 | 通过 | 变更在 `evals/candidates/CAND-20260622-12` |
+| 候选预算未超限 | 通过 | description 624，body 1491 |
+| patch 绑定候选 | 通过 | manifest 记录 base/candidate/patch SHA-256 |
+| 现有验证通过 | 通过 | 49 个脚本测试、skill、eval、fixture、active 回归结果校验通过 |
+| 插件路径 smoke 通过 | 通过 | `test_reference_reader_prefers_script_source_dir` |
+| 未直接激活 | 通过 | manifest 状态为 `preflight_passed_pending_isolated_evaluation` |

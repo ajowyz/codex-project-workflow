@@ -153,10 +153,16 @@ python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME "Exe
 
 ## 7. 下一步候选
 
-建议下一步创建一个最小候选，不直接封装插件，而是先解决 helper 路径可移植性：
+已创建最小候选 `CAND-20260622-12`，不直接封装插件，而是先解决 helper 路径可移植性：
 
 - 候选目标：让 `read_reference.py` 在仓库级技能和插件技能中都能被可靠调用。
 - 变更范围：`SKILL.md` 的 helper 调用说明、必要脚本或包装器、相关脚本测试。
 - 回归重点：E32 上下文预算、E35 多硬触发、插件路径冒烟测试。
 - 激活门：路径证据必须证明没有从开发仓库借用插件运行时文件。
 
+当前状态：
+
+- 预检通过。
+- 本地插件路径 smoke 通过：复制到插件式技能源目录的 `read_reference.py` 优先读取同目录 `references/`，没有借用仓库 fallback。
+- active skill 未改变。
+- 仍需 E32/E35 定向回归或等价隔离评估。
