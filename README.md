@@ -19,6 +19,8 @@
 
 ## 从这里开始
 
+如果不知道该看哪个文档，先看：`docs/DOCUMENT_INDEX.md`
+
 1. 阅读最终使用手册：`docs/PRODUCT_MANUAL.md`
 2. 复制常用任务模板：`docs/TASK_TEMPLATES.md`
 3. 安装、更新或复验插件：`docs/INSTALL_UPDATE.md`

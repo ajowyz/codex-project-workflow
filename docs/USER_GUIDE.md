@@ -1,5 +1,7 @@
 # Codex Project Workflow 使用手册
 
+> 历史说明：这是一份早期仓库级使用手册，保留用于追溯。当前正式入口请看 `README.md`、`docs/DOCUMENT_INDEX.md` 和 `docs/PRODUCT_MANUAL.md`。
+
 > 状态：草案，可直接用于当前激活版本  
 > 适用版本：`CAND-20260620-11` 已激活  
 > 日期：2026-06-22

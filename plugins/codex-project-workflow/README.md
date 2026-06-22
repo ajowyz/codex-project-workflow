@@ -26,6 +26,30 @@ python <skill_dir>/scripts/read_reference.py governance "Execution Rules" "Outpu
 
 The helper checks the plugin-local `references/` directory first. A development-repo fallback remains only for local source-tree use when `.agents/skills/codex-project-workflow/references/` exists in the current working directory.
 
+## Minimal Use
+
+After enabling the plugin, start a new Codex thread and describe the task naturally. For example:
+
+```text
+Continue this project. First review the current state, plan, and git status, then decide the next step.
+```
+
+For implementation tasks where the path matters, add:
+
+```text
+After finishing, prove that the result went through the original project entry and owner path.
+```
+
+For professional research or solution comparison, add:
+
+```text
+First explain what sources, methods, and alternatives you will compare. Ask before browsing.
+```
+
+## Install Smoke
+
+After install or update, use a fresh Codex thread to verify that the loaded skill path comes from the plugin cache and that `governance`, `research`, and `verification` can be read through the plugin-local helper.
+
 ## Validation
 
 Before publishing or installing this plugin, validate the manifest, the packaged skill, the helper path, and the absence of excluded assets. The official plugin validator should be used when its Python dependencies are available.
@@ -36,4 +60,4 @@ From this repository root, the current verified package can be checked with:
 python scripts/verify_plugin_install_smoke.py
 ```
 
-See the source repository docs for the full manual, task templates, install/update notes, and extension roadmap.
+If the full source repository is available, see `docs/DOCUMENT_INDEX.md` for the manual, task templates, install/update notes, and extension roadmap.

@@ -1,5 +1,7 @@
 # 插件封装准备清单
 
+> Historical/development note: this file records the packaging preparation phase. For current user-facing usage, installation, update, and document navigation, start with `README.md` and `docs/DOCUMENT_INDEX.md`.
+
 > 状态：准备中  
 > 日期：2026-06-22  
 > 当前基线：`CAND-20260620-11` 已在 `master` 激活  

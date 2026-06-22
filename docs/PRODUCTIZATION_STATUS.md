@@ -23,3 +23,9 @@ No active skill rule, plugin manifest, marketplace entry, installed cache, Hook,
 ## Next Step
 
 Use the plugin on real tasks and record only evidence-backed improvement candidates.
+
+## DOGFOOD-02 Update
+
+The project now has `docs/DOCUMENT_INDEX.md` as the document navigation entry and `docs/DOGFOOD_LOG.md` as the record for self-use reviews.
+
+The current baseline treats `README.md`, `docs/PRODUCT_MANUAL.md`, `docs/TASK_TEMPLATES.md`, `docs/INSTALL_UPDATE.md`, and `docs/PLUGIN_INSTALL_SMOKE.md` as current-state documents. Older planning and packaging documents are retained as historical/development evidence.

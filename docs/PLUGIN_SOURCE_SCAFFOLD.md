@@ -6,7 +6,9 @@ Date: 2026-06-22
 
 The first repo-local plugin source package exists at `plugins/codex-project-workflow/`.
 
-This is a source package only. It has not been installed into the personal Codex plugin directory and does not create a marketplace entry.
+This document describes the source package in this repository. Installation status is tracked separately in `docs/PLUGIN_INSTALL_SMOKE.md`.
+
+Current source package status: created and install-smoke verified through the personal plugin flow.
 
 ## Included
 
@@ -34,7 +36,7 @@ This is a source package only. It has not been installed into the personal Codex
 - Private paths
 - Project execution history
 
-## Remaining Gates
+## Completed Gates
 
 - Validate plugin manifest shape.
 - Validate packaged skill frontmatter and required references.
