@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260622-12",
   "parent_candidate_id": "CAND-20260620-11",
   "created_at": "2026-06-22T13:38:55+08:00",
-  "status": "preflight_passed_pending_isolated_evaluation",
+  "status": "preflight_passed_regression_pending",
   "base_commit": "cb6e8b8",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -36,6 +36,7 @@
   },
   "evaluation": {
     "status": "plugin_path_smoke_passed_pending_targeted_regression",
+    "activation_branch": "codex/cand-20260622-12-activation",
     "required_regressions": [
       "E32:hard_trigger_overage",
       "E35:four_hard_triggers",
@@ -45,7 +46,7 @@
       "Plugin packaging preparation found that the active skill's helper command is hard-coded to the repository .agents path.",
       "The helper script itself already resolves references relative to its own script directory; the candidate changes the skill instruction to use the active skill source directory first.",
       "Local plugin-path smoke passed: read_reference.py copied into a plugin-like skill tree loaded the plugin-local reference before a conflicting repo fallback reference.",
-      "Formal activation must wait for preflight and path evidence that plugin-installed runs do not borrow the development repository helper."
+      "Formal activation must wait for E32/E35 targeted regression or equivalent isolated activation evidence."
     ]
   },
   "activation": {

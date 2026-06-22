@@ -284,3 +284,10 @@
 - Evidence: candidate `SKILL.candidate.md`, `patch.diff`, and `manifest.json` were created under `.agents/skills/codex-project-workflow/evals/candidates/CAND-20260622-12`; 49 script tests, skill validation, eval validation, full fixture validation, active CAND-11 regression result validation, and a local plugin-path smoke passed.
 - Scope: isolated candidate only; active `SKILL.md` remains CAND-20260620-11.
 - Next step: run E32/E35 targeted regression or an equivalent isolated activation run before any CAND-12 activation.
+
+## Update 2026-06-22 CAND-20260622-12 Isolated Activation
+
+- Current stage: isolated activation branch `codex/cand-20260622-12-activation` has been created for regression only.
+- Evidence: CAND-12 patch is applied to active `SKILL.md` on the isolated branch; formal activation remains blocked until targeted regression evidence exists.
+- Scope: branch-local activation for testing; `master` still records CAND-12 as an unactivated candidate.
+- Next step: validate branch-local activation, commit the isolated branch, then run E32/E35 targeted regression or equivalent isolated tests.
