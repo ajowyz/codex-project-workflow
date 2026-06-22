@@ -256,3 +256,10 @@
 - Current stage: CAND-20260620-11 is formally activated on `master` after explicit user approval.
 - Evidence: activation merge brought in the active `SKILL.md`, active governance reference, `REGRESSION-20260621-11` evidence, and the collector prompt-integrity adaptation.
 - Next step: continue from the activated workflow rules; run broader calibration only if later behavior suggests drift or regression.
+
+## Update 2026-06-22 User Guide and Usage Exercise
+
+- Current stage: post-activation usability hardening has started.
+- Evidence: `docs/USER_GUIDE.md` translates the activated workflow into user-facing operating guidance; `docs/USAGE_EXERCISES.md` records the first mainline usage exercise under CAND-20260620-11.
+- Scope: documentation and local verification only; no core skill rule, candidate, network, dependency, or plugin packaging change in this step.
+- Next step: verify the docs against the active skill checks, then choose a low-risk implementation exercise or start plugin packaging preparation.
