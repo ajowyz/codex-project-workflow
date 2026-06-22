@@ -42,6 +42,10 @@ This is a source package only. It has not been installed into the personal Codex
 - Prove excluded assets are absent from the package.
 - Run an install smoke in a fresh Codex thread before treating this as install-ready.
 
+## Install Smoke Update
+
+See `docs/PLUGIN_INSTALL_SMOKE.md` for the current installation attempt. The personal plugin source and default marketplace entry are prepared, but `codex plugin add codex-project-workflow@personal` is blocked in this desktop thread by a local executable `Access is denied` error.
+
 ## Validator Note
 
 The official `validate_plugin.py` script currently requires `PyYAML`. If that dependency is unavailable, use local structural checks as a temporary fallback and rerun the official validator once the dependency is available.
