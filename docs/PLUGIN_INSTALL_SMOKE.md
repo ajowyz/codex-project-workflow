@@ -4,9 +4,16 @@ Date: 2026-06-22
 
 ## Status
 
-The personal plugin source and default personal marketplace entry have been prepared.
+Passed.
 
-The install command is currently blocked by the local Codex Desktop CLI executable returning `Access is denied`.
+The `codex-project-workflow` plugin was enabled through Codex App and verified in a fresh thread. The fresh-thread run loaded the plugin cache copy instead of the project-local `.agents` copy.
+
+## Verified Installed Source
+
+- Skill path: `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260622112058\skills\codex-project-workflow\SKILL.md`
+- Helper path: `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260622112058\skills\codex-project-workflow\scripts\read_reference.py`
+- References path: `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260622112058\skills\codex-project-workflow\references`
+- Project-local copy present but not used for this smoke: `D:\project\efficiently use codex\.agents\skills\codex-project-workflow\SKILL.md`
 
 ## Prepared Assets
 
@@ -15,34 +22,37 @@ The install command is currently blocked by the local Codex Desktop CLI executab
 - Marketplace name: `personal`
 - Plugin install target: `codex-project-workflow@personal`
 
-## Completed Checks
+## Fresh-Thread Checks
 
-- The marketplace entry points to `./plugins/codex-project-workflow`.
-- The personal plugin manifest is valid JSON.
-- The personal plugin version has a Codex cachebuster suffix.
-- The packaged helper reads plugin-local `references/`.
-- Exclusion scan found no eval workspaces, regression run markers, candidate history, smoke/calibration logs, TODO placeholders, or absolute Windows paths.
-- The official plugin validator core path passed with a temporary YAML shim.
+- The fresh thread discovered and loaded `codex-project-workflow`.
+- The loaded skill came from the plugin cache path.
+- The helper came from the plugin cache path.
+- The helper reads plugin-local `references/` first through `Path(__file__).resolve().parent.parent / "references" / name`.
+- `governance` loaded `Execution Rules` and `Output Requirements`; metrics: `codepoints=2484 h2_sections=2`.
+- `research` loaded `Execution Rules` and `Output Requirements`; metrics: `codepoints=1205 h2_sections=2`.
+- `verification` loaded `Execution Rules` and `Output Requirements`; metrics: `codepoints=2239 h2_sections=2`.
 
-## Blocked Check
+## Repeatable Check
 
-The following command could not run in this desktop thread:
+Run this read-only check after reinstalling or updating the plugin:
+
+```text
+python scripts/verify_plugin_install_smoke.py
+```
+
+The script verifies that `SKILL.md`, `scripts/read_reference.py`, and `references/{governance,research,verification}.md` are all under the same installed plugin cache version directory, then runs the helper for all three references from a temporary directory so the project `.agents` fallback cannot satisfy the check.
+
+## Historical Note
+
+The direct command below failed in the original desktop thread because the packaged Codex CLI executable returned `Access is denied`:
 
 ```text
 codex plugin add codex-project-workflow@personal
 ```
 
-Observed result:
-
-```text
-Access is denied
-```
-
-This appears to be a local executable permission issue for the Codex Desktop packaged CLI, not a plugin package validation failure.
+That was a local executable permission issue, not a plugin package validation failure. Enabling through Codex App and verifying in a fresh thread completed the install smoke.
 
 ## Remaining Gates
 
-- Install or enable the plugin through the Codex app or a CLI environment that can execute `codex`.
-- Start a new Codex thread after installation.
-- Verify the new thread discovers `codex-project-workflow` from the installed plugin.
-- Verify the installed skill can load `governance`, `research`, and `verification` through plugin-local `read_reference.py`.
+- Prepare final user-facing docs and task templates.
+- Decide the next extension path: install/update automation, better first-run smoke UX, or broader real-project exercises.

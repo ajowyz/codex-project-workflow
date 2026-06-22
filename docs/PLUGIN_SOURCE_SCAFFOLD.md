@@ -44,7 +44,7 @@ This is a source package only. It has not been installed into the personal Codex
 
 ## Install Smoke Update
 
-See `docs/PLUGIN_INSTALL_SMOKE.md` for the current installation attempt. The personal plugin source and default marketplace entry are prepared, but `codex plugin add codex-project-workflow@personal` is blocked in this desktop thread by a local executable `Access is denied` error.
+See `docs/PLUGIN_INSTALL_SMOKE.md` for the completed installation smoke. The plugin was enabled through Codex App and verified in a fresh thread from the plugin cache path, not the project-local `.agents` copy.
 
 ## Validator Note
 
