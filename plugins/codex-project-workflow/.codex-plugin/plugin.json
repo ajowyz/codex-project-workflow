@@ -1,0 +1,31 @@
+{
+  "name": "codex-project-workflow",
+  "version": "0.1.0",
+  "description": "Structured Codex workflow for scoped planning, research governance, implementation-path checks, and verification.",
+  "author": {
+    "name": "wang yazhou"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "codex",
+    "workflow",
+    "planning",
+    "research",
+    "verification"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Codex Project Workflow",
+    "shortDescription": "Plan, research, govern, and verify Codex project work.",
+    "longDescription": "Adds a portable Codex workflow skill for project startup, scoped research, architecture planning, approval boundaries, implementation-path checks, and verification reporting.",
+    "developerName": "wang yazhou",
+    "category": "Productivity",
+    "capabilities": [
+      "Project planning",
+      "Research governance",
+      "Verification",
+      "Skill workflow"
+    ],
+    "defaultPrompt": "Use Codex Project Workflow when a task needs planning, research, governance, implementation-path checking, or verification."
+  }
+}
