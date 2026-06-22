@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260622-12",
   "parent_candidate_id": "CAND-20260620-11",
   "created_at": "2026-06-22T13:38:55+08:00",
-  "status": "preflight_passed_regression_pending",
+  "status": "regression_passed_pending_activation_approval",
   "base_commit": "cb6e8b8",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -31,12 +31,23 @@
     "behavior_fixtures": "passed: python .agents/skills/codex-project-workflow/scripts/validate_evals.py",
     "full_fixtures": "passed: python .agents/skills/codex-project-workflow/scripts/validate_full_fixtures.py",
     "active_regression_result": "passed: python .agents/skills/codex-project-workflow/scripts/validate_full_results.py --summary .agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260621-11/results/summary.json --assessment .agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260621-11/assessment.json",
+    "candidate_targeted_regression_result": "passed: python .agents/skills/codex-project-workflow/scripts/validate_full_results.py --summary .agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260622-12/results/summary.json --assessment .agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260622-12/assessment.json",
     "skill_body_chars": 1491,
     "skill_description_chars": 624
   },
   "evaluation": {
-    "status": "plugin_path_smoke_passed_pending_targeted_regression",
+    "status": "regression_passed_pending_activation_approval",
     "activation_branch": "codex/cand-20260622-12-activation",
+    "targeted_regression": {
+      "run_id": "REGRESSION-20260622-12",
+      "status": "passed",
+      "cases": [
+        "E32:hard_trigger_overage",
+        "E35:four_hard_triggers"
+      ],
+      "summary": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260622-12/results/summary.json",
+      "assessment": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260622-12/assessment.json"
+    },
     "required_regressions": [
       "E32:hard_trigger_overage",
       "E35:four_hard_triggers",
@@ -46,11 +57,13 @@
       "Plugin packaging preparation found that the active skill's helper command is hard-coded to the repository .agents path.",
       "The helper script itself already resolves references relative to its own script directory; the candidate changes the skill instruction to use the active skill source directory first.",
       "Local plugin-path smoke passed: read_reference.py copied into a plugin-like skill tree loaded the plugin-local reference before a conflicting repo fallback reference.",
-      "Formal activation must wait for E32/E35 targeted regression or equivalent isolated activation evidence."
+      "REGRESSION-20260622-12 passed E32 hard_trigger_overage and E35 four_hard_triggers on the isolated activation branch.",
+      "Formal activation is ready but still requires a candidate-specific activation record for CAND-20260622-12."
     ]
   },
   "activation": {
     "allowed": false,
+    "ready_after_regression": true,
     "requires_explicit_user_approval": true,
     "invalidation_conditions": [
       "base commit or active SKILL.md hash changes",

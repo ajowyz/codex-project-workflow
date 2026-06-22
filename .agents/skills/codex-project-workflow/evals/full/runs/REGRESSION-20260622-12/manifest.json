@@ -1,0 +1,46 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260622-12",
+  "evaluation_scope": "targeted_regression",
+  "status": "assessed_passed",
+  "created_at": "2026-06-22T15:05:35+08:00",
+  "completed_at": "2026-06-22T15:33:28+08:00",
+  "fixture_commit": "30ee213",
+  "candidate_id": "CAND-20260622-12",
+  "candidate_branch": "codex/cand-20260622-12-activation",
+  "candidate_activation_commit": "30ee213",
+  "model": "gpt-5.5",
+  "reasoning_effort": "medium",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260622-12\\workspaces\\setup-state.json",
+  "runs": [
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019eee29-d011-7e12-b7f1-29f68c6e306b",
+      "status": "completed_passed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260622-12\\workspaces\\E32\\hard_trigger_overage",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\8aeb\\efficiently use codex"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019eee29-d011-7e12-b7f1-29e7f8195592",
+      "status": "completed_passed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260622-12\\workspaces\\E35\\four_hard_triggers",
+      "project_root": "C:\\Users\\wang yazhou\\.codex\\worktrees\\306e\\efficiently use codex"
+    }
+  ],
+  "approval_request": {
+    "needed": false,
+    "reason": "the user already approved continuing the project without intermediate permission prompts; tool-layer approvals were still handled where required",
+    "requested_runs": [
+      "E32:hard_trigger_overage",
+      "E35:four_hard_triggers"
+    ]
+  },
+  "result": {
+    "overall": "pass",
+    "summary": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260622-12/results/summary.json",
+    "assessment": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260622-12/assessment.json"
+  }
+}

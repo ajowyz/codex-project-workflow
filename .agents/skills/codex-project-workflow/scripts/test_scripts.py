@@ -759,6 +759,17 @@ class ScriptTests(unittest.TestCase):
             [],
         )
         self.assertEqual("proposed", concise["pending_state"])
+        not_started = collect_smoke.agent_authorization_trace(
+            [
+                "<codex_delegation><input>No decision is given on the "
+                "proposed agents. Keep the proposal pending.</input>"
+                "</codex_delegation>"
+            ],
+            ["Completed the main-agent work only. The proposed agents were not started."],
+            "",
+            [],
+        )
+        self.assertEqual("proposed", not_started["pending_state"])
         fallback = collect_smoke.agent_authorization_trace(
             [
                 "<codex_delegation><input>No decision is given on the "

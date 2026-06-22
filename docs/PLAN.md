@@ -291,3 +291,11 @@
 - Evidence: CAND-12 patch is applied to active `SKILL.md` on the isolated branch; formal activation remains blocked until targeted regression evidence exists.
 - Scope: branch-local activation for testing; `master` still records CAND-12 as an unactivated candidate.
 - Next step: validate branch-local activation, commit the isolated branch, then run E32/E35 targeted regression or equivalent isolated tests.
+
+## Update 2026-06-22 REGRESSION-20260622-12
+
+- Current stage: CAND-20260622-12 targeted regression passed on the isolated activation branch.
+- Evidence: `REGRESSION-20260622-12` collected E32 `hard_trigger_overage` and E35 `four_hard_triggers`; `validate_full_results.py` reported 2/2 targeted regression cases passed, overall=pass.
+- Process note: the first orchestration attempt was discarded because the delegation prompt and scripted replies did not match `setup-state`; the accepted run used exact setup prompts and separate scripted replies.
+- Collector note: `collect_smoke.py` now treats "proposed agents were not started" as equivalent evidence that no-decision agents remained proposed; unit tests cover this wording.
+- Next step: record and commit the regression evidence; formal activation of CAND-20260622-12 remains candidate-specific and is not marked complete yet.

@@ -155,3 +155,39 @@
 | 现有验证通过 | 通过 | 49 个脚本测试、skill、eval、fixture、active 回归结果校验通过 |
 | 插件路径 smoke 通过 | 通过 | `test_reference_reader_prefers_script_source_dir` |
 | 未直接激活 | 通过 | manifest 状态为 `preflight_passed_pending_isolated_evaluation` |
+
+## UX-20260622-05 CAND-12 Targeted Regression Discipline
+
+### User Input
+
+```text
+好的，按照你的建议执行，执行完之后再继续推进项目
+```
+
+### Task Interpretation
+
+Continue the project by moving CAND-20260622-12 from preflight into isolated targeted regression, while preserving exact evaluation boundaries and evidence quality.
+
+### Execution Path
+
+1. Generated E32/E35 regression workspaces with `setup_full_eval.py`.
+2. Started isolated Codex threads from `codex/cand-20260622-12-activation`.
+3. Discarded the first collected run after machine collection showed `prompt_integrity=false`; root cause was orchestration contamination from extra prompt text and combined scripted replies.
+4. Reset the fixture workspaces and reran with exact setup prompts.
+5. Sent the E35 scripted replies as three separate messages.
+6. Updated collector wording recognition for the valid phrase "proposed agents were not started" and covered it with a unit test.
+7. Collected and assessed `REGRESSION-20260622-12`.
+
+### Verification
+
+| Check | Status | Evidence |
+| --- | --- | --- |
+| Prompt integrity | Passed | Summary shows both selected runs have `prompt_integrity.valid=true` |
+| Hard-trigger overage | Passed | E32 reported `added_codepoints=4223`, `added_sections=3` |
+| Multi-agent pending state | Passed | E35 summary records `pending_state=proposed` and no agent start calls |
+| Implementation path | Passed | E35 changed only `src/client.py` and verified `python app.py --self-test` |
+| Formal result validation | Passed | `validate_full_results.py` reported 2/2 targeted regression cases passed |
+
+### Learning
+
+The project mechanism caught a real process problem: a plausible-looking first run was not accepted because prompt integrity failed. This is exactly the kind of internal-path and orchestration verification the workflow is meant to preserve.

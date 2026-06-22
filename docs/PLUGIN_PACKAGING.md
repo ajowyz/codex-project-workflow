@@ -166,3 +166,10 @@ python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME "Exe
 - 本地插件路径 smoke 通过：复制到插件式技能源目录的 `read_reference.py` 优先读取同目录 `references/`，没有借用仓库 fallback。
 - active skill 未改变。
 - 仍需 E32/E35 定向回归或等价隔离评估。
+
+## Status Update 2026-06-22 CAND-12 Regression
+
+- `CAND-20260622-12` now has plugin-path smoke evidence and targeted regression evidence.
+- `REGRESSION-20260622-12` passed E32 `hard_trigger_overage` and E35 `four_hard_triggers` on the isolated activation branch.
+- The P1 helper path portability blocker is no longer a candidate-design blocker, but plugin packaging should still wait for formal CAND-12 activation or an explicitly selected package baseline.
+- First plugin packaging must exclude regression workspaces, rollout logs, personal memory, private paths, and this project execution history.

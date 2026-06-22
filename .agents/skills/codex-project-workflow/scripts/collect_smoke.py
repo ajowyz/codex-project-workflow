@@ -380,6 +380,8 @@ def agent_authorization_trace(
             r"(?i)(?:remains?|stays?) `?proposed`?|"
             r"proposal (?:is |remains? )?pending|"
             r"proposed agents? (?:remain|remains|stays?) pending|"
+            r"proposed agents? (?:were )?not started|"
+            r"leav(?:e|ing) (?:the )?proposed agents? untouched|"
             r"agents? (?:remain|remains|stays?) pending|"
             r"keep (?:that |the )?proposal pending",
             assistant_text,
