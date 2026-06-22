@@ -263,3 +263,10 @@
 - Evidence: `docs/USER_GUIDE.md` translates the activated workflow into user-facing operating guidance; `docs/USAGE_EXERCISES.md` records the first mainline usage exercise under CAND-20260620-11.
 - Scope: documentation and local verification only; no core skill rule, candidate, network, dependency, or plugin packaging change in this step.
 - Next step: verify the docs against the active skill checks, then choose a low-risk implementation exercise or start plugin packaging preparation.
+
+## Update 2026-06-22 Plugin Packaging Preparation
+
+- Current stage: plugin packaging preparation has started, but no plugin has been created or installed.
+- Evidence: `docs/PLUGIN_PACKAGING.md` defines the first plugin boundary, packageable assets, excluded assets, pre-packaging gates, install-time smoke gates, and a P1 helper path portability blocker.
+- Scope: documentation only; no marketplace entry, plugin manifest, Hook, MCP, app connector, or installed cache was changed.
+- Next step: create a minimal candidate for helper path portability before scaffolding the actual plugin.
