@@ -58,3 +58,32 @@ Disallowed changes:
 - Marketplace entry.
 - Installed plugin cache.
 - Hook, MCP, app connector, or custom Agent manifest.
+
+## DOGFOOD-03 Real Low-Risk Template Exercise
+
+Date: 2026-06-23
+
+Scope: use the plugin workflow on a real low-risk task: review whether `docs/TASK_TEMPLATES.md` covers the user's repeated real workflows from this project.
+
+Boundary:
+
+- Allowed files: `docs/TASK_TEMPLATES.md` and this log.
+- No active skill rule changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+- Do not treat plugin output as proof that the plugin is correct; use file evidence and verification commands.
+
+Evidence:
+
+- Installed plugin helper loaded `governance` and `verification` from the plugin cache path.
+- `docs/TASK_TEMPLATES.md` already covered new project startup, continuing current project, professional solution comparison, implementation-path proof, fewer interruptions, multi-agent judgment, network research, final acceptance, plugin smoke, and model/context upgrades.
+- The project conversation repeatedly used additional workflows not directly represented as templates: progress and drift reports, pause/resume with usage limits, dogfood self-review, and candidate-improvement capture.
+
+Action:
+
+- Added templates for progress/drift reporting, pause/resume and budget boundaries, dogfood self-review, candidate-improvement capture, and document-entry/status consistency review.
+
+Verification:
+
+- Run plugin install smoke.
+- Run existing script unit tests.
+- Run whitespace diff check.
