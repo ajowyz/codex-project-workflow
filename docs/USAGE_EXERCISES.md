@@ -191,3 +191,32 @@ Continue the project by moving CAND-20260622-12 from preflight into isolated tar
 ### Learning
 
 The project mechanism caught a real process problem: a plausible-looking first run was not accepted because prompt integrity failed. This is exactly the kind of internal-path and orchestration verification the workflow is meant to preserve.
+
+## UX-20260622-06 Candidate Activation
+
+### User Input
+
+```text
+激活
+```
+
+### Task Interpretation
+
+Treat the message as explicit candidate-specific activation approval for `CAND-20260622-12`, because the immediately preceding project state identified CAND-12 as regression-passed and awaiting activation.
+
+### Execution Path
+
+1. Confirmed the worktree was on `codex/cand-20260622-12-activation`.
+2. Confirmed active `SKILL.md` hash matched the CAND-12 candidate hash.
+3. Confirmed `REGRESSION-20260622-12` was assessed passed.
+4. Updated the CAND-12 manifest to `activated` with approval text `激活`.
+5. Updated project status docs for activation and plugin packaging readiness.
+
+### Verification
+
+| Check | Status | Evidence |
+| --- | --- | --- |
+| Explicit approval | Passed | User message was `激活` after CAND-12 was named as the activation target |
+| Target hash | Passed | Active and candidate skill hashes both equal `532ed9cea45f6954c64c6c0b25291c187325f92978ba3ae5a7c0d2891202cdb6` |
+| Regression gate | Passed | `REGRESSION-20260622-12` passed E32/E35 and validates with `validate_full_results.py` |
+| Activation scope | Passed | Activation targets only `.agents/skills/codex-project-workflow/SKILL.md` |

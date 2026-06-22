@@ -299,3 +299,10 @@
 - Process note: the first orchestration attempt was discarded because the delegation prompt and scripted replies did not match `setup-state`; the accepted run used exact setup prompts and separate scripted replies.
 - Collector note: `collect_smoke.py` now treats "proposed agents were not started" as equivalent evidence that no-decision agents remained proposed; unit tests cover this wording.
 - Next step: record and commit the regression evidence; formal activation of CAND-20260622-12 remains candidate-specific and is not marked complete yet.
+
+## Update 2026-06-22 CAND-20260622-12 Activation
+
+- Current stage: CAND-20260622-12 is formally activated after explicit user approval with `激活`.
+- Evidence: active `SKILL.md` hash matches the CAND-12 candidate hash `532ed9cea45f6954c64c6c0b25291c187325f92978ba3ae5a7c0d2891202cdb6`; `REGRESSION-20260622-12` passed E32 and E35; manifest status is `activated`.
+- Scope: helper reference loading now instructs Codex to use the active skill source directory first, with repository `.agents` only as an existing-path fallback.
+- Next step: merge the activation branch into `master`, then begin first plugin package scaffolding from the activated baseline.

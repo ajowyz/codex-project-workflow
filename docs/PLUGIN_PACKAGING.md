@@ -173,3 +173,9 @@ python .agents/skills/codex-project-workflow/scripts/read_reference.py NAME "Exe
 - `REGRESSION-20260622-12` passed E32 `hard_trigger_overage` and E35 `four_hard_triggers` on the isolated activation branch.
 - The P1 helper path portability blocker is no longer a candidate-design blocker, but plugin packaging should still wait for formal CAND-12 activation or an explicitly selected package baseline.
 - First plugin packaging must exclude regression workspaces, rollout logs, personal memory, private paths, and this project execution history.
+
+## Status Update 2026-06-22 CAND-12 Activation
+
+- `CAND-20260622-12` has been approved with `激活` and recorded as activated.
+- Plugin packaging may now use the activated CAND-12 baseline after the activation branch is merged to `master`.
+- The first package should still run install-time smoke tests to prove the helper reads plugin-local `references/` rather than this development repository.
