@@ -33,6 +33,17 @@ The `codex-project-workflow` plugin was updated through the personal plugin sour
 - `research` loaded `Execution Rules` and `Output Requirements`; metrics: `codepoints=1205 h2_sections=2`.
 - `verification` loaded `Execution Rules` and `Output Requirements`; metrics: `codepoints=2239 h2_sections=2`.
 
+## Fresh-Thread Pickup Checks
+
+- Fresh-thread smoke thread: `019f2736-4b2f-7032-80e4-5d74a0f72552`.
+- Thread status: completed and idle.
+- The fresh thread reported that the visible `codex-project-workflow` skill came from installed plugin cache version `0.1.0+codex.20260703085220`.
+- The reported skill path was `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703085220\skills\codex-project-workflow\SKILL.md`.
+- The fresh thread reported that helper execution and path evidence came from installed plugin cache, not the old `0.1.0+codex.20260622112058` cache and not the project `.agents` copy.
+- The fresh thread also ran `python scripts\verify_plugin_install_smoke.py`; it passed with `PLUGIN INSTALL SMOKE: PASS`.
+- Fresh-thread protocol metrics matched the installed cache check: `governance` `codepoints=2484 h2_sections=2`, `research` `codepoints=1205 h2_sections=2`, and `verification` `codepoints=2239 h2_sections=2`.
+- Fresh-thread git status was clean: `## master`.
+
 ## Repeatable Check
 
 Run this read-only check after reinstalling or updating the plugin:
@@ -65,5 +76,4 @@ That was a local executable permission issue, not a plugin package validation fa
 
 ## Remaining Gates
 
-- Open a fresh Codex thread when validating new-thread pickup behavior after this update.
 - For the next source change, repeat `python scripts\prepare_plugin_update.py --apply --apply-cachebuster`, Codex App re-enable, and `python scripts\verify_plugin_install_smoke.py`.

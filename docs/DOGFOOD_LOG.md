@@ -458,4 +458,34 @@ Verification:
 - `python scripts\verify_plugin_install_smoke.py` passed and selected installed cache version `0.1.0+codex.20260703085220`.
 - Installed skill, helper, and references all came from `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703085220`.
 - `governance`, `research`, and `verification` metrics matched the expected installed reference outputs.
-- Fresh-thread pickup should still be checked in a new Codex thread when validating thread startup behavior.
+- Fresh-thread pickup remained as a separate follow-up gate and was completed in DOGFOOD-15.
+
+## DOGFOOD-15 Fresh-Thread Pickup Smoke
+
+Date: 2026-07-03
+
+Scope: verify that a newly created Codex project thread picks up the updated installed plugin cache after DOGFOOD-14.
+
+Boundary:
+
+- Allowed files: `docs/PLUGIN_INSTALL_SMOKE.md` and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No repository plugin manifest changes.
+- No manual marketplace edits.
+- Do not manually edit installed plugin cache.
+- Fresh-thread smoke itself was read-only: no file edits, no commits, no browsing, and no multi-agent startup.
+
+Action:
+
+- Created fresh-thread pickup smoke thread `019f2736-4b2f-7032-80e4-5d74a0f72552`.
+- Asked the fresh thread to verify automatic `codex-project-workflow` pickup, installed cache path, helper metrics, required project docs, git status, and `python scripts\verify_plugin_install_smoke.py`.
+
+Verification:
+
+- Fresh-thread conclusion: passed.
+- The fresh thread reported the visible `codex-project-workflow` skill path as `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703085220\skills\codex-project-workflow\SKILL.md`.
+- It explicitly rejected the old `0.1.0+codex.20260622112058` cache and project `.agents` copy as the evidence path.
+- It reported protocol metrics: `governance codepoints=2484 h2_sections=2`, `research codepoints=1205 h2_sections=2`, and `verification codepoints=2239 h2_sections=2`.
+- It ran `python scripts\verify_plugin_install_smoke.py`; the script selected `0.1.0+codex.20260703085220` and printed `PLUGIN INSTALL SMOKE: PASS`.
+- It reported `git status --short --branch --untracked-files=all` as `## master`.
