@@ -335,3 +335,33 @@ Verification:
 - Targeted text search found the new state/persistence, save path, tests, auxiliary scripts, deviations, unverified-path, fallback-phrase, and roadmap-completion wording.
 - `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
 - `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
+
+## DOGFOOD-11 New Project Interview Template Exercise
+
+Date: 2026-07-03
+
+Scope: use the plugin workflow on a real documentation task: calibrate the `docs/TASK_TEMPLATES.md` new-project startup prompt against the product manual's goal, constraint, and completion-standard guidance.
+
+Boundary:
+
+- Allowed files: `docs/TASK_TEMPLATES.md`, `docs/EXTENSION_ROADMAP.md`, and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+
+Finding:
+
+- The existing new-project template asked for understood goal, missing information, initial risk/boundary, and next collaboration mode.
+- It did not explicitly ask for target users, scenarios, pain points, scope, non-goals, constraints, completion criteria, deliverables, data/security/compliance boundaries, or human-confirmation decisions.
+- The roadmap still listed new-project interview as a remaining recommended P1 exercise.
+
+Action:
+
+- Expanded the new-project startup template to cover users, scenarios, pain points, scope/non-goals, constraints, completion standards, deliverables, missing information, risks, boundaries, human-confirmation decisions, and minimal clarifying questions.
+- Updated the roadmap to mark the new-project interview template exercise complete and state that P2 can be considered while preserving sensitive configuration boundaries.
+
+Verification:
+
+- Targeted text search found target-user, scenario, pain-point, non-goal, completion-standard, deliverable, minimal-question, roadmap-completion, and install/update automation wording.
+- `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
+- `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
