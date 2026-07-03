@@ -242,3 +242,34 @@ Verification:
 - Targeted text search found the new decision, alternative, allowed-work, `proposed`, and explicit-acceptance wording.
 - `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
 - `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
+
+## DOGFOOD-08 Professional Comparison Template Exercise
+
+Date: 2026-07-03
+
+Scope: use the plugin workflow on a real documentation task: calibrate the `docs/TASK_TEMPLATES.md` professional-solution prompt against the research protocol output requirements without browsing.
+
+Boundary:
+
+- Allowed files: `docs/TASK_TEMPLATES.md` and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+- No web browsing; this is a local template exercise.
+
+Finding:
+
+- The existing professional-solution template asked what sources or methods would be used, which options would be compared, and why one option was recommended.
+- It did not explicitly ask for recommendation-first output, evidence dates or versions, applicability limits, failure modes, reversibility, counterevidence, unresolved questions, or the next verification step.
+- It did not explicitly require saying when the answer is based only on local project files and existing context because networking has not been approved.
+
+Action:
+
+- Updated the professional-solution template to request recommendation-first comparison, evidence dates or versions, applicability limits, failure modes, reversibility, counterevidence, unresolved questions, and next verification.
+- Added a no-networking boundary sentence and kept networking behind an explicit research approval package.
+
+Verification:
+
+- Targeted text search found the new recommendation, evidence-date, failure-mode, reversibility, counterevidence, unresolved-question, next-verification, and no-networking wording.
+- `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
+- `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
