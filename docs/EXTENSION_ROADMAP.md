@@ -54,7 +54,7 @@
 - 已完成：实现路径证明模板演练。
 - 已完成：新项目需求访谈模板演练。
 
-进入 P2 前的真实项目演练门已满足；下一步可以考虑安装/更新自动化，但仍不得自动修改已安装 cache 或 marketplace 以外的敏感配置。
+进入 P2 前的真实项目演练门已满足；首轮安装/更新自动化和真实本地更新闭环已经完成，后续仍不得自动修改已安装 cache、marketplace 或其他敏感配置。
 
 ## 中期扩展
 
@@ -79,11 +79,13 @@
 - 脚本只有显式 `--apply` 才复制仓库插件源包到个人插件源目录；不修改 marketplace 或已安装 plugin cache。
 - 脚本已支持 marketplace 预检、target 残留文件防护，以及显式 `--apply --apply-cachebuster` 更新个人插件源 manifest 版本。
 - 已新增 `docs/IMPROVEMENT_CANDIDATES.md`，用于把本地使用中发现的问题先沉淀为可审查候选，再进入更新流程。
+- DOGFOOD-16 已完成一次真实本地更新闭环：source prep、Codex App re-enable、install smoke、fresh-thread pickup smoke、记录新 cache 版本 `0.1.0+codex.20260703113254`。
 
 可选方向：
 
-- 运行一次真实 apply、重新启用插件、新线程 smoke，并把新 cache 版本记录到 `docs/PLUGIN_INSTALL_SMOKE.md`。
-- 不自动修改 marketplace、已安装 cache 或其他敏感配置。
+- 后续源改动重复同一闭环：候选记录、source prep、Codex App re-enable、install smoke、fresh-thread pickup smoke、记录新 cache 版本。
+- 继续保持 marketplace、已安装 cache 和其他敏感配置不被脚本静默修改。
+- 下一类值得校准的是 P2 多 Agent 使用判断，或在真实项目中继续收集候选改进信号。
 
 ### P2 多 Agent 使用校准
 

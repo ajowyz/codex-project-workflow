@@ -537,3 +537,33 @@ Follow-up update prep:
 - `python scripts\verify_plugin_install_smoke.py` then selected installed cache version `0.1.0+codex.20260703113254` and printed `PLUGIN INSTALL SMOKE: PASS`.
 - Fresh-thread pickup smoke thread `019f27c3-179b-7220-a045-15094edcf86a` passed. It reported the visible skill path as `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703113254\skills\codex-project-workflow\SKILL.md`, explicitly rejected old cache `0.1.0+codex.20260703085220` and project `.agents` as evidence paths, and reported protocol metrics `governance codepoints=2484 h2_sections=2`, `research codepoints=1205 h2_sections=2`, `verification codepoints=2239 h2_sections=2`.
 - Remaining gate: none for DOGFOOD-16 install pickup. Future source changes still need source prep, Codex App re-enable, install smoke, fresh-thread pickup smoke, and record update.
+
+## DOGFOOD-17 Roadmap Status Sync
+
+Date: 2026-07-03
+
+Scope: update the extension roadmap after DOGFOOD-16 completed the real local update loop.
+
+Boundary:
+
+- Allowed files: `docs/EXTENSION_ROADMAP.md` and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+
+Finding:
+
+- `docs/EXTENSION_ROADMAP.md` still listed the real apply, re-enable, fresh-thread smoke, and cache-version recording as a future optional direction.
+- DOGFOOD-16 had already completed that loop and installed cache `0.1.0+codex.20260703113254`.
+
+Action:
+
+- Updated the roadmap to mark the first real update loop complete.
+- Reframed future update work as repeating the same candidate-bound, human-in-the-loop process for later source changes.
+- Kept sensitive configuration boundaries unchanged.
+
+Verification:
+
+- Run roadmap text search for stale future wording.
+- Run install smoke.
+- Run whitespace diff check.
