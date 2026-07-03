@@ -95,14 +95,22 @@ python scripts\verify_plugin_install_smoke.py
 已验证版本：
 
 ```text
-0.1.0+codex.20260703085220
+0.1.0+codex.20260703113254
 ```
 
 已验证插件 cache 路径：
 
 ```text
-C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703085220
+C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703113254
 ```
+
+最近一次更新说明：
+
+```text
+python scripts\prepare_plugin_update.py --apply --apply-cachebuster
+```
+
+该命令把个人插件源准备到 `0.1.0+codex.20260703113254`。当前 `codex` CLI 在 WindowsApps 包目录下返回 `Access is denied`；本次通过 Codex App 插件页重新启用后，安装 smoke 和 fresh-thread pickup smoke 均已通过。
 
 个人插件源：
 
@@ -164,6 +172,8 @@ python scripts\prepare_plugin_update.py --apply --apply-cachebuster
 如果需要可复现的版本后缀，可以同时传入 `--cachebuster <token>`。
 
 这个脚本会修改个人插件源目录，但不修改 marketplace，也不修改已安装 plugin cache。完成后仍需要通过 Codex App 或 CLI 重新启用插件、新开线程 smoke，并运行 `python scripts\verify_plugin_install_smoke.py`。
+
+如果这次更新来自本地使用中发现的问题，先确认它已经记录到 `docs/IMPROVEMENT_CANDIDATES.md` 或 `docs/DOGFOOD_LOG.md`。更新完成后记录新 cache 版本、smoke 结果和仍需人工完成的步骤；不要把脚本准备成功当作插件已经启用。
 
 ## 校验命令
 

@@ -22,3 +22,4 @@ description: Structure and govern Codex work for new or ambiguous projects, mult
 ## Finish
 
 Verify result/path; repeat overage lines in all finals. Keep durable changes isolated.
+For workflow-template, install/update, package, or acceptance-record changes, state whether the real acceptance action was run; if not, list it as the next step. Local-use problems may become evidence-bound candidates, but never silently rewrite active plugin files, marketplace entries, or installed cache.

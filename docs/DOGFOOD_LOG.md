@@ -489,3 +489,51 @@ Verification:
 - It reported protocol metrics: `governance codepoints=2484 h2_sections=2`, `research codepoints=1205 h2_sections=2`, and `verification codepoints=2239 h2_sections=2`.
 - It ran `python scripts\verify_plugin_install_smoke.py`; the script selected `0.1.0+codex.20260703085220` and printed `PLUGIN INSTALL SMOKE: PASS`.
 - It reported `git status --short --branch --untracked-files=all` as `## master`.
+
+## DOGFOOD-16 Local-Use Improvement Capture
+
+Date: 2026-07-03
+
+Scope: respond to the local-use signal that the plugin can notice problems during use, but should not silently auto-update itself.
+
+Boundary:
+
+- Allowed files: `docs/IMPROVEMENT_CANDIDATES.md`, `docs/DOCUMENT_INDEX.md`, `docs/TASK_TEMPLATES.md`, `docs/INSTALL_UPDATE.md`, `docs/EXTENSION_ROADMAP.md`, `plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md`, `scripts/prepare_plugin_update.py`, `scripts/test_prepare_plugin_update.py`, and this log.
+- No plugin manifest changes.
+- No marketplace edits.
+- No installed plugin cache edits.
+- Do not run a real reinstall in this dogfood step; stop at repository-verified readiness.
+
+Finding:
+
+- This is an improvement-capture and acceptance-closure gap, not a request for silent self-update.
+- The project already had a candidate-improvement template and update-prep script, but no current candidate ledger tying real-use problems to later updates.
+- The update-prep script did not explicitly remind the user to bind the update to a candidate, dogfood note, or explicit request, then record the new cache version and smoke result.
+- The source plugin finish rule did not explicitly call out the real acceptance action for workflow-template, install/update, package, or acceptance-record changes.
+
+Action:
+
+- Added `docs/IMPROVEMENT_CANDIDATES.md` with a stable record template and DOGFOOD-16 entry.
+- Added the candidate ledger to the document index.
+- Updated the candidate-improvement template to require deciding whether to write the ledger.
+- Updated install/update docs and roadmap to describe the human-in-the-loop candidate-to-update path.
+- Updated the source plugin `SKILL.md` finish rule with a narrow acceptance-closure check.
+- Updated `scripts/prepare_plugin_update.py` and tests so update-prep output reminds users to bind updates to a candidate, dogfood note, or explicit request and record final smoke evidence.
+
+Verification:
+
+- Run focused script tests.
+- Run dry-run update prep.
+- Run installed plugin smoke.
+- Run whitespace diff check.
+
+Follow-up update prep:
+
+- Ran `python scripts\prepare_plugin_update.py --apply --apply-cachebuster`.
+- Personal plugin source was updated to `0.1.0+codex.20260703113254`.
+- The script validated the personal marketplace entry and did not modify marketplace or installed cache.
+- `codex plugin list` and the extensionless packaged `codex` executable both failed with `Access is denied`.
+- Opened the Codex App plugin page and re-enabled the plugin there.
+- `python scripts\verify_plugin_install_smoke.py` then selected installed cache version `0.1.0+codex.20260703113254` and printed `PLUGIN INSTALL SMOKE: PASS`.
+- Fresh-thread pickup smoke thread `019f27c3-179b-7220-a045-15094edcf86a` passed. It reported the visible skill path as `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703113254\skills\codex-project-workflow\SKILL.md`, explicitly rejected old cache `0.1.0+codex.20260703085220` and project `.agents` as evidence paths, and reported protocol metrics `governance codepoints=2484 h2_sections=2`, `research codepoints=1205 h2_sections=2`, `verification codepoints=2239 h2_sections=2`.
+- Remaining gate: none for DOGFOOD-16 install pickup. Future source changes still need source prep, Codex App re-enable, install smoke, fresh-thread pickup smoke, and record update.

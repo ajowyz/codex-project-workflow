@@ -304,9 +304,11 @@ def print_report(
         print("- run python scripts\\prepare_plugin_update.py --apply --apply-cachebuster")
     elif not cachebuster_applied:
         print("- update the target manifest cachebuster before reinstalling")
+    print("- confirm this update is tied to an approved candidate, dogfood note, or explicit user request")
     print("- re-enable or reinstall the plugin through Codex App or CLI")
     print("- open a fresh Codex thread and run install smoke")
     print("- run python scripts\\verify_plugin_install_smoke.py")
+    print("- record the cache version, smoke result, and any remaining manual step")
     print("PLUGIN UPDATE PREP: PASS")
 
 

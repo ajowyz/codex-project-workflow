@@ -14,7 +14,7 @@
 
 - 插件源包：`plugins/codex-project-workflow/`
 - 插件安装 smoke：已通过
-- 已验证的插件 cache 版本：`0.1.0+codex.20260703085220`
+- 已验证的插件 cache 版本：`0.1.0+codex.20260703113254`
 - 可重复 smoke 脚本：`python scripts/verify_plugin_install_smoke.py`
 
 ## 从这里开始

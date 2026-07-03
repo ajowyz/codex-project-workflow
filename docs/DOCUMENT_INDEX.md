@@ -18,6 +18,7 @@
 ## 当前验证和状态记录
 
 - `docs/PLUGIN_INSTALL_SMOKE.md`：已安装插件的 smoke 验收证据。
+- `docs/IMPROVEMENT_CANDIDATES.md`：真实使用中发现的问题和候选改进台账，不代表自动生效规则。
 - `docs/PLUGIN_SOURCE_SCAFFOLD.md`：仓库内插件源包结构和封装状态。
 - `docs/PRODUCTIZATION_STATUS.md`：产品化文档阶段状态。
 - `docs/DOGFOOD_LOG.md`：用本插件审查和优化本项目的记录。

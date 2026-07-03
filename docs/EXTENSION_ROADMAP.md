@@ -78,6 +78,7 @@
 - 已新增默认干跑的插件源包更新准备脚本，用于验证 source、target、required files 和 safety 输出。
 - 脚本只有显式 `--apply` 才复制仓库插件源包到个人插件源目录；不修改 marketplace 或已安装 plugin cache。
 - 脚本已支持 marketplace 预检、target 残留文件防护，以及显式 `--apply --apply-cachebuster` 更新个人插件源 manifest 版本。
+- 已新增 `docs/IMPROVEMENT_CANDIDATES.md`，用于把本地使用中发现的问题先沉淀为可审查候选，再进入更新流程。
 
 可选方向：
 

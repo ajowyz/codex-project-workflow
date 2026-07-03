@@ -96,6 +96,8 @@ class PluginUpdatePrepTests(unittest.TestCase):
         self.assertIn("action: no files copied", text)
         self.assertIn("marketplace file not modified", text)
         self.assertIn("installed plugin cache not modified", text)
+        self.assertIn("approved candidate, dogfood note, or explicit user request", text)
+        self.assertIn("record the cache version, smoke result", text)
         self.assertIn("PLUGIN UPDATE PREP: PASS", text)
         self.assertFalse(target.exists())
 
@@ -144,6 +146,7 @@ class PluginUpdatePrepTests(unittest.TestCase):
         self.assertEqual(manifest["version"], "0.1.0+codex.dogfood-13")
         self.assertIn("marketplace: checked", text)
         self.assertIn("cachebuster: updated target manifest version", text)
+        self.assertIn("approved candidate, dogfood note, or explicit user request", text)
 
     def test_apply_cachebuster_requires_apply(self) -> None:
         source = self.build_source()
