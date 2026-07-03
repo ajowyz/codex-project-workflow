@@ -148,6 +148,7 @@ python "C:\Users\wang yazhou\.codex\skills\.system\plugin-creator\scripts\update
 
 ```powershell
 python scripts\verify_plugin_install_smoke.py
+python -m unittest discover -s scripts -p "test_*.py"
 python -m unittest discover -s .agents\skills\codex-project-workflow\scripts -p test_scripts.py
 git diff --check
 ```

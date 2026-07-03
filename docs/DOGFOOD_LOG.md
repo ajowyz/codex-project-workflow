@@ -185,3 +185,30 @@ Verification:
 - Failure UX was checked with a missing cache root; it printed `PLUGIN INSTALL SMOKE: FAIL`, a reason, and next steps.
 - `python -m unittest discover -s .agents\skills\codex-project-workflow\scripts -p test_scripts.py` passed 49 tests.
 - `git diff --check` reported no whitespace errors; Git only warned that modified files will be normalized from LF to CRLF when touched.
+
+## DOGFOOD-06A Smoke Script Focused Tests
+
+Date: 2026-07-03
+
+Scope: turn DOGFOOD-05's smoke UX changes into a low-risk code exercise with focused tests.
+
+Boundary:
+
+- Allowed files: `scripts/test_verify_plugin_install_smoke.py`, `docs/INSTALL_UPDATE.md`, and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+- Tests use temporary fake plugin cache directories and do not modify the real installed plugin cache.
+
+Action:
+
+- Added focused tests for the plugin install smoke script.
+- Covered success report output, missing cache failure guidance, rejection of mixed install paths, and helper execution from a temporary directory.
+- Added the new test command to the install/update local checks.
+
+Verification:
+
+- `python -m unittest discover -s scripts -p "test_*.py"` passed 4 tests.
+- `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
+- `python -m unittest discover -s .agents\skills\codex-project-workflow\scripts -p test_scripts.py` passed 49 tests.
+- `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
