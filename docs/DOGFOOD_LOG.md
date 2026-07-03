@@ -304,3 +304,34 @@ Verification:
 - Targeted text search found roadmap current-progress, completed exercise, remaining exercise, and P2 gate wording.
 - `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
 - `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
+
+## DOGFOOD-10 Implementation-Path Proof Template Exercise
+
+Date: 2026-07-03
+
+Scope: use the plugin workflow on a real documentation task: calibrate the `docs/TASK_TEMPLATES.md` implementation-path proof prompt against the verification protocol output requirements.
+
+Boundary:
+
+- Allowed files: `docs/TASK_TEMPLATES.md`, `docs/EXTENSION_ROADMAP.md`, and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+
+Finding:
+
+- The existing implementation-path template covered user entry, owner module/function, owner-path edit, bypass risk, result verification, and path verification.
+- It did not explicitly ask for state/persistence changes, result, tests, auxiliary scripts, deviations, or unverified paths.
+- The roadmap still listed implementation-path proof as a remaining P1 exercise.
+
+Action:
+
+- Updated the implementation-path proof template to request state/persistence changes, result verification, tests, auxiliary scripts, deviations, and unverified paths.
+- Added the explicit fallback phrase: `结果已验证，实现路径未验证`.
+- Updated the roadmap to mark the implementation-path proof template exercise complete and keep new-project interview as the remaining recommended P1 exercise.
+
+Verification:
+
+- Targeted text search found the new state/persistence, save path, tests, auxiliary scripts, deviations, unverified-path, fallback-phrase, and roadmap-completion wording.
+- `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
+- `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
