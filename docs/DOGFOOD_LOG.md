@@ -212,3 +212,33 @@ Verification:
 - `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
 - `python -m unittest discover -s .agents\skills\codex-project-workflow\scripts -p test_scripts.py` passed 49 tests.
 - `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
+
+## DOGFOOD-07 Multi-Agent Decision Template Exercise
+
+Date: 2026-07-03
+
+Scope: use the plugin workflow on a real documentation task: calibrate the `docs/TASK_TEMPLATES.md` multi-agent judgment prompt against the governance output requirements.
+
+Boundary:
+
+- Allowed files: `docs/TASK_TEMPLATES.md` and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+- Do not start multi-agent workers; this is a single-agent template exercise.
+
+Finding:
+
+- The existing template asked for Agent roles, boundaries, costs, risks, and fallback.
+- It did not explicitly ask for the governance protocol's decision, recommendation, alternatives, consequences, or work allowed without approval.
+- It also did not explicitly require `proposed` status or state that silence/unrelated approval is not acceptance.
+
+Action:
+
+- Updated the multi-agent judgment template to request decision, recommendation, alternatives, consequences, allowed main-thread work, `proposed` state, and explicit acceptance semantics.
+
+Verification:
+
+- Targeted text search found the new decision, alternative, allowed-work, `proposed`, and explicit-acceptance wording.
+- `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
+- `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
