@@ -273,3 +273,34 @@ Verification:
 - Targeted text search found the new recommendation, evidence-date, failure-mode, reversibility, counterevidence, unresolved-question, next-verification, and no-networking wording.
 - `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
 - `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
+
+## DOGFOOD-09 Extension Roadmap Refresh
+
+Date: 2026-07-03
+
+Scope: update `docs/EXTENSION_ROADMAP.md` after DOGFOOD-05 through DOGFOOD-08 so the roadmap reflects completed P1 work and remaining gates.
+
+Boundary:
+
+- Allowed files: `docs/EXTENSION_ROADMAP.md` and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+
+Finding:
+
+- The roadmap still listed P1 template, smoke, and real-project exercise work as generic future actions.
+- It did not reflect completed DOGFOOD-05 smoke UX, DOGFOOD-06A smoke focused tests, DOGFOOD-07 multi-agent judgment template calibration, or DOGFOOD-08 professional-comparison template calibration.
+- It also did not state what should remain before moving to P2 automation or candidate mechanisms.
+
+Action:
+
+- Added current-progress bullets under P1 template work and update/smoke stability.
+- Split real-project exercises into completed and remaining items.
+- Added a P2 entry gate: complete at least one new-project interview or implementation-path proof exercise before moving on.
+
+Verification:
+
+- Targeted text search found roadmap current-progress, completed exercise, remaining exercise, and P2 gate wording.
+- `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
+- `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
