@@ -365,3 +365,33 @@ Verification:
 - Targeted text search found target-user, scenario, pain-point, non-goal, completion-standard, deliverable, minimal-question, roadmap-completion, and install/update automation wording.
 - `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
 - `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
+
+## DOGFOOD-12 Plugin Update Prep Script
+
+Date: 2026-07-03
+
+Scope: start P2 install/update automation with a conservative repository script that validates and optionally copies the plugin source package.
+
+Boundary:
+
+- Allowed files: `scripts/prepare_plugin_update.py`, `scripts/test_prepare_plugin_update.py`, `docs/INSTALL_UPDATE.md`, `docs/EXTENSION_ROADMAP.md`, and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+- Do not run `--apply` in this dogfood step; tests may copy only temporary fake plugin packages.
+
+Action:
+
+- Added `scripts/prepare_plugin_update.py`.
+- Default mode is dry-run: validate source package, report source/target/required files, state safety boundaries, and print next steps.
+- `--apply` copies the repository plugin source package to the personal plugin source directory but still does not modify marketplace or installed plugin cache.
+- Added focused tests using temporary fake plugin packages.
+- Updated install/update docs and roadmap with the new script.
+
+Verification:
+
+- `python scripts\prepare_plugin_update.py` passed in dry-run mode and printed `PLUGIN UPDATE PREP: PASS`; no files were copied.
+- `python -m unittest discover -s scripts -p "test_*.py"` passed 8 tests.
+- `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
+- `python -m unittest discover -s .agents\skills\codex-project-workflow\scripts -p test_scripts.py` passed 49 tests.
+- `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.

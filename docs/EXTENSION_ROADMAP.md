@@ -73,9 +73,13 @@
 
 目标：减少手工复制和 cachebuster 操作。
 
+当前进展：
+
+- 已新增默认干跑的插件源包更新准备脚本，用于验证 source、target、required files 和 safety 输出。
+- 脚本只有显式 `--apply` 才复制仓库插件源包到个人插件源目录；不修改 marketplace 或已安装 plugin cache。
+
 可选方向：
 
-- 写一个只复制仓库插件源包到个人插件目录的脚本。
 - 写一个更新 cachebuster 并提示新线程 smoke 的脚本。
 - 不自动修改 marketplace 以外的敏感配置。
 

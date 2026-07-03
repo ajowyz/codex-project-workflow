@@ -136,6 +136,20 @@ codex://plugins/codex-project-workflow?marketplacePath=C%3A%5CUsers%5Cwang%20yaz
 6. 运行 `python scripts\verify_plugin_install_smoke.py`。
 7. 把结果记录到 `docs/PLUGIN_INSTALL_SMOKE.md`。
 
+可以先用仓库脚本做干跑计划：
+
+```powershell
+python scripts\prepare_plugin_update.py
+```
+
+确认 source、target、required files 和 safety 输出无误后，再显式复制到个人插件源目录：
+
+```powershell
+python scripts\prepare_plugin_update.py --apply
+```
+
+这个脚本不修改 marketplace，也不修改已安装 plugin cache。复制后仍需要更新 cachebuster、重新启用插件、新开线程 smoke，并运行 `python scripts\verify_plugin_install_smoke.py`。
+
 当前本机 cachebuster 更新命令：
 
 ```powershell
@@ -148,6 +162,7 @@ python "C:\Users\wang yazhou\.codex\skills\.system\plugin-creator\scripts\update
 
 ```powershell
 python scripts\verify_plugin_install_smoke.py
+python scripts\prepare_plugin_update.py
 python -m unittest discover -s scripts -p "test_*.py"
 python -m unittest discover -s .agents\skills\codex-project-workflow\scripts -p test_scripts.py
 git diff --check
