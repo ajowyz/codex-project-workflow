@@ -42,6 +42,16 @@ python scripts/verify_plugin_install_smoke.py
 
 The script verifies that `SKILL.md`, `scripts/read_reference.py`, and `references/{governance,research,verification}.md` are all under the same installed plugin cache version directory, then runs the helper for all three references from a temporary directory so the project `.agents` fallback cannot satisfy the check.
 
+Expected successful output includes:
+
+- `PLUGIN INSTALL SMOKE`
+- selected cache version and installed paths
+- `fallback guard: helper is executed from a temporary directory`
+- metrics for `governance`, `research`, and `verification`
+- `PLUGIN INSTALL SMOKE: PASS`
+
+Failures should print `PLUGIN INSTALL SMOKE: FAIL`, a reason, and next steps.
+
 ## Historical Note
 
 The direct command below failed in the original desktop thread because the packaged Codex CLI executable returned `Access is denied`:
@@ -54,5 +64,5 @@ That was a local executable permission issue, not a plugin package validation fa
 
 ## Remaining Gates
 
-- Prepare final user-facing docs and task templates.
-- Decide the next extension path: install/update automation, better first-run smoke UX, or broader real-project exercises.
+- Continue real-project exercises.
+- Consider install/update automation after another smoke or package update cycle.

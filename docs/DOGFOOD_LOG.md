@@ -152,3 +152,36 @@ Fresh-thread smoke:
 - The minimal smoke recovered that DOGFOOD-04A added the long-conversation/fresh-thread handoff docs and DOGFOOD-04B added the verification-loop reminder.
 - Evidence reported by the smoke: `docs/DOGFOOD_LOG.md` has DOGFOOD-04A and DOGFOOD-04B sections; `README.md` points to `docs/DOCUMENT_INDEX.md`; `docs/DOCUMENT_INDEX.md` lists `docs/DOGFOOD_LOG.md` as a current verification/status record; git modified files are `docs/DOGFOOD_LOG.md`, `docs/PRODUCT_MANUAL.md`, `docs/TASK_TEMPLATES.md`, `plugins/codex-project-workflow/README.md`, and `plugins/codex-project-workflow/docs/USER_GUIDE.md`.
 - Smoke risk: the minimal smoke checked only the requested read-only sources and git status/name-status; it did not independently inspect every modified target document beyond the DOGFOOD log record.
+
+## DOGFOOD-05 Plugin Smoke UX
+
+Date: 2026-07-03
+
+Scope: improve the user-facing output and documentation around `scripts/verify_plugin_install_smoke.py`.
+
+Boundary:
+
+- Allowed files: `scripts/verify_plugin_install_smoke.py`, `docs/PLUGIN_INSTALL_SMOKE.md`, `docs/INSTALL_UPDATE.md`, and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+
+Finding:
+
+- The smoke script already verified the important path facts, but the output was terse.
+- Success output did not explicitly frame itself as an acceptance report.
+- Failure messages did not consistently include next-step guidance.
+- The docs described what the script checks, but did not show what a user should look for in the output.
+
+Action:
+
+- Updated the smoke script to print a clear `PLUGIN INSTALL SMOKE` report, selected cache version, installed paths, fallback guard, reference metrics, and `PLUGIN INSTALL SMOKE: PASS`.
+- Updated failure paths to print `PLUGIN INSTALL SMOKE: FAIL`, a reason, and next steps.
+- Updated install/smoke docs with expected successful output and failure-reading guidance.
+
+Verification:
+
+- `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
+- Failure UX was checked with a missing cache root; it printed `PLUGIN INSTALL SMOKE: FAIL`, a reason, and next steps.
+- `python -m unittest discover -s .agents\skills\codex-project-workflow\scripts -p test_scripts.py` passed 49 tests.
+- `git diff --check` reported no whitespace errors; Git only warned that modified files will be normalized from LF to CRLF when touched.

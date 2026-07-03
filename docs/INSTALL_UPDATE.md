@@ -79,6 +79,15 @@ python scripts\verify_plugin_install_smoke.py
 
 这个脚本会确认 `SKILL.md`、`scripts/read_reference.py` 和三份 `references/*.md` 都在同一个已安装插件 cache 版本目录下，并从临时目录调用 helper，避免误走当前项目 `.agents` fallback。
 
+通过时应看到 `PLUGIN INSTALL SMOKE: PASS`，并确认输出里有：
+
+- selected cache version
+- skill、helper、references 三个 installed paths
+- `fallback guard: helper is executed from a temporary directory`
+- governance、research、verification 三组 metrics
+
+失败时不要只看退出码；同时查看 `PLUGIN INSTALL SMOKE: FAIL` 后面的 reason 和 next steps。
+
 ## 当前本机状态
 
 当前这台机器上的 `codex-project-workflow` 已通过 Codex App 启用，并在新线程完成安装 smoke。
