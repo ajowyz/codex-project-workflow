@@ -130,7 +130,7 @@ codex://plugins/codex-project-workflow?marketplacePath=C%3A%5CUsers%5Cwang%20yaz
 
 1. 验证仓库源包。
 2. 把仓库源包复制到个人插件源目录。
-3. 使用 `update_plugin_cachebuster.py` 更新个人插件 manifest 的版本后缀。
+3. 更新个人插件源 manifest 的 cachebuster 后缀。
 4. 通过 Codex App 或 CLI 重装/启用。
 5. 新开线程 smoke。
 6. 运行 `python scripts\verify_plugin_install_smoke.py`。
@@ -142,19 +142,28 @@ codex://plugins/codex-project-workflow?marketplacePath=C%3A%5CUsers%5Cwang%20yaz
 python scripts\prepare_plugin_update.py
 ```
 
-确认 source、target、required files 和 safety 输出无误后，再显式复制到个人插件源目录：
+输出里应确认：
+
+- `marketplace: checked`
+- `target stale-file guard: ok`
+- source 和 target manifest version 符合预期
+- safety 说明 marketplace 和 installed plugin cache 不会被修改
+
+如需先预览下一版 cachebuster，可以传入固定 token：
 
 ```powershell
-python scripts\prepare_plugin_update.py --apply
+python scripts\prepare_plugin_update.py --cachebuster DOGFOOD-13
 ```
 
-这个脚本不修改 marketplace，也不修改已安装 plugin cache。复制后仍需要更新 cachebuster、重新启用插件、新开线程 smoke，并运行 `python scripts\verify_plugin_install_smoke.py`。
-
-当前本机 cachebuster 更新命令：
+确认无误后，再显式复制到个人插件源目录并更新目标 manifest 版本：
 
 ```powershell
-python "C:\Users\wang yazhou\.codex\skills\.system\plugin-creator\scripts\update_plugin_cachebuster.py" "C:\Users\wang yazhou\plugins\codex-project-workflow"
+python scripts\prepare_plugin_update.py --apply --apply-cachebuster
 ```
+
+如果需要可复现的版本后缀，可以同时传入 `--cachebuster <token>`。
+
+这个脚本会修改个人插件源目录，但不修改 marketplace，也不修改已安装 plugin cache。完成后仍需要通过 Codex App 或 CLI 重新启用插件、新开线程 smoke，并运行 `python scripts\verify_plugin_install_smoke.py`。
 
 ## 校验命令
 

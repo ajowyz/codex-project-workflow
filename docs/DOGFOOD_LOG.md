@@ -395,3 +395,37 @@ Verification:
 - `python scripts\verify_plugin_install_smoke.py` passed and printed `PLUGIN INSTALL SMOKE: PASS`.
 - `python -m unittest discover -s .agents\skills\codex-project-workflow\scripts -p test_scripts.py` passed 49 tests.
 - `git diff --check` reported no whitespace errors; Git only warned that modified docs will be normalized from LF to CRLF when touched.
+
+## DOGFOOD-13 Real Update Readiness
+
+Date: 2026-07-03
+
+Scope: advance the P2 install/update automation from source-copy prep to a state where a real plugin update can be prepared with one explicit repository command before Codex App or CLI reinstall.
+
+Boundary:
+
+- Allowed files: `scripts/prepare_plugin_update.py`, `scripts/test_prepare_plugin_update.py`, `docs/INSTALL_UPDATE.md`, `docs/PLUGIN_INSTALL_SMOKE.md`, `docs/EXTENSION_ROADMAP.md`, and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No plugin manifest, marketplace, installed cache, Hook, MCP, app connector, or custom Agent manifest changes.
+- Do not run a real reinstall in this dogfood step; stop at repository-verified readiness.
+
+Finding:
+
+- DOGFOOD-12 could copy the repository plugin source to the personal plugin source, but cachebuster update still depended on a separate manual command.
+- The dry-run report did not yet validate the personal marketplace entry or guard against stale files left in the target plugin source.
+- Without those checks, a real reinstall could use the wrong source path or carry stale target files forward.
+
+Action:
+
+- Extended `scripts/prepare_plugin_update.py` to validate the personal marketplace entry, report source and target manifest versions, and reject target files that are not present in the repository source package.
+- Added explicit `--apply --apply-cachebuster` support to copy the repository plugin source and rewrite only the personal plugin source manifest version with a `+codex.<token>` suffix.
+- Kept marketplace and installed plugin cache read-only.
+- Added focused tests for marketplace validation, cachebuster application, missing `--apply`, and stale target file rejection.
+- Updated install/update docs, install smoke notes, and the extension roadmap.
+
+Verification:
+
+- `python scripts\prepare_plugin_update.py` passed in dry-run mode and printed `marketplace: checked`, `target stale-file guard: ok`, and `PLUGIN UPDATE PREP: PASS`; no files were copied.
+- `python scripts\prepare_plugin_update.py --cachebuster DOGFOOD-13` passed in dry-run mode and printed planned version `0.1.0+codex.dogfood-13`; no files were copied.
+- `python -m unittest discover -s scripts -p "test_*.py"` passed 12 tests.

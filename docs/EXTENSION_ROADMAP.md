@@ -77,11 +77,12 @@
 
 - 已新增默认干跑的插件源包更新准备脚本，用于验证 source、target、required files 和 safety 输出。
 - 脚本只有显式 `--apply` 才复制仓库插件源包到个人插件源目录；不修改 marketplace 或已安装 plugin cache。
+- 脚本已支持 marketplace 预检、target 残留文件防护，以及显式 `--apply --apply-cachebuster` 更新个人插件源 manifest 版本。
 
 可选方向：
 
-- 写一个更新 cachebuster 并提示新线程 smoke 的脚本。
-- 不自动修改 marketplace 以外的敏感配置。
+- 运行一次真实 apply、重新启用插件、新线程 smoke，并把新 cache 版本记录到 `docs/PLUGIN_INSTALL_SMOKE.md`。
+- 不自动修改 marketplace、已安装 cache 或其他敏感配置。
 
 ### P2 多 Agent 使用校准
 

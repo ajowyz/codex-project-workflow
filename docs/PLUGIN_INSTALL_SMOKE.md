@@ -64,5 +64,6 @@ That was a local executable permission issue, not a plugin package validation fa
 
 ## Remaining Gates
 
-- Continue real-project exercises.
-- Consider install/update automation after another smoke or package update cycle.
+- The current verified installed cache version is still `0.1.0+codex.20260622112058`.
+- Repository update prep is ready: `python scripts\prepare_plugin_update.py --apply --apply-cachebuster` can copy the source package to the personal plugin source and update the target manifest cachebuster.
+- A future real update still needs Codex App or CLI re-enable, a fresh-thread smoke, and a new installed cache version recorded here.
