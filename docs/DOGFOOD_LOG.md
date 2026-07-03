@@ -429,3 +429,33 @@ Verification:
 - `python scripts\prepare_plugin_update.py` passed in dry-run mode and printed `marketplace: checked`, `target stale-file guard: ok`, and `PLUGIN UPDATE PREP: PASS`; no files were copied.
 - `python scripts\prepare_plugin_update.py --cachebuster DOGFOOD-13` passed in dry-run mode and printed planned version `0.1.0+codex.dogfood-13`; no files were copied.
 - `python -m unittest discover -s scripts -p "test_*.py"` passed 12 tests.
+
+## DOGFOOD-14 Real Plugin Install Completion
+
+Date: 2026-07-03
+
+Scope: complete the real local plugin update after DOGFOOD-13 made the repository update path ready.
+
+Boundary:
+
+- Allowed files: `README.md`, `docs/INSTALL_UPDATE.md`, `docs/PLUGIN_INSTALL_SMOKE.md`, and this log.
+- No active skill rule changes.
+- No reference protocol changes.
+- No repository plugin manifest changes.
+- No manual marketplace edits.
+- Do not manually edit installed plugin cache.
+
+Action:
+
+- Ran `python scripts\prepare_plugin_update.py --apply --apply-cachebuster`.
+- The personal plugin source manifest was updated to `0.1.0+codex.20260703085220`.
+- The script validated the personal marketplace entry and did not modify marketplace or installed cache.
+- Tried `codex plugin add codex-project-workflow@personal`; it failed with `codex.exe: Access is denied`.
+- Used Codex App plugin UI as the reinstall path.
+
+Verification:
+
+- `python scripts\verify_plugin_install_smoke.py` passed and selected installed cache version `0.1.0+codex.20260703085220`.
+- Installed skill, helper, and references all came from `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703085220`.
+- `governance`, `research`, and `verification` metrics matched the expected installed reference outputs.
+- Fresh-thread pickup should still be checked in a new Codex thread when validating thread startup behavior.

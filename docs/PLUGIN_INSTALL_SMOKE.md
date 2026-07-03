@@ -1,18 +1,19 @@
 # Plugin Install Smoke
 
-Date: 2026-06-22
+Date: 2026-07-03
 
 ## Status
 
 Passed.
 
-The `codex-project-workflow` plugin was enabled through Codex App and verified in a fresh thread. The fresh-thread run loaded the plugin cache copy instead of the project-local `.agents` copy.
+The `codex-project-workflow` plugin was updated through the personal plugin source and Codex App, then verified with the repository install smoke script. The installed cache copy loaded instead of the project-local `.agents` copy.
 
 ## Verified Installed Source
 
-- Skill path: `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260622112058\skills\codex-project-workflow\SKILL.md`
-- Helper path: `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260622112058\skills\codex-project-workflow\scripts\read_reference.py`
-- References path: `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260622112058\skills\codex-project-workflow\references`
+- Version: `0.1.0+codex.20260703085220`
+- Skill path: `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703085220\skills\codex-project-workflow\SKILL.md`
+- Helper path: `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703085220\skills\codex-project-workflow\scripts\read_reference.py`
+- References path: `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703085220\skills\codex-project-workflow\references`
 - Project-local copy present but not used for this smoke: `D:\project\efficiently use codex\.agents\skills\codex-project-workflow\SKILL.md`
 
 ## Prepared Assets
@@ -22,11 +23,11 @@ The `codex-project-workflow` plugin was enabled through Codex App and verified i
 - Marketplace name: `personal`
 - Plugin install target: `codex-project-workflow@personal`
 
-## Fresh-Thread Checks
+## Installed Cache Checks
 
-- The fresh thread discovered and loaded `codex-project-workflow`.
-- The loaded skill came from the plugin cache path.
-- The helper came from the plugin cache path.
+- The repository smoke script selected installed cache version `0.1.0+codex.20260703085220`.
+- The skill path came from the plugin cache path.
+- The helper path came from the plugin cache path.
 - The helper reads plugin-local `references/` first through `Path(__file__).resolve().parent.parent / "references" / name`.
 - `governance` loaded `Execution Rules` and `Output Requirements`; metrics: `codepoints=2484 h2_sections=2`.
 - `research` loaded `Execution Rules` and `Output Requirements`; metrics: `codepoints=1205 h2_sections=2`.
@@ -64,6 +65,5 @@ That was a local executable permission issue, not a plugin package validation fa
 
 ## Remaining Gates
 
-- The current verified installed cache version is still `0.1.0+codex.20260622112058`.
-- Repository update prep is ready: `python scripts\prepare_plugin_update.py --apply --apply-cachebuster` can copy the source package to the personal plugin source and update the target manifest cachebuster.
-- A future real update still needs Codex App or CLI re-enable, a fresh-thread smoke, and a new installed cache version recorded here.
+- Open a fresh Codex thread when validating new-thread pickup behavior after this update.
+- For the next source change, repeat `python scripts\prepare_plugin_update.py --apply --apply-cachebuster`, Codex App re-enable, and `python scripts\verify_plugin_install_smoke.py`.

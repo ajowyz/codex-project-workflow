@@ -90,18 +90,18 @@ python scripts\verify_plugin_install_smoke.py
 
 ## 当前本机状态
 
-当前这台机器上的 `codex-project-workflow` 已通过 Codex App 启用，并在新线程完成安装 smoke。
+当前这台机器上的 `codex-project-workflow` 已通过 Codex App 启用，并通过安装 smoke 脚本复验。
 
 已验证版本：
 
 ```text
-0.1.0+codex.20260622112058
+0.1.0+codex.20260703085220
 ```
 
 已验证插件 cache 路径：
 
 ```text
-C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260622112058
+C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703085220
 ```
 
 个人插件源：
