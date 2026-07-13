@@ -17,7 +17,7 @@
 
 ## 当前状态
 
-- 当前仓库位于 `D:\project\codex\codex_project_workflow`；`master`、HEAD 与本地 `origin/master` 均为 `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`，迁移验收后的工作树干净。
+- 当前仓库位于 `D:\project\codex\codex_project_workflow`；迁移验收输入快照为 `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`，当时工作树干净且本地 `master` 与本地 `origin/master` 对齐。后续提交的实时 HEAD 与分支同步状态以 Git 命令输出为准，不在计划文档中固化为当前值。
 - E 盘完整 bundle 的 SHA-256 为 `AFE706473E13D31ED9F22ECD1D94DF2991C299F927D1088A0A59FA1F5C0A5B17`，`git bundle verify` 通过，包含完整历史和 80 个本地分支引用；历史分支未导入正式仓库。
 - personal marketplace 位于 `C:\Users\w\.agents\plugins\marketplace.json`，个人插件源位于 `C:\Users\w\plugins\codex-project-workflow`。
 - 当前 installed cache 版本为 `0.1.0+codex.20260712082233`；新任务 `019f5979-2a17-7c80-871e-8cecbcfa3c4e` 已确认技能来自新电脑 installed cache。
@@ -319,7 +319,7 @@
 ## Update 2026-07-13 New Computer Migration Acceptance
 
 - Current stage: new-computer migration and runtime acceptance passed.
-- Repository evidence: `D:\project\codex\codex_project_workflow` is on clean `master`; HEAD and local `origin/master` are both `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`.
+- Repository evidence: the migration-acceptance input snapshot in `D:\project\codex\codex_project_workflow` was a clean `master` at `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`, aligned with the local `origin/master` tracking ref at that time. Later documentation commits are outside that snapshot; live HEAD and branch divergence must be read from Git rather than treated as constants in this file.
 - Backup evidence: the E-drive full bundle matched SHA-256 `AFE706473E13D31ED9F22ECD1D94DF2991C299F927D1088A0A59FA1F5C0A5B17`, verified as complete history, and retained 80 local branch refs without importing them into the formal clone.
 - Plugin evidence: personal installed cache version `0.1.0+codex.20260712082233` loaded in fresh thread `019f5979-2a17-7c80-871e-8cecbcfa3c4e`; repository install smoke passed; protocol metrics matched; 7 core installed files matched the repository plugin source by SHA-256.
 - Scope: migration and documentation-state synchronization only; no plugin rule, source package, marketplace, installed cache, historical evaluation evidence, or Git history was changed by this documentation update.

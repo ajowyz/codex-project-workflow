@@ -132,7 +132,7 @@ codex://plugins/codex-project-workflow?marketplacePath=C%3A%5CUsers%5Cw%5C.agent
 
 新电脑 fresh-thread pickup smoke 任务为 `019f5979-2a17-7c80-871e-8cecbcfa3c4e`。该任务确认技能来自上述 installed cache，三份协议 metrics 分别为 governance `2484/2`、research `1205/2`、verification `2239/2`，仓库 smoke 输出 `PLUGIN INSTALL SMOKE: PASS`，且 7 个核心文件与仓库插件源包 SHA-256 一致。
 
-当前仓库路径为 `D:\project\codex\codex_project_workflow`；验收时 `master`、HEAD 与本地 `origin/master` 均为 `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`，工作树干净。验收未联网，因此这里的 `origin/master` 指本地远端跟踪引用。
+当前仓库路径为 `D:\project\codex\codex_project_workflow`；迁移验收输入快照为 `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`，当时工作树干净，且本地 `master` 与本地 `origin/master` 跟踪引用对齐。验收未联网；后续提交的实时 HEAD、ahead/behind 和服务器远端状态应分别用 Git 状态命令与明确的联网核对确认，不在本文档中硬编码为当前值。
 
 环境备注：普通 PowerShell 的裸 `python` 当前命中无效的 Microsoft Store 别名；Codex bundled Python 可以正常运行 smoke。CLI 的 `Access is denied` 和裸 `python` 入口问题都不是插件包校验失败。
 
