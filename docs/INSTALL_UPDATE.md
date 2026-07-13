@@ -90,18 +90,18 @@ python scripts\verify_plugin_install_smoke.py
 
 ## 当前本机状态
 
-当前这台机器上的 `codex-project-workflow` 已通过 Codex App 启用，并通过安装 smoke 脚本复验。
+当前新电脑上的 `codex-project-workflow` 已通过 Codex App 启用，并于 2026-07-13 通过安装 smoke 和 fresh-thread pickup smoke。
 
 已验证版本：
 
 ```text
-0.1.0+codex.20260703113254
+0.1.0+codex.20260712082233
 ```
 
 已验证插件 cache 路径：
 
 ```text
-C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703113254
+C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260712082233
 ```
 
 最近一次更新说明：
@@ -110,27 +110,31 @@ C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+
 python scripts\prepare_plugin_update.py --apply --apply-cachebuster
 ```
 
-该命令把个人插件源准备到 `0.1.0+codex.20260703113254`。当前 `codex` CLI 在 WindowsApps 包目录下返回 `Access is denied`；本次通过 Codex App 插件页重新启用后，安装 smoke 和 fresh-thread pickup smoke 均已通过。
+该命令把个人插件源准备到 `0.1.0+codex.20260712082233`。当前 `codex` CLI 在 WindowsApps 包目录下返回 `Access is denied`；本次通过 Codex App 插件页启用后，安装 smoke 和 fresh-thread pickup smoke 均已通过。
 
 个人插件源：
 
 ```text
-C:\Users\wang yazhou\plugins\codex-project-workflow
+C:\Users\w\plugins\codex-project-workflow
 ```
 
 个人 marketplace：
 
 ```text
-C:\Users\wang yazhou\.agents\plugins\marketplace.json
+C:\Users\w\.agents\plugins\marketplace.json
 ```
 
 Codex App 插件页：
 
 ```text
-codex://plugins/codex-project-workflow?marketplacePath=C%3A%5CUsers%5Cwang%20yazhou%5C.agents%5Cplugins%5Cmarketplace.json
+codex://plugins/codex-project-workflow?marketplacePath=C%3A%5CUsers%5Cw%5C.agents%5Cplugins%5Cmarketplace.json
 ```
 
-历史备注：在本项目的一个桌面线程中，打包的 `codex` CLI 曾返回 `Access is denied`。这不是插件包校验失败；启用插件页和新线程 smoke 已经完成安装验证。
+新电脑 fresh-thread pickup smoke 任务为 `019f5979-2a17-7c80-871e-8cecbcfa3c4e`。该任务确认技能来自上述 installed cache，三份协议 metrics 分别为 governance `2484/2`、research `1205/2`、verification `2239/2`，仓库 smoke 输出 `PLUGIN INSTALL SMOKE: PASS`，且 7 个核心文件与仓库插件源包 SHA-256 一致。
+
+当前仓库路径为 `D:\project\codex\codex_project_workflow`；验收时 `master`、HEAD 与本地 `origin/master` 均为 `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`，工作树干净。验收未联网，因此这里的 `origin/master` 指本地远端跟踪引用。
+
+环境备注：普通 PowerShell 的裸 `python` 当前命中无效的 Microsoft Store 别名；Codex bundled Python 可以正常运行 smoke。CLI 的 `Access is denied` 和裸 `python` 入口问题都不是插件包校验失败。
 
 ## 更新插件源包
 

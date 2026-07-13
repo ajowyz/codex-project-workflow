@@ -1,20 +1,20 @@
 # Plugin Install Smoke
 
-Date: 2026-07-03
+Date: 2026-07-13
 
 ## Status
 
 Passed.
 
-The `codex-project-workflow` plugin was updated through the personal plugin source and Codex App, then verified with the repository install smoke script. The installed cache copy loaded instead of the project-local `.agents` copy.
+The `codex-project-workflow` plugin was migrated to the new computer through the personal plugin source and Codex App, then verified with the repository install smoke script and a fresh-thread pickup. The installed cache copy loaded instead of the project-local `.agents` copy.
 
 ## Verified Installed Source
 
-- Version: `0.1.0+codex.20260703113254`
-- Skill path: `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703113254\skills\codex-project-workflow\SKILL.md`
-- Helper path: `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703113254\skills\codex-project-workflow\scripts\read_reference.py`
-- References path: `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703113254\skills\codex-project-workflow\references`
-- Project-local copy present but not used for this smoke: `D:\project\efficiently use codex\.agents\skills\codex-project-workflow\SKILL.md`
+- Version: `0.1.0+codex.20260712082233`
+- Skill path: `C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260712082233\skills\codex-project-workflow\SKILL.md`
+- Helper path: `C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260712082233\skills\codex-project-workflow\scripts\read_reference.py`
+- References path: `C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260712082233\skills\codex-project-workflow\references`
+- Project-local copy present but not used for this smoke: `D:\project\codex\codex_project_workflow\.agents\skills\codex-project-workflow\SKILL.md`
 
 ## Prepared Assets
 
@@ -25,24 +25,26 @@ The `codex-project-workflow` plugin was updated through the personal plugin sour
 
 ## Installed Cache Checks
 
-- The repository smoke script selected installed cache version `0.1.0+codex.20260703113254`.
+- The repository smoke script selected installed cache version `0.1.0+codex.20260712082233`.
 - The skill path came from the plugin cache path.
 - The helper path came from the plugin cache path.
 - The helper reads plugin-local `references/` first through `Path(__file__).resolve().parent.parent / "references" / name`.
+- The installed cache and repository plugin source matched SHA-256 for the 7 core files: skill, helper, three references, plugin README, and user guide.
 - `governance` loaded `Execution Rules` and `Output Requirements`; metrics: `codepoints=2484 h2_sections=2`.
 - `research` loaded `Execution Rules` and `Output Requirements`; metrics: `codepoints=1205 h2_sections=2`.
 - `verification` loaded `Execution Rules` and `Output Requirements`; metrics: `codepoints=2239 h2_sections=2`.
 
 ## Fresh-Thread Pickup Checks
 
-- Fresh-thread smoke thread: `019f27c3-179b-7220-a045-15094edcf86a`.
+- Fresh-thread smoke thread: `019f5979-2a17-7c80-871e-8cecbcfa3c4e`.
 - Thread status: completed and idle.
-- The fresh thread reported that the visible `codex-project-workflow` skill came from installed plugin cache version `0.1.0+codex.20260703113254`.
-- The reported skill path was `C:\Users\wang yazhou\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260703113254\skills\codex-project-workflow\SKILL.md`.
-- The fresh thread reported that helper execution and path evidence came from installed plugin cache, not the old `0.1.0+codex.20260703085220` cache and not the project `.agents` copy.
-- The fresh thread also ran `python scripts\verify_plugin_install_smoke.py`; it passed with `PLUGIN INSTALL SMOKE: PASS`.
+- The fresh thread reported that the visible `codex-project-workflow` skill came from installed plugin cache version `0.1.0+codex.20260712082233`.
+- The reported skill path was `C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260712082233\skills\codex-project-workflow\SKILL.md`.
+- The fresh thread reported that helper execution and path evidence came from installed plugin cache, not the previous computer path and not the project `.agents` copy.
+- The fresh thread ran the repository smoke with the new computer's Codex bundled Python; it passed with `PLUGIN INSTALL SMOKE: PASS`.
 - Fresh-thread protocol metrics matched the installed cache check: `governance` `codepoints=2484 h2_sections=2`, `research` `codepoints=1205 h2_sections=2`, and `verification` `codepoints=2239 h2_sections=2`.
-- Fresh-thread git status showed the existing uncommitted project changes and was unchanged by the read-only smoke.
+- Fresh-thread Git status showed a clean `master`; HEAD and local `origin/master` were both `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`, with `0/0` divergence.
+- The smoke remained read-only and left the worktree clean.
 
 ## Repeatable Check
 
@@ -51,6 +53,8 @@ Run this read-only check after reinstalling or updating the plugin:
 ```text
 python scripts/verify_plugin_install_smoke.py
 ```
+
+On the current new computer, bare `python` in an ordinary PowerShell session may resolve to an invalid Microsoft Store alias. Use an available Python 3 executable, including the Codex bundled Python used by the verified smoke, before treating a command-launch failure as a plugin failure.
 
 The script verifies that `SKILL.md`, `scripts/read_reference.py`, and `references/{governance,research,verification}.md` are all under the same installed plugin cache version directory, then runs the helper for all three references from a temporary directory so the project `.agents` fallback cannot satisfy the check.
 
@@ -74,7 +78,9 @@ codex plugin add codex-project-workflow@personal
 
 That was a local executable permission issue, not a plugin package validation failure. Enabling through Codex App and verifying in a fresh thread completed the install smoke.
 
-## DOGFOOD-16 Source Update Completion
+## Historical DOGFOOD-16 Source Update on the Previous Computer
+
+This section preserves the previous computer's 2026-07-03 evidence. It is not the current new-computer installed state.
 
 After DOGFOOD-16, the repository source was copied to the personal plugin source with:
 

@@ -1,14 +1,14 @@
 # 项目计划与当前状态
 
-> 执行状态：执行中  
-> 更新时间：2026-06-20 21:47 +08:00
-> 当前阶段：`CAND-20260620-10` 定点桌面回归已收集并评估；E32/E19 通过，E35 因额外网络查询判定失败，候选保持未激活
+> 执行状态：新电脑迁移完成，正常运行
+> 更新时间：2026-07-13 +08:00
+> 当前阶段：仓库、bundle、personal marketplace、个人插件源、installed cache、安装 smoke 与 fresh-thread pickup smoke 已完成迁移验收
 > 最新审计：CONFIRM-20260611-01
 > 预登记审计：无
 
 ## 当前目标
 
-实现并验证仓库级 `codex-project-workflow` 技能原型，证明薄核心、按需协议和离线评估可以在 Codex 桌面应用中工作。
+在新电脑上稳定使用已产品化的 `codex-project-workflow` 插件，并只把有真实使用证据的改进沉淀为候选。
 
 ## 关键约束
 
@@ -16,6 +16,15 @@
 - 新增机制必须可测量、可降级并具有退出条件。
 
 ## 当前状态
+
+- 当前仓库位于 `D:\project\codex\codex_project_workflow`；`master`、HEAD 与本地 `origin/master` 均为 `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`，迁移验收后的工作树干净。
+- E 盘完整 bundle 的 SHA-256 为 `AFE706473E13D31ED9F22ECD1D94DF2991C299F927D1088A0A59FA1F5C0A5B17`，`git bundle verify` 通过，包含完整历史和 80 个本地分支引用；历史分支未导入正式仓库。
+- personal marketplace 位于 `C:\Users\w\.agents\plugins\marketplace.json`，个人插件源位于 `C:\Users\w\plugins\codex-project-workflow`。
+- 当前 installed cache 版本为 `0.1.0+codex.20260712082233`；新任务 `019f5979-2a17-7c80-871e-8cecbcfa3c4e` 已确认技能来自新电脑 installed cache。
+- `python scripts\verify_plugin_install_smoke.py` 的等价 bundled-Python 调用输出 `PLUGIN INSTALL SMOKE: PASS`；governance、research、verification metrics 分别为 `2484/2`、`1205/2`、`2239/2`。
+- installed cache 与仓库插件源包的 7 个核心文件 SHA-256 全部一致。
+
+## 历史状态记录
 
 - `CALIBRATION-20260620-04` 第一批四条线程已完成收集：E02 `low_risk_listing`、E02 `download` 和 E16 `default` 行为有效；E12 `state_matrix` 因提示词没有暴露 evaluator-supplied workspace，线程转而读取仓库内评估夹具，被收集器标记为 `evaluator_oracle_access`，本批次暂停扩大投放。
 - E12 夹具提示已改为显式包含 `{workspace}` 和 `{workspace}/scenarios`，脚本回归已覆盖该边界；`CALIBRATION-20260620-04-E12RERUN` 单项重跑已收集，`oracle_access_detected=false`、`prompt_integrity.valid=true`、`changed_files=[]`，可作为原 E12 无效样本的替代结果。
@@ -200,17 +209,17 @@
 - 提交 `65f3ff2` 保存去污染夹具、诊断结果、候选 v4 和 14 项回归；从该提交创建干净基线 `4b47e0d` 与干净候选 `0d66a1f`。
 - SMOKE-06 干净探针的桌面初始上下文只列出一个 `codex-project-workflow` 技能，证明重复发现问题已关闭；探针随后仍因 premium 零额度在模型输出前结束。
 
-## 下一步
+## 历史下一步（2026-06-20）
 
 1. 保持 `CAND-20260620-10` 未激活，并把 `REGRESSION-20260620-10` 作为失败证据归档。
 2. 创建下一最小候选，重点收紧网络动作授权：批准一个 exact sanitized query 不允许追加、替换或扩展第二查询；需要更多查询或打开新来源时必须重新给出审批包。
 3. 新候选预检通过后，优先重跑 E35 `four_hard_triggers`，再用 E19 和 E32 验证未引入授权/预算退化；通过后再决定是否进入完整 16 条重复校准或用户批准激活门。
 
-## 阻塞
+## 历史阻塞（2026-06-20）
 
 - 当前没有额度阻塞；正式技能仍停留在 CAND-20260619-09 激活版本。`CAND-20260620-10` 已有有效失败样本，阻塞点是需要下一最小候选修复网络查询范围扩展问题，暂不应进入插件封装或激活。
 
-## 当前风险
+## 历史风险（2026-06-20）
 
 - 首批校准和首轮定点复测证明模型行为对规则位置与措辞敏感，后续仍需用新线程而不是静态审阅确认。
 - 定点回归通过不代表完整重复运行稳定；E16 和 E35 在定点通过后于新线程重新退化，后续候选必须同时满足定点门和完整校准门。
@@ -228,7 +237,7 @@
 - 调用链、状态轨迹和架构规则的可观察程度取决于具体项目；实现时需要为不同技术栈选择可验证证据。
 - 约 1,500 字符核心预算、标准 2,500 字符/2 章节、完整 6,000 字符/4 章节和 20 个任务复查周期均是待原型校准的工程假设。
 
-## 需要用户决定
+## 历史待决定项（2026-06-20）
 
 - 暂无新的阻塞性用户决定；下一次需要决定通常会出现在完整重复校准是否启用多 Agent 或是否进入插件封装时。
 
@@ -306,3 +315,32 @@
 - Evidence: active `SKILL.md` hash matches the CAND-12 candidate hash `532ed9cea45f6954c64c6c0b25291c187325f92978ba3ae5a7c0d2891202cdb6`; `REGRESSION-20260622-12` passed E32 and E35; manifest status is `activated`.
 - Scope: helper reference loading now instructs Codex to use the active skill source directory first, with repository `.agents` only as an existing-path fallback.
 - Next step: merge the activation branch into `master`, then begin first plugin package scaffolding from the activated baseline.
+
+## Update 2026-07-13 New Computer Migration Acceptance
+
+- Current stage: new-computer migration and runtime acceptance passed.
+- Repository evidence: `D:\project\codex\codex_project_workflow` is on clean `master`; HEAD and local `origin/master` are both `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`.
+- Backup evidence: the E-drive full bundle matched SHA-256 `AFE706473E13D31ED9F22ECD1D94DF2991C299F927D1088A0A59FA1F5C0A5B17`, verified as complete history, and retained 80 local branch refs without importing them into the formal clone.
+- Plugin evidence: personal installed cache version `0.1.0+codex.20260712082233` loaded in fresh thread `019f5979-2a17-7c80-871e-8cecbcfa3c4e`; repository install smoke passed; protocol metrics matched; 7 core installed files matched the repository plugin source by SHA-256.
+- Scope: migration and documentation-state synchronization only; no plugin rule, source package, marketplace, installed cache, historical evaluation evidence, or Git history was changed by this documentation update.
+
+## 当前下一步
+
+1. 在真实任务中使用已安装插件，只记录有证据的改进候选。
+2. 插件源发生变化时，重复 source prep、Codex App 重新启用、fresh-thread pickup 和仓库 install smoke。
+3. 在普通 PowerShell 中需要复验时，使用可执行的 Python 3 路径；当前裸 `python` 可能命中无效的 Microsoft Store 别名。
+
+## 当前阻塞
+
+- 插件使用和项目恢复没有阻塞。
+- 普通 PowerShell 的裸 `python` 入口不可用是环境便利性问题；Codex bundled Python 已完成全部迁移验证。
+
+## 当前风险
+
+- 当前验收未联网 fetch；`origin/master` 结论只代表本地远端跟踪引用。迁移阶段已另行只读核对过服务器 `master` 与相同提交一致。
+- 后续插件更新若未同时更新个人源、installed cache 和状态文档，可能再次产生版本漂移。
+- 历史评估记录保留旧电脑绝对路径属于证据的一部分，不应机械替换为新电脑路径。
+
+## 当前需要用户决定
+
+- 暂无阻塞性决定。

@@ -13,9 +13,13 @@
 ## 当前状态
 
 - 插件源包：`plugins/codex-project-workflow/`
-- 插件安装 smoke：已通过
-- 已验证的插件 cache 版本：`0.1.0+codex.20260703113254`
+- 新电脑迁移与插件安装 smoke：已于 2026-07-13 通过
+- 已验证的插件 cache 版本：`0.1.0+codex.20260712082233`
+- 已验证的插件 cache 根目录：`C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260712082233`
+- 当前仓库：`D:\project\codex\codex_project_workflow`，`master`、HEAD 与本地 `origin/master` 均为 `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`
 - 可重复 smoke 脚本：`python scripts/verify_plugin_install_smoke.py`
+
+当前普通 PowerShell 的裸 `python` 可能命中无效的 Microsoft Store 别名；Codex bundled Python 已完成本次验证。若裸命令失败，应先使用可执行的 Python 3 路径，不要把环境入口问题误判为插件失败。
 
 ## 从这里开始
 
