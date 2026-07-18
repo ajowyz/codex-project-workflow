@@ -157,7 +157,7 @@ Codex 应主动判断是否值得多 Agent。常见触发：
 plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md
 ```
 
-`.agents/skills/codex-project-workflow/` 是评估与协议镜像目录，不是第二个可发现技能。当前已通过回归的候选安装验收目标为 cache `0.1.0+codex.cand-20260718-15-r6`；其治理状态仍是等待显式激活批准。
+`.agents/skills/codex-project-workflow/` 是评估与协议镜像目录，不是第二个可发现技能。当前正式激活 cache 为 `0.1.0+codex.cand-20260718-15-r6`；CAND-15 已通过证据绑定批准。
 
 插件目前没有自动记录功能。`docs/IMPROVEMENT_CANDIDATES.md` 和 `docs/DOGFOOD_LOG.md` 是人工、可审查的改进记录；Codex 只有在任务明确要求并处于允许范围时才更新它们。记录候选不会自动改写技能、更新 marketplace、重装插件或修改 cache。
 

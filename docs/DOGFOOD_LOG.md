@@ -677,3 +677,32 @@ Outcome:
 - `activation.allowed=false` remains correct until a new evidence-bound explicit approval names CAND-15, its candidate hash, R6, the passing result, and the unchanged scope.
 - The repository owner and R6 physically contain the candidate bytes for evaluation. The patch applies forward to the recorded base and reverse to the current worktree; this working-source state is deliberately distinct from the formal activation record.
 - The prior CAND-14 failure evidence remains frozen and is not rewritten by this repair.
+
+## DOGFOOD-21 CAND-15 Evidence-Bound Activation
+
+Date: 2026-07-18
+
+Scope: formally activate CAND-20260718-15 after the user approved the exact candidate ID, SHA-256, R6 runtime, `6/6` run and `2/2` case pass result, overall pass, and unchanged manifest scope.
+
+Boundary:
+
+- Changed only the candidate activation owner and current-state documentation.
+- Did not change `SKILL.md`, candidate bytes, patch, R6 cache, personal plugin source, marketplace, automatic recording, Hook, MCP, or historical evaluation evidence.
+- Reused the already installed and enabled R6 because its content hash exactly matched the approved candidate; no reinstall or new cachebuster was needed.
+
+Official and implementation evidence:
+
+- The current Codex manual confirms that plugins are installed reusable instruction/tool bundles and can be selected explicitly; the local CLI reports the approved R6 plugin installed and enabled.
+- The previously frozen official Skills/Subagents guidance and community runtime reports remain the external basis for trigger precision, bounded delegation, single-owner checks, and fresh-session pickup. No new external scope was added during activation.
+
+Verification:
+
+- Candidate, active owner, personal source, and R6 skill SHA-256 all equal `f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a`; patch SHA-256 remains `77c812864c7176faf9e9ff96c5f66c8037dd739ea556f13b3cfb09f6bb142105`.
+- CLEAN7 remains `2/2` pass and FULL remains `6/6` runs, `2/2` cases, `overall=pass`.
+- R6 is installed and enabled, explicit-version smoke passes, and the runtime inventory has one matching owner with no `.agents` skill path.
+
+Outcome:
+
+- Candidate status is `activated`.
+- `activation.allowed=true`, `formal_activation_recorded=true`, and R6 is recorded as `activated_runtime`.
+- The exact approval text and activation timestamp are stored in the candidate manifest.

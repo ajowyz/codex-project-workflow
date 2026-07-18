@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260718-15",
   "parent_candidate_id": "CAND-20260716-14",
   "created_at": "2026-07-18T15:32:31.0960558+08:00",
-  "status": "regression_passed_pending_activation_approval",
+  "status": "activated",
   "base_commit": "1e760c30a25818b3dc8c78e1240096acb3866c37",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -13,7 +13,7 @@
       "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/SKILL.candidate.md",
       "candidate_sha256": "f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a",
       "evaluated_active_sha256": "f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a",
-      "working_source_state": "candidate_content_present_for_evaluation_pending_governance_activation"
+      "working_source_state": "candidate_content_formally_activated"
     }
   ],
   "patch": {
@@ -47,7 +47,7 @@
     "patch_apply_check": "passed_against_base_commit; current_worktree_reverse_apply_passed"
   },
   "evaluation": {
-    "status": "passed",
+    "status": "required_regressions_passed_activated",
     "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN7",
     "full_run": "REGRESSION-20260718-GPT56-C15-FULL",
     "targeted_result": {
@@ -112,13 +112,28 @@
     ]
   },
   "activation": {
-    "allowed": false,
+    "allowed": true,
     "working_source_contains_candidate": true,
-    "installed_cache_role": "evaluation_copy",
-    "formal_activation_recorded": false,
+    "installed_cache_role": "activated_runtime",
+    "formal_activation_recorded": true,
     "requires_explicit_user_approval": true,
-    "approval_text": null,
-    "approval_scope": "pending evidence-bound approval for CAND-20260718-15",
+    "approved_at": "2026-07-18T17:36:13+08:00",
+    "approval_text": "批准正式激活 CAND-20260718-15；候选 SHA-256=f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a；运行时=0.1.0+codex.cand-20260718-15-r6；接受 6/6 run、2/2 case、overall=pass；范围保持 manifest 记录不变。",
+    "approval_scope": "CAND-20260718-15 candidate SHA-256 f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a; runtime 0.1.0+codex.cand-20260718-15-r6; accepted 6/6 runs, 2/2 cases, overall pass; manifest scope unchanged",
+    "activated_at": "2026-07-18T17:36:13+08:00",
+    "activated_targets": [
+      {
+        "active_path": "plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md",
+        "sha256": "f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a"
+      }
+    ],
+    "activated_runtime": {
+      "version": "0.1.0+codex.cand-20260718-15-r6",
+      "skill_path": "C:/Users/w/.codex/plugins/cache/personal/codex-project-workflow/0.1.0+codex.cand-20260718-15-r6/skills/codex-project-workflow/SKILL.md",
+      "sha256": "f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a",
+      "installed": true,
+      "enabled": true
+    },
     "invalidation_conditions": [
       "base commit, candidate, patch, target list, or scope changes, or the active target changes away from the recorded evaluated candidate hash",
       "targeted or full current-model regression is missing or fails",

@@ -1,7 +1,7 @@
 # 模型与上下文策略
 
 > - 状态：2026-06-22 历史策略基线，冻结；当前运行时补充见第 8 节
-> - 日期：历史基线 2026-06-22；当前补充 2026-07-16
+> - 日期：历史基线 2026-06-22；当前补充 2026-07-18
 > - 适用范围：模型升级、上下文窗口变化、推理能力变化、成本变化后的工作流调整
 > - 规则源关系：本文不覆盖 `SKILL.md`、安全边界、确认门或候选激活机制
 
@@ -155,7 +155,7 @@ model_profile:
 - 模型与推理强度：`gpt-5.6-sol` / `xhigh`。
 - Codex App：`26.715.3651.0`。
 - Codex CLI：`0.145.0-alpha.18`。
-- 已评估候选 installed cache：`0.1.0+codex.cand-20260718-15-r6`；CAND-15 尚待显式激活批准。
+- 正式激活 installed cache：`0.1.0+codex.cand-20260718-15-r6`；CAND-15 已完成证据绑定批准。
 - 当前协议选取指标：governance `2484/2`、research `1205/2`、verification `2239/2`。
 
 模型名称、上下文能力和 Codex 表面会变化；每次升级仍应先参考[官方 Models 文档](https://learn.chatgpt.com/docs/models)与[官方 Skills 文档](https://learn.chatgpt.com/docs/build-skills)，再以本仓库当前模型回归校准实际行为。官方文档说明预期能力与配置契约，本地 fresh task、原始 rollout 和确定性验证才证明当前实现表现。

@@ -90,7 +90,7 @@ python scripts\verify_plugin_install_smoke.py
 
 ## 当前本机状态
 
-### 2026-07-16 当前验收状态
+### 2026-07-18 当前验收状态
 
 当前仓库的唯一技能源是：
 
@@ -110,7 +110,7 @@ D:\project\codex\codex_project_workflow\plugins\codex-project-workflow\skills\co
 C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.cand-20260718-15-r6
 ```
 
-该目录是 CAND-15 的已评估测试安装态；候选仍等待证据绑定的显式激活批准，不能仅凭安装或 smoke 把它描述为正式激活。
+该目录是 CAND-15 的正式激活运行时。激活依据是绑定候选 ID、候选哈希、R6、通过结果和不变范围的显式批准；安装或 smoke 本身仍不构成激活授权。
 
 仓库源包、个人插件源和安装 cache 的 7 个内容文件应保持一致；manifest 允许个人源/安装 cache 带 cachebuster，而仓库 manifest 保持源版本。更新只能通过 `prepare_plugin_update.py` 和受支持的插件安装流程完成，不手工编辑 marketplace 或安装 cache。
 

@@ -203,10 +203,9 @@ Residual signal:
 
 Status:
 
-- `regression_passed_pending_activation_approval`。
-- `activation.allowed=false`；R6 是已评估测试安装态，不是正式激活。
-- 仓库 active path 的物理内容已等于候选 SHA，用于正式回归；patch 对 base commit 正向检查通过，对当前工作树反向检查通过。这里的 activation 是证据绑定的治理状态，不等同于候选字节是否已放入唯一源或测试 cache。
-- 只有绑定候选 ID、候选哈希、R6 运行时、`6/6` / `2/2` / `overall=pass` 结果和当前范围的显式用户批准，才可进入激活状态更新。
+- `activated`。
+- 用户已显式批准绑定候选 ID、SHA-256 `f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a`、R6 运行时、`6/6` / `2/2` / `overall=pass` 结果和不变范围；`activation.allowed=true`、`formal_activation_recorded=true`。
+- 仓库 active path 的物理内容等于候选 SHA；patch 对 base commit 正向检查通过，对当前工作树反向检查通过。R6 由 `evaluation_copy` 转为正式 `activated_runtime`，未复制或改写候选字节。
 
 Out of scope:
 
