@@ -567,3 +567,72 @@ Verification:
 - Run roadmap text search for stale future wording.
 - Run install smoke.
 - Run whitespace diff check.
+
+## DOGFOOD-18 GPT-5.6 Runtime and Evaluation Refresh
+
+Date: 2026-07-16
+
+Scope: re-evaluate the plugin after the Codex App, CLI, and active GPT model changed; remove duplicate skill ownership; repair the E32/E35 harness; prepare and smoke the resulting plugin package.
+
+Boundary:
+
+- Repository package is the only editable skill source.
+- `.agents/skills/codex-project-workflow/` remains an evaluation and protocol-mirror area, not a discoverable project skill.
+- Installation uses the supported plugin preparation and CLI install flow; marketplace and installed cache are not edited by hand.
+- No automatic recording, Hook, MCP, app connector, dependency installation, background self-update, or vector database work.
+- Historical GPT-5.5 entries remain unchanged and continue to describe their own evaluation period.
+
+External research:
+
+- Refreshed the current official guidance for [building skills](https://learn.chatgpt.com/docs/build-skills), [subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents), and [models](https://learn.chatgpt.com/docs/models).
+- Compared the documented configuration contract with the current implementation report in [openai/codex issue #20210](https://github.com/openai/codex/issues/20210): project-local `skills.config` filtering is not reliable evidence of runtime exclusion in the affected implementation.
+- Treated official documentation as the intended contract and fresh runtime traces as implementation evidence; no project-local config workaround was retained.
+
+Findings:
+
+- CAND-20260716-13 baseline calibration passed 4 of 6 target regressions, but failed E32 negative control and the E32 standard context budget.
+- The negative-control path and blind-evaluation wording leaked the skill identity, while the collector did not fully decode current unified `exec` traces.
+- A project-local discoverable skill created a second apparent owner beside the plugin package and made installed-runtime evidence harder to interpret.
+- The current App task can retain a stale plugin inventory snapshot after reinstall. A fresh CLI process observed a newly installed candidate cache, so App task pickup, final-cache integrity, and final-cache pickup must be reported separately.
+
+Action:
+
+- Replaced the candidate description with exclusion-first routing and narrowed bounded Route 2 implementation to verification-only unless a governance trigger is present.
+- Removed the project-local discoverable `SKILL.md` and ineffective project config; retained evaluation scripts, fixtures, protocol mirrors, and recorded evidence under `.agents`.
+- Isolated negative-control workspaces and made the blind boundary conditional on independent skill activation.
+- Updated full-evaluation setup, collection, validation, context measurement, and script tests for relative manifests, unified `exec`, JSON text blocks, actual workdirs, fixture isolation, and real loaded-skill metrics.
+- Prepared and installed cache `0.1.0+codex.20260716095059` through the supported plugin flow.
+
+Verification:
+
+- Project script tests passed `67/67`.
+- The repository's strict skill, eval, fixture, install-smoke, hash, and whitespace checks are the local acceptance gates.
+- The official Python validators require `PyYAML`; no available Python runtime had it, so those validators are recorded as unavailable rather than passed.
+- Fresh CLI runtime evidence first saw a single `codex-project-workflow:codex-project-workflow` entry from candidate cache `0.1.0+codex.20260716093851`; later clean negative and standard regressions loaded the final cache `0.1.0+codex.20260716095059`, which also passed explicit-version smoke. The already-open App task may still display its older inventory until a new top-level task or App restart.
+- Formal candidate pass/fail remains in the candidate manifest and evaluation result records; this dogfood entry is an operational narrative, not a substitute verdict.
+- At the close of this entry, final-cache clean CLI regressions had validator-passing formal result packages for E32 `negative_quick` and `standard_cross_file` under the tracked `.eval-workspaces/formal-results/` directory; their source manifests and collector diagnostics remain under the matching `.agents/skills/codex-project-workflow/evals/full/runs/` directories. The remaining four E32/E35 fixtures were prepared but blocked by the account Codex usage limit.
+- That temporary quota block was cleared and the remaining batch was completed on 2026-07-18. See DOGFOOD-19 for the formal outcome; the contaminated App runs remain debugging evidence only.
+
+## DOGFOOD-19 CAND-14 Remaining Clean Regression
+
+Date: 2026-07-18
+
+Scope: complete the four final-cache E32/E35 regressions that were previously blocked by the Codex usage limit, assess their formal evidence, and update CAND-14 without activating it.
+
+Boundary:
+
+- Used fresh, isolated CLI threads with `gpt-5.6-sol` / `xhigh`, App `26.715.3651.0`, CLI `0.145.0-alpha.18`, the installed final cache, exact fixture prompts, and only the scripted approvals.
+- Did not edit the installed cache, marketplace, candidate body, candidate patch, or personal plugin source. Did not activate CAND-14.
+- Discarded diagnostic attempts against legacy `CodexSandboxOffline`-owned workspaces after ACL refresh failed. Regenerated host-owned workspaces instead of weakening sandboxing or changing those ACLs.
+
+Verification:
+
+- Formal run: `.agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260718-GPT56-C14-REMAINING-CLEAN/`.
+- Passed: E32 `full_high_risk_migration` and `nested_h3_counting`.
+- Failed: E32 `hard_trigger_overage` omitted the mandatory verification protocol; E35 `four_hard_triggers` left public-source verification incomplete, ran a different unit-test command, duplicated protocol loads, and reported the intended rather than actual aggregate overage.
+- Per-run result is `2/4`; with E32 aggregated across three variants, the validated case result is `0/2 targeted_regression cases passed; overall=fail`.
+- Candidate manifest now records `preflight_passed_regression_failed` and `activation.allowed=false`.
+
+Outcome:
+
+- The quota-dependent work is complete, but CAND-14 did not meet activation criteria. The next implementation cycle must use a new repair candidate and fresh targeted regressions; CAND-14 remains frozen as failed evidence.

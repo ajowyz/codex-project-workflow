@@ -1,0 +1,60 @@
+diff --git a/.agents/skills/codex-project-workflow/SKILL.md b/.agents/skills/codex-project-workflow/SKILL.md
+deleted file mode 100644
+--- a/.agents/skills/codex-project-workflow/SKILL.md
++++ /dev/null
+@@ -1,24 +0,0 @@
+----
+-name: codex-project-workflow
+-description: Structure and govern Codex work for new or ambiguous projects, multi-step implementation, professional research, solution comparison, architecture and planning, third-party downloads, high-risk changes, project recovery, or requests for a rigorous workflow. Also use when Codex needs to create, generate, export, or save a deliverable through an existing product or application, even if the request looks like one step, and for ordinary tasks when research, confirmation, implementation-path verification, recovery, or coordination may matter. Do not use for simple questions or explicit low-risk one-step edits or commands.
+----
+-
+-# Codex Project Workflow
+-
+-## Route
+-
+-1. Inspect first: goal, constraints, completion test; ask only blockers.
+-2. Run one helper per protocol from skill source: `python <skill_dir>/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`; repo fallback `.agents/skills/codex-project-workflow/scripts/read_reference.py` only if present. Load only `research`, `governance`, or `verification`.
+-3. Never scan skill dirs/read refs directly. Helper failure waives no gate.
+-4. If research/dependency/implementation coexist, stop after protocols; show one multi-agent proposal before web, command/install-sim, write, or verify. Web/search/open and install-sim need later exact approval for only shown query/URL/source/fields/purpose/phase or command/scope. Extra query/source/open needs new approval; pre-runs never count. No-decision/unrelated approval authorizes neither and keeps agents `proposed`; main continues displayed writes/verification without new ask. Acceptance starts agents; refusal/unavailable selects fallback.
+-
+-## Safeguards
+-
+-- Never invent execution, sources, tests, or proof.
+-- Before writes map entry/state/owners/bypasses; edit existing owner.
+-- For product state writes, save `docs/IMPLEMENTATION_CONTRACT.md` before run. Otherwise trace contracts/protocols unless required; no research/governance docs.
+-- Safety, authorization, and verification override budgets.
+-
+-## Finish
+-
+-Verify result/path; repeat overage lines in all finals. Keep durable changes isolated.
+diff --git a/plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md b/plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md
+--- a/plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md
++++ b/plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md
+@@ -7,19 +7,18 @@ description: Structure and govern Codex work for new or ambiguous projects, mult
+ 
+ ## Route
+ 
+-1. Inspect first: goal, constraints, completion test; ask only blockers.
+-2. Run one helper per protocol from skill source: `python <skill_dir>/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`; repo fallback `.agents/skills/codex-project-workflow/scripts/read_reference.py` only if present. Load only `research`, `governance`, or `verification`.
+-3. Never scan skill dirs/read refs directly. Helper failure waives no gate.
+-4. If research/dependency/implementation coexist, stop after protocols; show one multi-agent proposal before web, command/install-sim, write, or verify. Web/search/open and install-sim need later exact approval for only shown query/URL/source/fields/purpose/phase or command/scope. Extra query/source/open needs new approval; pre-runs never count. No-decision/unrelated approval authorizes neither and keeps agents `proposed`; main continues displayed writes/verification without new ask. Acceptance starts agents; refusal/unavailable selects fallback.
++1. Inspect goal/constraints/completion; ask only blockers.
++2. Run protocols via `python <skill_dir>/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`; use `.agents/skills/codex-project-workflow/scripts/read_reference.py` only if present. Load only `research`, `governance`, or `verification`.
++3. Do not scan skill dirs or refs. Helper failure waives no gate.
++4. When research, dependency, and implementation coexist, load protocols, then show one multi-agent proposal before web, commands/install-sim, writes, or verification. Each web/search/open/install-sim needs later exact approval limited to the displayed action; changes need new approval and pre-runs never count. No decision/unrelated approval keeps agents `proposed`; main may continue displayed writes/verification. Acceptance starts agents; otherwise fallback.
+ 
+ ## Safeguards
+ 
+ - Never invent execution, sources, tests, or proof.
+-- Before writes map entry/state/owners/bypasses; edit existing owner.
+-- For product state writes, save `docs/IMPLEMENTATION_CONTRACT.md` before run. Otherwise trace contracts/protocols unless required; no research/governance docs.
+-- Safety, authorization, and verification override budgets.
++- Before writes map entry/state/owners/bypasses; edit the owner.
++- For product state writes, save `docs/IMPLEMENTATION_CONTRACT.md` before product run; otherwise keep contracts/protocols in trace. Create no unneeded governance docs.
++- Safety, authorization, verification override budgets.
+ 
+ ## Finish
+ 
+-Verify result/path; repeat overage lines in all finals. Keep durable changes isolated.
+-For workflow-template, install/update, package, or acceptance-record changes, state whether the real acceptance action was run; if not, list it as the next step. Local-use problems may become evidence-bound candidates, but never silently rewrite active plugin files, marketplace entries, or installed cache.
++Verify result/path and repeat overage lines; isolate durable changes. For workflow/package/update records, report real acceptance or next step. Evidence may become a candidate; never silently edit active plugin, marketplace, or cache.

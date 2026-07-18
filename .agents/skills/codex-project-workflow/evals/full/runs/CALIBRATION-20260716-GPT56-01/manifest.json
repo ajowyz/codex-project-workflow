@@ -1,0 +1,85 @@
+{
+  "format_version": "1.0",
+  "run_id": "CALIBRATION-20260716-GPT56-01",
+  "evaluation_scope": "targeted_regression",
+  "status": "completed_unassessed_at_manifest_freeze",
+  "created_at": "2026-07-16T16:40:30+08:00",
+  "completed_at": "2026-07-16T16:59:29+08:00",
+  "fixture_commit": "5a7f0bc66460b7bf944e1e43919be34fbf8192a0",
+  "candidate_id": "CAND-20260716-13",
+  "candidate_sha256": "51aa1bf7ffb88a9646281754fd2e9d759d1a9aaab46623d35eba23a8f999d861",
+  "plugin_cache_version": "0.1.0+codex.20260716083725",
+  "codex_app_version": "26.707.12708.0",
+  "codex_cli_version": "0.144.5",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "setup_state": "workspaces/setup-state.json",
+  "runtime_skill_inventory_at_launch": {
+    "matching_entries": 2,
+    "content_state": "byte-identical candidate payload",
+    "note": "The run began before the project-local discoverable SKILL.md was retired. Behavior evidence remains candidate-valid; runtime-owner acceptance was rerun separately after the structural fix.",
+    "post_fix_acceptance_thread_id": "019f6a23-82cf-7552-b489-d06f1e72abbf"
+  },
+  "runs": [
+    {
+      "case_id": "E32",
+      "variant_id": "negative_quick",
+      "thread_id": "019f6a15-8d88-7d61-b994-179291fa7739",
+      "status": "completed",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\CALIBRATION-20260716-GPT56-01\\workspaces\\E32\\negative_quick",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "standard_cross_file",
+      "thread_id": "019f6a15-c82f-75e1-9485-db89a4570693",
+      "status": "completed",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\CALIBRATION-20260716-GPT56-01\\workspaces\\E32\\standard_cross_file",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "full_high_risk_migration",
+      "thread_id": "019f6a15-af8f-7d31-b4fd-b9da9ae3716a",
+      "status": "completed",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\CALIBRATION-20260716-GPT56-01\\workspaces\\E32\\full_high_risk_migration",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019f6a15-fb96-7f23-b2bd-7f4467c3af9d",
+      "status": "completed",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\CALIBRATION-20260716-GPT56-01\\workspaces\\E32\\hard_trigger_overage",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "nested_h3_counting",
+      "thread_id": "019f6a16-151e-7ef2-94b6-c27d001e0999",
+      "status": "completed",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\CALIBRATION-20260716-GPT56-01\\workspaces\\E32\\nested_h3_counting",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019f6a16-324e-7b71-b318-8f4758e51a6b",
+      "status": "completed",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\CALIBRATION-20260716-GPT56-01\\workspaces\\E35\\four_hard_triggers",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    }
+  ],
+  "approval_request": {
+    "needed": false,
+    "reason": "The user explicitly approved all remaining P1, P2, and P3 actions; fixture-specific scripted approvals were still sent only after the exact action was displayed.",
+    "requested_runs": [
+      "E32:negative_quick",
+      "E32:standard_cross_file",
+      "E32:full_high_risk_migration",
+      "E32:hard_trigger_overage",
+      "E32:nested_h3_counting",
+      "E35:four_hard_triggers"
+    ]
+  }
+}

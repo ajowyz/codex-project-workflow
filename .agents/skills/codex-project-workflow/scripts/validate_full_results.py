@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import fnmatch
+import hashlib
 import json
 from pathlib import Path
 
@@ -26,6 +27,10 @@ def load_json(path):
         return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         raise ValueError(f"{path}: {exc}") from exc
+
+
+def sha256(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def require(condition, message):
@@ -110,6 +115,62 @@ def validate_prompt_integrity(integrity, hard_failures):
 
 
 def validate_machine_assertions(result, assertion_results):
+    trace = result.get("context_trace")
+    if isinstance(trace, dict):
+        description = trace.get("project_skill_description_chars")
+        body = trace.get("skill_body_loaded_chars")
+        reference_codepoints = trace.get("reference_loaded_chars")
+        reference_sections = trace.get("reference_h2_sections")
+        trace_values_valid = all(
+            isinstance(value, int) and value >= 0
+            for value in (
+                description,
+                body,
+                reference_codepoints,
+                reference_sections,
+            )
+        )
+        context_map = {
+            "context_trace.verifiable": (
+                trace.get("project_skill_listed") is True
+                and trace_values_valid
+            ),
+            "all_fixtures.skill_description_codepoints": (
+                isinstance(description, int) and 0 < description <= 800
+            ),
+            "negative_quick.body_and_reference_codepoints": (
+                body == 0 and reference_codepoints == 0
+            ),
+            "explicit_quick_standard_full.core_body_codepoints": (
+                isinstance(body, int) and 0 < body <= 1500
+            ),
+            "standard.reference_codepoints": (
+                isinstance(reference_codepoints, int)
+                and 0 <= reference_codepoints <= 2500
+            ),
+            "standard.reference_h2_sections": (
+                isinstance(reference_sections, int)
+                and 0 <= reference_sections <= 2
+            ),
+            "full.reference_codepoints": (
+                isinstance(reference_codepoints, int)
+                and 0 <= reference_codepoints <= 6000
+            ),
+            "full.reference_h2_sections": (
+                isinstance(reference_sections, int)
+                and 0 <= reference_sections <= 4
+            ),
+            "governance_corpus.bulk_loaded": not bool(
+                trace.get("governance_read_calls")
+            ),
+        }
+        for subject, expected_pass in context_map.items():
+            if subject not in assertion_results:
+                continue
+            require(
+                assertion_results[subject]["passed"] == expected_pass,
+                f"{subject}: assessment disagrees with machine context trace",
+            )
     overage = result.get("context_overage")
     if overage is not None:
         subject_map = {
@@ -134,8 +195,73 @@ def validate_machine_assertions(result, assertion_results):
         )
 
 
-def evaluation_expectations(summary):
-    manifest = load_json(Path(summary["source_manifest"]))
+def resolve_source_manifest(summary_path, summary):
+    recorded = summary.get("source_manifest")
+    require(
+        isinstance(recorded, str) and recorded.strip(),
+        "summary source_manifest must be a non-empty path",
+    )
+    recorded_path = Path(recorded)
+    if recorded_path.is_absolute() and recorded_path.is_file():
+        manifest_path = recorded_path.resolve()
+    elif not recorded_path.is_absolute():
+        manifest_path = (summary_path.parent / recorded_path).resolve()
+    else:
+        require(
+            recorded_path.name == "manifest.json",
+            "legacy source manifest fallback only supports manifest.json",
+        )
+        manifest_path = (summary_path.parent.parent / "manifest.json").resolve()
+    require(manifest_path.is_file(), f"source manifest not found: {manifest_path}")
+    manifest = load_json(manifest_path)
+    require(
+        manifest.get("run_id") == summary.get("run_id"),
+        "source manifest run_id must match summary",
+    )
+    recorded_sha256 = summary.get("source_manifest_sha256")
+    if recorded_sha256 is not None:
+        require(
+            isinstance(recorded_sha256, str) and recorded_sha256.strip(),
+            "source_manifest_sha256 must be a non-empty string",
+        )
+        require(
+            sha256(manifest_path) == recorded_sha256,
+            "source manifest SHA-256 mismatch",
+        )
+    return manifest_path, manifest
+
+
+def validate_runtime(result, manifest):
+    run_key = f"{result['case_id']}:{result['variant_id']}"
+    matches = [
+        run
+        for run in manifest["runs"]
+        if f"{run['case_id']}:{run['variant_id']}" == run_key
+    ]
+    require(len(matches) == 1, f"{run_key}: manifest runtime entry missing")
+    run = matches[0]
+    expected_model = run.get("model", manifest.get("model"))
+    expected_effort = run.get(
+        "reasoning_effort",
+        manifest.get("reasoning_effort"),
+    )
+    require(
+        isinstance(expected_model, str) and expected_model.strip(),
+        f"{run_key}: manifest model is required",
+    )
+    require(
+        isinstance(expected_effort, str) and expected_effort.strip(),
+        f"{run_key}: manifest reasoning effort is required",
+    )
+    require(result["model"] == expected_model, f"{run_key}: wrong model")
+    require(
+        result["reasoning_effort"] == expected_effort,
+        f"{run_key}: wrong reasoning effort",
+    )
+
+
+def evaluation_expectations(summary, manifest=None):
+    manifest = manifest or load_json(Path(summary["source_manifest"]))
     scope = manifest.get("evaluation_scope", "full_calibration")
     manifest_run_keys = {
         f"{run['case_id']}:{run['variant_id']}"
@@ -172,7 +298,11 @@ def evaluation_expectations(summary):
 def validate(summary_path, assessment_path):
     summary = load_json(summary_path)
     assessment = load_json(assessment_path)
-    scope, expected_cases, expected_subjects = evaluation_expectations(summary)
+    _, manifest = resolve_source_manifest(summary_path, summary)
+    scope, expected_cases, expected_subjects = evaluation_expectations(
+        summary,
+        manifest,
+    )
 
     results = summary["results"]
     require(
@@ -199,8 +329,7 @@ def validate(summary_path, assessment_path):
         run_key = f"{case_id}:{result['variant_id']}"
         record = assessments[run_key]
         require(result["status"] == "completed", f"{case_id}: rollout not completed")
-        require(result["model"] == "gpt-5.5", f"{case_id}: wrong model")
-        require(result["reasoning_effort"] == "medium", f"{case_id}: wrong reasoning effort")
+        validate_runtime(result, manifest)
         require(record["thread_id"] == result["thread_id"], f"{case_id}: thread mismatch")
 
         scores = record["scores"]

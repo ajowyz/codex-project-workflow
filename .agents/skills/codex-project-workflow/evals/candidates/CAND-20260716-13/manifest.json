@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "CAND-20260716-13",
+  "parent_candidate_id": "CAND-20260622-12",
+  "created_at": "2026-07-16T00:00:00+08:00",
+  "status": "preflight_passed_regression_failed",
+  "base_commit": "5a7f0bc66460b7bf944e1e43919be34fbf8192a0",
+  "hash_algorithm": "sha256-nfc-lf-utf8",
+  "targets": [
+    {
+      "active_path": "plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md",
+      "base_sha256": "9c87469c82e7d5e7d6ff14cdabc173e5b11ea2c06724ab9f9d07e42cc07e5f7d",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260716-13/SKILL.candidate.md",
+      "candidate_sha256": "51aa1bf7ffb88a9646281754fd2e9d759d1a9aaab46623d35eba23a8f999d861"
+    }
+  ],
+  "retired_discovery_paths": [
+    {
+      "path": ".agents/skills/codex-project-workflow/SKILL.md",
+      "base_sha256": "532ed9cea45f6954c64c6c0b25291c187325f92978ba3ae5a7c0d2891202cdb6",
+      "reason": "project-local skills.config filtering is not honored by the current Codex runtime; removal prevents duplicate discovery"
+    }
+  ],
+  "patch": {
+    "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260716-13/patch.diff",
+    "sha256": "0a806e2acdade24cec0182853d5550b821f5442dd8bbccde582666dce7a0626a",
+    "apply_check": "passed"
+  },
+  "scope": [
+    "make the packaged plugin skill the single source and installed runtime owner",
+    "retire the project-local discoverable SKILL.md while retaining the evaluation harness and protocol parity guards",
+    "preserve exact approval, multi-agent pending-state, implementation-path, and overage behavior",
+    "restore the core skill body to at most 1500 NFC Unicode codepoints while retaining acceptance closure",
+    "keep automatic recording, hooks, MCP, marketplace edits, and installed-cache edits out of scope"
+  ],
+  "preflight": {
+    "status": "passed_with_tooling_limit",
+    "skill_body_codepoints": 1485,
+    "skill_description_codepoints": 624,
+    "project_validator": "passed",
+    "skill_creator_quick_validate": "not_run_missing_pyyaml_in_available_runtimes",
+    "static_regression": "56_of_56_passed_after_single_owner_change_at_preflight",
+    "patch_apply_check": "passed",
+    "forward_tests": [
+      "simple_read_only_route_passed_without_skill_activation",
+      "research_dependency_implementation_route_passed_with_three_protocols_and_proposed_agents"
+    ]
+  },
+  "evaluation": {
+    "status": "failed_current_model_regression",
+    "run_id": "CALIBRATION-20260716-GPT56-01",
+    "result": "4_of_6_runs_passed; E32 aggregate failed",
+    "failures": [
+      "E32:negative_quick loaded the skill body and verification protocol",
+      "E32:standard_cross_file loaded governance plus verification above the standard budget"
+    ],
+    "required_regressions": [
+      "E32:negative_quick",
+      "E32:standard_cross_file",
+      "E32:full_high_risk_migration",
+      "E32:hard_trigger_overage",
+      "E32:nested_h3_counting",
+      "E35:four_hard_triggers",
+      "plugin-install-smoke",
+      "fresh-task-runtime-owner"
+    ]
+  },
+  "activation": {
+    "allowed": false,
+    "requires_explicit_user_approval": true,
+    "approval_text": "后续请求都批准，完成P1、P2、P3",
+    "approval_scope": "P1, P2, and P3 implementation, validation, plugin update, and acceptance",
+    "invalidation_conditions": [
+      "base commit, active target hash, or retired discovery path changes before activation",
+      "candidate, patch, target list, or scope changes",
+      "preflight or required current-model evidence is missing or regresses",
+      "evaluation helper or protocol mirrors differ from the package after activation",
+      "fresh-task evidence still lists the project authoring skill as active",
+      "approval refers to a different target or scope"
+    ]
+  }
+}

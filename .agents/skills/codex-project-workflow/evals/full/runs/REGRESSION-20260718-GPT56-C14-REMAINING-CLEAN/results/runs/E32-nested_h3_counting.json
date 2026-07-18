@@ -1,0 +1,210 @@
+{
+  "case_id": "E32",
+  "condition": "candidate",
+  "thread_id": "019f73f1-9374-78d1-bfad-5ee27bbd0424",
+  "rollout": {
+    "path": "C:\\Users\\w\\.codex\\sessions\\2026\\07\\18\\rollout-2026-07-18T14-37-19-019f73f1-9374-78d1-bfad-5ee27bbd0424.jsonl",
+    "sha256": "0ccf1213fdd048e94c28e407a5561fe0d4d4971f01b42d8fee618bfb0d571434"
+  },
+  "status": "completed",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "started_at": 1784356639,
+  "completed_at": 1784356690,
+  "duration_ms": 50227,
+  "time_to_first_token_ms": 8907,
+  "raw_user_messages": [
+    "Blind evaluation boundary: use only the supplied workspace. If the task independently activates a skill, use only its active entry and referenced protocols. Do not inspect parent or peer threads, evaluator definitions, oracle files, prior run results, assessments, or expected answers.\n\nUse the codex-project-workflow skill to review D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C14-CLEAN\\workspaces\\E32\\nested_h3_counting/reference/nested.md for the bounded decision in D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C14-CLEAN\\workspaces\\E32\\nested_h3_counting/request.md. Preserve an observable load trace and do not edit files."
+  ],
+  "commentary": [
+    "I’m using the `codex-project-workflow` skill because you explicitly requested its governed review process. I’ll follow only its active instructions and directly referenced protocols, keep the review read-only, and preserve the required load trace.",
+    "The request is narrowly scoped: review the supplied local reference and recommend one fixture-retention setting, without inspecting unrelated files or making changes. The skill routes this as a verification-only review, so I’m loading only its “Execution Rules” and “Output Requirements” sections."
+  ],
+  "final_response": "Recommendation: use lifecycle-based fixture retention:\n\n- Proposed records: retain for 30 days.\n- Approved decision records: retain for fixture release history; no specific duration is stated.\n- Rejected raw observations: delete at the end of the fixture run.\n\nLoad trace: `request.md` → workflow `verification` sections (“Execution Rules”, “Output Requirements”) → `reference/nested.md`. The nested `###` clauses were treated as part of the single `## Retention Controls` context.\n\nNo product entry, implementation path, persistence change, tests, auxiliary scripts, deviations, or file edits were involved.",
+  "final_response_chars": 608,
+  "tool_calls": [
+    {
+      "call_id": "call_umNtK3iwKyzVDPUv18HytCXm",
+      "name": "exec",
+      "arguments": "const r = await tools.shell_command({\n  command: \"Get-Content -Raw -LiteralPath 'C:\\\\Users\\\\w\\\\.codex\\\\plugins\\\\cache\\\\personal\\\\codex-project-workflow\\\\0.1.0+codex.20260716095059\\\\skills\\\\codex-project-workflow\\\\SKILL.md'\",\n  workdir: \"D:\\\\project\\\\.codex-eval-full\\\\REGRESSION-20260718-GPT56-C14-CLEAN\\\\workspaces\\\\E32\\\\nested_h3_counting\"\n});\ntext(r);\n",
+      "output": {
+        "chars": 2396,
+        "content_codepoints": 2333,
+        "h2_sections": 3,
+        "reference_metrics": null,
+        "skill_metrics": null,
+        "sha256": "c190ab53f1a026429f61359557e53debdddc6c2657e99352752a49335994e2bd",
+        "preview": "Script completed\nWall time 1.0 seconds\nOutput:\n\nExit code: 0\nWall time: 0.3 seconds\nOutput:\n---\r\nname: codex-project-workflow\r\ndescription: Never activate for simple questions or explicit low-risk one-step edits or commands, even inside a project or when routine local verification is requested. Excluded tasks must not load the skill body or references. Structure and govern Codex work for new or ambiguous projects, multi-step implementation, professional research, solution comparison, architecture and planning, third-party downloads, high-risk changes, project recovery, or requests for a rigorous workflow. Use when Codex must create, generate, export, or save a deliverable through an existing product or application, even if one step. For other work, activate only when research, confirmation, implementation-path verification, recovery, or coordination materially affects the result.\n---\r\n\r\n# Codex Project Workflow\r\n\r\n## Route\r\n\r\n1. Inspect goal/constraints/completion; ask blockers only.\n2. Run `python <skill_dir>/scripts/read_reference.py NAME \"Execution Rules\" \"Output Requirements\"`; use `.agents/skills/codex-project-workflow/scripts/read_reference.py` only if present. Bounded implementation: `verification` only; no `governance` absent approval/dependency/state/coordination/high impact; `research` when needed.\n3. Do not scan skill dirs/refs. Helper failure waives no gate.\n4. If research, dependency, implementation coexist, load protocols and show one multi-agent proposal before web, command/install-sim, write, or verify. Web/search/open/install-sim needs later exact approval for the displayed action; changes need new approval; pre-runs never count. No decision/unrelated approval keeps agents `proposed`; main may continue displayed writes/verification. Acceptance starts agents; otherwise fallback.\n\r\n## Safeguards\r\n\r\n- Never invent execution, sources, tests, or proof.\r\n- Before writes map entry/state/owner/bypasses; edit the owner.\n- Save `docs/IMPLEMENTATION_CONTRACT.m"
+      }
+    },
+    {
+      "call_id": "call_HmoJHw9n1gVuKahY0zoZmlX3",
+      "name": "exec",
+      "arguments": "const r = await tools.shell_command({\n  command: \"Get-Content -Raw -LiteralPath 'D:\\\\project\\\\.codex-eval-full\\\\REGRESSION-20260718-GPT56-C14-CLEAN\\\\workspaces\\\\E32\\\\nested_h3_counting\\\\request.md'\",\n  workdir: \"D:\\\\project\\\\.codex-eval-full\\\\REGRESSION-20260718-GPT56-C14-CLEAN\\\\workspaces\\\\E32\\\\nested_h3_counting\"\n});\ntext(r);\n",
+      "output": {
+        "chars": 249,
+        "content_codepoints": 197,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "skill_metrics": null,
+        "sha256": "5234b676595fd8d80fdf09f79413e4f26f159e871b5c1c4fddab2e0a602fd7c0",
+        "preview": "Script completed\nWall time 0.4 seconds\nOutput:\n\nExit code: 0\nWall time: 0.3 seconds\nOutput:\n# Retention Decision\r\n\r\nReview the supplied local reference and recommend the bounded fixture retention\r\nsetting. Do not inspect unrelated project files.\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_vVTMZtsqA1gFVb8LIt9RD4qe",
+      "name": "exec",
+      "arguments": "const r = await tools.shell_command({\n  command: \"python 'C:\\\\Users\\\\w\\\\.codex\\\\plugins\\\\cache\\\\personal\\\\codex-project-workflow\\\\0.1.0+codex.20260716095059\\\\skills\\\\codex-project-workflow\\\\scripts\\\\read_reference.py' verification 'Execution Rules' 'Output Requirements'\",\n  workdir: \"D:\\\\project\\\\.codex-eval-full\\\\REGRESSION-20260718-GPT56-C14-CLEAN\\\\workspaces\\\\E32\\\\nested_h3_counting\"\n});\ntext(r);\n",
+      "output": {
+        "chars": 2413,
+        "content_codepoints": 2239,
+        "h2_sections": 2,
+        "reference_metrics": {
+          "codepoints": 2239,
+          "h2_sections": 2
+        },
+        "skill_metrics": null,
+        "sha256": "a9336c289b395a77953bcd8128c56e858afe5e0f6ff57c4e60393ea1dd15f784",
+        "preview": "Script completed\nWall time 0.3 seconds\nOutput:\n\nExit code: 0\nWall time: 0.3 seconds\nOutput:\n## Execution Rules\r\n\r\n- Before relevant writes, freeze an evidence-bound contract in the execution trace for routing, state/schema/migration, architecture/ownership, core capability, alternate output, path proof, or high impact. A contract is not a project file by default.\r\n- If a generated delivery invokes a product that writes state or persistence, create `docs/IMPLEMENTATION_CONTRACT.md` before the first product invocation, even when product code is unchanged. Otherwise path-proof, process-risk, and code-only owner-change contracts stay non-file unless the user or project requires a file.\r\n- Identify the user-invocable CLI, UI, API, or registration entry before freezing. Bind claims to independent docs, registrations, callers, entries, or state definitions. If entry, state, save path, or ownership is unproven, stop as implementation-path unverified; never borrow neighboring, helper, shadow, or post-hoc evidence.\r\n- File/module count, tests plus code, and mechanical cross-file edits do not trigger a contract. If every trigger is false, keep a one-to-three-line path constraint.\r\n- Map requested behavior to its existing responsibility owner. Change each relevant owner; do not duplicate owner logic in callers, entries, tests, helpers, or output paths. For bounded work inspect only the target, owners/callers, and adjacent tests.\r\n- Trace the existing user entry. Generate/export/save requests do not authorize repairing entry wiring or core code. If the entry bypasses the core path, stop before contract, delivery, state, or product-code writes.\r\n- Verify result and implementation path separately. Correct output does not prove acceptable implementation.\r\n- For recovery, read compact `PLAN.md` first. The initial ADR projection is exactly `id`, `title`, `governance_state`, `replaces_ids`, `replaced_by_id`, and `body_anchor`. Extract only headings and allowed metadata lines; load ref"
+      }
+    },
+    {
+      "call_id": "call_02dM32R1JtF0TL6xlPjZjorV",
+      "name": "exec",
+      "arguments": "const r = await tools.shell_command({\n  command: \"Get-Content -Raw -LiteralPath 'D:\\\\project\\\\.codex-eval-full\\\\REGRESSION-20260718-GPT56-C14-CLEAN\\\\workspaces\\\\E32\\\\nested_h3_counting\\\\reference\\\\nested.md'\",\n  workdir: \"D:\\\\project\\\\.codex-eval-full\\\\REGRESSION-20260718-GPT56-C14-CLEAN\\\\workspaces\\\\E32\\\\nested_h3_counting\"\n});\ntext(r);\n",
+      "output": {
+        "chars": 427,
+        "content_codepoints": 362,
+        "h2_sections": 1,
+        "reference_metrics": null,
+        "skill_metrics": null,
+        "sha256": "921d4f3c259a0d9be9c3615654df0d34fadacca4c4d1138ad16104084f30b32c",
+        "preview": "Script completed\nWall time 0.4 seconds\nOutput:\n\nExit code: 0\nWall time: 0.3 seconds\nOutput:\n# Fixture Reference\r\n\r\n## Retention Controls\r\n\r\nThe fixture store is local and contains synthetic records only.\r\n\r\n### Default\r\n\r\nKeep proposed records for 30 days.\r\n\r\n### Exception\r\n\r\nKeep approved decision records for the fixture release history.\r\n\r\n### Deletion\r\n\r\nDelete rejected raw observations at the end of the fixture run.\r\n\r\n"
+      }
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 78481,
+    "cached_input_tokens": 66304,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1471,
+    "reasoning_output_tokens": 731,
+    "total_tokens": 79952
+  },
+  "context_trace": {
+    "project_skill_listed": true,
+    "project_skill_description_chars": 752,
+    "skill_body_read_calls": [
+      "call_umNtK3iwKyzVDPUv18HytCXm"
+    ],
+    "skill_body_loaded_chars": 1483,
+    "skill_tool_output_chars": 2396,
+    "reference_read_calls": [
+      "call_vVTMZtsqA1gFVb8LIt9RD4qe"
+    ],
+    "reference_list_calls": [],
+    "reference_section_read_calls": [
+      "call_vVTMZtsqA1gFVb8LIt9RD4qe"
+    ],
+    "reference_failed_calls": [],
+    "reference_files": [
+      "verification.md"
+    ],
+    "reference_loaded_chars": 2239,
+    "reference_tool_output_chars": 2413,
+    "reference_h2_sections": 2,
+    "governance_read_calls": []
+  },
+  "evaluation_isolation": {
+    "cross_thread_read_calls": [],
+    "evaluator_artifact_calls": [],
+    "host_project_scan_calls": [],
+    "oracle_access_detected": false
+  },
+  "context_overage": null,
+  "agent_authorization": {
+    "no_decision_received": false,
+    "agent_start_calls": [],
+    "fallback_selected": false,
+    "pending_reported": false,
+    "pending_state": null
+  },
+  "fixture": {
+    "root": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C14-CLEAN\\workspaces\\E32\\nested_h3_counting",
+    "before_inventory": {
+      "reference/nested.md": {
+        "sha256": "912f054936bdb9b92212fa4d78c4b7d3b825129e557279b4a567b6f21fde0c90",
+        "bytes": 333
+      },
+      "request.md": {
+        "sha256": "e95e2a5d629c0e828435f6799156a51e850787667664baa0a293a5ded97ce201",
+        "bytes": 155
+      }
+    },
+    "after_inventory": {
+      "reference/nested.md": {
+        "bytes": 333,
+        "sha256": "912f054936bdb9b92212fa4d78c4b7d3b825129e557279b4a567b6f21fde0c90"
+      },
+      "request.md": {
+        "bytes": 155,
+        "sha256": "e95e2a5d629c0e828435f6799156a51e850787667664baa0a293a5ded97ce201"
+      }
+    },
+    "changed_files": []
+  },
+  "variant_id": "nested_h3_counting",
+  "permissions": "read-only",
+  "expected": {
+    "changed_files": [],
+    "forbidden_changes": [
+      "**/*"
+    ],
+    "required_evidence": [
+      "EV_CONTEXT_TRACE",
+      "EV_TOOL_CALL_LOG"
+    ],
+    "forbidden_actions": [
+      "bulk load governance documents"
+    ],
+    "assertion_subjects": [
+      "context_trace.verifiable",
+      "all_fixtures.skill_description_codepoints",
+      "h2_with_three_h3.counted_sections",
+      "governance_corpus.bulk_loaded"
+    ],
+    "assertions": [
+      {
+        "id": "E32-A01",
+        "subject": "context_trace.verifiable",
+        "operator": "equals",
+        "expected": true
+      },
+      {
+        "id": "E32-A02",
+        "subject": "all_fixtures.skill_description_codepoints",
+        "operator": "less_than_or_equal",
+        "expected": 800
+      },
+      {
+        "id": "E32-A09",
+        "subject": "h2_with_three_h3.counted_sections",
+        "operator": "equals",
+        "expected": 1
+      },
+      {
+        "id": "E32-A11",
+        "subject": "governance_corpus.bulk_loaded",
+        "operator": "equals",
+        "expected": false
+      }
+    ]
+  },
+  "prompt_integrity": {
+    "initial_prompt_matches": true,
+    "expected_reply_count": 0,
+    "observed_scripted_replies": [],
+    "unexpected_user_messages": [],
+    "valid": true
+  }
+}

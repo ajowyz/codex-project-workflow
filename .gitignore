@@ -1,2 +1,5 @@
 __pycache__/
 *.py[cod]
+.eval-workspaces/*
+!.eval-workspaces/formal-results/
+!.eval-workspaces/formal-results/**

@@ -1,0 +1,56 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260718-GPT56-C14-REMAINING-CLEAN",
+  "evaluation_scope": "targeted_regression",
+  "status": "completed_unassessed_at_manifest_freeze",
+  "created_at": "2026-07-18T14:37:19+08:00",
+  "completed_at": "2026-07-18T14:45:06+08:00",
+  "fixture_commit": "5a7f0bc66460b7bf944e1e43919be34fbf8192a0",
+  "candidate_id": "CAND-20260716-14",
+  "candidate_sha256": "44d3c152f2e91ac838c2c8e8f4ee69dc3a20c8024041750f5751329d56286e1e",
+  "plugin_cache_version": "0.1.0+codex.20260716095059",
+  "codex_app_version": "26.715.3651.0",
+  "codex_cli_version": "0.145.0-alpha.18",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C14-CLEAN\\workspaces\\setup-state.json",
+  "runtime_skill_inventory_at_launch": {
+    "matching_entries": 1,
+    "owner": "installed plugin cache",
+    "note": "Fresh CLI sessions loaded the final installed plugin cache in host-owned fixture workspaces outside the repository and evaluator trees. Memory injection and unrelated notify/MCP hooks were disabled for blind-test isolation."
+  },
+  "runs": [
+    {
+      "case_id": "E32",
+      "variant_id": "full_high_risk_migration",
+      "thread_id": "019f73f1-93a3-7900-ab5d-6f1fec9c1e17",
+      "status": "completed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C14-CLEAN\\workspaces\\E32\\full_high_risk_migration",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019f73f1-9357-70b1-b3fc-9a7931f4c60e",
+      "status": "completed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C14-CLEAN\\workspaces\\E32\\hard_trigger_overage",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "nested_h3_counting",
+      "thread_id": "019f73f1-9374-78d1-bfad-5ee27bbd0424",
+      "status": "completed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C14-CLEAN\\workspaces\\E32\\nested_h3_counting",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019f73f1-93ae-75c1-bd03-f2a13818bb95",
+      "status": "completed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C14-CLEAN\\workspaces\\E35\\four_hard_triggers",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    }
+  ]
+}

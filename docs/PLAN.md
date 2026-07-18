@@ -1,30 +1,45 @@
 # 项目计划与当前状态
 
-> 执行状态：新电脑迁移完成，正常运行
-> 更新时间：2026-07-13 +08:00
-> 当前阶段：仓库、bundle、personal marketplace、个人插件源、installed cache、安装 smoke 与 fresh-thread pickup smoke 已完成迁移验收
-> 最新审计：CONFIRM-20260611-01
-> 预登记审计：无
+> 执行状态：P1 已完成；P2 已完成实现、预检及 6/6 项干净回归执行，其中 4/6 通过，E32/E35 聚合失败，CAND-14 不可激活；P3 文档同步已完成
+> 更新时间：2026-07-18 +08:00
+> 当前回归运行时：`gpt-5.6-sol` / `xhigh`；Codex App `26.715.3651.0`；Codex CLI `0.145.0-alpha.18`
+> 当前安装版本：`0.1.0+codex.20260716095059`
+> 历史说明：2026-06 的 GPT-5.5 校准、旧契约和旧候选记录均作为冻结证据保留，不代表当前入口或运行时
 
 ## 当前目标
 
-在新电脑上稳定使用已产品化的 `codex-project-workflow` 插件，并只把有真实使用证据的改进沉淀为候选。
+在 GPT-5.6 当前运行时下完成插件单一所有者收敛、候选回归和文档验收，并继续只把有真实使用证据的改进沉淀为候选。
 
 ## 关键约束
 
 - 保留实现完整性、安全、专业研究和可恢复性，但不让重型治理默认进入普通任务。
 - 新增机制必须可测量、可降级并具有退出条件。
+- 仓库插件包是唯一源；个人源和 installed cache 只通过正式准备、安装与复验流程更新，不手工编辑运行时 cache。
+- 自动记录、Hook、MCP 和外部持久化服务不在本轮范围。
 
 ## 当前状态
 
-- 当前仓库位于 `D:\project\codex\codex_project_workflow`；迁移验收输入快照为 `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`，当时工作树干净且本地 `master` 与本地 `origin/master` 对齐。后续提交的实时 HEAD 与分支同步状态以 Git 命令输出为准，不在计划文档中固化为当前值。
-- E 盘完整 bundle 的 SHA-256 为 `AFE706473E13D31ED9F22ECD1D94DF2991C299F927D1088A0A59FA1F5C0A5B17`，`git bundle verify` 通过，包含完整历史和 80 个本地分支引用；历史分支未导入正式仓库。
-- personal marketplace 位于 `C:\Users\w\.agents\plugins\marketplace.json`，个人插件源位于 `C:\Users\w\plugins\codex-project-workflow`。
-- 当前 installed cache 版本为 `0.1.0+codex.20260712082233`；新任务 `019f5979-2a17-7c80-871e-8cecbcfa3c4e` 已确认技能来自新电脑 installed cache。
-- `python scripts\verify_plugin_install_smoke.py` 的等价 bundled-Python 调用输出 `PLUGIN INSTALL SMOKE: PASS`；governance、research、verification metrics 分别为 `2484/2`、`1205/2`、`2239/2`。
-- installed cache 与仓库插件源包的 7 个核心文件 SHA-256 全部一致。
+- 仓库 `plugins/codex-project-workflow/` 是技能的唯一源；`C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260716095059` 是正式安装产生的运行时副本。
+- `.agents/skills/codex-project-workflow/` 只承担评估夹具、脚本和协议镜像职责，目录中不再保留可发现的 `SKILL.md`。
+- 插件安装 smoke 已针对最终 cache 通过；governance、research、verification 选取指标分别为 `2484/2`、`1205/2`、`2239/2`。
+- [官方 Skills 文档](https://learn.chatgpt.com/docs/build-skills)描述的 project config / `skills.config` 是预期配置契约；当前实现不能把 project-local filtering 当作有效隔离。项目实测与 [openai/codex#20210](https://github.com/openai/codex/issues/20210) 一致，因此已经删除重复发现入口，而不是依赖本地过滤。
+- 当前 Codex App 任务的插件清单可能保持任务创建时的旧快照；fresh CLI 进程已经确认只发现一个 `codex-project-workflow` 入口并指向新 cache。App 侧复验应使用新顶层任务或重启后的新任务。
 
-## 历史状态记录
+## P1 / P2 / P3 当前状态
+
+- P1：完成。插件包成为唯一源，`.agents` 退回评估/协议镜像，重复 `SKILL.md` 与无效 project-local filtering 方案已移除，最终 cache 已通过安装 smoke。
+- P2：实现、预检和 6 项 final-cache 干净回归均已执行；`negative_quick`、`standard_cross_file`、`full_high_risk_migration`、`nested_h3_counting` 通过，`hard_trigger_overage` 与 E35 `four_hard_triggers` 失败。CAND-14 状态为 `preflight_passed_regression_failed`，不得激活。
+- P3：本轮核心文档已同步到 2026-07-18 的正式失败结论。本轮 P3 不等同于旧路线图中的 Hook/MCP 长期候选。
+
+## 历史迁移验收基线（2026-07-13，冻结）
+
+- 迁移验收输入快照为 `2af7e23e3cfe20fff5cc81d37bbcd1965bc9efbf`，当时工作树干净且本地 `master` 与本地 `origin/master` 对齐。
+- E 盘完整 bundle 的 SHA-256 为 `AFE706473E13D31ED9F22ECD1D94DF2991C299F927D1088A0A59FA1F5C0A5B17`，`git bundle verify` 通过，包含完整历史和 80 个本地分支引用；历史分支未导入正式仓库。
+- 当时验证的 installed cache 是 `0.1.0+codex.20260712082233`。它只描述 2026-07-13 的迁移验收，不是当前运行版本。
+
+## 历史状态记录（冻结）
+
+> 以下 GPT-5.5 校准、候选、契约和回归记录是不可改写的历史证据；其中“当前”“生效入口”等措辞只对各自记录日期成立。
 
 - `CALIBRATION-20260620-04` 第一批四条线程已完成收集：E02 `low_risk_listing`、E02 `download` 和 E16 `default` 行为有效；E12 `state_matrix` 因提示词没有暴露 evaluator-supplied workspace，线程转而读取仓库内评估夹具，被收集器标记为 `evaluator_oracle_access`，本批次暂停扩大投放。
 - E12 夹具提示已改为显式包含 `{workspace}` 和 `{workspace}/scenarios`，脚本回归已覆盖该边界；`CALIBRATION-20260620-04-E12RERUN` 单项重跑已收集，`oracle_access_detected=false`、`prompt_integrity.valid=true`、`changed_files=[]`，可作为原 E12 无效样本的替代结果。
@@ -98,13 +113,13 @@
 - 激活后本地确定性验证通过：48 项脚本测试、36 案例行为夹具、31/31 完整夹具、REGRESSION-20260619-22 和 REGRESSION-20260619-23 结果验证，以及正式入口目标哈希核对均通过。
 - 激活变更已提交为本地回退点，提交信息为 `activate codex project workflow candidate 09`。
 
-## 当前工作模式
+## 历史工作模式（2026-06，冻结）
 
 - 工作模式：完整
 - Agent 策略：本阶段 3 个已批准只读 Agent 均已完成审查；主 Agent 已吸收评估隔离、技能规则和反方回归发现并保留全部写入与最终判断权。
 - 联网策略：实现阶段按需查询公开的一手资料；内部内容不外发
 
-## 当前实现契约
+## 历史实现契约（IMPL-20260613-02，冻结）
 
 - 契约 ID：`IMPL-20260613-02`
 - 版本：v2
@@ -123,7 +138,7 @@
 - 独立来源：`ARCHITECTURE.md` 长期规则候选要求、`DECISIONS.md` ADR-023/ADR-026、`EVALUATION.md` E02/E16/E32/E35 规范、`CALIBRATION-20260613-03` 原始 rollout。
 - 未验证：候选在全新桌面线程中的稳定性，以及下一轮 16 线程完整校准结果。
 
-## 已完成
+## 历史完成记录（冻结）
 
 - 3 个只读 Agent 已完成评估隔离、候选规则和反方回归审查；主要发现已转化为机器可判定的污染检测、提示完整性、超限计算、授权状态和所有权回归。
 - 隔离候选 `CAND-20260613-01` 已绑定基础提交、三份正式目标及候选哈希、可应用补丁哈希和失效条件；当前状态为预检通过、待独立评估，未允许激活。
@@ -326,21 +341,23 @@
 
 ## 当前下一步
 
-1. 在真实任务中使用已安装插件，只记录有证据的改进候选。
-2. 插件源发生变化时，重复 source prep、Codex App 重新启用、fresh-thread pickup 和仓库 install smoke。
-3. 在普通 PowerShell 中需要复验时，使用可执行的 Python 3 路径；当前裸 `python` 可能命中无效的 Microsoft Store 别名。
+1. 冻结 CAND-14 的失败证据，保持 `activation.allowed=false`，不得用局部通过或结果格式校验通过替代行为验收。
+2. 如继续 P2，建立新的修复候选，只处理 E32 verification 遗漏以及 E35 来源核验、指定测试命令和协议重复计数问题，再运行目标回归与防退化回归。
+3. App UI 需要显示新版本时，新开顶层任务或重启 App 后复验；当前任务的旧插件清单快照只作为刷新边界证据。
 
 ## 当前阻塞
 
-- 插件使用和项目恢复没有阻塞。
-- 普通 PowerShell 的裸 `python` 入口不可用是环境便利性问题；Codex bundled Python 已完成全部迁移验证。
+- 用户已批准本轮 P1、P2、P3 范围；剩余四项回归已经完成，不再受账户 Codex usage limit 阻塞。
+- 当前阻塞是行为验收失败而非运行基础设施：E32 和 E35 均未满足聚合通过条件。P2 因此保持未激活；修复必须进入新候选，不能改写 CAND-14 的失败结论。
 
 ## 当前风险
 
-- 当前验收未联网 fetch；`origin/master` 结论只代表本地远端跟踪引用。迁移阶段已另行只读核对过服务器 `master` 与相同提交一致。
-- 后续插件更新若未同时更新个人源、installed cache 和状态文档，可能再次产生版本漂移。
-- 历史评估记录保留旧电脑绝对路径属于证据的一部分，不应机械替换为新电脑路径。
+- project-local `skills.config` 的预期契约与当前运行时行为存在差异；在实现修复前，不得重新依赖该过滤层维持单一技能入口。
+- App 任务插件清单可能是创建时快照；必须区分“旧任务未刷新”和“fresh CLI/新任务未加载新 cache”。
+- 后续插件更新若未同时复验仓库源、个人源、installed cache 和状态文档，可能再次产生版本漂移。
+- 历史评估记录包含 GPT-5.5、旧 cache 和旧绝对路径，这些属于证据的一部分，不应机械改写为当前值。
+- 自动记录、Hook 和 MCP 仍不在范围；不得把人工候选记录描述为后台自动记录。
 
 ## 当前需要用户决定
 
-- 暂无阻塞性决定。
+- 暂无阻塞性决定；若候选、目标哈希或范围变化，必须按候选失效条件重新确认。

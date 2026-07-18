@@ -3,6 +3,7 @@ import argparse
 import html
 import importlib.util
 import json
+import os
 import re
 from pathlib import Path
 
@@ -46,7 +47,7 @@ def delegation_input(message):
     for _ in range(4):
         match = re.search(r"<input>(.*?)</input>", current, flags=re.DOTALL)
         if not match:
-            return None if current == message else current.strip()
+            return current.strip()
         current = html.unescape(match.group(1).strip())
     return current.strip()
 
@@ -89,6 +90,13 @@ def prompt_integrity(raw_messages, setup):
             observed_prompt == expected_prompt
             and not unexpected
         ),
+    }
+
+
+def manifest_provenance(manifest_path, output_dir):
+    return {
+        "path": Path(os.path.relpath(manifest_path, output_dir)).as_posix(),
+        "sha256": collect_smoke.sha256(manifest_path),
     }
 
 
@@ -135,10 +143,12 @@ def collect(manifest_path, sessions_root, setup_state_path, output_dir):
             encoding="utf-8",
         )
 
+    provenance = manifest_provenance(manifest_path, output_dir)
     summary = {
         "format_version": "1.0",
         "run_id": manifest["run_id"],
-        "source_manifest": str(manifest_path.resolve()),
+        "source_manifest": provenance["path"],
+        "source_manifest_sha256": provenance["sha256"],
         "source_setup_state": str(setup_state_path.resolve()),
         "results": [
             {

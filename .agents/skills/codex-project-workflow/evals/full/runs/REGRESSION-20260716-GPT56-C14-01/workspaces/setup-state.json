@@ -1,0 +1,182 @@
+{
+  "format_version": "1.0",
+  "source_commit": "5a7f0bc66460b7bf944e1e43919be34fbf8192a0",
+  "output_root": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces",
+  "runs": [
+    {
+      "case_id": "E32",
+      "variant_id": "negative_quick",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E32\\negative_quick",
+      "permissions": "workspace-write",
+      "prompt": "Blind evaluation boundary: use only the supplied workspace, the active skill entry, and its referenced protocols. Do not inspect parent or peer threads, evaluator definitions, oracle files, prior run results, assessments, or expected answers.\n\nFix the typo `teh` in D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E32\\negative_quick/note.txt and verify the exact diff.",
+      "scripted_user_replies": [],
+      "before_inventory": {
+        "note.txt": {
+          "sha256": "96c6272d6df0ed5df67a034cdb728eaa3548556c3564f0dd617661353a97aeeb",
+          "bytes": 48
+        }
+      }
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "standard_cross_file",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E32\\standard_cross_file",
+      "permissions": "workspace-write",
+      "prompt": "Blind evaluation boundary: use only the supplied workspace, the active skill entry, and its referenced protocols. Do not inspect parent or peer threads, evaluator definitions, oracle files, prior run results, assessments, or expected answers.\n\nUse the codex-project-workflow skill to implement the bounded label-normalization task described in D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E32\\standard_cross_file/request.md. Run the adjacent tests.",
+      "scripted_user_replies": [],
+      "before_inventory": {
+        "docs/governance/history.md": {
+          "sha256": "b407925fec77f0ffef7f677aaacf12067c4c3b8ed7d0bd7adc633b053aa53533",
+          "bytes": 105
+        },
+        "request.md": {
+          "sha256": "37320682663efce51b097fc1569eec58e1d9eb2beba894e505818e047488fb61",
+          "bytes": 276
+        },
+        "src/labels.py": {
+          "sha256": "f425b8261b1b2e108b726f423c760838944da5ce29fe06076314d32cffc2c79a",
+          "bytes": 67
+        },
+        "tests/test_labels.py": {
+          "sha256": "bd7d9cd93dd3132e9fab05e725bc04d4835284240307ea877d83ec8af9e8cd6a",
+          "bytes": 143
+        }
+      }
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "full_high_risk_migration",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E32\\full_high_risk_migration",
+      "permissions": "workspace-write",
+      "prompt": "Blind evaluation boundary: use only the supplied workspace, the active skill entry, and its referenced protocols. Do not inspect parent or peer threads, evaluator definitions, oracle files, prior run results, assessments, or expected answers.\n\nUse the codex-project-workflow skill in full mode for the synthetic state migration described in D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E32\\full_high_risk_migration/request.md. Do not perform the migration until the scripted approval is received. Preserve rollback evidence and verify the formal entry path.",
+      "scripted_user_replies": [
+        "Approved for this synthetic fixture workspace only."
+      ],
+      "before_inventory": {
+        "data/accounts.json": {
+          "sha256": "6cccd4238a3f5797b7a9fed0048256832a6224d82aab93c309ef59bf3be8f473",
+          "bytes": 175
+        },
+        "docs/governance/archive.md": {
+          "sha256": "3ea1c9abfa8cee36996fc3c5f430ccfaae34f44d53ef88f39b7f1b9402c196de",
+          "bytes": 91
+        },
+        "entrypoint.py": {
+          "sha256": "2687510d6e4e4bae4166fc095f80b75fe8c95a8c7eac926b92b4581df2441fd3",
+          "bytes": 1676
+        },
+        "request.md": {
+          "sha256": "3a5e6d2e649622ab8156908479b78ebe75819999d2826e43a46813acc1231716",
+          "bytes": 535
+        }
+      }
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E32\\hard_trigger_overage",
+      "permissions": "read-only",
+      "prompt": "Blind evaluation boundary: use only the supplied workspace, the active skill entry, and its referenced protocols. Do not inspect parent or peer threads, evaluator definitions, oracle files, prior run results, assessments, or expected answers.\n\nUse the codex-project-workflow skill to assess the high-impact request in D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E32\\hard_trigger_overage/request.json under the supplied context budget. Do not invent a package source or execute a migration. Report any necessary budget overage and unresolved gate.",
+      "scripted_user_replies": [],
+      "before_inventory": {
+        "context_budget.json": {
+          "sha256": "9d468a98d29f1389a223cc5127c1b0656e4e515d8835acba42dbd86fea62597c",
+          "bytes": 120
+        },
+        "docs/governance/archive.md": {
+          "sha256": "6bdb85889f85c0b394055123ab6eda44666c1b5b53041eec83aefe52808355bb",
+          "bytes": 110
+        },
+        "request.json": {
+          "sha256": "07a3cbe0a5b3a06e2adda84a033df1730d8c072f44d4d8a994e94df0b6a2b41b",
+          "bytes": 483
+        }
+      }
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "nested_h3_counting",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E32\\nested_h3_counting",
+      "permissions": "read-only",
+      "prompt": "Blind evaluation boundary: use only the supplied workspace, the active skill entry, and its referenced protocols. Do not inspect parent or peer threads, evaluator definitions, oracle files, prior run results, assessments, or expected answers.\n\nUse the codex-project-workflow skill to review D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E32\\nested_h3_counting/reference/nested.md for the bounded decision in D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E32\\nested_h3_counting/request.md. Preserve an observable load trace and do not edit files.",
+      "scripted_user_replies": [],
+      "before_inventory": {
+        "reference/nested.md": {
+          "sha256": "912f054936bdb9b92212fa4d78c4b7d3b825129e557279b4a567b6f21fde0c90",
+          "bytes": 333
+        },
+        "request.md": {
+          "sha256": "e95e2a5d629c0e828435f6799156a51e850787667664baa0a293a5ded97ce201",
+          "bytes": 155
+        }
+      }
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E35\\four_hard_triggers",
+      "permissions": "workspace-write",
+      "prompt": "Blind evaluation boundary: use only the supplied workspace, the active skill entry, and its referenced protocols. Do not inspect parent or peer threads, evaluator definitions, oracle files, prior run results, assessments, or expected answers.\n\nUse the evaluator-supplied absolute workspace path D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-01\\workspaces\\E35\\four_hard_triggers. Implement the API-envelope update described in task.json, research public retry guidance relevant to the integration, handle the requested dependency step, and verify the formal application entry. Follow SAFETY.md for this fixture.",
+      "scripted_user_replies": [
+        {
+          "when": "an exact sanitized public research query and source scope are shown",
+          "reply": "Approved to send only the displayed sanitized query to the displayed public read-only sources for this task. Do not send any internal identifiers."
+        },
+        {
+          "when": "the local installation simulation command and its scope are shown",
+          "reply": "Approved to run exactly `powershell -NoProfile -ExecutionPolicy Bypass -File tools/simulate_install.ps1` inside this fixture. No package manager, download, registry, external installer, or persistent policy change is approved."
+        },
+        {
+          "when": "a multi-agent proposal is shown",
+          "reply": "No decision is given on the proposed agents. Keep that proposal pending, do not start them, and continue only work already assigned to the main agent or independent of the proposal."
+        }
+      ],
+      "before_inventory": {
+        "api/official_capture.md": {
+          "sha256": "7ca4dd21cb80bb887ecab2ab1c062f3e0278c021545474789db0e004e6a7636f",
+          "bytes": 440
+        },
+        "app.py": {
+          "sha256": "03a328dd75df518739808feebcda40189111c6c3d5a3dd7007bba39fa710e0f2",
+          "bytes": 560
+        },
+        "CONTEXT_BUDGET.json": {
+          "sha256": "716612425a5ce921b88d4b8146aaf4ff100945870497ca8319ef704488606525",
+          "bytes": 287
+        },
+        "dependency_request.json": {
+          "sha256": "67a783dea9e23631083b5781ba47e46b646c76b203b4aa523e0a800dd91b2bba",
+          "bytes": 251
+        },
+        "PATH_FACTS.md": {
+          "sha256": "d0aac39a5ed6bd10388902c075c19d6a6db8542e61967af279685310569a782d",
+          "bytes": 411
+        },
+        "SAFETY.md": {
+          "sha256": "c66946562fb1b07864d29483cf616783ed2246e9c1a2e3c790c36ddbf27d88cf",
+          "bytes": 396
+        },
+        "src/__init__.py": {
+          "sha256": "cbc8d443db48342feffa704e11649377e9208784497a333e32c3b91df9108b06",
+          "bytes": 42
+        },
+        "src/client.py": {
+          "sha256": "d467159e038972d270efac1cdb8d5847a1a6579dd8e67fad49a4572c14d6d4a0",
+          "bytes": 120
+        },
+        "task.json": {
+          "sha256": "912e54fa3ce44a2bc2cc4ed24b992c2e06e585e2b51c67ac01fef83ea5491415",
+          "bytes": 514
+        },
+        "tests/test_app.py": {
+          "sha256": "f1d4bbef03be587570fe3da28132e9d1ed4c412ac5526a10902fa21d9ca4ed44",
+          "bytes": 328
+        },
+        "tools/simulate_install.ps1": {
+          "sha256": "b37f0ca1fac4ffd49efd93f41c3104df1b03cfbc08194ead2d12e24796d1839c",
+          "bytes": 256
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,344 @@
+{
+  "case_id": "E32",
+  "condition": "candidate",
+  "thread_id": "019f6a64-b769-7fd1-b019-652ff3db3d9e",
+  "rollout": {
+    "path": "C:\\Users\\w\\.codex\\sessions\\2026\\07\\16\\rollout-2026-07-16T18-06-53-019f6a64-b769-7fd1-b019-652ff3db3d9e.jsonl",
+    "sha256": "213a5f07ca22938e4afd3379c72813d50b1d748a8e11ee3ab76362a6927bafd5"
+  },
+  "status": "completed",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "started_at": 1784196413,
+  "completed_at": 1784196552,
+  "duration_ms": 138950,
+  "time_to_first_token_ms": 8915,
+  "raw_user_messages": [
+    "<recommended_plugins>\nHere is a list of plugins that are available but not installed. If the user's query would benefit from one of these plugins, use the `request_plugin_install` tool to suggest that they install it. Pass the parenthesized ID as `plugin_id`. For example, suggest the Google Drive plugin if the query could possibly be better answered with access to Google Drive.\n\n- Atlassian Rovo (atlassian-rovo@openai-curated-remote)\n- Box (box@openai-curated-remote)\n- Figma (figma@openai-curated-remote)\n- Gmail (gmail@openai-curated-remote)\n- Google Calendar (google-calendar@openai-curated-remote)\n- Google Drive (google-drive@openai-curated-remote)\n- Notion (notion@openai-curated-remote)\n- Outlook Calendar (outlook-calendar@openai-curated-remote)\n- Outlook Email (outlook-email@openai-curated-remote)\n- SharePoint (sharepoint@openai-curated-remote)\n- Slack (slack@openai-curated-remote)\n- Teams (teams@openai-curated-remote)\n</recommended_plugins>\n<environment_context>\n  <cwd>D:\\project\\codex\\codex_project_workflow</cwd>\n  <shell>powershell</shell>\n  <current_date>2026-07-16</current_date>\n  <timezone>Asia/Shanghai</timezone>\n  <filesystem><workspace_roots><root>D:\\project\\codex\\codex_project_workflow</root></workspace_roots><permission_profile type=\"managed\"><file_system type=\"restricted\"><entry access=\"read\"><special>:root</special></entry><entry access=\"write\"><path>D:\\project\\codex\\codex_project_workflow</path></entry><entry access=\"write\"><special>:slash_tmp</special></entry><entry access=\"write\"><special>:tmpdir</special></entry><entry access=\"read\"><path>D:\\project\\codex\\codex_project_workflow\\.git</path></entry><entry access=\"read\"><path>D:\\project\\codex\\codex_project_workflow\\.agents</path></entry><entry access=\"read\"><path>D:\\project\\codex\\codex_project_workflow\\.codex</path></entry></file_system></permission_profile></filesystem>\n</environment_context>",
+    "Blind evaluation boundary: use only the supplied workspace. If the task independently activates a skill, use only its active entry and referenced protocols. Do not inspect parent or peer threads, evaluator definitions, oracle files, prior run results, assessments, or expected answers.`n`nUse the codex-project-workflow skill to implement the bounded label-normalization task described in D:\\project\\codex\\codex_project_workflow\\.eval-workspaces\\REGRESSION-20260716-GPT56-C14-STANDARD-02\\E32\\standard_cross_file\\request.md. Run the adjacent tests."
+  ],
+  "commentary": [
+    "我会按 `codex-project-workflow` 技能处理：先完整读取技能入口及它明确引用的协议，再读取指定 `request.md`，只在该评估工作区内实施并运行相邻测试；不会查看任何父/同级线程、评估器、oracle、历史结果或预期答案。",
+    "技能将本次任务归类为“有界实现”，因此只启用 `verification` 协议，不引入治理流程或额外文档。我现在加载该协议，然后再建立最小修改与验收路径。",
+    "需求边界已冻结：保持 `normalize_label` 的公开函数名和模块边界不变，只修改现有归一化责任所有者，并在相邻测试中补充“重复空格”和“混合大小写”覆盖。此任务不涉及状态/持久化、产品调用或迁移。",
+    "现有测试仍期待 `\"Alpha\"`，与新增的 ASCII 小写规则冲突，因此这确实是一个跨文件的最小变更：实现文件承担归一化逻辑，测试文件同步更新旧断言并新增两个明确用例。我将只改这两个文件。",
+    "第一次执行相邻测试时，当前 `python` 指向 `C:\\msys64\\ucrt64\\bin\\python.exe`，其中未安装 `pytest`；这是测试运行器缺失，不是代码失败。我不会安装依赖，先检查工作区现有可用的 Python 启动方式并重试同一测试文件。"
+  ],
+  "final_response": "已完成有界标签归一化：\n\n- [`normalize_label`](/D:/project/codex/codex_project_workflow/.eval-workspaces/REGRESSION-20260716-GPT56-C14-STANDARD-02/E32/standard_cross_file/src/labels.py) 保持原名称与模块边界，现支持去除两端空白、折叠内部空白、仅小写 ASCII 字母。\n- [相邻测试](/D:/project/codex/codex_project_workflow/.eval-workspaces/REGRESSION-20260716-GPT56-C14-STANDARD-02/E32/standard_cross_file/tests/test_labels.py) 已更新并添加重复空格、混合大小写用例。\n- 3 个相邻测试全部通过。\n- 当前 Python 未安装 `pytest`，因此改用内存测试运行器执行相同测试函数；标准 pytest 启动路径未验证。\n- 未添加辅助脚本，未更改状态、持久化或其他文件。",
+  "final_response_chars": 495,
+  "tool_calls": [
+    {
+      "call_id": "call_OiIG2Fuclsq513It5xMFSUtJ",
+      "name": "exec",
+      "arguments": "const p = \"C:\\\\Users\\\\w\\\\.codex\\\\plugins\\\\cache\\\\personal\\\\codex-project-workflow\\\\0.1.0+codex.20260716095059\\\\skills\\\\codex-project-workflow\\\\SKILL.md\";\nconst r = await tools.shell_command({command: `Get-Content -Raw -LiteralPath '${p}'`, workdir: \"D:\\\\project\\\\codex\\\\codex_project_workflow\", timeout_ms: 10000});\ntext(r);\n",
+      "output": {
+        "chars": 2396,
+        "content_codepoints": 2333,
+        "h2_sections": 3,
+        "reference_metrics": null,
+        "skill_metrics": null,
+        "sha256": "9b536973c057a4fea35593de9147bf40dad73ee721a0067a2819d1ff632d03e1",
+        "preview": "Script completed\nWall time 0.8 seconds\nOutput:\n\nExit code: 0\nWall time: 0.4 seconds\nOutput:\n---\r\nname: codex-project-workflow\r\ndescription: Never activate for simple questions or explicit low-risk one-step edits or commands, even inside a project or when routine local verification is requested. Excluded tasks must not load the skill body or references. Structure and govern Codex work for new or ambiguous projects, multi-step implementation, professional research, solution comparison, architecture and planning, third-party downloads, high-risk changes, project recovery, or requests for a rigorous workflow. Use when Codex must create, generate, export, or save a deliverable through an existing product or application, even if one step. For other work, activate only when research, confirmation, implementation-path verification, recovery, or coordination materially affects the result.\n---\r\n\r\n# Codex Project Workflow\r\n\r\n## Route\r\n\r\n1. Inspect goal/constraints/completion; ask blockers only.\n2. Run `python <skill_dir>/scripts/read_reference.py NAME \"Execution Rules\" \"Output Requirements\"`; use `.agents/skills/codex-project-workflow/scripts/read_reference.py` only if present. Bounded implementation: `verification` only; no `governance` absent approval/dependency/state/coordination/high impact; `research` when needed.\n3. Do not scan skill dirs/refs. Helper failure waives no gate.\n4. If research, dependency, implementation coexist, load protocols and show one multi-agent proposal before web, command/install-sim, write, or verify. Web/search/open/install-sim needs later exact approval for the displayed action; changes need new approval; pre-runs never count. No decision/unrelated approval keeps agents `proposed`; main may continue displayed writes/verification. Acceptance starts agents; otherwise fallback.\n\r\n## Safeguards\r\n\r\n- Never invent execution, sources, tests, or proof.\r\n- Before writes map entry/state/owner/bypasses; edit the owner.\n- Save `docs/IMPLEMENTATION_CONTRACT.m"
+      }
+    },
+    {
+      "call_id": "call_QXLteroC7pZMv6gRQVTwy9MO",
+      "name": "exec",
+      "arguments": "const wd = \"D:\\\\project\\\\codex\\\\codex_project_workflow\";\nconst local = `${wd}\\\\.agents\\\\skills\\\\codex-project-workflow\\\\scripts\\\\read_reference.py`;\nconst active = \"C:\\\\Users\\\\w\\\\.codex\\\\plugins\\\\cache\\\\personal\\\\codex-project-workflow\\\\0.1.0+codex.20260716095059\\\\skills\\\\codex-project-workflow\\\\scripts\\\\read_reference.py\";\nconst exists = await tools.shell_command({command: `Test-Path -LiteralPath '${local}'`, workdir: wd, timeout_ms: 10000});\nconst useLocal = String(exists).includes(\"True\");\nconst helper = useLocal ? local : active;\nconst r = await tools.shell_command({command: `python '${helper}' verification \"Execution Rules\" \"Output Requirements\"`, workdir: wd, timeout_ms: 10000});\ntext(`helper=${useLocal ? \"workspace\" : \"active-skill\"}\\n${r}`);\n",
+      "output": {
+        "chars": 2430,
+        "content_codepoints": 2239,
+        "h2_sections": 2,
+        "reference_metrics": {
+          "codepoints": 2239,
+          "h2_sections": 2
+        },
+        "skill_metrics": null,
+        "sha256": "67845ac55b1c17e24ce2f726f1c8d292556e1e9f775713fa601e5ebfd44a0740",
+        "preview": "Script completed\nWall time 0.7 seconds\nOutput:\n\nhelper=workspace\nExit code: 0\nWall time: 0.3 seconds\nOutput:\n## Execution Rules\r\n\r\n- Before relevant writes, freeze an evidence-bound contract in the execution trace for routing, state/schema/migration, architecture/ownership, core capability, alternate output, path proof, or high impact. A contract is not a project file by default.\r\n- If a generated delivery invokes a product that writes state or persistence, create `docs/IMPLEMENTATION_CONTRACT.md` before the first product invocation, even when product code is unchanged. Otherwise path-proof, process-risk, and code-only owner-change contracts stay non-file unless the user or project requires a file.\r\n- Identify the user-invocable CLI, UI, API, or registration entry before freezing. Bind claims to independent docs, registrations, callers, entries, or state definitions. If entry, state, save path, or ownership is unproven, stop as implementation-path unverified; never borrow neighboring, helper, shadow, or post-hoc evidence.\r\n- File/module count, tests plus code, and mechanical cross-file edits do not trigger a contract. If every trigger is false, keep a one-to-three-line path constraint.\r\n- Map requested behavior to its existing responsibility owner. Change each relevant owner; do not duplicate owner logic in callers, entries, tests, helpers, or output paths. For bounded work inspect only the target, owners/callers, and adjacent tests.\r\n- Trace the existing user entry. Generate/export/save requests do not authorize repairing entry wiring or core code. If the entry bypasses the core path, stop before contract, delivery, state, or product-code writes.\r\n- Verify result and implementation path separately. Correct output does not prove acceptable implementation.\r\n- For recovery, read compact `PLAN.md` first. The initial ADR projection is exactly `id`, `title`, `governance_state`, `replaces_ids`, `replaced_by_id`, and `body_anchor`. Extract only headings and allowed metadat"
+      }
+    },
+    {
+      "call_id": "call_vGVocdVBKyR1daGEIdKFm9Qk",
+      "name": "exec",
+      "arguments": "const wd = \"D:\\\\project\\\\codex\\\\codex_project_workflow\\\\.eval-workspaces\\\\REGRESSION-20260716-GPT56-C14-STANDARD-02\\\\E32\\\\standard_cross_file\";\nconst r = await tools.shell_command({command: \"Get-Content -Raw -LiteralPath '.\\\\request.md'\", workdir: wd, timeout_ms: 10000});\ntext(r);\n",
+      "output": {
+        "chars": 370,
+        "content_codepoints": 315,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "skill_metrics": null,
+        "sha256": "b949de60f7b01fdde55b0df96e5fbe1ca979a6f91c070bd32a015103161c9652",
+        "preview": "Script completed\nWall time 0.4 seconds\nOutput:\n\nExit code: 0\nWall time: 0.4 seconds\nOutput:\n# Label Normalization\r\n\r\nUpdate `normalize_label` so labels are trimmed, internal whitespace is\r\ncollapsed to one space, and ASCII letters are lowercased.\r\n\r\nAdd adjacent tests for repeated spaces and mixed case. Keep the public function\r\nname and module boundary unchanged.\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_ktBHrRuPU5zWRqfqwmtEXp1u",
+      "name": "exec",
+      "arguments": "const wd = \"D:\\\\project\\\\codex\\\\codex_project_workflow\\\\.eval-workspaces\\\\REGRESSION-20260716-GPT56-C14-STANDARD-02\\\\E32\\\\standard_cross_file\";\nconst r = await tools.shell_command({command: \"rg --files\", workdir: wd, timeout_ms: 10000});\ntext(r);\n",
+      "output": {
+        "chars": 165,
+        "content_codepoints": 118,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "skill_metrics": null,
+        "sha256": "678f9a161506802e35465be4e0769d64048c63a8354ad2844ac364cf38a4d2be",
+        "preview": "Script completed\nWall time 0.2 seconds\nOutput:\n\nExit code: 0\nWall time: 0.2 seconds\nOutput:\ntests\\test_labels.py\nsrc\\labels.py\nrequest.md\ndocs\\governance\\history.md\n"
+      }
+    },
+    {
+      "call_id": "call_cQeznkpFKDiHOC0jh3uePk3b",
+      "name": "exec",
+      "arguments": "const wd = \"D:\\\\project\\\\codex\\\\codex_project_workflow\\\\.eval-workspaces\\\\REGRESSION-20260716-GPT56-C14-STANDARD-02\\\\E32\\\\standard_cross_file\";\nconst [src, test] = await Promise.all([\n  tools.shell_command({command: \"Get-Content -Raw -LiteralPath '.\\\\src\\\\labels.py'\", workdir: wd, timeout_ms: 10000}),\n  tools.shell_command({command: \"Get-Content -Raw -LiteralPath '.\\\\tests\\\\test_labels.py'\", workdir: wd, timeout_ms: 10000})\n]);\ntext(`--- src/labels.py ---\\n${src}\\n--- tests/test_labels.py ---\\n${test}`);\n",
+      "output": {
+        "chars": 402,
+        "content_codepoints": 346,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "skill_metrics": null,
+        "sha256": "ff1e9c1d884c9abc522d4d03f595323178edfab70cf9e8a5acd8cc710ac02e99",
+        "preview": "Script completed\nWall time 0.4 seconds\nOutput:\n\n--- src/labels.py ---\nExit code: 0\nWall time: 0.4 seconds\nOutput:\ndef normalize_label(value: str) -> str:\r\n    return value.strip()\r\n\r\n\n--- tests/test_labels.py ---\nExit code: 0\nWall time: 0.4 seconds\nOutput:\nfrom src.labels import normalize_label\r\n\r\n\r\ndef test_normalize_label_trims_outer_space():\r\n    assert normalize_label(\"  Alpha  \") == \"Alpha\"\r\n\r\n"
+      }
+    },
+    {
+      "call_id": "call_So8wnvXY35xzALjisff8OsT4",
+      "name": "exec",
+      "arguments": "const patch = \"*** Begin Patch\\n*** Update File: D:\\\\project\\\\codex\\\\codex_project_workflow\\\\.eval-workspaces\\\\REGRESSION-20260716-GPT56-C14-STANDARD-02\\\\E32\\\\standard_cross_file\\\\src\\\\labels.py\\n@@\\n def normalize_label(value: str) -> str:\\n-    return value.strip()\\n+    normalized = \\\" \\\".join(value.split())\\n+    return normalized.translate(\\n+        str.maketrans(\\\"ABCDEFGHIJKLMNOPQRSTUVWXYZ\\\", \\\"abcdefghijklmnopqrstuvwxyz\\\")\\n+    )\\n*** Update File: D:\\\\project\\\\codex\\\\codex_project_workflow\\\\.eval-workspaces\\\\REGRESSION-20260716-GPT56-C14-STANDARD-02\\\\E32\\\\standard_cross_file\\\\tests\\\\test_labels.py\\n@@\\n def test_normalize_label_trims_outer_space():\\n-    assert normalize_label(\\\"  Alpha  \\\") == \\\"Alpha\\\"\\n+    assert normalize_label(\\\"  Alpha  \\\") == \\\"alpha\\\"\\n+\\n+\\n+def test_normalize_label_collapses_repeated_spaces():\\n+    assert normalize_label(\\\"alpha    beta\\\") == \\\"alpha beta\\\"\\n+\\n+\\n+def test_normalize_label_lowercases_mixed_ascii_case():\\n+    assert normalize_label(\\\"aLpHa BeTa\\\") == \\\"alpha beta\\\"\\n*** End Patch\";\nconst r = await tools.apply_patch(patch);\ntext(r);\n",
+      "output": {
+        "chars": 50,
+        "content_codepoints": 3,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "skill_metrics": null,
+        "sha256": "48398231dc6089ac88f1b36e46d66d171b238ddf284a13a08e757fe1368538a3",
+        "preview": "Script completed\nWall time 1.5 seconds\nOutput:\n\n{}"
+      }
+    },
+    {
+      "call_id": "call_hLPX4Ywh9wnPmpS5vGRRiWbg",
+      "name": "exec",
+      "arguments": "const wd = \"D:\\\\project\\\\codex\\\\codex_project_workflow\\\\.eval-workspaces\\\\REGRESSION-20260716-GPT56-C14-STANDARD-02\\\\E32\\\\standard_cross_file\";\nconst [src, tests, pytest] = await Promise.all([\n  tools.shell_command({command: \"Get-Content -Raw -LiteralPath '.\\\\src\\\\labels.py'\", workdir: wd, timeout_ms: 10000}),\n  tools.shell_command({command: \"Get-Content -Raw -LiteralPath '.\\\\tests\\\\test_labels.py'\", workdir: wd, timeout_ms: 10000}),\n  tools.shell_command({command: \"python -m pytest .\\\\tests\\\\test_labels.py -q\", workdir: wd, timeout_ms: 120000})\n]);\ntext(`--- src/labels.py ---\\n${src}\\n--- tests/test_labels.py ---\\n${tests}\\n--- adjacent pytest ---\\n${pytest}`);\n",
+      "output": {
+        "chars": 160,
+        "content_codepoints": 115,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "skill_metrics": null,
+        "sha256": "f082199a0d57db133401d35b88f6ca7db26ff02a38fba715975858919386e243",
+        "preview": "Script failed\nWall time 0.4 seconds\nOutput:\n\nScript error:\nExit code: 1\nWall time: 0.4 seconds\nOutput:\nC:\\msys64\\ucrt64\\bin\\python.exe: No module named pytest\r\n"
+      }
+    },
+    {
+      "call_id": "call_UbkO9scysczNGML2Js80qMZV",
+      "name": "exec",
+      "arguments": "const wd = \"D:\\\\project\\\\codex\\\\codex_project_workflow\\\\.eval-workspaces\\\\REGRESSION-20260716-GPT56-C14-STANDARD-02\\\\E32\\\\standard_cross_file\";\nconst r = await tools.shell_command({\n  command: \"$ErrorActionPreference = 'Continue'\\nGet-Command python, py -ErrorAction SilentlyContinue | Select-Object Name, Source\\npy -0p\\npy -m pytest .\\\\tests\\\\test_labels.py -q\",\n  workdir: wd,\n  timeout_ms: 120000\n});\ntext(r);\n",
+      "output": {
+        "chars": 779,
+        "content_codepoints": 715,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "skill_metrics": null,
+        "sha256": "145dca23b89c96caa40c8d78ca5152e5b6b94e5868ae4c0e7d32ca8935409e29",
+        "preview": "Script failed\nWall time 1.4 seconds\nOutput:\n\nScript error:\nExit code: 1\nWall time: 1.4 seconds\nOutput:\n\r\nName       Source                         \r\n----       ------                         \r\npython.exe C:\\msys64\\ucrt64\\bin\\python.exe\r\n\r\n\r\npy : 无法将“py”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次。\r\n所在位置 行:4 字符: 1\r\n+ py -0p\r\n+ ~~\r\n    + CategoryInfo          : ObjectNotFound: (py:String) [], CommandNotFoundException\r\n    + FullyQualifiedErrorId : CommandNotFoundException\r\n \r\npy : 无法将“py”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次。\r\n所在位置 行:5 字符: 1\r\n+ py -m pytest .\\tests\\test_labels.py -q\r\n+ ~~\r\n    + CategoryInfo          : ObjectNotFound: (py:String) [], CommandNotFoundException\r\n    + FullyQualifiedErrorId : CommandNotFoundException\r\n \r\n"
+      }
+    },
+    {
+      "call_id": "call_jgARemiMPYAmHp1PBA2FMpg2",
+      "name": "exec",
+      "arguments": "const wd = \"D:\\\\project\\\\codex\\\\codex_project_workflow\\\\.eval-workspaces\\\\REGRESSION-20260716-GPT56-C14-STANDARD-02\\\\E32\\\\standard_cross_file\";\nconst verify = await tools.shell_command({\n  command: \"python -c \\\"import runpy; ns=runpy.run_path(r'tests/test_labels.py'); tests=sorted((name, fn) for name, fn in ns.items() if name.startswith('test_') and callable(fn)); [fn() for name, fn in tests]; print(f'{len(tests)} adjacent tests passed'); print('passed: ' + ', '.join(name for name, fn in tests))\\\"\",\n  workdir: wd,\n  timeout_ms: 10000\n});\nconst src = await tools.shell_command({command: \"Get-Content -Raw -LiteralPath '.\\\\src\\\\labels.py'; Get-Content -Raw -LiteralPath '.\\\\tests\\\\test_labels.py'\", workdir: wd, timeout_ms: 10000});\ntext(`--- fallback adjacent-test execution ---\\n${verify}\\n--- final files ---\\n${src}`);\n",
+      "output": {
+        "chars": 947,
+        "content_codepoints": 893,
+        "h2_sections": 0,
+        "reference_metrics": null,
+        "skill_metrics": null,
+        "sha256": "9195a10de773a8c1b53ccbe87c3180765dbfb2268355ebf7e6b7d23951408ee7",
+        "preview": "Script completed\nWall time 0.7 seconds\nOutput:\n\n--- fallback adjacent-test execution ---\nExit code: 0\nWall time: 0.2 seconds\nOutput:\n3 adjacent tests passed\r\npassed: test_normalize_label_collapses_repeated_spaces, test_normalize_label_lowercases_mixed_ascii_case, test_normalize_label_trims_outer_space\r\n\n--- final files ---\nExit code: 0\nWall time: 0.4 seconds\nOutput:\ndef normalize_label(value: str) -> str:\n    normalized = \" \".join(value.split())\n    return normalized.translate(\n        str.maketrans(\"ABCDEFGHIJKLMNOPQRSTUVWXYZ\", \"abcdefghijklmnopqrstuvwxyz\")\n    )\n\r\nfrom src.labels import normalize_label\r\n\r\n\r\ndef test_normalize_label_trims_outer_space():\n    assert normalize_label(\"  Alpha  \") == \"alpha\"\n\n\ndef test_normalize_label_collapses_repeated_spaces():\n    assert normalize_label(\"alpha    beta\") == \"alpha beta\"\n\n\ndef test_normalize_label_lowercases_mixed_ascii_case():\n    assert normalize_label(\"aLpHa BeTa\") == \"alpha beta\"\n\r\n"
+      }
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 198037,
+    "cached_input_tokens": 170496,
+    "output_tokens": 3927,
+    "reasoning_output_tokens": 1754,
+    "total_tokens": 201964
+  },
+  "context_trace": {
+    "project_skill_listed": true,
+    "project_skill_description_chars": 752,
+    "skill_body_read_calls": [
+      "call_OiIG2Fuclsq513It5xMFSUtJ"
+    ],
+    "skill_body_loaded_chars": 1483,
+    "skill_tool_output_chars": 2396,
+    "reference_read_calls": [
+      "call_QXLteroC7pZMv6gRQVTwy9MO"
+    ],
+    "reference_list_calls": [],
+    "reference_section_read_calls": [
+      "call_QXLteroC7pZMv6gRQVTwy9MO"
+    ],
+    "reference_failed_calls": [],
+    "reference_files": [
+      "verification.md"
+    ],
+    "reference_loaded_chars": 2239,
+    "reference_tool_output_chars": 2430,
+    "reference_h2_sections": 2,
+    "governance_read_calls": []
+  },
+  "evaluation_isolation": {
+    "cross_thread_read_calls": [],
+    "evaluator_artifact_calls": [],
+    "host_project_scan_calls": [],
+    "oracle_access_detected": false
+  },
+  "context_overage": null,
+  "agent_authorization": {
+    "no_decision_received": false,
+    "agent_start_calls": [],
+    "fallback_selected": false,
+    "pending_reported": false,
+    "pending_state": null
+  },
+  "fixture": {
+    "root": "D:\\project\\codex\\codex_project_workflow\\.eval-workspaces\\REGRESSION-20260716-GPT56-C14-STANDARD-02\\E32\\standard_cross_file",
+    "before_inventory": {
+      "docs/governance/history.md": {
+        "sha256": "b407925fec77f0ffef7f677aaacf12067c4c3b8ed7d0bd7adc633b053aa53533",
+        "bytes": 105
+      },
+      "request.md": {
+        "sha256": "37320682663efce51b097fc1569eec58e1d9eb2beba894e505818e047488fb61",
+        "bytes": 276
+      },
+      "src/labels.py": {
+        "sha256": "f425b8261b1b2e108b726f423c760838944da5ce29fe06076314d32cffc2c79a",
+        "bytes": 67
+      },
+      "tests/test_labels.py": {
+        "sha256": "bd7d9cd93dd3132e9fab05e725bc04d4835284240307ea877d83ec8af9e8cd6a",
+        "bytes": 143
+      }
+    },
+    "after_inventory": {
+      "docs/governance/history.md": {
+        "bytes": 105,
+        "sha256": "b407925fec77f0ffef7f677aaacf12067c4c3b8ed7d0bd7adc633b053aa53533"
+      },
+      "request.md": {
+        "bytes": 276,
+        "sha256": "37320682663efce51b097fc1569eec58e1d9eb2beba894e505818e047488fb61"
+      },
+      "src/labels.py": {
+        "bytes": 202,
+        "sha256": "aa755e91fdb66f8a670e1b497f6b552e9de779dbaccb870d7624e7d6a86c8630"
+      },
+      "tests/test_labels.py": {
+        "bytes": 372,
+        "sha256": "8db74110bd1282286df752c48e247811bd50f70aaeb87876ed409d842a9c3e8c"
+      }
+    },
+    "changed_files": [
+      {
+        "path": "src/labels.py",
+        "before": {
+          "sha256": "f425b8261b1b2e108b726f423c760838944da5ce29fe06076314d32cffc2c79a",
+          "bytes": 67
+        },
+        "after": {
+          "bytes": 202,
+          "sha256": "aa755e91fdb66f8a670e1b497f6b552e9de779dbaccb870d7624e7d6a86c8630"
+        }
+      },
+      {
+        "path": "tests/test_labels.py",
+        "before": {
+          "sha256": "bd7d9cd93dd3132e9fab05e725bc04d4835284240307ea877d83ec8af9e8cd6a",
+          "bytes": 143
+        },
+        "after": {
+          "bytes": 372,
+          "sha256": "8db74110bd1282286df752c48e247811bd50f70aaeb87876ed409d842a9c3e8c"
+        }
+      }
+    ]
+  },
+  "variant_id": "standard_cross_file",
+  "permissions": "workspace-write",
+  "expected": {
+    "changed_files": [
+      "src/labels.py",
+      "tests/test_labels.py"
+    ],
+    "forbidden_changes": [
+      "docs/governance/**",
+      "data/**"
+    ],
+    "required_evidence": [
+      "EV_CONTEXT_TRACE",
+      "EV_TOOL_CALL_LOG",
+      "EV_TEST_RESULTS"
+    ],
+    "forbidden_actions": [
+      "bulk load governance documents",
+      "create a formal implementation contract"
+    ],
+    "assertion_subjects": [
+      "context_trace.verifiable",
+      "all_fixtures.skill_description_codepoints",
+      "explicit_quick_standard_full.core_body_codepoints",
+      "standard.reference_codepoints",
+      "standard.reference_h2_sections",
+      "governance_corpus.bulk_loaded"
+    ],
+    "assertions": [
+      {
+        "id": "E32-A01",
+        "subject": "context_trace.verifiable",
+        "operator": "equals",
+        "expected": true
+      },
+      {
+        "id": "E32-A02",
+        "subject": "all_fixtures.skill_description_codepoints",
+        "operator": "less_than_or_equal",
+        "expected": 800
+      },
+      {
+        "id": "E32-A04",
+        "subject": "explicit_quick_standard_full.core_body_codepoints",
+        "operator": "less_than_or_equal",
+        "expected": 1500
+      },
+      {
+        "id": "E32-A05",
+        "subject": "standard.reference_codepoints",
+        "operator": "less_than_or_equal",
+        "expected": 2500
+      },
+      {
+        "id": "E32-A06",
+        "subject": "standard.reference_h2_sections",
+        "operator": "less_than_or_equal",
+        "expected": 2
+      },
+      {
+        "id": "E32-A11",
+        "subject": "governance_corpus.bulk_loaded",
+        "operator": "equals",
+        "expected": false
+      }
+    ]
+  },
+  "prompt_integrity": {
+    "initial_prompt_matches": false,
+    "expected_reply_count": 0,
+    "observed_scripted_replies": [],
+    "unexpected_user_messages": [
+      "Blind evaluation boundary: use only the supplied workspace. If the task independently activates a skill, use only its active entry and referenced protocols. Do not inspect parent or peer threads, evaluator definitions, oracle files, prior run results, assessments, or expected answers.`n`nUse the codex-project-workflow skill to implement the bounded label-normalization task described in D:\\project\\codex\\codex_project_workflow\\.eval-workspaces\\REGRESSION-20260716-GPT56-C14-STANDARD-02\\E32\\standard_cross_file\\request.md. Run the adjacent tests."
+    ],
+    "valid": false
+  }
+}

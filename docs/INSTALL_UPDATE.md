@@ -90,6 +90,40 @@ python scripts\verify_plugin_install_smoke.py
 
 ## 当前本机状态
 
+### 2026-07-16 当前验收状态
+
+当前仓库的唯一技能源是：
+
+```text
+D:\project\codex\codex_project_workflow\plugins\codex-project-workflow\skills\codex-project-workflow\SKILL.md
+```
+
+`.agents/skills/codex-project-workflow/` 只保留评估夹具、协议镜像和验证工具，不包含可发现的 `SKILL.md`。不要再用项目本地技能副本覆盖或证明插件运行时。
+
+当前已准备并安装的插件 cache：
+
+```text
+0.1.0+codex.20260716095059
+```
+
+```text
+C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260716095059
+```
+
+仓库源包、个人插件源和安装 cache 的 7 个内容文件应保持一致；manifest 允许个人源/安装 cache 带 cachebuster，而仓库 manifest 保持源版本。更新只能通过 `prepare_plugin_update.py` 和受支持的插件安装流程完成，不手工编辑 marketplace 或安装 cache。
+
+当前 App 任务的技能清单可能是在任务启动时冻结的，重装后仍显示旧 cache 路径。判断最新安装时应分别检查：
+
+- `python scripts\verify_plugin_install_smoke.py --version-dir <exact-cache-dir>` 的 cache 完整性；
+- fresh CLI 进程或真正新建的顶层 App 任务的 pickup；
+- 当前旧 App 任务只作为“清单可能陈旧”的边界证据，不能代替 fresh pickup。
+
+本轮项目严格验证器通过。官方插件/技能 Python 校验器依赖 `PyYAML`；当前可用 Python 环境缺少该依赖，因此状态是 **unavailable**，不是 passed，也不要求为本轮额外安装仓库依赖。
+
+自动记录、Hook、MCP、app connector 和后台自更新不属于当前插件安装范围。
+
+### 2026-07-13 迁移验收基线（历史）
+
 当前新电脑上的 `codex-project-workflow` 已通过 Codex App 启用，并于 2026-07-13 通过安装 smoke 和 fresh-thread pickup smoke。
 
 已验证版本：
@@ -192,3 +226,11 @@ git diff --check
 ```
 
 官方插件校验脚本需要 `PyYAML`。如果当前 Python 环境缺少该依赖，应记录原因，不要假装官方校验已通过。
+
+当前包还应运行显式版本 smoke，避免“自动选择最新目录”掩盖目标版本错误：
+
+```powershell
+python scripts\verify_plugin_install_smoke.py --version-dir C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260716095059
+```
+
+若 App 当前任务仍显示旧清单，先完成上述只读 cache smoke，再用 fresh CLI 或新顶层 App 任务验证 pickup；不要删除旧任务证据，也不要把重启 App 说成已经执行。

@@ -1,0 +1,63 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260716-GPT56-C14-STANDARD",
+  "assessed_at": "2026-07-16T18:18:00+08:00",
+  "assessment_method": "Manual review of the machine-collected final-cache CLI rollout, exact setup-state prompt, changed-file inventory, implementation-path evidence, context metrics, and evaluation-isolation report.",
+  "summary_source": "summary.json",
+  "runs": {
+    "E32:standard_cross_file": {
+      "thread_id": "019f6a69-c1c8-7683-9327-05b94a32372b",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 2,
+        "workflow_fit": 2,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 2,
+        "output_efficiency": 2
+      },
+      "total_score": 16,
+      "hard_failures": [],
+      "assertion_results": {
+        "context_trace.verifiable": {
+          "passed": true,
+          "evidence": "The trace records the final-cache skill body, exactly one selected verification reference, and no evaluator-oracle access."
+        },
+        "all_fixtures.skill_description_codepoints": {
+          "passed": true,
+          "evidence": "The launch-time exclusion-first description measured 752 codepoints, below the 800-codepoint limit."
+        },
+        "explicit_quick_standard_full.core_body_codepoints": {
+          "passed": true,
+          "evidence": "The loaded core body measured 1483 codepoints, below the 1500-codepoint limit."
+        },
+        "standard.reference_codepoints": {
+          "passed": true,
+          "evidence": "Only the verification selection was loaded at 2239 codepoints, below the 2500-codepoint standard limit."
+        },
+        "standard.reference_h2_sections": {
+          "passed": true,
+          "evidence": "The selected verification protocol contributed exactly 2 H2 sections."
+        },
+        "governance_corpus.bulk_loaded": {
+          "passed": true,
+          "evidence": "No governance corpus document or governance protocol was read."
+        }
+      },
+      "notes": [
+        "Only src/labels.py and tests/test_labels.py changed; all three adjacent test functions passed through the available standard-library runner because pytest was unavailable."
+      ],
+      "result": "pass"
+    }
+  },
+  "cases": {
+    "E32": {
+      "variant_ids": [
+        "standard_cross_file"
+      ],
+      "result": "pass"
+    }
+  },
+  "overall_result": "pass"
+}

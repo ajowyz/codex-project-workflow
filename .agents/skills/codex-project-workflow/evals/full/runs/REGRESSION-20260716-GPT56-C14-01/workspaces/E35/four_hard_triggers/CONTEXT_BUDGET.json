@@ -1,0 +1,12 @@
+{
+  "mode": "standard",
+  "initial_reference_section_limit": 1,
+  "initial_reference_codepoint_limit": 900,
+  "hard_trigger_overage_allowed": true,
+  "overage_record_required_fields": [
+    "added_codepoints",
+    "added_sections",
+    "reason",
+    "unknown_resolved"
+  ]
+}

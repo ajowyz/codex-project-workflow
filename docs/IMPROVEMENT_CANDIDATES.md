@@ -100,3 +100,71 @@ Invalidation:
 Status:
 
 - Applied to repository source and installed cache `0.1.0+codex.20260703113254`; fresh-thread pickup smoke passed in thread `019f27c3-179b-7220-a045-15094edcf86a`.
+
+## CAND-20260716-13 GPT-5.6 Baseline Calibration
+
+Date: 2026-07-16
+
+Trigger signal:
+
+- Codex App、CLI 和模型升级后，需要重新核对插件的触发精度、上下文成本、安装所有权和评估夹具是否仍符合当前运行时行为。
+
+Observed behavior:
+
+- GPT-5.6 基线校准共 6 个目标回归，4 个通过、2 个失败。
+- E32 负控把本应排除的低风险一步任务误判为需要加载技能，实际加载了技能正文和 verification 协议。
+- E32 标准任务同时加载 governance 与 verification，聚合上下文为 `4723` Unicode 码点、`4` 个二级章节，超过 `2500/2` 预算。
+- 负控工作区和盲测提示本身包含技能名称或“active skill”措辞，构成评估污染；采集器对统一 `exec`、JSON 文本块和真实加载轨迹的解析也存在缺口。
+
+Minimal fix considered:
+
+- 用 exclusion-first 描述明确排除简单问题、明确低风险一步编辑和普通本地验证。
+- 让 Route 2 的有界实现只加载 verification；没有批准、依赖、状态、协调或高影响触发时不加载 governance。
+- 隔离评估工作区，移除负控路径和盲测边界中的技能名称污染，并修复采集器。
+
+Status:
+
+- Baseline calibration failed; not accepted as the final behavior candidate.
+- 失败证据保留在候选和完整评估目录中，不以安装成功替代行为回归。
+
+## CAND-20260716-14 Exclusion-First Routing and Harness Isolation
+
+Date: 2026-07-16
+
+Scope:
+
+- Plugin source, routing description, bounded Route 2 behavior, E32/E35 regression harness, collection, and install acceptance.
+
+Candidate behavior:
+
+- 简单问题、明确低风险一步编辑/命令和普通本地验证不得激活技能，也不得加载正文或 references。
+- 其他有界实现若需要路径验证，只加载 verification；没有治理触发时不加载 governance。
+- 研究、依赖、实现路径、高风险、恢复或协调条件仍按原硬触发和授权边界处理，不能为了上下文预算省略安全门。
+
+Harness corrections:
+
+- 完整评估 manifest 使用相对来源路径和 SHA-256，并继续兼容旧记录。
+- 负控工作区移到不包含技能名称的隔离路径；盲测边界改为“若任务独立激活技能，才使用 active entry”。
+- 采集器支持统一 `exec` 的原始 JavaScript 参数、JSON 文本块、实际 workdir、fixture/host 扫描区分以及真实加载技能的 metrics。
+- `.agents/skills/codex-project-workflow/` 仅保留评估夹具、协议镜像和工具，不再包含可发现的 `SKILL.md`。
+
+Ownership and install evidence:
+
+- `plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md` 是仓库内唯一技能源。
+- 最终准备并安装的 cache 版本为 `0.1.0+codex.20260716095059`；安装 cache 是运行时副本，不是第二个源 owner。
+- 当前已打开的 Codex App 任务可能保留启动时的旧插件清单；fresh CLI 进程已在前一安装候选 `0.1.0+codex.20260716093851` 上证明会重新加载新 cache，而最终 `0.1.0+codex.20260716095059` 已通过显式版本 smoke。旧任务清单不能作为最终版本 pickup 的反证或证明，前一候选的 CLI pickup 也不能冒充最终版本 pickup。
+
+Verification boundary:
+
+- 项目严格验证器通过；脚本单元回归达到 `67/67`。
+- 官方插件/技能校验器依赖 `PyYAML`，当前可用 Python 环境缺少该依赖，因此记录为 unavailable，不声明官方校验已通过。
+- 候选的最终激活结论仍以候选 manifest 和正式回归记录为准；本台账不替代评估结果。
+- Final-cache clean CLI regressions for E32 `negative_quick` and `standard_cross_file` have validator-passing result packages under the tracked `.eval-workspaces/formal-results/` directory; their source manifests and collector diagnostics remain under the matching `.agents/skills/codex-project-workflow/evals/full/runs/` directories.
+- The remaining four clean regressions ran on 2026-07-18 under `.agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260718-GPT56-C14-REMAINING-CLEAN/`: `full_high_risk_migration` and `nested_h3_counting` passed; `hard_trigger_overage` and E35 `four_hard_triggers` failed. The formal validator accepted the evidence shape and reported `0/2 targeted_regression cases passed; overall=fail` because both the E32 aggregate and E35 case failed.
+- The E32 failure omitted the mandatory verification protocol. E35 left public-source verification incomplete, used a different unit-test command from the required command, duplicated protocol loads, and misreported the resulting context overage.
+- Earlier diagnostic launches against legacy sandbox-owned workspaces were discarded. The formal batch used newly generated host-owned workspaces and current matching App/CLI runtime files, so the two failures are recorded as current-model regressions rather than infrastructure failures.
+- CAND-14 is `preflight_passed_regression_failed`, remains unactivated, and has `activation.allowed=false`. Its evidence must not be promoted as a successful acceptance result.
+
+Out of scope:
+
+- 自动记录、Hook、MCP、app connector、后台自更新和向量检索。

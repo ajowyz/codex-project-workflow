@@ -148,3 +148,19 @@ Codex 应主动判断是否值得多 Agent。常见触发：
 6. 激活后记录版本和回滚依据。
 
 向量数据库不是默认需要。只有当经验量、检索复杂度和召回要求超过结构化文档或普通索引时，才进入专项评估。
+
+## 当前安装与记录边界
+
+截至 2026-07-16，仓库中的插件技能源只有：
+
+```text
+plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md
+```
+
+`.agents/skills/codex-project-workflow/` 是评估与协议镜像目录，不是第二个可发现技能。当前安装验收目标为 cache `0.1.0+codex.20260716095059`。
+
+插件目前没有自动记录功能。`docs/IMPROVEMENT_CANDIDATES.md` 和 `docs/DOGFOOD_LOG.md` 是人工、可审查的改进记录；Codex 只有在任务明确要求并处于允许范围时才更新它们。记录候选不会自动改写技能、更新 marketplace、重装插件或修改 cache。
+
+当前也不包含 Hook、MCP、app connector、后台监听、向量数据库或静默自更新。如果以后评估这些能力，必须作为新的独立范围，重新处理权限、隐私、数据删除、回归和用户确认，不能从现有“人工记录”描述推导为已授权。
+
+插件更新后，已经打开的 Codex App 任务可能继续显示启动时的旧插件清单。应使用显式版本安装 smoke，并在 fresh CLI 进程或真正的新顶层 App 任务中核对 pickup；旧任务显示旧路径不等同于安装失败，fresh CLI 成功也不等同于旧 App 任务已经热刷新。

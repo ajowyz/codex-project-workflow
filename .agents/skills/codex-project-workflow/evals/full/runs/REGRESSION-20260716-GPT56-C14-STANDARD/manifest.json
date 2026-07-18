@@ -1,0 +1,32 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260716-GPT56-C14-STANDARD",
+  "evaluation_scope": "targeted_regression",
+  "status": "completed_unassessed_at_manifest_freeze",
+  "created_at": "2026-07-16T18:12:23+08:00",
+  "completed_at": "2026-07-16T18:14:05+08:00",
+  "fixture_commit": "5a7f0bc66460b7bf944e1e43919be34fbf8192a0",
+  "candidate_id": "CAND-20260716-14",
+  "candidate_sha256": "44d3c152f2e91ac838c2c8e8f4ee69dc3a20c8024041750f5751329d56286e1e",
+  "plugin_cache_version": "0.1.0+codex.20260716095059",
+  "codex_app_version": "26.707.12708.0",
+  "codex_cli_version": "0.144.5",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "setup_state": ".eval-workspaces/REGRESSION-20260716-GPT56-C14-STANDARD-03/setup-state.json",
+  "runtime_skill_inventory_at_launch": {
+    "matching_entries": 1,
+    "owner": "installed plugin cache",
+    "note": "A fresh CLI process loaded the final installed plugin cache and ran in a clean workspace outside the skill and evaluator trees."
+  },
+  "runs": [
+    {
+      "case_id": "E32",
+      "variant_id": "standard_cross_file",
+      "thread_id": "019f6a69-c1c8-7683-9327-05b94a32372b",
+      "status": "completed",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.eval-workspaces\\REGRESSION-20260716-GPT56-C14-STANDARD-03\\E32\\standard_cross_file",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    }
+  ]
+}

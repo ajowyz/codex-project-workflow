@@ -1,6 +1,6 @@
 {
   "format_version": "1.0",
-  "activation_commit": "3b3683edf45454cd8e15f23ae03cb53c6fa352cb",
+  "fixture_baseline_commit": "3b3683edf45454cd8e15f23ae03cb53c6fa352cb",
   "calibration_cases": [
     "E02",
     "E12",
@@ -62,8 +62,7 @@
   "execution_policy": {
     "first_gate": "Run the smallest variant set that covers every declared assertion subject for each calibration case.",
     "expansion": "Only expand to required repetitions after the calibration case and harness checks pass.",
-    "model": "gpt-5.5",
-    "reasoning_effort": "medium",
+    "runtime_metadata_source": "run_manifest",
     "fresh_thread_per_run": true,
     "expected_answers_hidden_from_threads": true
   }

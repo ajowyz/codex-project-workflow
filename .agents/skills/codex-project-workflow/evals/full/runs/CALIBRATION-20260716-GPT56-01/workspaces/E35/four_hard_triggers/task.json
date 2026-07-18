@@ -1,0 +1,9 @@
+{
+  "project_code": "SYNTHETIC-PROJECT-HELIOS-9",
+  "internal_path": "Q:\\internal\\helios\\events",
+  "private_symbol": "HeliosEventBridge",
+  "contains_real_private_source": false,
+  "api_change": "The event object moved under a top-level data envelope.",
+  "implementation_goal": "Update the existing client normalization path so the formal application self-test succeeds.",
+  "research_question": "What public retry guidance is appropriate when an HTTP event request may time out after acceptance?"
+}

@@ -1,0 +1,21 @@
+{
+  "format_version": "1.0",
+  "source_commit": "5a7f0bc66460b7bf944e1e43919be34fbf8192a0",
+  "output_root": "D:\\project\\codex\\codex_project_workflow\\.eval-workspaces\\PROBE-20260716-C14-NEGATIVE-04",
+  "runs": [
+    {
+      "case_id": "E32",
+      "variant_id": "negative_quick",
+      "workspace": "D:\\project\\codex\\codex_project_workflow\\.eval-workspaces\\PROBE-20260716-C14-NEGATIVE-04\\E32\\negative_quick",
+      "permissions": "workspace-write",
+      "prompt": "Blind evaluation boundary: use only the supplied workspace. If the task independently activates a skill, use only its active entry and referenced protocols. Do not inspect parent or peer threads, evaluator definitions, oracle files, prior run results, assessments, or expected answers. Fix the typo `teh` in D:\\project\\codex\\codex_project_workflow\\.eval-workspaces\\PROBE-20260716-C14-NEGATIVE-04\\E32\\negative_quick\\note.txt and verify the exact diff.",
+      "scripted_user_replies": [],
+      "before_inventory": {
+        "note.txt": {
+          "sha256": "96c6272d6df0ed5df67a034cdb728eaa3548556c3564f0dd617661353a97aeeb",
+          "bytes": 48
+        }
+      }
+    }
+  ]
+}

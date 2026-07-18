@@ -1,0 +1,55 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260716-GPT56-C14-NEGATIVE",
+  "assessed_at": "2026-07-16T18:18:00+08:00",
+  "assessment_method": "Manual review of the machine-collected final-cache CLI rollout, exact prompt transport, fixture inventory, tool trace, context metrics, and evaluation-isolation report.",
+  "summary_source": "summary.json",
+  "runs": {
+    "E32:negative_quick": {
+      "thread_id": "019f6a5c-75e9-74f2-b9dd-8237957df634",
+      "scores": {
+        "goal_preservation": 2,
+        "proactive_completeness": 2,
+        "workflow_fit": 2,
+        "professionalism": 2,
+        "confirmation_boundary": 2,
+        "evidence_and_verification": 2,
+        "implementation_integrity": 2,
+        "output_efficiency": 2
+      },
+      "total_score": 16,
+      "hard_failures": [],
+      "assertion_results": {
+        "context_trace.verifiable": {
+          "passed": true,
+          "evidence": "The final-cache skill description was present in the session catalog and the machine trace records zero body and reference reads."
+        },
+        "all_fixtures.skill_description_codepoints": {
+          "passed": true,
+          "evidence": "The launch-time exclusion-first description measured 752 codepoints, below the 800-codepoint limit."
+        },
+        "negative_quick.body_and_reference_codepoints": {
+          "passed": true,
+          "evidence": "The excluded one-step edit loaded 0 body codepoints and 0 reference codepoints."
+        },
+        "governance_corpus.bulk_loaded": {
+          "passed": true,
+          "evidence": "No governance corpus or workflow protocol was read."
+        }
+      },
+      "notes": [
+        "Only note.txt changed; exact corrected content, LF ending, and no BOM were verified."
+      ],
+      "result": "pass"
+    }
+  },
+  "cases": {
+    "E32": {
+      "variant_ids": [
+        "negative_quick"
+      ],
+      "result": "pass"
+    }
+  },
+  "overall_result": "pass"
+}

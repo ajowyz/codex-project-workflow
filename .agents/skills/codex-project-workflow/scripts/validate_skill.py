@@ -12,9 +12,15 @@ def fail(message: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("skill_dir", type=Path)
+    parser.add_argument(
+        "--skill-file",
+        type=Path,
+        help="Optional packaged SKILL.md to validate with this evaluation harness.",
+    )
     args = parser.parse_args()
     skill_dir = args.skill_dir
-    text = (skill_dir / "SKILL.md").read_text(encoding="utf-8-sig")
+    skill_file = args.skill_file or skill_dir / "SKILL.md"
+    text = skill_file.read_text(encoding="utf-8-sig")
     match = re.match(r"\A---\n(.*?)\n---\n(.*)\Z", text, re.S)
     if not match:
         fail("invalid SKILL.md frontmatter")

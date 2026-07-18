@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "accounts": [
+    {
+      "id": "A-001",
+      "name": "Primary"
+    },
+    {
+      "id": "A-002",
+      "name": "Reserve"
+    }
+  ]
+}

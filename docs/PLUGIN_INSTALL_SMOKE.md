@@ -1,5 +1,26 @@
 # Plugin Install Smoke
 
+## Current Acceptance Snapshot
+
+Date: 2026-07-16
+
+Current installed target:
+
+- Version: `0.1.0+codex.20260716095059`
+- Cache root: `C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260716095059`
+- Repository source owner: `D:\project\codex\codex_project_workflow\plugins\codex-project-workflow\skills\codex-project-workflow\SKILL.md`
+- Project-local discoverable skill: absent; `.agents/skills/codex-project-workflow/` is evaluation/protocol infrastructure only.
+
+Current acceptance facts:
+
+- The explicit-version repository smoke passed for `0.1.0+codex.20260716095059` and loaded the skill, helper, and three protocol files from that one cache directory.
+- Protocol metrics remain governance `2484/2`, research `1205/2`, and verification `2239/2`.
+- Fresh CLI final-cache regressions loaded exactly one `codex-project-workflow:codex-project-workflow` entry from `0.1.0+codex.20260716095059`; E32 negative control loaded no body/reference, while the standard case loaded only the final-cache body and verification selection. The earlier `0.1.0+codex.20260716093851` pickup remains historical process-reload evidence.
+- The already-open Codex App task can retain its startup-time plugin inventory and may still report an older cache. That is a task-context refresh boundary, not proof that the new cache failed to install.
+- Official Python plugin/skill validators were unavailable because the current Python runtimes do not include `PyYAML`. Project strict validators and install smoke passed; this record does not relabel the official validator as passed.
+
+The 2026-07-13 sections below are retained as historical migration evidence. They do not describe the current installed version or the current `.agents` ownership model.
+
 Date: 2026-07-13
 
 ## Status
@@ -106,4 +127,6 @@ The repository install smoke and fresh-thread pickup smoke both passed for this 
 
 ## Remaining Gates
 
-- For the next source change, repeat `python scripts\prepare_plugin_update.py --apply --apply-cachebuster`, Codex App re-enable, and `python scripts\verify_plugin_install_smoke.py`.
+- For the next source change, repeat `python scripts\prepare_plugin_update.py --apply --apply-cachebuster`, supported plugin reinstall, explicit-version `python scripts\verify_plugin_install_smoke.py --version-dir <cache-dir>`, and a fresh-process pickup check.
+- If only the already-open App task shows an old path, start a genuinely new top-level App task or restart the App before claiming App pickup; do not rewrite the older task's evidence.
+- Automatic recording, Hook, MCP, app connector, and silent self-update remain out of scope.

@@ -1,0 +1,72 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260716-GPT56-C14-NEGATIVE",
+  "source_manifest": "../../../.agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260716-GPT56-C14-NEGATIVE/manifest.json",
+  "source_manifest_sha256": "f27e9708f45f456bfb34dbf6a618af993a1a13e9b9ba4fa9eb6ab5eb4cab90fe",
+  "source_setup_state": "D:\\project\\codex\\codex_project_workflow\\.agents\\skills\\codex-project-workflow\\evals\\full\\runs\\REGRESSION-20260716-GPT56-C14-NEGATIVE\\workspaces\\setup-state.json",
+  "results": [
+    {
+      "case_id": "E32",
+      "variant_id": "negative_quick",
+      "thread_id": "019f6a5c-75e9-74f2-b9dd-8237957df634",
+      "status": "completed",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "duration_ms": 81707,
+      "time_to_first_token_ms": 10286,
+      "final_response_chars": 292,
+      "total_tokens": 110826,
+      "tool_call_count": 5,
+      "changed_files": [
+        "note.txt"
+      ],
+      "expected_changed_files": [
+        "note.txt"
+      ],
+      "expected_assertion_subjects": [
+        "context_trace.verifiable",
+        "all_fixtures.skill_description_codepoints",
+        "negative_quick.body_and_reference_codepoints",
+        "governance_corpus.bulk_loaded"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 752,
+        "skill_body_read_calls": [],
+        "skill_body_loaded_chars": 0,
+        "skill_tool_output_chars": 0,
+        "reference_read_calls": [],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [],
+        "reference_failed_calls": [],
+        "reference_files": [],
+        "reference_loaded_chars": 0,
+        "reference_tool_output_chars": 0,
+        "reference_h2_sections": 0,
+        "governance_read_calls": []
+      },
+      "evaluation_isolation": {
+        "cross_thread_read_calls": [],
+        "evaluator_artifact_calls": [],
+        "host_project_scan_calls": [],
+        "oracle_access_detected": false
+      },
+      "context_overage": null,
+      "agent_authorization": {
+        "no_decision_received": false,
+        "agent_start_calls": [],
+        "fallback_selected": false,
+        "pending_reported": false,
+        "pending_state": null
+      },
+      "prompt_integrity": {
+        "initial_prompt_matches": true,
+        "expected_reply_count": 0,
+        "observed_scripted_replies": [],
+        "unexpected_user_messages": [],
+        "valid": true
+      },
+      "rollout_sha256": "a836495ebde79ec0c1049c87a207ab2b17af2bde92c451dbe9a59ccdd5861ff5"
+    }
+  ]
+}

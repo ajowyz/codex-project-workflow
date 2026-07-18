@@ -9,8 +9,8 @@ def normalized_text(path: Path) -> str:
     return path.read_text(encoding="utf-8-sig").replace("\r\n", "\n").replace("\r", "\n")
 
 
-def skill_metrics(path: Path) -> dict:
-    text = normalized_text(path)
+def skill_metrics_text(text: str) -> dict:
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
     match = re.match(r"\A---\n(.*?)\n---\n?(.*)\Z", text, re.S)
     if not match:
         raise ValueError("SKILL.md must contain YAML frontmatter")
@@ -22,6 +22,10 @@ def skill_metrics(path: Path) -> dict:
         "description_chars": len(description.group(1).strip()),
         "body_chars": len(body.rstrip("\n")),
     }
+
+
+def skill_metrics(path: Path) -> dict:
+    return skill_metrics_text(normalized_text(path))
 
 
 def reference_metrics(path: Path) -> dict:

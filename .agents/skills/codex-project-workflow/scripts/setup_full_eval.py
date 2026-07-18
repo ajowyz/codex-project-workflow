@@ -13,10 +13,10 @@ SKILL_DIR = SCRIPT_DIR.parent
 FULL_DIR = SKILL_DIR / "evals" / "full"
 CASES_DIR = FULL_DIR / "cases"
 BLIND_EVAL_BOUNDARY = (
-    "Blind evaluation boundary: use only the supplied workspace, the active "
-    "skill entry, and its referenced protocols. Do not inspect parent or peer "
-    "threads, evaluator definitions, oracle files, prior run results, "
-    "assessments, or expected answers."
+    "Blind evaluation boundary: use only the supplied workspace. If the task "
+    "independently activates a skill, use only its active entry and referenced "
+    "protocols. Do not inspect parent or peer threads, evaluator definitions, "
+    "oracle files, prior run results, assessments, or expected answers."
 )
 
 
@@ -39,6 +39,17 @@ def load_case(case_id):
     return json.loads(
         (CASES_DIR / case_id / "case.json").read_text(encoding="utf-8")
     )
+
+
+def validate_negative_control_path(variant_id, destination):
+    if (
+        variant_id == "negative_quick"
+        and "codex-project-workflow" in str(destination).casefold()
+    ):
+        raise ValueError(
+            "negative control workspace path must not name "
+            "codex-project-workflow"
+        )
 
 
 def select_variant(case, requested=None):
@@ -69,7 +80,10 @@ def minimal_variant_cover(case):
     raise ValueError(f"{case['case_id']}: no assertion-covering variant set")
 
 
-def setup_selected(selections, output_root, source_commit=None):
+def setup_selected(selections, output_root, source_commit):
+    if not isinstance(source_commit, str) or not source_commit.strip():
+        raise ValueError("source_commit is required")
+    source_commit = source_commit.strip()
     validate_full_fixtures.validate()
     output_root.mkdir(parents=True, exist_ok=True)
     runs = []
@@ -79,6 +93,7 @@ def setup_selected(selections, output_root, source_commit=None):
         variant = select_variant(case, variant_id)
         source = CASES_DIR / case_id / variant["workspace"]
         destination = output_root / case_id / variant["id"]
+        validate_negative_control_path(variant["id"], destination)
         if destination.exists():
             shutil.rmtree(destination)
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -107,9 +122,7 @@ def setup_selected(selections, output_root, source_commit=None):
 
     state = {
         "format_version": "1.0",
-        "source_commit": source_commit or json.loads(
-            (FULL_DIR / "batch_manifest.json").read_text(encoding="utf-8")
-        )["activation_commit"],
+        "source_commit": source_commit,
         "output_root": str(output_root.resolve()),
         "runs": runs,
     }
@@ -165,7 +178,7 @@ def main():
     parser.add_argument("--calibration", action="store_true")
     parser.add_argument("--variant", action="append", default=[])
     parser.add_argument("--output-root", type=Path, required=True)
-    parser.add_argument("--source-commit")
+    parser.add_argument("--source-commit", required=True)
     args = parser.parse_args()
 
     requested = {}

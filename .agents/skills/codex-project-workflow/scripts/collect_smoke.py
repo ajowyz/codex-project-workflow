@@ -58,6 +58,19 @@ def parse_arguments(raw):
 def output_summary(output):
     if not isinstance(output, str):
         output = json.dumps(output, ensure_ascii=False, sort_keys=True)
+    raw_output = output
+    try:
+        decoded = json.loads(output)
+    except json.JSONDecodeError:
+        decoded = None
+    if isinstance(decoded, list):
+        text_blocks = [
+            item.get("text")
+            for item in decoded
+            if isinstance(item, dict) and isinstance(item.get("text"), str)
+        ]
+        if text_blocks:
+            output = "\n".join(text_blocks)
     normalized = unicodedata.normalize(
         "NFC",
         output.replace("\r\n", "\n").replace("\r", "\n"),
@@ -83,6 +96,16 @@ def output_summary(output):
             "",
             content,
         )
+    skill_metrics = None
+    skill_candidate = content.lstrip("\n")
+    if skill_candidate.startswith("---\n") and re.search(
+        r"(?m)^name:\s*codex-project-workflow\s*$",
+        skill_candidate,
+    ):
+        try:
+            skill_metrics = measure_context.skill_metrics_text(skill_candidate)
+        except ValueError:
+            skill_metrics = None
     return {
         "chars": len(output),
         "content_codepoints": (
@@ -96,7 +119,8 @@ def output_summary(output):
             else len(re.findall(r"(?m)^## ", output))
         ),
         "reference_metrics": reference_metrics,
-        "sha256": hashlib.sha256(output.encode("utf-8")).hexdigest(),
+        "skill_metrics": skill_metrics,
+        "sha256": hashlib.sha256(raw_output.encode("utf-8")).hexdigest(),
         "preview": output[:2000],
     }
 
@@ -105,17 +129,57 @@ def normalize_path_text(value):
     return re.sub(r"/+", "/", value.replace("\\", "/"))
 
 
+def argument_text(arguments):
+    if isinstance(arguments, str):
+        return arguments
+    return json.dumps(arguments, ensure_ascii=False)
+
+
 def command_argument(arguments):
+    if isinstance(arguments, str):
+        return arguments
     if not isinstance(arguments, dict):
         return ""
     command = arguments.get("command", arguments.get("cmd", ""))
     return command if isinstance(command, str) else ""
 
 
+def raw_exec_workdirs(arguments):
+    if not isinstance(arguments, str):
+        return []
+    assignments = {
+        name: value
+        for name, _, value in re.findall(
+            r"(?:const|let)\s+([A-Za-z_$][\w$]*)\s*=\s*([\"'])(.*?)\2\s*;",
+            arguments,
+            flags=re.DOTALL,
+        )
+    }
+    values = []
+    pattern = re.compile(
+        r"\bworkdir\s*:\s*(?:([\"'])(.*?)\1|([A-Za-z_$][\w$]*))",
+        flags=re.DOTALL,
+    )
+    for quote, literal, variable in pattern.findall(arguments):
+        if quote:
+            values.append(literal)
+        elif variable in assignments:
+            values.append(assignments[variable])
+    return values
+
+
+def is_injected_user_context(text):
+    stripped = text.lstrip()
+    return stripped.startswith(
+        ("<recommended_plugins>", "<environment_context>")
+    )
+
+
 def evaluation_isolation_trace(
     tool_calls,
     thread_id,
     project_root=None,
+    fixture_root=None,
 ):
     result = {
         "cross_thread_read_calls": [],
@@ -128,6 +192,19 @@ def evaluation_isolation_trace(
         if project_root
         else None
     )
+    normalized_fixture = (
+        normalize_path_text(str(Path(fixture_root).resolve())).casefold()
+        if fixture_root
+        else None
+    )
+    normalized_fixture_relative = None
+    if normalized_fixture and normalized_project:
+        try:
+            normalized_fixture_relative = normalize_path_text(
+                str(Path(fixture_root).resolve().relative_to(Path(project_root).resolve()))
+            ).casefold()
+        except ValueError:
+            normalized_fixture_relative = None
     evaluator_markers = (
         "/evals/full/cases/",
         "/evals/full/runs/",
@@ -139,7 +216,7 @@ def evaluation_isolation_trace(
         "expected_assertion_subjects",
     )
     broad_scan = re.compile(
-        r"(?i)(?:^|[;&|]\s*|\s)(?:rg|grep|findstr|select-string|"
+        r"(?i)(?:^|[;&|]\s*|[\s\"'`])(?:rg|grep|findstr|select-string|"
         r"get-childitem|dir|ls)\b"
     )
     host_targets = re.compile(
@@ -151,36 +228,70 @@ def evaluation_isolation_trace(
         call_id = call.get("call_id")
         name = str(call.get("name", "")).casefold()
         arguments = call.get("arguments")
-        serialized = normalize_path_text(
-            json.dumps(arguments, ensure_ascii=False)
-        ).casefold()
+        serialized = normalize_path_text(argument_text(arguments)).casefold()
+        evaluator_serialized = serialized
+        if normalized_fixture:
+            evaluator_serialized = evaluator_serialized.replace(
+                normalized_fixture,
+                "<fixture_root>",
+            )
+        if normalized_fixture_relative:
+            evaluator_serialized = evaluator_serialized.replace(
+                normalized_fixture_relative,
+                "<fixture_root>",
+            )
 
         if name.endswith("read_thread") and isinstance(arguments, dict):
             target = arguments.get("threadId", arguments.get("thread_id"))
             if target and target != thread_id:
                 result["cross_thread_read_calls"].append(call_id)
 
-        if any(marker in serialized for marker in evaluator_markers):
+        if any(marker in evaluator_serialized for marker in evaluator_markers):
             result["evaluator_artifact_calls"].append(call_id)
 
-        if not normalized_project or not isinstance(arguments, dict):
+        if not normalized_project:
             continue
-        workdir = arguments.get("workdir")
         command = command_argument(arguments)
-        if not isinstance(workdir, str):
+        if isinstance(arguments, dict):
+            workdir = arguments.get("workdir")
+            if not isinstance(workdir, str):
+                continue
+            in_project_context = (
+                normalize_path_text(str(Path(workdir).resolve())).casefold()
+                == normalized_project
+            )
+        elif isinstance(arguments, str):
+            raw_workdirs = [
+                normalize_path_text(value).casefold()
+                for value in raw_exec_workdirs(arguments)
+            ]
+            in_project_context = (
+                normalized_project in raw_workdirs
+                if raw_workdirs
+                else normalized_project in serialized
+            )
+        else:
             continue
-        normalized_workdir = normalize_path_text(
-            str(Path(workdir).resolve())
-        ).casefold()
-        if normalized_workdir != normalized_project:
+        if not in_project_context:
             continue
+        scan_command = normalize_path_text(command).casefold()
+        if normalized_fixture:
+            scan_command = scan_command.replace(
+                normalized_fixture,
+                "<fixture_root>",
+            )
+        if normalized_fixture_relative:
+            scan_command = scan_command.replace(
+                normalized_fixture_relative,
+                "<fixture_root>",
+            )
         allowed_skill_read = (
             "codex-project-workflow/skill.md" in serialized
             or "codex-project-workflow/scripts/read_reference.py" in serialized
         )
         if (
-            broad_scan.search(command)
-            and host_targets.search(command)
+            broad_scan.search(scan_command)
+            and host_targets.search(scan_command)
             and not allowed_skill_read
         ):
             result["host_project_scan_calls"].append(call_id)
@@ -213,7 +324,7 @@ def reference_call_trace(tool_calls, trace_skill_dir):
 
     for call in tool_calls:
         arguments = call.get("arguments")
-        serialized = normalize_path_text(json.dumps(arguments, ensure_ascii=False))
+        serialized = normalize_path_text(argument_text(arguments))
         output = call.get("output")
         command = command_argument(arguments)
         helper_matches = re.findall(
@@ -221,6 +332,30 @@ def reference_call_trace(tool_calls, trace_skill_dir):
             command,
             flags=re.IGNORECASE,
         )
+        if "read_reference.py" in command and "${" in command:
+            for array_body in re.findall(
+                r"(?:const|let)\s+\w+\s*=\s*\[(.*?)\]",
+                command,
+                flags=re.DOTALL,
+            ):
+                helper_matches.extend(
+                    re.findall(r"[\"']([A-Za-z0-9_.-]+)[\"']", array_body)
+                )
+            for template in re.findall(r"`([^`]*)`", command, flags=re.DOTALL):
+                if not (
+                    "Execution Rules" in template
+                    and "Output Requirements" in template
+                ):
+                    continue
+                helper_matches.extend(
+                    stem
+                    for stem in path_by_stem
+                    if re.search(
+                        rf"(?<![A-Za-z0-9_.-]){re.escape(stem)}(?![A-Za-z0-9_.-])",
+                        template,
+                        flags=re.IGNORECASE,
+                    )
+                )
         direct_paths = [
             path
             for path in reference_paths
@@ -405,7 +540,8 @@ def agent_authorization_trace(
 
 def extract_skill_description(developer_text):
     pattern = re.compile(
-        r"^- codex-project-workflow: (.+?) \(file: .+?codex-project-workflow/SKILL\.md\)$",
+        r"^- codex-project-workflow(?::codex-project-workflow)?: "
+        r"(.+?) \(file: .+?codex-project-workflow/SKILL\.md\)$",
         flags=re.MULTILINE,
     )
     match = pattern.search(normalize_path_text(developer_text))
@@ -527,7 +663,7 @@ def parse_rollout(
                 phase = payload.get("phase")
                 if role == "developer":
                     developer_texts.append(text)
-                elif role == "user" and "<codex_delegation>" in text:
+                elif role == "user" and not is_injected_user_context(text):
                     result["raw_user_messages"].append(text)
                 elif role == "assistant" and phase == "commentary":
                     result["commentary"].append(text)
@@ -576,26 +712,50 @@ def parse_rollout(
         result["context_trace"]["project_skill_description_chars"] = len(description)
 
     skill_path = "codex-project-workflow"
-    trace_skill_dir = (
-        Path(project_root) / ".agents" / "skills" / "codex-project-workflow"
-        if project_root
-        else SKILL_DIR
-    )
-    for call in result["tool_calls"]:
-        serialized = normalize_path_text(
-            json.dumps(call["arguments"], ensure_ascii=False)
+    trace_skill_dir = SKILL_DIR
+    if project_root:
+        project_root_path = Path(project_root)
+        project_skill_dir = (
+            project_root_path / ".agents" / "skills" / "codex-project-workflow"
         )
+        package_skill_dir = (
+            project_root_path
+            / "plugins"
+            / "codex-project-workflow"
+            / "skills"
+            / "codex-project-workflow"
+        )
+        trace_skill_dir = (
+            project_skill_dir
+            if (project_skill_dir / "SKILL.md").is_file()
+            else package_skill_dir
+        )
+    for call in result["tool_calls"]:
+        serialized = normalize_path_text(argument_text(call["arguments"]))
         if skill_path not in serialized:
             continue
         if re.search(r"codex-project-workflow/SKILL\.md", serialized, flags=re.IGNORECASE):
             result["context_trace"]["skill_body_read_calls"].append(call["call_id"])
 
     if result["context_trace"]["skill_body_read_calls"]:
-        skill_file = trace_skill_dir / "SKILL.md"
-        if skill_file.is_file():
+        emitted_metrics = [
+            call["output"].get("skill_metrics")
+            for call in result["tool_calls"]
+            if call["call_id"]
+            in result["context_trace"]["skill_body_read_calls"]
+            and call["output"]
+            and call["output"].get("skill_metrics")
+        ]
+        if emitted_metrics:
             result["context_trace"]["skill_body_loaded_chars"] = (
-                measure_context.skill_metrics(skill_file)["body_chars"]
+                max(item["body_chars"] for item in emitted_metrics)
             )
+        else:
+            skill_file = trace_skill_dir / "SKILL.md"
+            if skill_file.is_file():
+                result["context_trace"]["skill_body_loaded_chars"] = (
+                    measure_context.skill_metrics(skill_file)["body_chars"]
+                )
         result["context_trace"]["skill_tool_output_chars"] = sum(
             call["output"]["chars"]
             for call in result["tool_calls"]
@@ -614,9 +774,7 @@ def parse_rollout(
         "TRACEABILITY.md",
     )
     for call in result["tool_calls"]:
-        serialized = normalize_path_text(
-            json.dumps(call["arguments"], ensure_ascii=False)
-        )
+        serialized = normalize_path_text(argument_text(call["arguments"]))
         if any(name in serialized for name in governance_names):
             result["context_trace"]["governance_read_calls"].append(call["call_id"])
 
@@ -624,6 +782,7 @@ def parse_rollout(
         result["tool_calls"],
         result["thread_id"],
         project_root,
+        fixture_root,
     )
     result["context_overage"] = context_overage_trace(
         fixture_root,

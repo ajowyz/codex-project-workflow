@@ -1,0 +1,84 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260716-GPT56-C14-STANDARD",
+  "source_manifest": "../../../.agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260716-GPT56-C14-STANDARD/manifest.json",
+  "source_manifest_sha256": "a641903f82cd689368e9da11341270a15cae0e1a5cdcbc3b92b9d30ddb40bd12",
+  "source_setup_state": "D:\\project\\codex\\codex_project_workflow\\.eval-workspaces\\REGRESSION-20260716-GPT56-C14-STANDARD-03\\setup-state.json",
+  "results": [
+    {
+      "case_id": "E32",
+      "variant_id": "standard_cross_file",
+      "thread_id": "019f6a69-c1c8-7683-9327-05b94a32372b",
+      "status": "completed",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "duration_ms": 101001,
+      "time_to_first_token_ms": 9516,
+      "final_response_chars": 638,
+      "total_tokens": 159439,
+      "tool_call_count": 7,
+      "changed_files": [
+        "src/labels.py",
+        "tests/test_labels.py"
+      ],
+      "expected_changed_files": [
+        "src/labels.py",
+        "tests/test_labels.py"
+      ],
+      "expected_assertion_subjects": [
+        "context_trace.verifiable",
+        "all_fixtures.skill_description_codepoints",
+        "explicit_quick_standard_full.core_body_codepoints",
+        "standard.reference_codepoints",
+        "standard.reference_h2_sections",
+        "governance_corpus.bulk_loaded"
+      ],
+      "context_trace": {
+        "project_skill_listed": true,
+        "project_skill_description_chars": 752,
+        "skill_body_read_calls": [
+          "call_Dmc0vRHrHBYbVpOildZqE2lh"
+        ],
+        "skill_body_loaded_chars": 1483,
+        "skill_tool_output_chars": 2396,
+        "reference_read_calls": [
+          "call_yyENzu9zvGm8Xgm9umESEl7J"
+        ],
+        "reference_list_calls": [],
+        "reference_section_read_calls": [
+          "call_yyENzu9zvGm8Xgm9umESEl7J"
+        ],
+        "reference_failed_calls": [],
+        "reference_files": [
+          "verification.md"
+        ],
+        "reference_loaded_chars": 2239,
+        "reference_tool_output_chars": 2778,
+        "reference_h2_sections": 2,
+        "governance_read_calls": []
+      },
+      "evaluation_isolation": {
+        "cross_thread_read_calls": [],
+        "evaluator_artifact_calls": [],
+        "host_project_scan_calls": [],
+        "oracle_access_detected": false
+      },
+      "context_overage": null,
+      "agent_authorization": {
+        "no_decision_received": false,
+        "agent_start_calls": [],
+        "fallback_selected": false,
+        "pending_reported": false,
+        "pending_state": null
+      },
+      "prompt_integrity": {
+        "initial_prompt_matches": true,
+        "expected_reply_count": 0,
+        "observed_scripted_replies": [],
+        "unexpected_user_messages": [],
+        "valid": true
+      },
+      "rollout_sha256": "5142259235d1b21cee2a5606c994094713e9e1a7df2fc13bbccb142a172b2fda"
+    }
+  ]
+}

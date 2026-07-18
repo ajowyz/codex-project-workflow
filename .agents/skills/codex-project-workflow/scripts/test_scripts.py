@@ -14,7 +14,15 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_DIR = SCRIPT_DIR.parent
 PROJECT_ROOT = SKILL_DIR.parents[2]
-CURRENT_CANDIDATE_ID = "CAND-20260622-12"
+PACKAGE_SKILL_DIR = (
+    PROJECT_ROOT
+    / "plugins"
+    / "codex-project-workflow"
+    / "skills"
+    / "codex-project-workflow"
+)
+ACTIVE_SKILL_FILE = PACKAGE_SKILL_DIR / "SKILL.md"
+CURRENT_CANDIDATE_ID = "CAND-20260716-14"
 
 
 def load(name: str):
@@ -69,20 +77,43 @@ class ScriptTests(unittest.TestCase):
             adr_index.validate(records)
 
     def test_context_budgets(self):
-        metrics = measure_context.skill_metrics(SKILL_DIR / "SKILL.md")
+        metrics = measure_context.skill_metrics(ACTIVE_SKILL_FILE)
         self.assertLessEqual(metrics["description_chars"], 800)
         self.assertLessEqual(metrics["body_chars"], 1500)
         self.assertIn(
             "deliverable through an existing product or application",
-            (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8"),
+            ACTIVE_SKILL_FILE.read_text(encoding="utf-8"),
         )
-        skill_text = (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8")
+        skill_text = ACTIVE_SKILL_FILE.read_text(encoding="utf-8")
+        self.assertIn("Never activate for simple questions", skill_text)
+        self.assertIn("routine local verification", skill_text)
         self.assertTrue(
             "Preserve ownership" in skill_text
             or "Change behavior in its existing owner" in skill_text
             or "Change behavior in existing owner" in skill_text
-            or "edit existing owner" in skill_text,
+            or "edit existing owner" in skill_text
+            or "edit the owner" in skill_text,
         )
+
+    def test_plugin_package_is_the_only_discoverable_project_skill_owner(self):
+        self.assertTrue(ACTIVE_SKILL_FILE.is_file())
+        self.assertFalse((SKILL_DIR / "SKILL.md").exists())
+        self.assertFalse((PROJECT_ROOT / ".codex" / "config.toml").exists())
+
+    def test_evaluation_payload_matches_plugin_package(self):
+        for relative in (
+            Path("scripts") / "read_reference.py",
+            Path("references") / "research.md",
+            Path("references") / "governance.md",
+            Path("references") / "verification.md",
+        ):
+            with self.subTest(relative=relative.as_posix()):
+                self.assertEqual(
+                    (SKILL_DIR / relative).read_bytes(),
+                    (PACKAGE_SKILL_DIR / relative).read_bytes(),
+                )
+
+    def test_reference_contracts(self):
         governance = (SKILL_DIR / "references" / "governance.md").read_text(
             encoding="utf-8"
         )
@@ -109,12 +140,12 @@ class ScriptTests(unittest.TestCase):
         self.assertIn("multi-agent proposal", skill_text)
         self.assertIn("<skill_dir>/scripts/read_reference.py", skill_text)
         self.assertIn("later exact approval", skill_text)
-        self.assertIn("Extra query/source/open needs new approval", skill_text)
+        self.assertIn("changes need new approval", skill_text)
         self.assertIn("keeps agents `proposed`", skill_text)
-        self.assertIn("without new ask", skill_text)
-        self.assertIn("edit existing owner", skill_text)
+        self.assertIn("main may continue displayed writes/verification", skill_text)
+        self.assertIn("edit the owner", skill_text)
         self.assertIn("docs/IMPLEMENTATION_CONTRACT.md", skill_text)
-        self.assertIn("no research/governance docs", skill_text)
+        self.assertIn("Create no unneeded governance docs", skill_text)
 
         def reference_text(name):
             candidate_reference = candidate_dir / "references" / name
@@ -207,6 +238,23 @@ class ScriptTests(unittest.TestCase):
                 target["candidate_sha256"],
                 canonical_hash_bytes(candidate.read_bytes()),
             )
+        for retired in manifest.get("retired_discovery_paths", []):
+            retired_path = PROJECT_ROOT / retired["path"]
+            self.assertFalse(retired_path.exists())
+            baseline = subprocess.run(
+                [
+                    "git",
+                    "show",
+                    f"{manifest['base_commit']}:{retired['path']}",
+                ],
+                cwd=PROJECT_ROOT,
+                capture_output=True,
+                check=True,
+            )
+            self.assertEqual(
+                retired["base_sha256"],
+                canonical_hash_bytes(baseline.stdout),
+            )
         self.assertEqual(1, len(active_states), "active targets are in a mixed state")
         patch_path = PROJECT_ROOT / manifest["patch"]["path"]
         self.assertEqual(
@@ -234,6 +282,20 @@ class ScriptTests(unittest.TestCase):
                     canonical_hash_bytes(baseline.stdout),
                 )
                 destination.write_bytes(baseline.stdout)
+            for retired in manifest.get("retired_discovery_paths", []):
+                destination = temporary_root / retired["path"]
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                baseline = subprocess.run(
+                    [
+                        "git",
+                        "show",
+                        f"{manifest['base_commit']}:{retired['path']}",
+                    ],
+                    cwd=PROJECT_ROOT,
+                    capture_output=True,
+                    check=True,
+                )
+                destination.write_bytes(baseline.stdout)
             shutil.copyfile(patch_path, temporary_root / "patch.diff")
             result = subprocess.run(
                 ["git", "apply", "--ignore-space-change", "patch.diff"],
@@ -252,6 +314,8 @@ class ScriptTests(unittest.TestCase):
                         encoding="utf-8"
                     ),
                 )
+            for retired in manifest.get("retired_discovery_paths", []):
+                self.assertFalse((temporary_root / retired["path"]).exists())
 
     def test_reference_reader_emits_exact_metrics(self):
         payload = "## Execution Rules\n\nalpha\n\n## Output Requirements\n\nbeta"
@@ -334,6 +398,35 @@ class ScriptTests(unittest.TestCase):
         )
         self.assertEqual(len(first) + len(second), summary["content_codepoints"])
         self.assertEqual(2, summary["h2_sections"])
+
+    def test_output_summary_decodes_unified_exec_text_blocks(self):
+        payload = "## Execution Rules\n\nalpha"
+        wrapped = json.dumps(
+            [
+                {
+                    "type": "input_text",
+                    "text": read_reference.output_with_metrics(payload),
+                }
+            ]
+        )
+        summary = collect_smoke.output_summary(wrapped)
+        self.assertEqual(len(payload), summary["content_codepoints"])
+        self.assertEqual(1, summary["h2_sections"])
+
+    def test_output_summary_extracts_emitted_skill_metrics(self):
+        output = (
+            "Script completed\nOutput:\n\n"
+            "---\n"
+            "name: codex-project-workflow\n"
+            "description: fixture description\n"
+            "---\n\n"
+            "# Codex Project Workflow\n"
+        )
+        summary = collect_smoke.output_summary(output)
+        self.assertEqual(
+            {"description_chars": 19, "body_chars": 25},
+            summary["skill_metrics"],
+        )
 
     def test_overage_line_is_machine_readable_and_unquoted(self):
         parsed = collect_smoke.parse_reported_overage(
@@ -427,7 +520,7 @@ class ScriptTests(unittest.TestCase):
 
     def test_evaluation_candidates_are_not_discoverable_skills(self):
         discovered = sorted((PROJECT_ROOT / ".agents").rglob("SKILL.md"))
-        self.assertEqual([SKILL_DIR / "SKILL.md"], discovered)
+        self.assertEqual([], discovered)
 
     def test_e23_approval_package_bindings_and_patch_contents(self):
         def committed_bytes(path):
@@ -640,6 +733,72 @@ class ScriptTests(unittest.TestCase):
             trace["reference_files"],
         )
 
+    def test_smoke_collector_traces_unified_exec_reference_loop(self):
+        calls = [
+            {
+                "call_id": "unified",
+                "name": "exec",
+                "arguments": (
+                    'const names = ["research", "governance", "verification"];\n'
+                    "const results = await Promise.all(names.map(name => "
+                    "tools.exec_command({cmd: `python read_reference.py ${name} "
+                    '"Execution Rules" "Output Requirements"`})));'
+                ),
+                "output": collect_smoke.output_summary(
+                    "## Execution Rules\n\nresearch\n\n"
+                    "<!-- codex-reference-metrics "
+                    "codepoints=1205 h2_sections=2 -->\n"
+                    "## Execution Rules\n\ngovernance\n\n"
+                    "<!-- codex-reference-metrics "
+                    "codepoints=2484 h2_sections=2 -->\n"
+                    "## Execution Rules\n\nverification\n\n"
+                    "<!-- codex-reference-metrics "
+                    "codepoints=2239 h2_sections=2 -->\n"
+                ),
+            }
+        ]
+        trace = collect_smoke.reference_call_trace(calls, SKILL_DIR)
+        self.assertEqual(["unified"], trace["reference_section_read_calls"])
+        self.assertEqual(6, trace["reference_h2_sections"])
+        self.assertEqual(5928, trace["reference_loaded_chars"])
+        self.assertEqual(
+            ["governance.md", "research.md", "verification.md"],
+            trace["reference_files"],
+        )
+
+    def test_smoke_collector_traces_unified_exec_template_commands(self):
+        calls = [
+            {
+                "call_id": "templates",
+                "name": "exec",
+                "arguments": (
+                    'const base = "scripts\\\\read_reference.py";\n'
+                    "const cmds = [\n"
+                    '  `python "${base}" governance "Execution Rules" '
+                    '"Output Requirements"`,\n'
+                    '  `python "${base}" verification "Execution Rules" '
+                    '"Output Requirements"`\n'
+                    "];"
+                ),
+                "output": collect_smoke.output_summary(
+                    "## Execution Rules\n\ngovernance\n\n"
+                    "<!-- codex-reference-metrics "
+                    "codepoints=2484 h2_sections=2 -->\n"
+                    "## Execution Rules\n\nverification\n\n"
+                    "<!-- codex-reference-metrics "
+                    "codepoints=2239 h2_sections=2 -->\n"
+                ),
+            }
+        ]
+        trace = collect_smoke.reference_call_trace(calls, SKILL_DIR)
+        self.assertEqual(["templates"], trace["reference_section_read_calls"])
+        self.assertEqual(4, trace["reference_h2_sections"])
+        self.assertEqual(4723, trace["reference_loaded_chars"])
+        self.assertEqual(
+            ["governance.md", "verification.md"],
+            trace["reference_files"],
+        )
+
     def test_smoke_collector_counts_failed_emitted_reference_content(self):
         calls = [
             {
@@ -684,7 +843,9 @@ class ScriptTests(unittest.TestCase):
     def test_full_eval_prompt_hides_evaluator_oracles(self):
         boundary = setup_full_eval.BLIND_EVAL_BOUNDARY
         self.assertIn("Do not inspect parent or peer threads", boundary)
+        self.assertIn("If the task independently activates a skill", boundary)
         self.assertIn("evaluator definitions", boundary)
+        self.assertNotIn("workspace, the active skill entry", boundary)
         self.assertNotIn("expected_changed_files", boundary)
 
     def test_full_eval_prompt_integrity_rejects_answer_hints(self):
@@ -714,6 +875,11 @@ class ScriptTests(unittest.TestCase):
             setup,
         )
         self.assertTrue(nested["valid"])
+        direct = collect_full_eval.prompt_integrity(
+            ["Original fixture prompt.", "Approved."],
+            setup,
+        )
+        self.assertTrue(direct["valid"])
         contaminated = collect_full_eval.prompt_integrity(
             [
                 "<codex_delegation><input>Original fixture prompt.</input>"
@@ -724,6 +890,30 @@ class ScriptTests(unittest.TestCase):
             setup,
         )
         self.assertFalse(contaminated["valid"])
+
+    def test_skill_description_supports_plugin_qualified_entry(self):
+        description = collect_smoke.extract_skill_description(
+            "- codex-project-workflow:codex-project-workflow: "
+            "Never activate for simple questions. "
+            "(file: C:/cache/codex-project-workflow/SKILL.md)"
+        )
+        self.assertEqual(
+            "Never activate for simple questions.",
+            description,
+        )
+
+    def test_collector_ignores_injected_user_context(self):
+        self.assertTrue(
+            collect_smoke.is_injected_user_context(
+                "<recommended_plugins>...</recommended_plugins>\n"
+                "<environment_context>...</environment_context>"
+            )
+        )
+        self.assertFalse(
+            collect_smoke.is_injected_user_context(
+                "Blind evaluation boundary: use only the supplied workspace."
+            )
+        )
 
     def test_agent_no_decision_remains_proposed(self):
         clean = collect_smoke.agent_authorization_trace(
@@ -820,6 +1010,52 @@ class ScriptTests(unittest.TestCase):
         self.assertEqual(["scan"], trace["host_project_scan_calls"])
         self.assertTrue(trace["oracle_access_detected"])
 
+    def test_collector_detects_unified_exec_host_scan(self):
+        project = str(PROJECT_ROOT)
+        escaped = project.replace("\\", "\\\\")
+        calls = [
+            {
+                "call_id": "unified-scan",
+                "name": "exec",
+                "arguments": (
+                    f'const wd = "{escaped}";\n'
+                    'const r = await tools.exec_command({cmd: "rg -n TODO .agents docs", '
+                    "workdir: wd});\ntext(r.output);"
+                ),
+            }
+        ]
+        trace = collect_smoke.evaluation_isolation_trace(
+            calls,
+            "evaluated-thread",
+            project,
+        )
+        self.assertEqual(["unified-scan"], trace["host_project_scan_calls"])
+        self.assertTrue(trace["oracle_access_detected"])
+
+    def test_collector_allows_unified_exec_fixture_scan(self):
+        project = str(PROJECT_ROOT)
+        fixture = PROJECT_ROOT / ".agents" / "skills" / "fixture"
+        escaped = str(fixture).replace("\\", "\\\\")
+        calls = [
+            {
+                "call_id": "fixture-scan",
+                "name": "exec",
+                "arguments": (
+                    f'const target = "{escaped}";\n'
+                    'const r = await tools.exec_command({cmd: "rg --files .", '
+                    "workdir: target});\ntext(r.output);"
+                ),
+            }
+        ]
+        trace = collect_smoke.evaluation_isolation_trace(
+            calls,
+            "evaluated-thread",
+            project,
+            str(fixture),
+        )
+        self.assertEqual([], trace["host_project_scan_calls"])
+        self.assertFalse(trace["oracle_access_detected"])
+
     def test_collector_detects_evaluation_control_artifacts(self):
         calls = [
             {
@@ -882,6 +1118,40 @@ class ScriptTests(unittest.TestCase):
             calls,
             "evaluated-thread",
             project,
+        )
+        self.assertFalse(trace["oracle_access_detected"])
+
+    def test_collector_allows_supplied_fixture_under_evals_run_path(self):
+        project = str(PROJECT_ROOT)
+        fixture = (
+            PROJECT_ROOT
+            / ".agents"
+            / "skills"
+            / "codex-project-workflow"
+            / "evals"
+            / "full"
+            / "runs"
+            / "RUN-1"
+            / "workspaces"
+            / "E35"
+            / "four_hard_triggers"
+        )
+        calls = [
+            {
+                "call_id": "fixture",
+                "name": "exec",
+                "arguments": (
+                    f'const ws = "{str(fixture).replace(chr(92), chr(92) * 2)}"; '
+                    "const r = await tools.exec_command({"
+                    "cmd: `Get-Content -Raw ${ws}\\task.json`, workdir: ws});"
+                ),
+            }
+        ]
+        trace = collect_smoke.evaluation_isolation_trace(
+            calls,
+            "evaluated-thread",
+            project,
+            fixture,
         )
         self.assertFalse(trace["oracle_access_detected"])
 
@@ -1017,6 +1287,31 @@ class ScriptTests(unittest.TestCase):
             state = json.loads(state_path.read_text(encoding="utf-8"))
             self.assertEqual("candidate-commit", state["source_commit"])
 
+    def test_full_setup_requires_source_commit(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output_root = Path(temporary) / "workspaces"
+            with self.assertRaisesRegex(ValueError, "source_commit is required"):
+                setup_full_eval.setup(
+                    ["E02"],
+                    output_root,
+                    source_commit=None,
+                )
+            self.assertFalse(output_root.exists())
+
+    def test_full_setup_rejects_skill_name_in_negative_control_path(self):
+        with self.assertRaisesRegex(
+            ValueError,
+            "negative control workspace path must not name",
+        ):
+            setup_full_eval.validate_negative_control_path(
+                "negative_quick",
+                Path("sandbox") / "codex-project-workflow" / "negative_quick",
+            )
+        setup_full_eval.validate_negative_control_path(
+            "negative_quick",
+            Path("sandbox") / "workflow-eval" / "negative_quick",
+        )
+
     def test_full_eval_minimal_variant_cover(self):
         case = {
             "case_id": "E99",
@@ -1070,6 +1365,23 @@ class ScriptTests(unittest.TestCase):
             finally:
                 collect_full_eval.CASES_DIR = original
 
+    def test_full_eval_manifest_provenance_is_relative_and_hashed(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            run_root = Path(temporary) / "run"
+            output_dir = run_root / "results"
+            output_dir.mkdir(parents=True)
+            manifest_path = run_root / "manifest.json"
+            manifest_path.write_text('{"run_id":"RUN-1"}\n', encoding="utf-8")
+            provenance = collect_full_eval.manifest_provenance(
+                manifest_path,
+                output_dir,
+            )
+            self.assertEqual("../manifest.json", provenance["path"])
+            self.assertEqual(
+                collect_smoke.sha256(manifest_path),
+                provenance["sha256"],
+            )
+
     def test_full_result_dimensions_are_stable(self):
         self.assertEqual(
             [
@@ -1084,6 +1396,74 @@ class ScriptTests(unittest.TestCase):
             ],
             validate_full_results.DIMENSIONS,
         )
+
+    def test_full_result_runtime_follows_manifest(self):
+        manifest = {
+            "model": "gpt-5.6-sol",
+            "reasoning_effort": "ultra",
+            "runs": [{"case_id": "E32", "variant_id": "negative_quick"}],
+        }
+        result = {
+            "case_id": "E32",
+            "variant_id": "negative_quick",
+            "model": "gpt-5.6-sol",
+            "reasoning_effort": "ultra",
+        }
+        validate_full_results.validate_runtime(result, manifest)
+        for field, value, message in (
+            ("model", "gpt-5.5", "wrong model"),
+            ("reasoning_effort", "medium", "wrong reasoning effort"),
+        ):
+            with self.subTest(field=field):
+                changed = dict(result)
+                changed[field] = value
+                with self.assertRaisesRegex(ValueError, message):
+                    validate_full_results.validate_runtime(changed, manifest)
+
+    def test_full_result_resolves_relative_and_legacy_manifest(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            run_root = Path(temporary) / "run"
+            results_dir = run_root / "results"
+            results_dir.mkdir(parents=True)
+            manifest_path = run_root / "manifest.json"
+            manifest_path.write_text(
+                json.dumps({"run_id": "RUN-1", "runs": []}) + "\n",
+                encoding="utf-8",
+            )
+            summary_path = results_dir / "summary.json"
+            relative = {
+                "run_id": "RUN-1",
+                "source_manifest": "../manifest.json",
+                "source_manifest_sha256": collect_smoke.sha256(manifest_path),
+            }
+            resolved, manifest = validate_full_results.resolve_source_manifest(
+                summary_path,
+                relative,
+            )
+            self.assertEqual(manifest_path.resolve(), resolved)
+            self.assertEqual("RUN-1", manifest["run_id"])
+
+            legacy = dict(relative)
+            legacy.pop("source_manifest_sha256")
+            legacy["source_manifest"] = "Z:/moved/run/manifest.json"
+            resolved, _ = validate_full_results.resolve_source_manifest(
+                summary_path,
+                legacy,
+            )
+            self.assertEqual(manifest_path.resolve(), resolved)
+
+            mismatched_run = dict(relative, run_id="RUN-2")
+            with self.assertRaisesRegex(ValueError, "run_id"):
+                validate_full_results.resolve_source_manifest(
+                    summary_path,
+                    mismatched_run,
+                )
+            mismatched_hash = dict(relative, source_manifest_sha256="0" * 64)
+            with self.assertRaisesRegex(ValueError, "SHA-256"):
+                validate_full_results.resolve_source_manifest(
+                    summary_path,
+                    mismatched_hash,
+                )
 
     def test_full_result_changed_file_patterns(self):
         self.assertTrue(
@@ -1183,6 +1563,67 @@ class ScriptTests(unittest.TestCase):
                 result,
                 assertions,
             )
+
+    def test_full_result_context_budget_assertions_follow_machine_trace(self):
+        result = {
+            "context_trace": {
+                "project_skill_listed": True,
+                "project_skill_description_chars": 743,
+                "skill_body_loaded_chars": 1483,
+                "reference_loaded_chars": 4723,
+                "reference_h2_sections": 4,
+                "governance_read_calls": [],
+            },
+            "context_overage": None,
+            "agent_authorization": None,
+        }
+        assertions = {
+            "context_trace.verifiable": {
+                "passed": True,
+                "evidence": "trace fields are present",
+            },
+            "all_fixtures.skill_description_codepoints": {
+                "passed": True,
+                "evidence": "743 <= 800",
+            },
+            "explicit_quick_standard_full.core_body_codepoints": {
+                "passed": True,
+                "evidence": "1483 <= 1500",
+            },
+            "standard.reference_codepoints": {
+                "passed": False,
+                "evidence": "4723 > 2500",
+            },
+            "standard.reference_h2_sections": {
+                "passed": False,
+                "evidence": "4 > 2",
+            },
+            "governance_corpus.bulk_loaded": {
+                "passed": True,
+                "evidence": "no corpus reads",
+            },
+        }
+        validate_full_results.validate_machine_assertions(result, assertions)
+        assertions["standard.reference_codepoints"]["passed"] = True
+        with self.assertRaisesRegex(
+            ValueError,
+            "assessment disagrees with machine context trace",
+        ):
+            validate_full_results.validate_machine_assertions(result, assertions)
+
+        negative = dict(result)
+        negative["context_trace"] = dict(result["context_trace"])
+        negative["context_trace"]["reference_loaded_chars"] = 2239
+        negative_assertions = {
+            "negative_quick.body_and_reference_codepoints": {
+                "passed": False,
+                "evidence": "body and reference were loaded",
+            }
+        }
+        validate_full_results.validate_machine_assertions(
+            negative,
+            negative_assertions,
+        )
 
     def test_full_result_agent_state_follows_machine_trace(self):
         result = {
