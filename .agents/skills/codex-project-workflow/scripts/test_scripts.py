@@ -22,7 +22,7 @@ PACKAGE_SKILL_DIR = (
     / "codex-project-workflow"
 )
 ACTIVE_SKILL_FILE = PACKAGE_SKILL_DIR / "SKILL.md"
-CURRENT_CANDIDATE_ID = "CAND-20260716-14"
+CURRENT_CANDIDATE_ID = "CAND-20260718-15"
 
 
 def load(name: str):
@@ -146,6 +146,13 @@ class ScriptTests(unittest.TestCase):
         self.assertIn("edit the owner", skill_text)
         self.assertIn("docs/IMPLEMENTATION_CONTRACT.md", skill_text)
         self.assertIn("Create no unneeded governance docs", skill_text)
+        self.assertIn("high-impact/state/migration/path-proof", skill_text)
+        self.assertIn("governance+verification, even read-only", skill_text)
+        self.assertIn("Load each required protocol once/task", skill_text)
+        self.assertIn("If all trigger, once each", skill_text)
+        self.assertIn("Run user/fixture verification commands verbatim", skill_text)
+        self.assertIn("including repeats", skill_text)
+        self.assertIn("report incomplete, never guess", skill_text)
 
         def reference_text(name):
             candidate_reference = candidate_dir / "references" / name

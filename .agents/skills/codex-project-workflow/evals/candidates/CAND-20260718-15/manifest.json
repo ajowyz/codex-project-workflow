@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "CAND-20260718-15",
+  "parent_candidate_id": "CAND-20260716-14",
+  "created_at": "2026-07-18T15:32:31.0960558+08:00",
+  "status": "preflight_passed_pending_isolated_evaluation",
+  "base_commit": "1e760c30a25818b3dc8c78e1240096acb3866c37",
+  "hash_algorithm": "sha256-nfc-lf-utf8",
+  "targets": [
+    {
+      "active_path": "plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md",
+      "base_sha256": "44d3c152f2e91ac838c2c8e8f4ee69dc3a20c8024041750f5751329d56286e1e",
+      "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/SKILL.candidate.md",
+      "candidate_sha256": "30effba1d3326f54f55826694a136f2d9842a395df71136c86773fdc38e78857"
+    }
+  ],
+  "patch": {
+    "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/patch.diff",
+    "sha256": "d693bbe3d9dfef1dee0f9ffcde563aeddce5336fd60dcc3adc1c3710f8fffc4c",
+    "apply_check": "passed"
+  },
+  "scope": [
+    "supersede the unactivated CAND-20260716-14 after current-model regression exposed missing and repeated protocol loads",
+    "make the research, governance, and verification trigger matrix explicit",
+    "require high-impact, state, migration, and implementation-path proof work to load governance plus verification even when read-only",
+    "load each required protocol once per task and aggregate every actual helper metric without guessing incomplete measurements",
+    "execute user-supplied and fixture verification commands verbatim",
+    "retain the packaged plugin skill as the single runtime owner",
+    "keep automatic recording, hooks, MCP, marketplace edits, and manual installed-cache edits out of scope"
+  ],
+  "runtime": {
+    "codex_app": "26.715.3651.0",
+    "codex_cli": "0.145.0-alpha.18",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "preflight": {
+    "status": "passed_with_tooling_limit",
+    "skill_body_codepoints": 1483,
+    "skill_description_codepoints": 752,
+    "project_validator": "passed",
+    "skill_creator_quick_validate": "not_run_missing_pyyaml_in_available_runtimes",
+    "static_regression": "70_of_70_passed; root_scripts=12_of_12_passed; evals=36_cases_148_assertions; full_fixtures=31_of_31_cases_61_variants",
+    "patch_apply_check": "passed"
+  },
+  "evaluation": {
+    "status": "pending",
+    "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED",
+    "full_run": "REGRESSION-20260718-GPT56-C15-FULL",
+    "required_regressions": [
+      "E32:negative_quick",
+      "E32:standard_cross_file",
+      "E32:full_high_risk_migration",
+      "E32:hard_trigger_overage",
+      "E32:nested_h3_counting",
+      "E35:four_hard_triggers",
+      "plugin-install-smoke",
+      "fresh-task-runtime-owner"
+    ],
+    "c14_failures_to_close": [
+      "E32:hard_trigger_overage must load governance and verification exactly once and report 4223/3 overage",
+      "E35:four_hard_triggers must load all three protocols exactly once, report 5028/5 overage, run the exact commands, and use a separate bounded page-open approval"
+    ]
+  },
+  "activation": {
+    "allowed": false,
+    "requires_explicit_user_approval": true,
+    "approval_text": null,
+    "approval_scope": "pending evidence-bound approval for CAND-20260718-15",
+    "invalidation_conditions": [
+      "base commit, active target hash, candidate, patch, target list, or scope changes",
+      "targeted or full current-model regression is missing or fails",
+      "installed cache differs from the evaluated package",
+      "fresh-task evidence does not show exactly one codex-project-workflow runtime owner",
+      "protocol trigger, load-once, exact-command, approval, context-budget, or incomplete-measurement behavior regresses",
+      "approval refers to a different candidate, hash, runtime, result, or scope"
+    ]
+  }
+}
