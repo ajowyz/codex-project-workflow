@@ -389,10 +389,18 @@ def reference_call_trace(tool_calls, trace_skill_dir):
             and "Execution Rules" in command
             and "Output Requirements" in command
         )
+        nested_helper_call = any(
+            marker in command
+            for marker in (
+                "tools.shell_command",
+                "tools.exec_command",
+                "Promise.all",
+            )
+        )
         measurement_incomplete = requested_sections and (
             output is None
-            or failed
-            or output.get("h2_sections", 0) == 0
+            or (failed and nested_helper_call)
+            or (not failed and output.get("h2_sections", 0) == 0)
         )
         if measurement_incomplete:
             result["reference_metric_measurement_complete"] = False

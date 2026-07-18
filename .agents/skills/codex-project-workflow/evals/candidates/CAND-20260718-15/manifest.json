@@ -11,12 +11,12 @@
       "active_path": "plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md",
       "base_sha256": "44d3c152f2e91ac838c2c8e8f4ee69dc3a20c8024041750f5751329d56286e1e",
       "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/SKILL.candidate.md",
-      "candidate_sha256": "30effba1d3326f54f55826694a136f2d9842a395df71136c86773fdc38e78857"
+      "candidate_sha256": "a4346a691b298e1306ffd17a04043b8369dd9274e4fc5d66bc25435aed8000ea"
     }
   ],
   "patch": {
     "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/patch.diff",
-    "sha256": "d693bbe3d9dfef1dee0f9ffcde563aeddce5336fd60dcc3adc1c3710f8fffc4c",
+    "sha256": "667e4a4fe618545c6ea709aa0cb057810a45427399eb5866b35a60c784df3fe8",
     "apply_check": "passed"
   },
   "scope": [
@@ -36,17 +36,21 @@
   },
   "preflight": {
     "status": "passed_with_tooling_limit",
-    "skill_body_codepoints": 1483,
+    "skill_body_codepoints": 1472,
     "skill_description_codepoints": 752,
     "project_validator": "passed",
     "skill_creator_quick_validate": "not_run_missing_pyyaml_in_available_runtimes",
-    "static_regression": "70_of_70_passed; root_scripts=12_of_12_passed; evals=36_cases_148_assertions; full_fixtures=31_of_31_cases_61_variants",
+    "static_regression": "71_of_71_passed; root_scripts=12_of_12_passed; evals=36_cases_148_assertions; full_fixtures=31_of_31_cases_61_variants",
     "patch_apply_check": "passed"
   },
   "evaluation": {
     "status": "pending",
-    "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED",
+    "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN2",
     "full_run": "REGRESSION-20260718-GPT56-C15-FULL",
+    "discarded_diagnostic_runs": [
+      "REGRESSION-20260718-GPT56-C15-TARGETED: resume process used the repository root as its writable sandbox root",
+      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN: helper directory placeholder was interpreted one level too high"
+    ],
     "required_regressions": [
       "E32:negative_quick",
       "E32:standard_cross_file",

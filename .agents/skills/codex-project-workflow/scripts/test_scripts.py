@@ -149,7 +149,8 @@ class ScriptTests(unittest.TestCase):
         self.assertIn("high-impact/state/migration/path-proof", skill_text)
         self.assertIn("governance+verification, even read-only", skill_text)
         self.assertIn("Load each required protocol once/task", skill_text)
-        self.assertIn("If all trigger, once each", skill_text)
+        self.assertIn("`<skill_dir>` is this `SKILL.md`'s folder", skill_text)
+        self.assertIn("All three: once each", skill_text)
         self.assertIn("Run user/fixture verification commands verbatim", skill_text)
         self.assertIn("including repeats", skill_text)
         self.assertIn("report incomplete, never guess", skill_text)
@@ -876,6 +877,27 @@ class ScriptTests(unittest.TestCase):
         self.assertIsNone(overage["expected_added_codepoints"])
         self.assertIsNone(overage["expected_added_sections"])
         self.assertFalse(overage["values_accurate"])
+
+    def test_smoke_collector_counts_visible_direct_helper_failure_as_zero(self):
+        calls = [
+            {
+                "call_id": "direct-failure",
+                "name": "command_execution",
+                "arguments": (
+                    "python C:/plugin/scripts/read_reference.py governance "
+                    '"Execution Rules" "Output Requirements"'
+                ),
+                "output": collect_smoke.output_summary(
+                    "Exit code: 1\nOutput:\nunknown reference: dependency\n"
+                ),
+            }
+        ]
+        trace = collect_smoke.reference_call_trace(calls, SKILL_DIR)
+        self.assertTrue(trace["reference_metric_measurement_complete"])
+        self.assertEqual([], trace["unmeasured_reference_calls"])
+        self.assertEqual(["direct-failure"], trace["reference_failed_calls"])
+        self.assertEqual(0, trace["reference_loaded_chars"])
+        self.assertEqual(0, trace["reference_h2_sections"])
 
     def test_smoke_collector_ignores_null_token_info(self):
         self.assertIsNone(
