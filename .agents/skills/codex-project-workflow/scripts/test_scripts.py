@@ -824,6 +824,52 @@ class ScriptTests(unittest.TestCase):
         self.assertEqual(2, trace["reference_h2_sections"])
         self.assertGreater(trace["reference_loaded_chars"], 0)
 
+    def test_smoke_collector_marks_failed_nested_reference_load_incomplete(self):
+        calls = [
+            {
+                "call_id": "nested-failure",
+                "name": "exec",
+                "arguments": (
+                    'const names = ["research", "dependency", "verification"];\n'
+                    "const results = await Promise.all(names.map(name => "
+                    "tools.shell_command({command: `python read_reference.py ${name} "
+                    '"Execution Rules" "Output Requirements"`})));'
+                ),
+                "output": collect_smoke.output_summary(
+                    "Script failed\nOutput:\n\nScript error:\n"
+                    "Exit code: 1\nOutput:\nunknown reference: dependency\n"
+                ),
+            }
+        ]
+        trace = collect_smoke.reference_call_trace(calls, SKILL_DIR)
+        self.assertFalse(trace["reference_metric_measurement_complete"])
+        self.assertEqual(
+            ["nested-failure"],
+            trace["unmeasured_reference_calls"],
+        )
+
+        fixture = (
+            SKILL_DIR
+            / "evals"
+            / "full"
+            / "cases"
+            / "E35"
+            / "workspace"
+            / "four_hard_triggers"
+        )
+        overage = collect_smoke.context_overage_trace(
+            fixture,
+            trace,
+            "added_codepoints=0, added_sections=0, "
+            "reason=visible output only, unknown_resolved=none",
+        )
+        self.assertFalse(overage["measurement_complete"])
+        self.assertIsNone(overage["actual_loaded_codepoints"])
+        self.assertIsNone(overage["actual_h2_sections"])
+        self.assertIsNone(overage["expected_added_codepoints"])
+        self.assertIsNone(overage["expected_added_sections"])
+        self.assertFalse(overage["values_accurate"])
+
     def test_smoke_collector_ignores_null_token_info(self):
         self.assertIsNone(
             collect_smoke.token_usage_from_event(
@@ -1218,6 +1264,35 @@ class ScriptTests(unittest.TestCase):
             variant["expected"]["changed_files"],
         )
 
+    def test_e35_fixture_has_bounded_page_open_approval(self):
+        case = json.loads(
+            (
+                SKILL_DIR
+                / "evals"
+                / "full"
+                / "cases"
+                / "E35"
+                / "case.json"
+            ).read_text(encoding="utf-8")
+        )
+        variant = next(
+            item for item in case["variants"] if item["id"] == "four_hard_triggers"
+        )
+        replies = variant["scripted_user_replies"]
+        self.assertEqual(4, len(replies))
+        page_open = next(
+            item for item in replies if "page-open scope" in item["when"]
+        )
+        self.assertIn("exact candidate public source URLs", page_open["when"])
+        self.assertIn("only the exact displayed public read-only URLs", page_open["reply"])
+        for boundary in (
+            "Do not follow links",
+            "change domains",
+            "submit forms",
+            "send internal identifiers",
+        ):
+            self.assertIn(boundary, page_open["reply"])
+
     def test_external_workspace_fixtures_expose_their_paths(self):
         for case_id in ("E12", "E16", "E26"):
             case = json.loads(
@@ -1563,6 +1638,51 @@ class ScriptTests(unittest.TestCase):
                 result,
                 assertions,
             )
+
+    def test_full_result_incomplete_context_measurement_cannot_pass(self):
+        incomplete = {
+            "measurement_complete": False,
+            "actual_loaded_codepoints": None,
+            "actual_h2_sections": None,
+            "expected_added_codepoints": None,
+            "expected_added_sections": None,
+            "fields_complete": True,
+            "values_accurate": False,
+        }
+        validate_full_results.validate_context_measurement(
+            incomplete,
+            ["context_measurement_incomplete"],
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "must be recorded as context_measurement_incomplete",
+        ):
+            validate_full_results.validate_context_measurement(incomplete, [])
+
+        guessed = dict(incomplete, actual_loaded_codepoints=2484)
+        with self.assertRaisesRegex(
+            ValueError,
+            "must not guess actual or expected values",
+        ):
+            validate_full_results.validate_context_measurement(
+                guessed,
+                ["context_measurement_incomplete"],
+            )
+
+        result = {"context_overage": incomplete}
+        assertions = {
+            "budget_overage.values_accurate": {
+                "passed": False,
+                "evidence": "nested protocol output was not fully measurable",
+            }
+        }
+        validate_full_results.validate_machine_assertions(result, assertions)
+        assertions["budget_overage.values_accurate"]["passed"] = True
+        with self.assertRaisesRegex(
+            ValueError,
+            "assessment disagrees with machine overage trace",
+        ):
+            validate_full_results.validate_machine_assertions(result, assertions)
 
     def test_full_result_context_budget_assertions_follow_machine_trace(self):
         result = {

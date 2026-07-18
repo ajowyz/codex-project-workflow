@@ -315,6 +315,8 @@ def reference_call_trace(tool_calls, trace_skill_dir):
         "reference_list_calls": [],
         "reference_section_read_calls": [],
         "reference_failed_calls": [],
+        "reference_metric_measurement_complete": True,
+        "unmeasured_reference_calls": [],
         "reference_files": [],
         "reference_loaded_chars": 0,
         "reference_tool_output_chars": 0,
@@ -381,6 +383,20 @@ def reference_call_trace(tool_calls, trace_skill_dir):
         )
         if failed:
             result["reference_failed_calls"].append(call["call_id"])
+
+        requested_sections = bool(
+            helper_paths
+            and "Execution Rules" in command
+            and "Output Requirements" in command
+        )
+        measurement_incomplete = requested_sections and (
+            output is None
+            or failed
+            or output.get("h2_sections", 0) == 0
+        )
+        if measurement_incomplete:
+            result["reference_metric_measurement_complete"] = False
+            result["unmeasured_reference_calls"].append(call["call_id"])
 
         if helper_paths:
             if output and output["h2_sections"]:
@@ -451,12 +467,20 @@ def context_overage_trace(fixture_root, context_trace, final_response):
     if not isinstance(codepoint_limit, int) or not isinstance(section_limit, int):
         return None
 
-    actual_codepoints = context_trace["reference_loaded_chars"]
-    actual_sections = context_trace["reference_h2_sections"]
-    expected = {
-        "added_codepoints": max(0, actual_codepoints - codepoint_limit),
-        "added_sections": max(0, actual_sections - section_limit),
-    }
+    measured_codepoints = context_trace["reference_loaded_chars"]
+    measured_sections = context_trace["reference_h2_sections"]
+    measurement_complete = context_trace.get(
+        "reference_metric_measurement_complete",
+        True,
+    )
+    expected = (
+        {
+            "added_codepoints": max(0, measured_codepoints - codepoint_limit),
+            "added_sections": max(0, measured_sections - section_limit),
+        }
+        if measurement_complete
+        else {"added_codepoints": None, "added_sections": None}
+    )
     reported = parse_reported_overage(final_response)
     required = {
         "added_codepoints",
@@ -465,15 +489,24 @@ def context_overage_trace(fixture_root, context_trace, final_response):
         "unknown_resolved",
     }
     fields_complete = required <= set(reported)
-    values_accurate = (
+    values_accurate = measurement_complete and (
         reported.get("added_codepoints") == expected["added_codepoints"]
         and reported.get("added_sections") == expected["added_sections"]
     )
     return {
         "budget_codepoints": codepoint_limit,
         "budget_h2_sections": section_limit,
-        "actual_loaded_codepoints": actual_codepoints,
-        "actual_h2_sections": actual_sections,
+        "measurement_complete": measurement_complete,
+        "unmeasured_reference_calls": context_trace.get(
+            "unmeasured_reference_calls",
+            [],
+        ),
+        "measured_loaded_codepoints": measured_codepoints,
+        "measured_h2_sections": measured_sections,
+        "actual_loaded_codepoints": (
+            measured_codepoints if measurement_complete else None
+        ),
+        "actual_h2_sections": measured_sections if measurement_complete else None,
         "expected_added_codepoints": expected["added_codepoints"],
         "expected_added_sections": expected["added_sections"],
         "reported": reported,

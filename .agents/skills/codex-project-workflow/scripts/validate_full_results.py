@@ -114,6 +114,34 @@ def validate_prompt_integrity(integrity, hard_failures):
     )
 
 
+def validate_context_measurement(overage, hard_failures):
+    if overage is None:
+        return
+    complete = overage.get("measurement_complete", True)
+    require(isinstance(complete, bool), "context measurement completeness must be boolean")
+    has_failure = "context_measurement_incomplete" in hard_failures
+    require(
+        complete or has_failure,
+        "incomplete context measurement must be recorded as context_measurement_incomplete",
+    )
+    require(
+        not complete or not has_failure,
+        "context_measurement_incomplete recorded for a complete measurement",
+    )
+    if not complete:
+        require(
+            overage.get("actual_loaded_codepoints") is None
+            and overage.get("actual_h2_sections") is None
+            and overage.get("expected_added_codepoints") is None
+            and overage.get("expected_added_sections") is None,
+            "incomplete context measurement must not guess actual or expected values",
+        )
+        require(
+            overage.get("values_accurate") is False,
+            "incomplete context measurement cannot report accurate overage values",
+        )
+
+
 def validate_machine_assertions(result, assertion_results):
     trace = result.get("context_trace")
     if isinstance(trace, dict):
@@ -356,6 +384,10 @@ def validate(summary_path, assessment_path):
         )
         validate_prompt_integrity(
             result.get("prompt_integrity"),
+            record["hard_failures"],
+        )
+        validate_context_measurement(
+            result.get("context_overage"),
             record["hard_failures"],
         )
 
