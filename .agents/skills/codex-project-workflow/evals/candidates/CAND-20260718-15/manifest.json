@@ -11,12 +11,12 @@
       "active_path": "plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md",
       "base_sha256": "44d3c152f2e91ac838c2c8e8f4ee69dc3a20c8024041750f5751329d56286e1e",
       "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/SKILL.candidate.md",
-      "candidate_sha256": "0180e3937ea497382dc9c158f4407aedc9d767633c03942c3ca0ae1dee73bf55"
+      "candidate_sha256": "f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a"
     }
   ],
   "patch": {
     "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/patch.diff",
-    "sha256": "2b855060e7f62a874392331af6afd0c3f71372807dd16785dab0482ed9b1f3ed",
+    "sha256": "77c812864c7176faf9e9ff96c5f66c8037dd739ea556f13b3cfb09f6bb142105",
     "apply_check": "passed"
   },
   "scope": [
@@ -36,7 +36,7 @@
   },
   "preflight": {
     "status": "passed_with_tooling_limit",
-    "skill_body_codepoints": 1499,
+    "skill_body_codepoints": 1498,
     "skill_description_codepoints": 752,
     "project_validator": "passed",
     "skill_creator_quick_validate": "not_run_missing_pyyaml_in_available_runtimes",
@@ -45,7 +45,7 @@
   },
   "evaluation": {
     "status": "pending",
-    "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN6",
+    "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN7",
     "full_run": "REGRESSION-20260718-GPT56-C15-FULL",
     "discarded_diagnostic_runs": [
       "REGRESSION-20260718-GPT56-C15-TARGETED: resume process used the repository root as its writable sandbox root",
@@ -53,7 +53,8 @@
       "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN2: the phrase all three was read as unconditional and over-loaded E32",
       "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN3: E35 added -v to an exact command and expanded search approval into unapproved page/source access",
       "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN4: E35 added -v because the fixture hid the exact no-extra-flags test command; the run was stopped before gated research or simulation",
-      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN5: E32 JSON-wrapped parallel helper results made protocol metrics unmeasurable; E35 simulation approval lost literal backticks during orchestration"
+      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN5: E32 JSON-wrapped parallel helper results made protocol metrics unmeasurable; E35 simulation approval lost literal backticks during orchestration",
+      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN6: compact route wording let E35 attempt a nonexistent implementation protocol before correcting to the three actual protocols"
     ],
     "required_regressions": [
       "E32:negative_quick",
