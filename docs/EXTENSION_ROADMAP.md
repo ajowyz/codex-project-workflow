@@ -5,22 +5,22 @@
 当前产品已经达到“个人可用、可复验、可继续扩展”的状态：
 
 - 当前正式回归运行环境是 `gpt-5.6-sol` / `xhigh`、Codex App `26.715.3651.0`、Codex CLI `0.145.0-alpha.18`。
-- `plugins/codex-project-workflow/` 是唯一源；installed cache `0.1.0+codex.20260716095059` 是正式安装产生的运行时副本。
+- `plugins/codex-project-workflow/` 是唯一源；已评估的候选 installed cache `0.1.0+codex.cand-20260718-15-r6` 是安装流程产生的运行时副本，不代表治理上的正式激活。
 - `.agents/skills/codex-project-workflow/` 只保留评估夹具、脚本和协议镜像，不包含可发现的 `SKILL.md`。
-- 安装 smoke 已针对最终 cache 通过；fresh CLI 已看到新 cache。当前 App 任务可能保留旧插件清单快照，App 复验需要新顶层任务或重启后的新任务。
+- 安装 smoke 已针对已评估候选 cache 通过；fresh CLI 已看到新 cache。当前 App 任务可能保留旧插件清单快照，App 复验需要新顶层任务或重启后的新任务。
 - [官方 Skills 文档](https://learn.chatgpt.com/docs/build-skills)中的 project config / `skills.config` 表示预期配置契约；当前实现不能依赖 project-local filtering，项目实测与 [openai/codex#20210](https://github.com/openai/codex/issues/20210) 一致。
 - 当前仍是纯技能插件，不包含自动记录、Hook、MCP、app connector 或自定义 Agent manifest。
 
 ## 本轮 P1 / P2 / P3 收口状态
 
 - P1：完成单一源、运行时所有者和重复发现入口收敛。
-- P2：候选实现、评估工具修复、预检和 6 项 final-cache 干净回归均已完成；4/6 逐运行通过，但 E32/E35 聚合均失败。`CAND-20260716-14` 状态为 `preflight_passed_regression_failed`，继续保持未激活。
-- P3：本轮核心文档已同步到 GPT-5.6/App/CLI 当前事实和 P2 正式失败结论。这里的 P3 是本轮文档与验收阶段，不授权下方历史路线中的 Hook、MCP 或自动记录。
+- P2：`CAND-20260718-15` 的实现、预检、2 项定向回归和 6 项完整干净回归均已完成；正式验证结果为逐运行 `6/6`、聚合 `2/2`、`overall=pass`。候选状态为 `regression_passed_pending_activation_approval`，仍未正式激活。
+- P3：本轮核心文档已同步到 GPT-5.6/App/CLI 当前事实、CAND-15 正式通过结论和未激活边界。这里的 P3 是本轮文档与验收阶段，不授权下方历史路线中的 Hook、MCP 或自动记录。
 
 ## 当前边界与下一轮触发条件
 
 - 继续使用人工、显式的候选记录；不增加后台记录能力。
-- 如继续 P2，下一步应建立新的修复候选并针对 E32/E35 失败重新回归；不得激活或重写 CAND-14 的失败证据。
+- 下一步仅在收到绑定 `CAND-20260718-15`、候选哈希、R6 运行时、通过结果和当前范围的显式批准后，才可把 `activation.allowed` 改为 true；此前保持测试安装态和正式激活状态分离。
 - 只有真实使用证据显示现有结构不足，且用户另行授权时，才重新评估 Hook、MCP、外部服务或自定义 Agent manifest。
 - 若官方修复 project-local filtering，先做 App/CLI pickup、负触发和单一所有者回归，再决定是否改变架构。
 - 若 App 任务插件清单未刷新，先验证任务快照边界，不重复创建仓库内技能副本。

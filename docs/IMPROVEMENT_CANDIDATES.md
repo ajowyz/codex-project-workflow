@@ -168,3 +168,46 @@ Verification boundary:
 Out of scope:
 
 - 自动记录、Hook、MCP、app connector、后台自更新和向量检索。
+
+## CAND-20260718-15 Current-Model Protocol Routing Repair
+
+Date: 2026-07-18
+
+Trigger signal:
+
+- CAND-14 的正式 GPT-5.6 回归显示：E32 高影响只读评估遗漏 verification；E35 未完成独立页面批准、未使用指定测试命令、重复加载协议并误报上下文总量。
+- [官方 Skills 指南](https://learn.chatgpt.com/docs/build-skills)强调用精确 description、清晰边界和正负触发提示验证技能；[官方 Subagents 指南](https://learn.chatgpt.com/docs/agent-configuration/subagents)建议只把独立、读多写少的工作并行化，并谨慎处理并行写入。
+- 社区实现信号继续表明不能只依赖配置或名称推断运行时所有权：[project-local filtering](https://github.com/openai/codex/issues/20210)、[重复技能名](https://github.com/openai/codex/issues/25324)和[续接会话与新鲜上下文差异](https://github.com/openai/codex/issues/17560)都需要本地 fresh-session 证据兜底。
+
+Candidate behavior:
+
+- 只允许 `research`、`governance`、`verification` 三个协议路由名；implementation 映射到 verification。
+- 高影响、状态、迁移和实现路径证明即使只读，也必须加载 governance 与 verification。
+- 每个必需协议每任务加载一次，分别暴露 helper 原始输出；无法计量时明确报告 incomplete，不猜测 overage。
+- 用户或夹具指定的验证命令必须逐字执行，不追加 flags。
+- 搜索批准不包含页面打开；每个新的 query、source、URL 或 open 都需要后续精确批准。
+- 多 Agent 提案未获决定时保持 `proposed`；主 Agent 只继续已分配或独立工作。
+
+Verification:
+
+- Candidate SHA-256：`f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a`；patch SHA-256：`77c812864c7176faf9e9ff96c5f66c8037dd739ea556f13b3cfb09f6bb142105`。
+- 静态验证：脚本 `71/71`、根目录 `12/12`、评估夹具 `36 cases / 148 assertions`、完整夹具 `31/31 cases / 61 variants`，skill structure 与 diff check 通过。
+- 定向回归 `REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN7`：`2/2` run、`2/2` case、`overall=pass`。
+- 完整回归 `REGRESSION-20260718-GPT56-C15-FULL`：`6/6` run、`2/2` case、`overall=pass`。
+- R6 cache `0.1.0+codex.cand-20260718-15-r6` 安装 smoke 通过；仓库、个人源和 cache 的 7 个内容文件一致。fresh CLI probe `019f7481-73b0-71a1-895d-12e64fe3a0be` 仅发现 1 个精确名称匹配，来源是 R6 cache，匹配路径不含 `.agents`。
+- 官方 Python quick validator 因已批准环境缺少 `PyYAML` 仍记为 unavailable；没有安装依赖，也不把项目验证器通过冒充官方 validator 通过。
+
+Residual signal:
+
+- E32 `standard_cross_file` 与 E35 `four_hard_triggers` 在加载正确协议前各自试探过不存在的 implementation 名称；失败调用没有加载协议正文，后续门、计量和结果完整，因此不构成本候选 hard failure，但可作为后续精简效率的真实使用信号。
+
+Status:
+
+- `regression_passed_pending_activation_approval`。
+- `activation.allowed=false`；R6 是已评估测试安装态，不是正式激活。
+- 仓库 active path 的物理内容已等于候选 SHA，用于正式回归；patch 对 base commit 正向检查通过，对当前工作树反向检查通过。这里的 activation 是证据绑定的治理状态，不等同于候选字节是否已放入唯一源或测试 cache。
+- 只有绑定候选 ID、候选哈希、R6 运行时、`6/6` / `2/2` / `overall=pass` 结果和当前范围的显式用户批准，才可进入激活状态更新。
+
+Out of scope:
+
+- 自动记录、Hook、MCP、app connector、后台自更新、向量检索和手工修改安装 cache。

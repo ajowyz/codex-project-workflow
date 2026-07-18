@@ -3,7 +3,7 @@
   "candidate_id": "CAND-20260718-15",
   "parent_candidate_id": "CAND-20260716-14",
   "created_at": "2026-07-18T15:32:31.0960558+08:00",
-  "status": "preflight_passed_pending_isolated_evaluation",
+  "status": "regression_passed_pending_activation_approval",
   "base_commit": "1e760c30a25818b3dc8c78e1240096acb3866c37",
   "hash_algorithm": "sha256-nfc-lf-utf8",
   "targets": [
@@ -11,13 +11,16 @@
       "active_path": "plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md",
       "base_sha256": "44d3c152f2e91ac838c2c8e8f4ee69dc3a20c8024041750f5751329d56286e1e",
       "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/SKILL.candidate.md",
-      "candidate_sha256": "f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a"
+      "candidate_sha256": "f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a",
+      "evaluated_active_sha256": "f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a",
+      "working_source_state": "candidate_content_present_for_evaluation_pending_governance_activation"
     }
   ],
   "patch": {
     "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/patch.diff",
     "sha256": "77c812864c7176faf9e9ff96c5f66c8037dd739ea556f13b3cfb09f6bb142105",
-    "apply_check": "passed"
+    "apply_check": "passed_against_base_commit",
+    "current_worktree_check": "reverse_apply_passed_candidate_already_present"
   },
   "scope": [
     "supersede the unactivated CAND-20260716-14 after current-model regression exposed missing and repeated protocol loads",
@@ -41,12 +44,49 @@
     "project_validator": "passed",
     "skill_creator_quick_validate": "not_run_missing_pyyaml_in_available_runtimes",
     "static_regression": "71_of_71_passed; root_scripts=12_of_12_passed; evals=36_cases_148_assertions; full_fixtures=31_of_31_cases_61_variants",
-    "patch_apply_check": "passed"
+    "patch_apply_check": "passed_against_base_commit; current_worktree_reverse_apply_passed"
   },
   "evaluation": {
-    "status": "pending",
+    "status": "passed",
     "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN7",
     "full_run": "REGRESSION-20260718-GPT56-C15-FULL",
+    "targeted_result": {
+      "status": "passed",
+      "runs_passed": "2_of_2",
+      "cases_passed": "2_of_2",
+      "overall": "pass",
+      "summary": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN7/results/summary.json",
+      "assessment": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN7/assessment.json",
+      "validator": "Full evaluation result is valid: 2/2 targeted_regression cases passed; overall=pass"
+    },
+    "full_result": {
+      "status": "passed",
+      "runs_passed": "6_of_6",
+      "cases_passed": "2_of_2",
+      "overall": "pass",
+      "summary": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260718-GPT56-C15-FULL/results/summary.json",
+      "assessment": ".agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260718-GPT56-C15-FULL/assessment.json",
+      "validator": "Full evaluation result is valid: 2/2 targeted_regression cases passed; overall=pass"
+    },
+    "plugin_install_smoke": {
+      "status": "passed",
+      "cache_version": "0.1.0+codex.cand-20260718-15-r6",
+      "governance_metrics": "2484_codepoints_2_h2",
+      "research_metrics": "1205_codepoints_2_h2",
+      "verification_metrics": "2239_codepoints_2_h2"
+    },
+    "fresh_task_runtime_owner": {
+      "status": "passed",
+      "thread_id": "019f7481-73b0-71a1-895d-12e64fe3a0be",
+      "exact_name_matches": 1,
+      "source_locator": "C:/Users/w/.codex/plugins/cache/personal/codex-project-workflow/0.1.0+codex.cand-20260718-15-r6/skills/codex-project-workflow/SKILL.md",
+      "cache_version": "0.1.0+codex.cand-20260718-15-r6",
+      "matching_agents_path": false
+    },
+    "nonblocking_observations": [
+      "E32 standard_cross_file and E35 four_hard_triggers each made rejected probes for nonexistent implementation-named references before loading the required verification route; no protocol content was loaded by those failed probes, required gates were completed, and both runs passed",
+      "the official skill-creator quick validator remains unavailable because PyYAML is absent from the approved local runtimes; no dependency installation was authorized or performed"
+    ],
     "discarded_diagnostic_runs": [
       "REGRESSION-20260718-GPT56-C15-TARGETED: resume process used the repository root as its writable sandbox root",
       "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN: helper directory placeholder was interpreted one level too high",
@@ -66,18 +106,21 @@
       "plugin-install-smoke",
       "fresh-task-runtime-owner"
     ],
-    "c14_failures_to_close": [
-      "E32:hard_trigger_overage must load governance and verification exactly once and report 4223/3 overage",
-      "E35:four_hard_triggers must load all three protocols exactly once, report 5028/5 overage, run the exact commands, and use a separate bounded page-open approval"
+    "c14_failures_closed": [
+      "E32:hard_trigger_overage loaded governance and verification exactly once and reported the 4223/3 overage in both passing CAND-15 batches",
+      "E35:four_hard_triggers loaded all three protocols exactly once, reported the 5028/5 overage, ran the exact commands, and used a separate bounded page-open approval in both passing CAND-15 batches"
     ]
   },
   "activation": {
     "allowed": false,
+    "working_source_contains_candidate": true,
+    "installed_cache_role": "evaluation_copy",
+    "formal_activation_recorded": false,
     "requires_explicit_user_approval": true,
     "approval_text": null,
     "approval_scope": "pending evidence-bound approval for CAND-20260718-15",
     "invalidation_conditions": [
-      "base commit, active target hash, candidate, patch, target list, or scope changes",
+      "base commit, candidate, patch, target list, or scope changes, or the active target changes away from the recorded evaluated candidate hash",
       "targeted or full current-model regression is missing or fails",
       "installed cache differs from the evaluated package",
       "fresh-task evidence does not show exactly one codex-project-workflow runtime owner",

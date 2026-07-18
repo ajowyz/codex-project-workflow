@@ -1,0 +1,40 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN5",
+  "evaluation_scope": "targeted_regression",
+  "status": "completed_unassessed_at_manifest_freeze",
+  "created_at": "2026-07-18T16:17:39+08:00",
+  "completed_at": "2026-07-18T16:26:17+08:00",
+  "fixture_commit": "f9de84663d4b6884f13cbf86b7cee11d18ad7d7e",
+  "candidate_id": "CAND-20260718-15",
+  "candidate_sha256": "d1e808cae33a8953aece3a43ef8791da7efbd2df66f32d32c26cad9214c39584",
+  "plugin_cache_version": "0.1.0+codex.cand-20260718-15-r4",
+  "codex_app_version": "26.715.3651.0",
+  "codex_cli_version": "0.145.0-alpha.18",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN5\\workspaces\\setup-state.json",
+  "runtime_skill_inventory_at_launch": {
+    "matching_entries": 1,
+    "owner": "installed plugin cache",
+    "note": "Fresh CLI sessions loaded the R4 installed plugin cache in isolated host-owned fixture workspaces. Memory injection, notify hooks, and the unrelated node_repl MCP were disabled."
+  },
+  "runs": [
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019f744d-6d80-7332-9a40-b6b8849c7d45",
+      "status": "completed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN5\\workspaces\\E32\\hard_trigger_overage",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019f744d-6d93-75e3-8b34-72ef84df6cb3",
+      "status": "completed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN5\\workspaces\\E35\\four_hard_triggers",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    }
+  ]
+}

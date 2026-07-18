@@ -1,9 +1,9 @@
 # 项目计划与当前状态
 
-> 执行状态：P1 已完成；P2 已完成实现、预检及 6/6 项干净回归执行，其中 4/6 通过，E32/E35 聚合失败，CAND-14 不可激活；P3 文档同步已完成
+> 执行状态：P1 已完成；P2 的 CAND-15 已完成实现、预检、2/2 定向及 6/6 完整干净回归，E32/E35 聚合 `2/2`、`overall=pass`；P3 文档同步已完成；候选仍待显式激活批准
 > 更新时间：2026-07-18 +08:00
 > 当前回归运行时：`gpt-5.6-sol` / `xhigh`；Codex App `26.715.3651.0`；Codex CLI `0.145.0-alpha.18`
-> 当前安装版本：`0.1.0+codex.20260716095059`
+> 当前已评估候选安装版本：`0.1.0+codex.cand-20260718-15-r6`（测试安装态，不代表正式激活）
 > 历史说明：2026-06 的 GPT-5.5 校准、旧契约和旧候选记录均作为冻结证据保留，不代表当前入口或运行时
 
 ## 当前目标
@@ -19,17 +19,18 @@
 
 ## 当前状态
 
-- 仓库 `plugins/codex-project-workflow/` 是技能的唯一源；`C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260716095059` 是正式安装产生的运行时副本。
+- 仓库 `plugins/codex-project-workflow/` 是技能的唯一源；`C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.cand-20260718-15-r6` 是候选评估安装产生的运行时副本。
+- 唯一源当前物理内容已经等于 CAND-15 候选哈希，以支持隔离评估；候选 patch 对 base commit 正向可应用、对当前工作树反向可应用。这是 working-source candidate state，不是治理上的正式激活。
 - `.agents/skills/codex-project-workflow/` 只承担评估夹具、脚本和协议镜像职责，目录中不再保留可发现的 `SKILL.md`。
-- 插件安装 smoke 已针对最终 cache 通过；governance、research、verification 选取指标分别为 `2484/2`、`1205/2`、`2239/2`。
+- 插件安装 smoke 已针对已评估候选 cache 通过；governance、research、verification 选取指标分别为 `2484/2`、`1205/2`、`2239/2`。
 - [官方 Skills 文档](https://learn.chatgpt.com/docs/build-skills)描述的 project config / `skills.config` 是预期配置契约；当前实现不能把 project-local filtering 当作有效隔离。项目实测与 [openai/codex#20210](https://github.com/openai/codex/issues/20210) 一致，因此已经删除重复发现入口，而不是依赖本地过滤。
 - 当前 Codex App 任务的插件清单可能保持任务创建时的旧快照；fresh CLI 进程已经确认只发现一个 `codex-project-workflow` 入口并指向新 cache。App 侧复验应使用新顶层任务或重启后的新任务。
 
 ## P1 / P2 / P3 当前状态
 
-- P1：完成。插件包成为唯一源，`.agents` 退回评估/协议镜像，重复 `SKILL.md` 与无效 project-local filtering 方案已移除，最终 cache 已通过安装 smoke。
-- P2：实现、预检和 6 项 final-cache 干净回归均已执行；`negative_quick`、`standard_cross_file`、`full_high_risk_migration`、`nested_h3_counting` 通过，`hard_trigger_overage` 与 E35 `four_hard_triggers` 失败。CAND-14 状态为 `preflight_passed_regression_failed`，不得激活。
-- P3：本轮核心文档已同步到 2026-07-18 的正式失败结论。本轮 P3 不等同于旧路线图中的 Hook/MCP 长期候选。
+- P1：完成。插件包成为唯一源，`.agents` 退回评估/协议镜像，重复 `SKILL.md` 与无效 project-local filtering 方案已移除，当前候选 cache 已通过安装 smoke。
+- P2：完成。CAND-15 的 `negative_quick`、`standard_cross_file`、`full_high_risk_migration`、`hard_trigger_overage`、`nested_h3_counting` 与 E35 `four_hard_triggers` 全部通过；2 项定向和 6 项完整批次均由正式验证器确认 `2/2 targeted_regression cases passed; overall=pass`。候选状态为 `regression_passed_pending_activation_approval`。
+- P3：本轮核心文档已同步到 2026-07-18 的正式通过结论和未激活边界。本轮 P3 不等同于旧路线图中的 Hook/MCP 长期候选。
 
 ## 历史迁移验收基线（2026-07-13，冻结）
 
@@ -341,14 +342,14 @@
 
 ## 当前下一步
 
-1. 冻结 CAND-14 的失败证据，保持 `activation.allowed=false`，不得用局部通过或结果格式校验通过替代行为验收。
-2. 如继续 P2，建立新的修复候选，只处理 E32 verification 遗漏以及 E35 来源核验、指定测试命令和协议重复计数问题，再运行目标回归与防退化回归。
+1. 冻结 CAND-15 的通过证据，继续保持 `activation.allowed=false`，不把 R6 测试安装态写成正式激活。
+2. 只有收到绑定候选 ID `CAND-20260718-15`、SHA-256 `f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a`、R6 运行时、`6/6` / `2/2` / `overall=pass` 结果和当前范围的显式批准后，才执行激活状态更新与最终 smoke。
 3. App UI 需要显示新版本时，新开顶层任务或重启 App 后复验；当前任务的旧插件清单快照只作为刷新边界证据。
 
 ## 当前阻塞
 
-- 用户已批准本轮 P1、P2、P3 范围；剩余四项回归已经完成，不再受账户 Codex usage limit 阻塞。
-- 当前阻塞是行为验收失败而非运行基础设施：E32 和 E35 均未满足聚合通过条件。P2 因此保持未激活；修复必须进入新候选，不能改写 CAND-14 的失败结论。
+- 运行基础设施和行为验收均不再阻塞：CAND-15 的定向与完整回归已经通过。
+- 唯一剩余治理门是 CAND-15 的证据绑定显式激活批准；在该批准到达前，`activation.allowed=false` 是预期状态。
 
 ## 当前风险
 
@@ -360,4 +361,4 @@
 
 ## 当前需要用户决定
 
-- 暂无阻塞性决定；若候选、目标哈希或范围变化，必须按候选失效条件重新确认。
+- 是否按上述候选 ID、哈希、R6 运行时、通过结果和范围正式激活 CAND-15。先前的范围性或笼统批准不替代这项证据绑定批准；若候选、目标哈希或范围变化，必须重新回归并重新确认。

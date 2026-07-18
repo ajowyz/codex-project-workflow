@@ -103,12 +103,14 @@ D:\project\codex\codex_project_workflow\plugins\codex-project-workflow\skills\co
 当前已准备并安装的插件 cache：
 
 ```text
-0.1.0+codex.20260716095059
+0.1.0+codex.cand-20260718-15-r6
 ```
 
 ```text
-C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260716095059
+C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.cand-20260718-15-r6
 ```
+
+该目录是 CAND-15 的已评估测试安装态；候选仍等待证据绑定的显式激活批准，不能仅凭安装或 smoke 把它描述为正式激活。
 
 仓库源包、个人插件源和安装 cache 的 7 个内容文件应保持一致；manifest 允许个人源/安装 cache 带 cachebuster，而仓库 manifest 保持源版本。更新只能通过 `prepare_plugin_update.py` 和受支持的插件安装流程完成，不手工编辑 marketplace 或安装 cache。
 
@@ -230,7 +232,7 @@ git diff --check
 当前包还应运行显式版本 smoke，避免“自动选择最新目录”掩盖目标版本错误：
 
 ```powershell
-python scripts\verify_plugin_install_smoke.py --version-dir C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260716095059
+python scripts\verify_plugin_install_smoke.py --version-dir C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.cand-20260718-15-r6
 ```
 
 若 App 当前任务仍显示旧清单，先完成上述只读 cache smoke，再用 fresh CLI 或新顶层 App 任务验证 pickup；不要删除旧任务证据，也不要把重启 App 说成已经执行。

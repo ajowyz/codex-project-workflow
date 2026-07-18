@@ -1,0 +1,72 @@
+{
+  "format_version": "1.0",
+  "run_id": "REGRESSION-20260718-GPT56-C15-FULL",
+  "evaluation_scope": "targeted_regression",
+  "status": "completed_unassessed_at_manifest_freeze",
+  "created_at": "2026-07-18T16:58:00+08:00",
+  "completed_at": "2026-07-18T17:07:42+08:00",
+  "fixture_commit": "e2c81758dddbfe1d40467d7ebe02a8b52d6b4986",
+  "candidate_id": "CAND-20260718-15",
+  "candidate_sha256": "f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a",
+  "plugin_cache_version": "0.1.0+codex.cand-20260718-15-r6",
+  "codex_app_version": "26.715.3651.0",
+  "codex_cli_version": "0.145.0-alpha.18",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "setup_state": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C15-FULL\\workspaces\\setup-state.json",
+  "runtime_skill_inventory_at_launch": {
+    "matching_entries": 1,
+    "owner": "installed plugin cache",
+    "note": "Six fresh CLI sessions loaded the R6 installed plugin cache in isolated host-owned fixture workspaces. Memory injection, notify hooks, and the unrelated node_repl MCP were disabled."
+  },
+  "runs": [
+    {
+      "case_id": "E32",
+      "variant_id": "negative_quick",
+      "thread_id": "019f7472-d12c-71b3-b407-0b05af6fecea",
+      "status": "completed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C15-FULL\\workspaces\\E32\\negative_quick",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "standard_cross_file",
+      "thread_id": "019f7472-d15b-7621-92ae-c86bb40d5a34",
+      "status": "completed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C15-FULL\\workspaces\\E32\\standard_cross_file",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "full_high_risk_migration",
+      "thread_id": "019f7472-d14d-7ab0-95ac-00f1439cfd96",
+      "status": "completed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C15-FULL\\workspaces\\E32\\full_high_risk_migration",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "hard_trigger_overage",
+      "thread_id": "019f7472-d116-7933-9de5-b1dc2cc398ac",
+      "status": "completed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C15-FULL\\workspaces\\E32\\hard_trigger_overage",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E32",
+      "variant_id": "nested_h3_counting",
+      "thread_id": "019f7472-d137-7b43-9273-3e9747b1ea3a",
+      "status": "completed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C15-FULL\\workspaces\\E32\\nested_h3_counting",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    },
+    {
+      "case_id": "E35",
+      "variant_id": "four_hard_triggers",
+      "thread_id": "019f7472-d166-7a50-9b42-e24b17c8c910",
+      "status": "completed",
+      "workspace": "D:\\project\\.codex-eval-full\\REGRESSION-20260718-GPT56-C15-FULL\\workspaces\\E35\\four_hard_triggers",
+      "project_root": "D:\\project\\codex\\codex_project_workflow"
+    }
+  ]
+}

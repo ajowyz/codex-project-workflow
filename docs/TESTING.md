@@ -141,16 +141,14 @@ python .agents\skills\codex-project-workflow\scripts\validate_skill.py .agents\s
 python .agents\skills\codex-project-workflow\scripts\validate_evals.py
 python .agents\skills\codex-project-workflow\scripts\validate_full_fixtures.py
 python -m unittest discover -s scripts -p "test_*.py"
-python scripts\verify_plugin_install_smoke.py --version-dir C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.20260716095059
+python scripts\verify_plugin_install_smoke.py --version-dir C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.cand-20260718-15-r6
 git diff --check
 ```
 
-当前脚本回归达到 `67/67`，项目严格验证器通过。官方 `quick_validate.py` / `validate_plugin.py` 需要 `PyYAML`，当前 Python 环境缺少该依赖，所以只可记录为 unavailable。不得用项目验证器通过来声称官方验证器也已执行通过。
+当前脚本回归达到 `71/71`，根目录脚本测试 `12/12`，项目严格验证器通过。官方 `quick_validate.py` / `validate_plugin.py` 需要 `PyYAML`，当前 Python 环境缺少该依赖，所以只可记录为 unavailable。不得用项目验证器通过来声称官方验证器也已执行通过。
 
-最终 cache 的 E32 `negative_quick` 和 `standard_cross_file` 已在干净路径中形成 validator-pass 结果。账户额度恢复后，其余四项于 2026-07-18 在 `.agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260718-GPT56-C14-REMAINING-CLEAN/` 完成：`full_high_risk_migration`、`nested_h3_counting` 通过，`hard_trigger_overage`、E35 `four_hard_triggers` 失败。
+CAND-15 的定向批次 `.agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN7/` 与完整六项批次 `.agents/skills/codex-project-workflow/evals/full/runs/REGRESSION-20260718-GPT56-C15-FULL/` 均完成正式评估。定向批次 `2/2` run，完整批次 `6/6` run；两者都按 E32/E35 聚合为 `2/2 targeted_regression cases passed; overall=pass`。
 
-正式结果是逐运行 `2/4`，按 E32/E35 聚合后是 `0/2 targeted_regression cases passed; overall=fail`。E32 失败原因是遗漏强制 verification 协议；E35 失败原因是公开来源核验未完成、未运行夹具指定的测试命令、重复加载协议并错误报告总过载。旧 App 运行和旧 sandbox owner 导致 ACL 刷新失败的诊断批次均不进入正式验收。
-
-CAND-14 必须保持 `preflight_passed_regression_failed`、`activation.allowed=false`。验证器接受结果文件格式并不等于行为回归通过，不得据此激活候选。
+CAND-15 必须保持 `regression_passed_pending_activation_approval`、`activation.allowed=false`，直到收到绑定候选 ID、哈希、R6 运行时、通过结果和范围的显式批准。安装 smoke、静态测试或验证器通过都不能单独替代激活批准。
 
 行为候选的最终状态仍以候选 manifest 和对应 full-eval assessment 为准；安装 smoke、静态测试或文档记录不能单独替代 E32/E35 行为回归。

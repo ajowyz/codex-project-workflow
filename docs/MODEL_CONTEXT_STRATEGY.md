@@ -148,14 +148,14 @@ model_profile:
 - 完整模式中多次因为预算需要人工追加信息。
 - 成本下降且回归证明质量不退化。
 
-## 8. GPT-5.6 当前运行时补充（2026-07-16）
+## 8. GPT-5.6 当前运行时补充（2026-07-18）
 
 ### 已核验环境
 
 - 模型与推理强度：`gpt-5.6-sol` / `xhigh`。
-- Codex App：`26.707.12708.0`。
-- Codex CLI：`0.144.5`。
-- installed cache：`0.1.0+codex.20260716095059`。
+- Codex App：`26.715.3651.0`。
+- Codex CLI：`0.145.0-alpha.18`。
+- 已评估候选 installed cache：`0.1.0+codex.cand-20260718-15-r6`；CAND-15 尚待显式激活批准。
 - 当前协议选取指标：governance `2484/2`、research `1205/2`、verification `2239/2`。
 
 模型名称、上下文能力和 Codex 表面会变化；每次升级仍应先参考[官方 Models 文档](https://learn.chatgpt.com/docs/models)与[官方 Skills 文档](https://learn.chatgpt.com/docs/build-skills)，再以本仓库当前模型回归校准实际行为。官方文档说明预期能力与配置契约，本地 fresh task、原始 rollout 和确定性验证才证明当前实现表现。

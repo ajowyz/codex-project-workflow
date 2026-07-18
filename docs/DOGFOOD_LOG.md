@@ -636,3 +636,44 @@ Verification:
 Outcome:
 
 - The quota-dependent work is complete, but CAND-14 did not meet activation criteria. The next implementation cycle must use a new repair candidate and fresh targeted regressions; CAND-14 remains frozen as failed evidence.
+
+## DOGFOOD-20 CAND-15 Repair and Clean Acceptance
+
+Date: 2026-07-18
+
+Scope: repair the two current-model regressions left by CAND-14, harden measurement and prompt-integrity gates, install an evaluation cache through the supported flow, complete fresh targeted and six-run clean regressions, and synchronize the project state without activating the candidate.
+
+Boundary:
+
+- Used repository source as the only editable owner; personal source was prepared by the supported update script and installed cache was not edited by hand.
+- Used fresh isolated CLI sessions with `gpt-5.6-sol` / `xhigh`, App `26.715.3651.0`, CLI `0.145.0-alpha.18`, memory injection disabled, and exact fixture replies only.
+- Kept automatic recording, Hook, MCP, app connectors, background updates, dependency installation, and marketplace edits out of scope.
+- Did not activate CAND-15. The installed R6 directory is evaluation evidence, not activation authority.
+
+External guidance:
+
+- Rechecked [official skill-building guidance](https://learn.chatgpt.com/docs/build-skills) for precise trigger boundaries and positive/negative test prompts.
+- Rechecked [official subagent guidance](https://learn.chatgpt.com/docs/agent-configuration/subagents) for independent parallel work and write-conflict limits.
+- Compared local runtime evidence with community implementation reports on [project-local filtering](https://github.com/openai/codex/issues/20210), [duplicate skill names](https://github.com/openai/codex/issues/25324), and [resume versus fresh-session context](https://github.com/openai/codex/issues/17560).
+
+Action:
+
+- Created CAND-20260718-15 with explicit three-protocol routing, high-impact governance-plus-verification, load-once/raw-metric rules, exact verification commands, separate page-open approval, and pending-agent behavior.
+- Hardened the collector and validator so incomplete nested measurements cannot be guessed or accepted, and added the fourth E35 page-open scripted reply.
+- Iterated diagnostic prompts and cache revisions without promoting failed diagnostics; final evaluated cache is `0.1.0+codex.cand-20260718-15-r6`.
+
+Verification:
+
+- Static gates: `71/71` script tests, `12/12` root tests, `36 cases / 148 assertions`, `31/31 cases / 61 variants`, skill structure PASS, diff check PASS.
+- R6 smoke PASS with governance `2484/2`, research `1205/2`, and verification `2239/2`; repo, personal source, and installed cache content parity passed.
+- Targeted clean run `REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN7`: `2/2` runs and `2/2` cases passed.
+- Full clean run `REGRESSION-20260718-GPT56-C15-FULL`: all six runs passed; aggregate `2/2 targeted_regression cases passed; overall=pass`.
+- Fresh runtime inventory probe thread `019f7481-73b0-71a1-895d-12e64fe3a0be` found exactly one `codex-project-workflow:codex-project-workflow` entry from R6 and no matching `.agents` path.
+- `quick_validate.py` remains unavailable because the approved local Python runtimes lack `PyYAML`; no package installation was authorized or performed.
+
+Outcome:
+
+- Candidate status is `regression_passed_pending_activation_approval`.
+- `activation.allowed=false` remains correct until a new evidence-bound explicit approval names CAND-15, its candidate hash, R6, the passing result, and the unchanged scope.
+- The repository owner and R6 physically contain the candidate bytes for evaluation. The patch applies forward to the recorded base and reverse to the current worktree; this working-source state is deliberately distinct from the formal activation record.
+- The prior CAND-14 failure evidence remains frozen and is not rewritten by this repair.
