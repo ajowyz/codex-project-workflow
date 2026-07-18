@@ -11,12 +11,12 @@
       "active_path": "plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md",
       "base_sha256": "44d3c152f2e91ac838c2c8e8f4ee69dc3a20c8024041750f5751329d56286e1e",
       "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/SKILL.candidate.md",
-      "candidate_sha256": "d9cc41a6a610274d179a0111fd230aa7f02d774388fb4ac8615934079df2add9"
+      "candidate_sha256": "d1e808cae33a8953aece3a43ef8791da7efbd2df66f32d32c26cad9214c39584"
     }
   ],
   "patch": {
     "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/patch.diff",
-    "sha256": "44c2c8a186a089596572778cbb7a01ea5215c46f3bf89cd03060f989c6756b3b",
+    "sha256": "55ad099d5e717ba137e75befc7563aef671badf8115b9c4a1d9c9edd2970fc28",
     "apply_check": "passed"
   },
   "scope": [
@@ -36,7 +36,7 @@
   },
   "preflight": {
     "status": "passed_with_tooling_limit",
-    "skill_body_codepoints": 1491,
+    "skill_body_codepoints": 1497,
     "skill_description_codepoints": 752,
     "project_validator": "passed",
     "skill_creator_quick_validate": "not_run_missing_pyyaml_in_available_runtimes",
@@ -45,12 +45,13 @@
   },
   "evaluation": {
     "status": "pending",
-    "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN3",
+    "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN4",
     "full_run": "REGRESSION-20260718-GPT56-C15-FULL",
     "discarded_diagnostic_runs": [
       "REGRESSION-20260718-GPT56-C15-TARGETED: resume process used the repository root as its writable sandbox root",
       "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN: helper directory placeholder was interpreted one level too high",
-      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN2: the phrase all three was read as unconditional and over-loaded E32"
+      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN2: the phrase all three was read as unconditional and over-loaded E32",
+      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN3: E35 added -v to an exact command and expanded search approval into unapproved page/source access"
     ],
     "required_regressions": [
       "E32:negative_quick",
