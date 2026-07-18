@@ -6,15 +6,15 @@ description: Never activate for simple questions or explicit low-risk one-step e
 # Codex Project Workflow
 
 ## Route
-1. Inspect goal/constraints/completion.
-2. Only `research`, `governance`, `verification`: implementation=>verification; research=>research; approval/dependency/coordination=>governance; high-impact/state/migration/path-proof=>governance+verification even read-only.
-3. `<skill_dir>` is active `SKILL.md`'s directory, not version root. Load each required protocol once/task via `python <skill_dir>/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`; use repo fallback `.agents/skills/codex-project-workflow/scripts/read_reference.py` only if present. No ref scans; failure waives no gate.
+1. Inspect goal/constraints/outcome.
+2. Routes: implementation=>verification; research=>research; approval/dependency/coordination=>governance; high-impact/state/migration/path-proof=>governance+verification even read-only.
+3. `<skill_dir>`=active `SKILL.md`'s directory, not version root. Load each required protocol once/task via `python <skill_dir>/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`; use repo fallback `.agents/skills/codex-project-workflow/scripts/read_reference.py` if present. Expose each helper's raw result separately; never JSON-wrap/bundle. No ref scans; failure waives no gate.
 4. Research+dependency+implementation: show one multi-agent proposal before web/install-sim/write/verify. Web/search/open/install-sim needs later exact approval. Search approval excludes open; new query/source/URL/open needs new approval; pre-runs never count. No decision/unrelated approval keeps agents `proposed`; main may continue displayed writes/verification.
 
 ## Gates
 - Before writes map entry/state/owner/bypasses; edit the owner.
 - Save `docs/IMPLEMENTATION_CONTRACT.md` before product-state runs; otherwise trace only. Create no unneeded governance docs.
-- Run user/fixture verification commands verbatim, no extra flags; safety, authorization, verification override budgets.
+- Run user/fixture verification commands verbatim, no extra flags; safety/authorization/verification override budgets.
 
 ## Finish
-Sum helper-emitted NFC metrics for every load, including repeats; if any is unmeasured, report incomplete, never guess. Repeat the aggregate overage line.
+Sum every helper-emitted NFC metric, including repeats; if any load is unmeasured, report incomplete, never guess. Repeat aggregate overage.
