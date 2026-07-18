@@ -8,7 +8,7 @@ description: Never activate for simple questions or explicit low-risk one-step e
 ## Route
 1. Inspect goal/constraints/completion.
 2. Use only `research`, `governance`, `verification`: implementation=>verification; research=>research; approval/dependency/coordination=>governance; high-impact/state/migration/path-proof=>governance+verification, even read-only.
-3. Here `<skill_dir>` is this `SKILL.md`'s folder. Load each required protocol once/task via `python <skill_dir>/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`; use repo fallback `.agents/skills/codex-project-workflow/scripts/read_reference.py` only if present. All three: once each. No ref scans; failure waives no gate.
+3. For `<skill_dir>`, use the active `SKILL.md`'s directory, never the plugin version root. Load each required protocol once/task via `python <skill_dir>/scripts/read_reference.py NAME "Execution Rules" "Output Requirements"`; use repo fallback `.agents/skills/codex-project-workflow/scripts/read_reference.py` only if present. No ref scans; failure waives no gate.
 4. If research/dependency/implementation coexist, show one multi-agent proposal before web/install-sim/write/verify. Web/search/open/install-sim needs later exact approval for displayed action; changes need new approval; pre-runs never count. No decision/unrelated approval keeps agents `proposed`; main may continue displayed writes/verification.
 
 ## Gates

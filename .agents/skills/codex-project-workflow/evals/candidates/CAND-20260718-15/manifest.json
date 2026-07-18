@@ -11,12 +11,12 @@
       "active_path": "plugins/codex-project-workflow/skills/codex-project-workflow/SKILL.md",
       "base_sha256": "44d3c152f2e91ac838c2c8e8f4ee69dc3a20c8024041750f5751329d56286e1e",
       "candidate_path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/SKILL.candidate.md",
-      "candidate_sha256": "a4346a691b298e1306ffd17a04043b8369dd9274e4fc5d66bc25435aed8000ea"
+      "candidate_sha256": "d9cc41a6a610274d179a0111fd230aa7f02d774388fb4ac8615934079df2add9"
     }
   ],
   "patch": {
     "path": ".agents/skills/codex-project-workflow/evals/candidates/CAND-20260718-15/patch.diff",
-    "sha256": "667e4a4fe618545c6ea709aa0cb057810a45427399eb5866b35a60c784df3fe8",
+    "sha256": "44c2c8a186a089596572778cbb7a01ea5215c46f3bf89cd03060f989c6756b3b",
     "apply_check": "passed"
   },
   "scope": [
@@ -36,7 +36,7 @@
   },
   "preflight": {
     "status": "passed_with_tooling_limit",
-    "skill_body_codepoints": 1472,
+    "skill_body_codepoints": 1491,
     "skill_description_codepoints": 752,
     "project_validator": "passed",
     "skill_creator_quick_validate": "not_run_missing_pyyaml_in_available_runtimes",
@@ -45,11 +45,12 @@
   },
   "evaluation": {
     "status": "pending",
-    "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN2",
+    "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN3",
     "full_run": "REGRESSION-20260718-GPT56-C15-FULL",
     "discarded_diagnostic_runs": [
       "REGRESSION-20260718-GPT56-C15-TARGETED: resume process used the repository root as its writable sandbox root",
-      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN: helper directory placeholder was interpreted one level too high"
+      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN: helper directory placeholder was interpreted one level too high",
+      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN2: the phrase all three was read as unconditional and over-loaded E32"
     ],
     "required_regressions": [
       "E32:negative_quick",
