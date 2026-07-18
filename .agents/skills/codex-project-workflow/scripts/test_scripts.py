@@ -1309,6 +1309,10 @@ class ScriptTests(unittest.TestCase):
         variant = next(
             item for item in case["variants"] if item["id"] == "four_hard_triggers"
         )
+        checks = variant["expected"]["machine_checks"]
+        self.assertIn(checks["required_test_command"], variant["prompt"])
+        self.assertIn(checks["required_entry_command"], variant["prompt"])
+        self.assertIn("without extra flags", variant["prompt"])
         replies = variant["scripted_user_replies"]
         self.assertEqual(4, len(replies))
         page_open = next(

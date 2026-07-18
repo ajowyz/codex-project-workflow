@@ -45,13 +45,14 @@
   },
   "evaluation": {
     "status": "pending",
-    "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN4",
+    "targeted_run": "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN5",
     "full_run": "REGRESSION-20260718-GPT56-C15-FULL",
     "discarded_diagnostic_runs": [
       "REGRESSION-20260718-GPT56-C15-TARGETED: resume process used the repository root as its writable sandbox root",
       "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN: helper directory placeholder was interpreted one level too high",
       "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN2: the phrase all three was read as unconditional and over-loaded E32",
-      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN3: E35 added -v to an exact command and expanded search approval into unapproved page/source access"
+      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN3: E35 added -v to an exact command and expanded search approval into unapproved page/source access",
+      "REGRESSION-20260718-GPT56-C15-TARGETED-CLEAN4: E35 added -v because the fixture hid the exact no-extra-flags test command; the run was stopped before gated research or simulation"
     ],
     "required_regressions": [
       "E32:negative_quick",
