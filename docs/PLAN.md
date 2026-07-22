@@ -1,8 +1,9 @@
 # 项目计划与当前状态
 
 > 执行状态：P1 已完成；P2 的 CAND-15 已完成实现、预检、2/2 定向及 6/6 完整干净回归，E32/E35 聚合 `2/2`、`overall=pass`，并已按证据绑定批准正式激活；P3 文档同步已完成
-> 更新时间：2026-07-18 +08:00
-> 当前回归运行时：`gpt-5.6-sol` / `xhigh`；Codex App `26.715.3651.0`；Codex CLI `0.145.0-alpha.18`
+> 更新时间：2026-07-22 +08:00
+> 当前正式回归基线：`gpt-5.6-sol` / `xhigh`；Codex App `26.715.3651.0`；Codex CLI `0.145.0-alpha.18`
+> 当前运行态复验：Codex App `26.715.9868.0`；Codex CLI `0.145.0-alpha.30`；App 隔离清单为唯一 R6 owner
 > 当前正式激活安装版本：`0.1.0+codex.cand-20260718-15-r6`
 > 历史说明：2026-06 的 GPT-5.5 校准、旧契约和旧候选记录均作为冻结证据保留，不代表当前入口或运行时
 
@@ -24,7 +25,8 @@
 - `.agents/skills/codex-project-workflow/` 只承担评估夹具、脚本和协议镜像职责，目录中不再保留可发现的 `SKILL.md`。
 - 插件安装 smoke 已针对正式激活 cache 通过；governance、research、verification 选取指标分别为 `2484/2`、`1205/2`、`2239/2`。
 - [官方 Skills 文档](https://learn.chatgpt.com/docs/build-skills)描述的 project config / `skills.config` 是预期配置契约；当前实现不能把 project-local filtering 当作有效隔离。项目实测与 [openai/codex#20210](https://github.com/openai/codex/issues/20210) 一致，因此已经删除重复发现入口，而不是依赖本地过滤。
-- 当前 Codex App 任务的插件清单可能保持任务创建时的旧快照；fresh CLI 进程已经确认只发现一个 `codex-project-workflow` 入口并指向新 cache。App 侧复验应使用新顶层任务或重启后的新任务。
+- 2026-07-22 的无上下文隔离 App Agent 只发现一个 `codex-project-workflow:codex-project-workflow`，来源精确为 R6，且没有 `.agents` 匹配路径。
+- 当前 standalone CLI `0.145.0-alpha.30` 的 `plugin list` 和 `debug prompt-input` 均未暴露插件；用户配置仍启用个人插件且 R6 cache 存在。该差异被记录为 App/CLI 状态源边界，不用于否定已经通过的 App owner 复验，也不在本轮修复。
 
 ## P1 / P2 / P3 当前状态
 
@@ -344,17 +346,18 @@
 
 1. 冻结 CAND-15 的通过与激活证据，保持候选哈希、R6 和当前范围不变。
 2. 继续以人工方式记录真实使用信号；只有出现新的可复现问题时，才建立新候选并重新走预检、回归和批准闭环。
-3. App UI 需要显示正式版本时，新开顶层任务或重启 App 后复验；当前任务的旧插件清单快照只作为刷新边界证据。
+3. 若以后要求 standalone CLI 与 App 插件目录一致，先单独诊断其 marketplace / `CODEX_HOME` 状态，再经新范围批准决定是否修复；不得直接重装或改 cache。
 
 ## 当前阻塞
 
 - 运行基础设施和行为验收均不再阻塞：CAND-15 的定向与完整回归已经通过。
 - CAND-15 的行为、安装和激活治理门均已关闭；当前无阻塞项。
+- standalone CLI 的个人插件目录为空是独立运行面差异，不阻塞当前 App 激活状态；CLI 修复尚未获批。
 
 ## 当前风险
 
 - project-local `skills.config` 的预期契约与当前运行时行为存在差异；在实现修复前，不得重新依赖该过滤层维持单一技能入口。
-- App 任务插件清单可能是创建时快照；必须区分“旧任务未刷新”和“fresh CLI/新任务未加载新 cache”。
+- App 与 standalone CLI 可能使用不同的插件状态来源；必须分别验证实际入口，不能用一个运行面的清单替代另一个运行面的证据。
 - 后续插件更新若未同时复验仓库源、个人源、installed cache 和状态文档，可能再次产生版本漂移。
 - 历史评估记录包含 GPT-5.5、旧 cache 和旧绝对路径，这些属于证据的一部分，不应机械改写为当前值。
 - 自动记录、Hook 和 MCP 仍不在范围；不得把人工候选记录描述为后台自动记录。

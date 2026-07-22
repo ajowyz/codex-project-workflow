@@ -706,3 +706,36 @@ Outcome:
 - Candidate status is `activated`.
 - `activation.allowed=true`, `formal_activation_recorded=true`, and R6 is recorded as `activated_runtime`.
 - The exact approval text and activation timestamp are stored in the candidate manifest.
+
+## DOGFOOD-22 Post-Update R6 App Runtime Recheck
+
+Date: 2026-07-22
+
+Scope: complete the previously quota-blocked post-activation runtime-owner recheck after the Codex App updated to `26.715.9868.0` and the local CLI updated to `0.145.0-alpha.30`.
+
+Boundary:
+
+- Used one isolated, no-context App Agent for the runtime inventory and the main Agent for deterministic local verification.
+- Did not rerun the six model cases; the accepted 2026-07-18 FULL batch remains the formal behavior baseline and was revalidated from its frozen artifacts.
+- Did not change the candidate manifest, `SKILL.md`, personal plugin source, R6 cache, marketplace, Hook, MCP, or automatic recording behavior.
+- Standalone CLI marketplace repair was explicitly out of scope.
+
+Official and community evidence:
+
+- The refreshed [official Codex manual](https://developers.openai.com/codex/codex-manual.md) states that plugins provide reusable instructions/connections, `codex plugin` operates on configured marketplace sources, and `CODEX_HOME` owns CLI/app-server state; its `codex exec` guidance assumes the invoked plugin has been provisioned in that run's `CODEX_HOME`.
+- Rechecked the bounded community reports for [project-local filtering](https://github.com/openai/codex/issues/20210), [duplicate same-name skills](https://github.com/openai/codex/issues/25324), and [resume versus fresh-session context](https://github.com/openai/codex/issues/17560). They remain supporting reports rather than authoritative instructions.
+
+Verification:
+
+- The isolated App Agent reported `exact_name_matches=1`, the R6 cache skill locator, visible R6 runtime metadata, and `matching_agents_path=false`.
+- Candidate, repository owner, and R6 normalized SHA-256 remain `f8ee04f6ffb89286d630c9c725b7897ee258bbd4569bd78381c3388da273686a`; repository, personal source, and cache retain seven-file parity.
+- R6 explicit-version smoke passed with governance `2484/2`, research `1205/2`, and verification `2239/2`.
+- Script tests passed `71/71`, root tests passed `12/12`, evaluation fixtures passed `36 cases / 148 assertions`, full fixtures passed `31/31 cases / 61 variants`, and skill structure remained valid.
+- CLEAN7 and FULL frozen result artifacts both passed `validate_full_results.py`; FULL remains `6/6` runs, `2/2` cases, `overall=pass`.
+- Standalone CLI reported zero installed/available plugins and zero `codex-project-workflow` prompt-input matches while the user config remained enabled and the R6 cache existed. This is an observed runtime-surface difference, not an App-owner failure.
+
+Outcome:
+
+- Post-update App runtime ownership passed with one R6 owner and no `.agents` duplicate.
+- CAND-15 remains formally activated without manifest or runtime-byte changes.
+- A future request may separately investigate standalone CLI marketplace / `CODEX_HOME` parity; this run did not authorize or perform that repair.

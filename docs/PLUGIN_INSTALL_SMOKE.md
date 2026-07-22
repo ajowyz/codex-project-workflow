@@ -2,7 +2,7 @@
 
 ## Current Acceptance Snapshot
 
-Date: 2026-07-18
+Date: 2026-07-22
 
 Current installed target:
 
@@ -16,6 +16,8 @@ Current acceptance facts:
 - The explicit-version repository smoke passed for `0.1.0+codex.cand-20260718-15-r6` and loaded the skill, helper, and three protocol files from that one cache directory.
 - Protocol metrics remain governance `2484/2`, research `1205/2`, and verification `2239/2`.
 - Pre-activation fresh CLI R6 regressions loaded exactly one `codex-project-workflow:codex-project-workflow` entry; E32 negative control loaded no body/reference, while the standard case loaded only the candidate body and successful verification selection. A separate pre-activation fresh runtime inventory probe in thread `019f7481-73b0-71a1-895d-12e64fe3a0be` also found exactly one match, the R6 cache locator, and no matching `.agents` path.
+- A 2026-07-22 isolated, no-context Codex App agent found exactly one matching skill, the R6 cache locator, explicit R6 runtime metadata, and no matching `.agents` path after the App update to `26.715.9868.0`.
+- The current standalone CLI `0.145.0-alpha.30` reports zero installed/available plugins and zero prompt-input matches even though user config enables the personal plugin and the R6 cache exists. This is recorded as a separate CLI `CODEX_HOME` / marketplace-state boundary; it was not used as the App acceptance entry and was not repaired.
 - CAND-15 now records `activated` with `activation.allowed=true`; the evidence-bound user approval, not smoke alone, granted formal activation.
 - The already-open Codex App task can retain its startup-time plugin inventory and may still report an older cache. That is a task-context refresh boundary, not proof that the new cache failed to install.
 - Official Python plugin/skill validators were unavailable because the current Python runtimes do not include `PyYAML`. Project strict validators and install smoke passed; this record does not relabel the official validator as passed.
