@@ -1,9 +1,9 @@
 # 项目计划与当前状态
 
-> 执行状态：P1 已完成；P2 的 CAND-15 已完成实现、预检、2/2 定向及 6/6 完整干净回归，E32/E35 聚合 `2/2`、`overall=pass`，并已按证据绑定批准正式激活；P3 文档同步已完成
+> 执行状态：P1 已完成；P2 的 CAND-15 已完成实现、预检、2/2 定向及 6/6 完整干净回归，E32/E35 聚合 `2/2`、`overall=pass`，并已按证据绑定批准正式激活；P3 文档同步已完成；P4 standalone CLI 所有权复验已通过且无需修复；P5 `master` 已完成远端同步
 > 更新时间：2026-07-22 +08:00
 > 当前正式回归基线：`gpt-5.6-sol` / `xhigh`；Codex App `26.715.3651.0`；Codex CLI `0.145.0-alpha.18`
-> 当前运行态复验：Codex App `26.715.9868.0`；Codex CLI `0.145.0-alpha.30`；App 隔离清单为唯一 R6 owner
+> 当前运行态复验：Codex App `26.715.9868.0`；Codex CLI `0.145.0-alpha.30`；App 隔离清单与仓库外 fresh CLI probe 均为唯一 R6 owner
 > 当前正式激活安装版本：`0.1.0+codex.cand-20260718-15-r6`
 > 历史说明：2026-06 的 GPT-5.5 校准、旧契约和旧候选记录均作为冻结证据保留，不代表当前入口或运行时
 
@@ -26,13 +26,15 @@
 - 插件安装 smoke 已针对正式激活 cache 通过；governance、research、verification 选取指标分别为 `2484/2`、`1205/2`、`2239/2`。
 - [官方 Skills 文档](https://learn.chatgpt.com/docs/build-skills)描述的 project config / `skills.config` 是预期配置契约；当前实现不能把 project-local filtering 当作有效隔离。项目实测与 [openai/codex#20210](https://github.com/openai/codex/issues/20210) 一致，因此已经删除重复发现入口，而不是依赖本地过滤。
 - 2026-07-22 的无上下文隔离 App Agent 只发现一个 `codex-project-workflow:codex-project-workflow`，来源精确为 R6，且没有 `.agents` 匹配路径。
-- 当前 standalone CLI `0.145.0-alpha.30` 的 `plugin list` 和 `debug prompt-input` 均未暴露插件；用户配置仍启用个人插件且 R6 cache 存在。该差异被记录为 App/CLI 状态源边界，不用于否定已经通过的 App owner 复验，也不在本轮修复。
+- 当前 standalone CLI `0.145.0-alpha.30` 已从默认 `C:\Users\w\.codex` 和隐式 personal marketplace 发现且只发现一个 `codex-project-workflow@personal`；版本为 R6，状态为 installed/enabled。两次仓库外 `debug prompt-input` 均只有一个该技能和一个 R6 cache locator，项目 `.agents` locator 为 0。先前的零结果属于已失效的更新期快照；现有只读证据不能唯一还原其原因，因此没有重装、cachebust 或改写配置。
 
-## P1 / P2 / P3 当前状态
+## P1 / P2 / P3 / P4 / P5 当前状态
 
 - P1：完成。插件包成为唯一源，`.agents` 退回评估/协议镜像，重复 `SKILL.md` 与无效 project-local filtering 方案已移除，当前正式 cache 已通过安装 smoke。
 - P2：完成。CAND-15 的 `negative_quick`、`standard_cross_file`、`full_high_risk_migration`、`hard_trigger_overage`、`nested_h3_counting` 与 E35 `four_hard_triggers` 全部通过；2 项定向和 6 项完整批次均由正式验证器确认 `2/2 targeted_regression cases passed; overall=pass`。候选状态为 `activated`。
 - P3：本轮核心文档已同步到 2026-07-18 的正式通过与激活结论。本轮 P3 不等同于旧路线图中的 Hook/MCP 长期候选。
+- P4：完成。CLI 的 personal marketplace、installed/enabled 状态、fresh prompt owner、R6 cache 与七个核心内容文件均通过复验；保持 R6 版本和哈希不变，运行时零写入。
+- P5：完成。推送前已刷新 `origin` 并确认远端是本地 `master` 的祖先；使用普通 fast-forward push 发布，不使用 force push。
 
 ## 历史迁移验收基线（2026-07-13，冻结）
 

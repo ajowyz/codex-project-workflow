@@ -739,3 +739,35 @@ Outcome:
 - Post-update App runtime ownership passed with one R6 owner and no `.agents` duplicate.
 - CAND-15 remains formally activated without manifest or runtime-byte changes.
 - A future request may separately investigate standalone CLI marketplace / `CODEX_HOME` parity; this run did not authorize or perform that repair.
+
+## DOGFOOD-23 Standalone CLI Parity and Remote Publication
+
+Date: 2026-07-22
+
+Scope: complete P4 by diagnosing the previously empty standalone CLI plugin inventory, then complete P5 by publishing the accepted P1-P4 history and this verification record to `origin/master`.
+
+Boundary:
+
+- Treated the repository plugin package as the source owner and the default personal marketplace, personal source, user config, and installed R6 cache as runtime state owners.
+- Kept the candidate manifest, `SKILL.md`, personal source, marketplace, `config.toml`, R6 cache, Hook, MCP, app connectors, and automatic recording unchanged.
+- Used the explicit current CLI binary, fresh processes outside the repository, and ordinary fast-forward Git operations. No reinstall, cachebuster, manual runtime-state edit, destructive cleanup, rebase, or force push was used.
+
+Official and community evidence:
+
+- The refreshed [official Codex manual](https://developers.openai.com/codex/codex-manual.md) identifies `CODEX_HOME` as the CLI/app-server state root and `codex plugin` as the supported plugin-management surface. The [official app-server protocol](https://github.com/openai/codex/blob/main/codex-rs/app-server/README.md) describes `plugin/list` as the discovery/state result for configured marketplaces.
+- Compared the old symptom with the Windows reports for [an empty plugin list despite an enabled feature](https://github.com/openai/codex/issues/24736) and [Desktop/global CLI shared-config ownership](https://github.com/openai/codex/issues/26366). These are community reports, not authoritative repair instructions; their destructive marketplace workarounds were not applied.
+
+Verification:
+
+- `codex-cli 0.145.0-alpha.30` has no explicit process, user, or machine `CODEX_HOME`, so the effective default is `C:\Users\w\.codex`.
+- The CLI sees four marketplaces; `personal` resolves to `C:\Users\w`. Filtering that marketplace returns exactly one plugin: `codex-project-workflow@personal`, version `0.1.0+codex.cand-20260718-15-r6`, `installed=true`, `enabled=true`, and source `C:\Users\w\plugins\codex-project-workflow`.
+- Two fresh `debug prompt-input` runs from `C:\Users\w` each found one exact skill entry, one R6 cache locator, and zero project `.agents` locators. The discoverable project-local `SKILL.md` remains absent.
+- Personal source and R6 cache contain the same eight files and hashes; the seven non-manifest core files also match the repository source. The repository manifest intentionally remains the base `0.1.0`, while personal source and cache retain the approved R6 cachebuster.
+- Explicit R6 install smoke passed with governance `2484/2`, research `1205/2`, and verification `2239/2`. Skill structure, `36 cases / 148 assertions`, `31/31 cases / 61 variants`, and `12/12` root tests passed. The 71-test suite initially had six environment errors because bare `git` was outside `PATH`; with the existing bundled Git directory added only to that process, all `71/71` passed.
+- After `git fetch --prune origin`, divergence was `0/12` and `origin/master` was an ancestor of local `master`, permitting a normal fast-forward push.
+
+Outcome:
+
+- P4 passed without a repair mutation. The earlier zero result is a stale historical observation; the available evidence does not uniquely prove whether an update-time process snapshot or runtime reconciliation caused it.
+- P5 published local `master` to `origin/master`; final divergence is `0/0`.
+- CAND-15 remains formally activated at R6 with unchanged candidate, manifest scope, runtime version, and content hash.
