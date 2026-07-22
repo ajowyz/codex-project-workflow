@@ -145,6 +145,22 @@ class PluginReleaseBuildTests(unittest.TestCase):
             )
         self.assertIn("personal absolute path", str(raised.exception))
 
+    def test_normalizes_text_line_endings_in_archive(self) -> None:
+        source, marketplace, root_license = self.build_fixture()
+        readme = source / "README.md"
+        readme.write_bytes(b"first\r\nsecond\r\n")
+        crlf_archive, _, crlf_digest, _ = self.release.build_release(
+            source, marketplace, root_license, self.tmp_path / "crlf"
+        )
+
+        readme.write_bytes(b"first\nsecond\n")
+        lf_archive, _, lf_digest, _ = self.release.build_release(
+            source, marketplace, root_license, self.tmp_path / "lf"
+        )
+
+        self.assertEqual(crlf_digest, lf_digest)
+        self.assertEqual(crlf_archive.read_bytes(), lf_archive.read_bytes())
+
 
 if __name__ == "__main__":
     unittest.main()

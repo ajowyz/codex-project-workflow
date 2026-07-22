@@ -180,6 +180,14 @@ def scan_public_files(source: Path, files: list[Path]) -> None:
                 fail(f"{label} detected in {relative.as_posix()}")
 
 
+def canonical_text_bytes(path: Path) -> bytes:
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        fail(f"public package contains a non-UTF-8 file: {path}")
+    return text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
+
+
 def write_archive(source: Path, files: list[Path], output_dir: Path, version: str) -> tuple[Path, Path, str]:
     output_dir.mkdir(parents=True, exist_ok=True)
     archive = output_dir / f"{PLUGIN_NAME}-{version}.zip"
@@ -188,7 +196,11 @@ def write_archive(source: Path, files: list[Path], output_dir: Path, version: st
             info = zipfile.ZipInfo(relative.as_posix(), date_time=(2026, 1, 1, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = (0o100644 & 0xFFFF) << 16
-            bundle.writestr(info, (source / relative).read_bytes(), compresslevel=9)
+            bundle.writestr(
+                info,
+                canonical_text_bytes(source / relative),
+                compresslevel=9,
+            )
     digest = hashlib.sha256(archive.read_bytes()).hexdigest()
     checksum = archive.with_suffix(archive.suffix + ".sha256")
     checksum.write_text(f"{digest}  {archive.name}\n", encoding="ascii", newline="\n")
