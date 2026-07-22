@@ -1,0 +1,43 @@
+name: Feature request
+description: Propose an evidence-backed improvement to the plugin or public distribution flow.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the user problem before proposing an implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: Explain what observable result would count as success.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Skill behavior
+        - Research or approval boundaries
+        - Verification
+        - Installation or release packaging
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints and risks
+      description: Note compatibility, privacy, safety, or workflow concerns.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting evidence
+      description: Link public examples or provide sanitized observations.

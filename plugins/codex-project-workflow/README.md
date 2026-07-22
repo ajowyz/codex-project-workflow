@@ -2,6 +2,22 @@
 
 This plugin packages the `codex-project-workflow` skill as a portable, source-controlled Codex plugin.
 
+## Install From The Public Repository
+
+Clone the repository, then add its local marketplace and install the plugin:
+
+```text
+git clone https://github.com/ajowyz/codex-project-workflow.git
+codex plugin marketplace add <absolute-path-to-cloned-repository>
+codex plugin add codex-project-workflow@ajowyz-codex
+```
+
+Start a new top-level Codex thread after installing or updating so the new thread picks up the current plugin. The repository root README contains the shortest installation smoke prompt.
+
+## License
+
+This plugin is released under the [MIT License](LICENSE).
+
 ## Contents
 
 - `.codex-plugin/plugin.json`
@@ -11,6 +27,7 @@ This plugin packages the `codex-project-workflow` skill as a portable, source-co
 - `skills/codex-project-workflow/references/verification.md`
 - `skills/codex-project-workflow/scripts/read_reference.py`
 - `docs/USER_GUIDE.md`
+- `LICENSE`
 
 ## Scope
 

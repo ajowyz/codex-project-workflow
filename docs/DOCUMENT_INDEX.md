@@ -8,6 +8,7 @@
 - `docs/PRODUCT_MANUAL.md`：最终使用手册，解释插件解决什么问题、什么时候使用、如何验收。
 - `docs/TASK_TEMPLATES.md`：常用任务模板，可以直接复制到启用插件的新线程。
 - `docs/INSTALL_UPDATE.md`：安装、更新、复验说明，区分通用流程和当前本机已验证状态。
+- `docs/RELEASING.md`：维护者构建发布包、校验、打标签和创建 GitHub Release 的流程。
 - `docs/EXTENSION_ROADMAP.md`：后续扩展路线，说明哪些方向值得做、哪些不建议做。
 
 ## 插件包内文档
@@ -40,6 +41,8 @@
 3. `docs/TASK_TEMPLATES.md`
 4. `docs/INSTALL_UPDATE.md`
 5. 需要扩展时再读 `docs/EXTENSION_ROADMAP.md`
+
+维护者准备公开版本时，另读 `docs/RELEASING.md`。
 
 ## 注意事项
 

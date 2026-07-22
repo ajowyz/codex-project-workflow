@@ -33,6 +33,7 @@ REQUIRED_RELATIVE_PATHS = (
     Path("skills") / PLUGIN_NAME / "references" / "verification.md",
     Path("README.md"),
     Path("docs") / "USER_GUIDE.md",
+    Path("LICENSE"),
 )
 
 

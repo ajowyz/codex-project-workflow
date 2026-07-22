@@ -10,14 +10,50 @@
 - 实现时验证结果，也验证有没有绕过项目原有入口和 owner 路径。
 - 把可复用经验沉淀为候选改进，经过证据和回归后再激活。
 
+## 快速安装
+
+### 1. 克隆公开仓库
+
+```powershell
+git clone https://github.com/ajowyz/codex-project-workflow.git
+cd codex-project-workflow
+```
+
+### 2. 添加仓库 marketplace 并安装插件
+
+把下面的 `<仓库绝对路径>` 替换为刚才克隆目录的绝对路径：
+
+```powershell
+codex plugin marketplace add <仓库绝对路径>
+codex plugin add codex-project-workflow@ajowyz-codex
+```
+
+也可以在 Codex App 的插件页面完成对应的 marketplace 添加和插件启用操作。
+
+### 3. 新开 Codex 任务
+
+插件安装或更新后需要新开顶层任务，让新任务加载最新插件。可以先输入：
+
+```text
+使用 codex-project-workflow 检查当前项目，先说明目标、范围、风险和下一步，不要修改文件。
+```
+
+如果能够识别并按需启用该工作流，最小安装验证即完成。插件维护者和需要严格复验的用户可以继续阅读 [`docs/INSTALL_UPDATE.md`](docs/INSTALL_UPDATE.md)。
+
+## 发布包与源码仓库
+
+- 首个 GitHub Release 创建前使用上面的公开仓库安装流程；正式发布后，普通用户优先使用版本化插件包。
+- 希望检查源码、评估证据或参与开发的用户使用完整仓库。
+- 插件运行时包只来自 `plugins/codex-project-workflow/`，不包含 `.agents/` 下的评估资产、运行记录或个人数据。
+- 项目采用 [MIT License](LICENSE)，允许在保留版权与许可声明的前提下使用、修改和再分发。
+
 ## 当前状态
 
 - 插件源包：`plugins/codex-project-workflow/`
 - 当前模型与推理强度：`gpt-5.6-sol` / `xhigh`
 - 当前正式回归运行环境：Codex App `26.715.3651.0`，Codex CLI `0.145.0-alpha.18`
 - 已正式激活的插件 cache 版本：`0.1.0+codex.cand-20260718-15-r6`
-- 已正式激活的插件 cache 根目录：`C:\Users\w\.codex\plugins\cache\personal\codex-project-workflow\0.1.0+codex.cand-20260718-15-r6`
-- 当前仓库：`D:\project\codex\codex_project_workflow`；实时 HEAD 与分支同步状态以 `git status --short --branch` 和 `git rev-parse HEAD` 为准，不在本文档中硬编码为当前值。
+- 维护者本机 cache 和仓库绝对路径不作为公开安装要求；实时状态以当前环境的插件清单与 Git 状态为准。
 - 可重复 smoke 脚本：`python scripts/verify_plugin_install_smoke.py`
 
 源与运行时的所有权关系已经收敛：仓库内 `plugins/codex-project-workflow/` 是唯一源；installed cache 是由正式安装流程生成的运行时副本；`.agents/skills/codex-project-workflow/` 只保留评估夹具和协议镜像，不再包含可发现的 `SKILL.md`。
@@ -36,6 +72,7 @@
 2. 复制常用任务模板：`docs/TASK_TEMPLATES.md`
 3. 安装、更新或复验插件：`docs/INSTALL_UPDATE.md`
 4. 查看后续扩展路线：`docs/EXTENSION_ROADMAP.md`
+5. 维护者发布新版本：`docs/RELEASING.md`
 
 ## 最常用的启动方式
 

@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "description": "Structured Codex workflow for scoped planning, research governance, implementation-path checks, and verification.",
   "author": {
-    "name": "wang yazhou"
+    "name": "wang yazhou",
+    "url": "https://github.com/ajowyz"
   },
-  "license": "UNLICENSED",
+  "homepage": "https://github.com/ajowyz/codex-project-workflow",
+  "repository": "https://github.com/ajowyz/codex-project-workflow",
+  "license": "MIT",
   "keywords": [
     "codex",
     "workflow",
@@ -20,12 +23,17 @@
     "longDescription": "Adds a portable Codex workflow skill for project startup, scoped research, architecture planning, approval boundaries, implementation-path checks, and verification reporting.",
     "developerName": "wang yazhou",
     "category": "Productivity",
+    "websiteURL": "https://github.com/ajowyz/codex-project-workflow",
     "capabilities": [
       "Project planning",
       "Research governance",
       "Verification",
       "Skill workflow"
     ],
-    "defaultPrompt": "Use Codex Project Workflow when a task needs planning, research, governance, implementation-path checking, or verification."
+    "defaultPrompt": [
+      "Plan and verify this project task with Codex Project Workflow.",
+      "Review the project state and identify the safest next step.",
+      "Verify both the result and the original implementation path."
+    ]
   }
 }

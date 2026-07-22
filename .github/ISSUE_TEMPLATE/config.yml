@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Installation documentation
+    url: https://github.com/ajowyz/codex-project-workflow/blob/master/docs/INSTALL_UPDATE.md
+    about: Read the installation and fresh-thread verification steps before filing an issue.

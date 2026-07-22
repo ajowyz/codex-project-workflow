@@ -10,6 +10,8 @@ This document describes the source package in this repository. Installation stat
 
 Current source package status: created and install-smoke verified through the personal plugin flow.
 
+Public release update 2026-07-22: the source package is MIT-licensed, included in the repository marketplace, and covered by the deterministic release builder. The GitHub Release itself has not yet been created.
+
 ## Included
 
 - `.codex-plugin/plugin.json`
@@ -20,6 +22,7 @@ Current source package status: created and install-smoke verified through the pe
 - `skills/codex-project-workflow/scripts/read_reference.py`
 - `README.md`
 - `docs/USER_GUIDE.md`
+- `LICENSE`
 
 ## Excluded
 
@@ -28,6 +31,7 @@ Current source package status: created and install-smoke verified through the pe
 - App connectors
 - Custom agent manifests
 - Personal marketplace entries
+- Repository evaluation assets and the repository marketplace file itself
 - Installed plugin cache changes
 - Eval workspaces
 - Regression run logs
@@ -43,6 +47,7 @@ Current source package status: created and install-smoke verified through the pe
 - Prove `read_reference.py` can read plugin-local references.
 - Prove excluded assets are absent from the package.
 - Run an install smoke in a fresh Codex thread before treating this as install-ready.
+- Build a nine-file public ZIP whose root is the plugin package and verify its SHA-256.
 
 ## Install Smoke Update
 

@@ -2,6 +2,29 @@
 
 本文件分为两部分：通用流程和当前本机状态。分享给他人时，优先使用通用流程；排查这台机器时，再看当前本机状态。
 
+## 从公开仓库安装
+
+普通用户推荐从公开仓库安装，不需要复制维护者的个人路径或 cache 版本。
+
+```powershell
+git clone https://github.com/ajowyz/codex-project-workflow.git
+cd codex-project-workflow
+codex plugin marketplace add <仓库绝对路径>
+codex plugin add codex-project-workflow@ajowyz-codex
+```
+
+其中 `<仓库绝对路径>` 是克隆后仓库根目录的绝对路径。仓库 marketplace 位于 `.agents/plugins/marketplace.json`，入口指向唯一插件源 `plugins/codex-project-workflow/`。
+
+安装后需要新开顶层 Codex 任务。旧任务可能继续使用启动时冻结的插件清单，不能用旧任务是否显示新版本来单独判定安装成功。
+
+公开安装流程不要求使用维护者的以下本机状态：
+
+- `C:\Users\w\plugins\codex-project-workflow`
+- `C:\Users\w\.agents\plugins\marketplace.json`
+- 任何 `C:\Users\w\.codex\plugins\cache\...` 版本目录
+
+这些路径只属于后文的维护与故障排查记录。
+
 ## 通用流程
 
 ### 1. 准备插件源包

@@ -1,0 +1,67 @@
+name: Bug report
+description: Report reproducible behavior that differs from the documented workflow.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a problem. Remove secrets, private paths, customer data, and full private prompts before submitting.
+  - type: input
+    id: plugin_version
+    attributes:
+      label: Plugin version
+      description: Version from `.codex-plugin/plugin.json` or the installed cache directory.
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: codex_environment
+    attributes:
+      label: Codex environment
+      description: Codex App or CLI version, model if relevant, and operating system.
+      placeholder: Codex App version, Windows 11
+    validations:
+      required: true
+  - type: textarea
+    id: task
+    attributes:
+      label: Sanitized task and scope
+      description: Provide the smallest prompt or task that reproduces the issue.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. Install the plugin...
+        2. Start a new Codex task...
+        3. Enter the sanitized prompt...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Add short logs, screenshots, or paths only after removing sensitive information.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: I removed secrets, personal data, private paths, and confidential project content.
+          required: true
