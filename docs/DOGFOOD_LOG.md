@@ -771,3 +771,34 @@ Outcome:
 - P4 passed without a repair mutation. The earlier zero result is a stale historical observation; the available evidence does not uniquely prove whether an update-time process snapshot or runtime reconciliation caused it.
 - P5 published local `master` to `origin/master`; final divergence is `0/0`.
 - CAND-15 remains formally activated at R6 with unchanged candidate, manifest scope, runtime version, and content hash.
+
+## DOGFOOD-24 Public Repository State Recovery and Handoff Preparation
+
+Date: 2026-07-22
+
+Scope: recover the repository state after public-release work completed in another Codex task, synchronize current-state documents, and prepare one new top-level Codex task as the sole continuation point for future development.
+
+Boundary:
+
+- Read current repository, remote, public GitHub, CI, tag, Release, package, and documentation state before changing status documents.
+- Kept the plugin skill, manifest, repository marketplace, personal source, installed R6 cache, candidate evidence, Hook, MCP, app connectors, and automatic recording behavior unchanged.
+- Preserved the distinction between public source version `0.1.0` and the maintainer's formally activated cache version `0.1.0+codex.cand-20260718-15-r6`.
+- Did not create a Git tag or GitHub Release and did not claim external consumer pickup from maintainer or CI evidence.
+
+Official and community evidence:
+
+- Rechecked the current [official OpenAI plugin build guidance](https://developers.openai.com/codex/plugins/build) for repository marketplace layout, relative plugin source paths, installation cache ownership, Git marketplace sources, and the new-task pickup boundary.
+- Rechecked public implementation reports for [repository-root marketplace ambiguity](https://github.com/openai/codex/issues/17066), [stale Git marketplace clones](https://github.com/openai/codex/issues/19834), [unchanged-version cache reuse](https://github.com/openai/codex/issues/21138), and [per-developer plugin enablement](https://github.com/openai/codex/issues/18115). These reports informed the clean-install and version-bump cautions but are not authoritative product instructions.
+- Anonymous GitHub pages confirmed the repository is public, the latest `master` workflow succeeded, and no tag or Release currently exists.
+
+Verification:
+
+- Repository marketplace and manifest expose one public plugin, version `0.1.0`, from `plugins/codex-project-workflow/`; root and plugin MIT licenses agree.
+- Local release validation and deterministic build pass; the ZIP checksum is `b1d2e3c6ff59804e8a8b5a4ba771ffea4f2f8e81d8a9ffff664a35c9e23e5732`.
+- The latest observed “Validate public plugin” run succeeded in 13 seconds and produced one artifact. Its Node.js 20 deprecation warning is recorded as follow-up work.
+
+Outcome:
+
+- P1-P5 remain complete; stale CLI-blocker and documentation-only productization statements have been corrected without rewriting frozen history.
+- The next release gate is isolated consumer clean install plus fresh-task pickup, followed by explicit authorization for `v0.1.0` tag and GitHub Release creation.
+- `docs/IMPLEMENTATION_CONTRACT.md` binds the requested Codex task creation to one local saved-project entry and prevents duplicate or background repository mutation during handoff.

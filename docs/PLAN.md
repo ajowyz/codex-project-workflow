@@ -1,6 +1,6 @@
 # 项目计划与当前状态
 
-> 执行状态：P1 已完成；P2 的 CAND-15 已完成实现、预检、2/2 定向及 6/6 完整干净回归，E32/E35 聚合 `2/2`、`overall=pass`，并已按证据绑定批准正式激活；P3 文档同步已完成；P4 standalone CLI 所有权复验已通过且无需修复；P5 `master` 已完成远端同步
+> 执行状态：P1 已完成；P2 的 CAND-15 已完成实现、预检、2/2 定向及 6/6 完整干净回归，E32/E35 聚合 `2/2`、`overall=pass`，并已按证据绑定批准正式激活；P3 文档同步已完成；P4 standalone CLI 所有权复验已通过且无需修复；P5 `master` 已完成远端同步；公开仓库发布基础与 `master` CI 已完成
 > 更新时间：2026-07-22 +08:00
 > 当前正式回归基线：`gpt-5.6-sol` / `xhigh`；Codex App `26.715.3651.0`；Codex CLI `0.145.0-alpha.18`
 > 当前运行态复验：Codex App `26.715.9868.0`；Codex CLI `0.145.0-alpha.30`；App 隔离清单与仓库外 fresh CLI probe 均为唯一 R6 owner
@@ -9,7 +9,7 @@
 
 ## 当前目标
 
-在 GPT-5.6 当前运行时下完成插件单一所有者收敛、候选回归和文档验收，并继续只把有真实使用证据的改进沉淀为候选。
+在保持 CAND-15 与 R6 冻结证据不变的前提下，把公开源版本 `0.1.0` 完成独立消费者验收和首个版本化 GitHub Release；之后继续只把有真实使用证据的改进沉淀为新候选。
 
 ## 关键约束
 
@@ -27,6 +27,8 @@
 - [官方 Skills 文档](https://learn.chatgpt.com/docs/build-skills)描述的 project config / `skills.config` 是预期配置契约；当前实现不能把 project-local filtering 当作有效隔离。项目实测与 [openai/codex#20210](https://github.com/openai/codex/issues/20210) 一致，因此已经删除重复发现入口，而不是依赖本地过滤。
 - 2026-07-22 的无上下文隔离 App Agent 只发现一个 `codex-project-workflow:codex-project-workflow`，来源精确为 R6，且没有 `.agents` 匹配路径。
 - 当前 standalone CLI `0.145.0-alpha.30` 已从默认 `C:\Users\w\.codex` 和隐式 personal marketplace 发现且只发现一个 `codex-project-workflow@personal`；版本为 R6，状态为 installed/enabled。两次仓库外 `debug prompt-input` 均只有一个该技能和一个 R6 cache locator，项目 `.agents` locator 为 0。先前的零结果属于已失效的更新期快照；现有只读证据不能唯一还原其原因，因此没有重装、cachebust 或改写配置。
+- GitHub 仓库 `ajowyz/codex-project-workflow` 已公开，默认分支为 `master`；仓库 marketplace `ajowyz-codex` 指向唯一公开插件源，manifest 版本为 `0.1.0`，许可证为 MIT。
+- `master` 的 “Validate public plugin” workflow 已成功运行并生成 artifact。GitHub 当前没有 tag 或 Release；外部消费者从公开源执行 clean install 与 fresh-task pickup 仍是独立待验收项。
 
 ## P1 / P2 / P3 / P4 / P5 当前状态
 
@@ -347,23 +349,28 @@
 ## 当前下一步
 
 1. 冻结 CAND-15 的通过与激活证据，保持候选哈希、R6 和当前范围不变。
-2. 继续以人工方式记录真实使用信号；只有出现新的可复现问题时，才建立新候选并重新走预检、回归和批准闭环。
-3. 若以后要求 standalone CLI 与 App 插件目录一致，先单独诊断其 marketplace / `CODEX_HOME` 状态，再经新范围批准决定是否修复；不得直接重装或改 cache。
+2. 从公开仓库或 CI artifact 建立隔离的消费者环境，核对 SHA-256、clean install、唯一 owner 和 fresh-task pickup；不得复用维护者 R6 cache 代替公开版验收。
+3. 独立验收通过后，按 `docs/RELEASING.md` 创建 `v0.1.0` tag 与 GitHub Release，并附上 ZIP 和 `.sha256`；外部发布写入仍需在新任务中明确确认。
+4. 处理或接受 GitHub Actions 当前的 Node.js 20 deprecation warning，再把结果记入发布证据。
+5. 发布闭环后继续以人工方式记录真实使用信号；只有出现新的可复现问题时，才建立新候选并重新走预检、回归和批准闭环。
 
 ## 当前阻塞
 
 - 运行基础设施和行为验收均不再阻塞：CAND-15 的定向与完整回归已经通过。
 - CAND-15 的行为、安装和激活治理门均已关闭；当前无阻塞项。
-- standalone CLI 的个人插件目录为空是独立运行面差异，不阻塞当前 App 激活状态；CLI 修复尚未获批。
+- standalone CLI 已复验为唯一 R6 owner，先前个人插件目录为空的记录属于历史快照，不再构成阻塞。
+- 公开仓库安装入口不存在已知结构性阻塞；`v0.1.0` tag/Release 和外部 clean install 尚未完成，因此不能宣称版本化公开发布已验收。
 
 ## 当前风险
 
 - project-local `skills.config` 的预期契约与当前运行时行为存在差异；在实现修复前，不得重新依赖该过滤层维持单一技能入口。
 - App 与 standalone CLI 可能使用不同的插件状态来源；必须分别验证实际入口，不能用一个运行面的清单替代另一个运行面的证据。
 - 后续插件更新若未同时复验仓库源、个人源、installed cache 和状态文档，可能再次产生版本漂移。
+- Git marketplace clone 或 installed cache 可能保留旧版本；公开发布后仍需通过版本变化、隔离安装和 fresh task 证明实际 pickup，不能只看 CI 产物存在。
+- 当前 workflow 使用的部分 GitHub Actions 触发 Node.js 20 deprecation warning；虽然本轮 CI 成功，但后续应依据 GitHub 官方迁移建议评估升级。
 - 历史评估记录包含 GPT-5.5、旧 cache 和旧绝对路径，这些属于证据的一部分，不应机械改写为当前值。
 - 自动记录、Hook 和 MCP 仍不在范围；不得把人工候选记录描述为后台自动记录。
 
 ## 当前需要用户决定
 
-- 暂无阻塞性决定。若候选、目标哈希、运行时或范围变化，必须建立新证据并重新确认。
+- 暂无本地开发阻塞性决定。创建 `v0.1.0` tag、GitHub Release 或其他外部发布状态前，需要在后续任务中确认当次发布范围；若候选、目标哈希、运行时或范围变化，必须建立新证据并重新确认。

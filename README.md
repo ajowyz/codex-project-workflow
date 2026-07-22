@@ -50,17 +50,21 @@ codex plugin add codex-project-workflow@ajowyz-codex
 ## 当前状态
 
 - 插件源包：`plugins/codex-project-workflow/`
+- 公开仓库：`https://github.com/ajowyz/codex-project-workflow`；默认分支 `master`
+- 公开插件版本：`0.1.0`；repository marketplace：`ajowyz-codex`
 - 当前模型与推理强度：`gpt-5.6-sol` / `xhigh`
-- 当前正式回归运行环境：Codex App `26.715.3651.0`，Codex CLI `0.145.0-alpha.18`
+- CAND-15 冻结回归基线：Codex App `26.715.3651.0`，Codex CLI `0.145.0-alpha.18`
+- 当前运行态复验：Codex App `26.715.9868.0`，Codex CLI `0.145.0-alpha.30`
 - 已正式激活的插件 cache 版本：`0.1.0+codex.cand-20260718-15-r6`
 - 维护者本机 cache 和仓库绝对路径不作为公开安装要求；实时状态以当前环境的插件清单与 Git 状态为准。
 - 可重复 smoke 脚本：`python scripts/verify_plugin_install_smoke.py`
+- 公开仓库和 `master` CI 已验证可用；首个 Git tag、GitHub Release 及外部消费者 clean install 尚未完成。
 
 源与运行时的所有权关系已经收敛：仓库内 `plugins/codex-project-workflow/` 是唯一源；installed cache 是由正式安装流程生成的运行时副本；`.agents/skills/codex-project-workflow/` 只保留评估夹具和协议镜像，不再包含可发现的 `SKILL.md`。
 
 [官方 Skills 文档](https://learn.chatgpt.com/docs/build-skills)给出的 project config 与 `skills.config` 是预期配置契约，但当前运行时不能依赖 project-local skill filtering；本项目的实测与 [openai/codex#20210](https://github.com/openai/codex/issues/20210) 一致，因此采用“移除重复发现入口”的单一所有者方案。当前已经运行的 Codex App 任务可能保留旧插件清单快照；fresh CLI 进程已看到上述新 cache。需要核对 App UI 时，应新开顶层任务或重启 App，再检查清单，不能把旧任务快照当成安装失败。
 
-本轮 P1 已完成单一源与运行时所有权收敛；P2 的 `CAND-20260718-15` 已完成 2 项定向和 6 项完整 GPT-5.6 干净回归，逐运行 `6/6`、聚合 `2/2`、`overall=pass`。fresh CLI 只发现 1 个匹配入口，R6 安装 smoke 通过。用户已按候选 ID、SHA-256、R6、通过结果和不变范围显式批准；manifest 当前为 `activated`、`activation.allowed=true`、`formal_activation_recorded=true`。P3 文档同步已完成。自动记录、Hook 与 MCP 均未加入本轮范围，当前记录能力仍是显式、人工触发的文档记录。
+P1-P5 均已完成：单一源与运行时所有权收敛；`CAND-20260718-15` 的 2 项定向和 6 项完整 GPT-5.6 干净回归通过并正式激活；文档同步、standalone CLI 所有权复验和 `master` 远端同步均已完成。公开发布准备已包含 MIT License、repository marketplace、GitHub Actions、Issue 模板及确定性发布包构建。公开源版本 `0.1.0` 与维护者内部激活 cache 版本 R6 是两个不同层级，不能把 R6 验收直接当作公开用户安装验收。自动记录、Hook 与 MCP 均未加入本轮范围，当前记录能力仍是显式、人工触发的文档记录。
 
 当前普通 PowerShell 的裸 `python` 可能命中无效的 Microsoft Store 别名。若裸命令失败，应先使用可执行的 Python 3 路径，不要把环境入口问题误判为插件失败。
 

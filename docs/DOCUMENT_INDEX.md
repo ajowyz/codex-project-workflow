@@ -18,10 +18,12 @@
 
 ## 当前验证和状态记录
 
+- `docs/PLAN.md`：当前执行状态、下一步、阻塞和风险；较早章节同时保留历史推进证据。
+- `docs/IMPLEMENTATION_CONTRACT.md`：本次 Codex 后续开发任务创建的正式产品入口、持久化范围和成功/失败判据。
 - `docs/PLUGIN_INSTALL_SMOKE.md`：已安装插件的 smoke 验收证据。
 - `docs/IMPROVEMENT_CANDIDATES.md`：真实使用中发现的问题和候选改进台账，不代表自动生效规则。
 - `docs/PLUGIN_SOURCE_SCAFFOLD.md`：仓库内插件源包结构和封装状态。
-- `docs/PRODUCTIZATION_STATUS.md`：产品化文档阶段状态。
+- `docs/PRODUCTIZATION_STATUS.md`：产品化历史阶段与当前公开发布状态。
 - `docs/DOGFOOD_LOG.md`：用本插件审查和优化本项目的记录。
 
 ## 历史/开发记录
@@ -30,7 +32,6 @@
 
 - `docs/USER_GUIDE.md`：早期仓库级使用手册，部分版本说明可能是历史状态。
 - `docs/PLUGIN_PACKAGING.md`：插件封装准备和候选激活过程记录，部分章节描述的是当时状态。
-- `docs/PLAN.md`：项目推进历史。
 - `docs/USAGE_EXERCISES.md`：使用演练记录。
 - `docs/ARCHITECTURE.md`、`docs/DECISIONS.md`、`docs/TRACEABILITY.md` 等：开发过程中的设计和追踪文档。
 
@@ -46,5 +47,5 @@
 
 ## 注意事项
 
-- 如果文档之间出现状态冲突，以 `README.md`、`docs/PRODUCT_MANUAL.md`、`docs/INSTALL_UPDATE.md`、`docs/PLUGIN_INSTALL_SMOKE.md` 的当前状态为准。
+- 如果文档之间出现状态冲突，以实时 Git/GitHub 状态以及 `README.md`、`docs/PLAN.md`、`docs/INSTALL_UPDATE.md`、`docs/PLUGIN_INSTALL_SMOKE.md`、`docs/PRODUCTIZATION_STATUS.md` 的当前状态段落为准。
 - 历史文档中的候选编号、旧激活状态和早期阻塞项用于追溯，不代表当前产品状态。
